@@ -1,101 +1,92 @@
 import { motion, type Variants } from 'framer-motion';
+import section3Bg from '../../../images/marketResearch/section3.png';
 
 const fadeUp: Variants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
         opacity: 1,
         y: 0,
-        transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const },
+        transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] },
     },
 };
 
 const stagger: Variants = {
     hidden: {},
-    visible: { transition: { staggerChildren: 0.12 } },
+    visible: { transition: { staggerChildren: 0.15 } },
 };
 
 export default function ExperienciaMR() {
     return (
-        <section className="w-full py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-transparent font-montserrat text-white overflow-hidden">
+        <section className="w-full py-20 sm:py-32 px-4 sm:px-6 lg:px-8 bg-transparent font-montserrat text-white overflow-hidden">
             <div className="max-w-6xl mx-auto">
                 <motion.div
-                    className="relative rounded-3xl overflow-hidden"
+                    className="relative rounded-[2rem] overflow-hidden border border-white/5 group"
                     initial="hidden"
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.3 }}
                     variants={stagger}
                 >
-                    {/* Background — pure CSS, zero performance cost */}
-                    <div
-                        className="absolute inset-0 z-0"
-                        style={{
-                            background: `
-                                radial-gradient(ellipse at 15% 50%, rgba(218, 55, 49, 0.18) 0%, transparent 55%),
-                                radial-gradient(ellipse at 85% 20%, rgba(247, 176, 51, 0.14) 0%, transparent 50%),
-                                radial-gradient(ellipse at 60% 90%, rgba(16, 150, 214, 0.12) 0%, transparent 50%),
-                                linear-gradient(135deg, #0f0f10 0%, #161618 50%, #0f0f10 100%)
-                            `,
-                        }}
-                    />
+                    {/* Contenedor de Imagen de Fondo con Efecto de Profundidad */}
+                    <div className="absolute inset-0 z-0">
+                        <motion.img 
+                            src={section3Bg} 
+                            alt="Fondo Experiencia Global" 
+                            className="w-full h-full object-cover opacity-90 mix-blend-lighten"
+                            initial={{ scale: 1.1 }}
+                            whileInView={{ scale: 1 }}
+                            transition={{ duration: 1.5 }}
+                        />
+                        {/* Overlay Gradiente Radial: Ilumina el centro (bombilla) y oscurece los bordes para legibilidad */}
+                        <div 
+                            className="absolute inset-0" 
+                            style={{
+                                background: `radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.8) 70%, rgba(0,0,0,0.95) 100%)`
+                            }} 
+                        />
+                    </div>
+                    
+                    {/* Capa de Brillo Dinámico al Hover */}
+                    <div className="absolute inset-0 z-0 bg-gradient-to-tr from-orange-500/5 to-transparent opacity-40 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-                    {/* Subtle noise grain overlay for depth */}
-                    <div
-                        className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none"
-                        style={{
-                            backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-                            backgroundSize: '128px 128px',
-                        }}
-                    />
+                    {/* Contenido Principal */}
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 p-8 sm:p-16 lg:p-20 items-center">
 
-                    {/* Thin accent border */}
-                    <div
-                        className="absolute inset-0 z-0 rounded-3xl pointer-events-none"
-                        style={{
-                            border: '1px solid rgba(247, 176, 51, 0.08)',
-                        }}
-                    />
-
-                    {/* Content grid */}
-                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 p-8 sm:p-12 lg:p-14">
-
-                        {/* Left column */}
-                        <div className="flex flex-col justify-center">
+                        {/* Columna Izquierda: Título y Contexto */}
+                        <div className="flex flex-col">
                             <motion.h2
                                 variants={fadeUp}
-                                className="font-aston text-3xl sm:text-4xl md:text-5xl leading-[1.1] tracking-tight mb-6"
+                                className="font-aston text-3xl sm:text-4xl md:text-5xl leading-[1.1] tracking-tight mb-8"
                             >
                                 Agencia de Investigación de Mercados con Experiencia Global:
                             </motion.h2>
 
                             <motion.p
                                 variants={fadeUp}
-                                className="text-white/60 text-sm sm:text-base leading-relaxed"
+                                className="text-white/70 text-base sm:text-lg leading-relaxed max-w-md"
                             >
-                                En WeProm contamos con más de 35 años de experiencia
+                                En <span className="text-white font-semibold">WeProm</span> contamos con más de 35 años de experiencia
                                 realizando proyectos de investigación de mercados para
-                                diferentes industrias y sectores, descubriendo y analizando
-                                oportunidades de negocio en México, Estados Unidos,
-                                Centroamérica y Europa.
+                                diferentes industrias y sectores.
                             </motion.p>
                         </div>
 
-                        {/* Right column */}
-                        <div className="flex flex-col justify-center gap-6">
+                        {/* Columna Derecha: Acción y Detalle */}
+                        <div className="flex flex-col gap-8">
                             <motion.div variants={fadeUp}>
-                                <button className="px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm text-white text-sm font-medium hover:bg-white/10 hover:border-white/30 transition-all duration-300">
+                                <motion.button 
+                                    whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.1)" }}
+                                    whileTap={{ scale: 0.95 }}
+                                    className="px-8 py-4 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-white text-sm font-bold tracking-widest uppercase hover:border-white/40 transition-all duration-300"
+                                >
                                     Habla con uno de nuestros expertos
-                                </button>
+                                </motion.button>
                             </motion.div>
 
                             <motion.p
                                 variants={fadeUp}
                                 className="text-white/60 text-sm sm:text-base leading-relaxed"
                             >
-                                Desde la validación de una idea de negocio, la
-                                identificación de la ubicación ideal para su expansión,
-                                hasta el análisis del comportamiento del consumidor en
-                                otros países, nos encargamos del proyecto de principio a
-                                fin, apoyándolo durante todo el proceso.
+                                Desde la validación de una idea de negocio hasta el análisis del comportamiento del consumidor en otros países, nos encargamos del proyecto de principio a fin, descubriendo oportunidades en México, Estados Unidos, Centroamérica y Europa.
                             </motion.p>
                         </div>
                     </div>

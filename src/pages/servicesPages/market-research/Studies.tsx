@@ -70,7 +70,7 @@ export default function TiposDeEstudios() {
                                                 {study.title}
                                             </h3>
 
-                                            <p className="text-white/55 text-sm sm:text-[15px] leading-relaxed mb-6">
+                                            <p className="text-white/85 text-sm sm:text-[15px] leading-relaxed mb-6">
                                                 {study.description}
                                             </p>
 

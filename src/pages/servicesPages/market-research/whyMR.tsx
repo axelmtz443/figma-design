@@ -1,6 +1,8 @@
 import { motion, type Variants } from 'framer-motion';
 import { Users, BarChart2, ClipboardList } from 'lucide-react';
 
+import section3Bg from '../../../images/marketResearch/section3.png';
+
 const features = [
     {
         icon: Users,
@@ -57,14 +59,14 @@ export default function WhyMR() {
                     >
                         <motion.h2
                             variants={fadeUp}
-                            className="font-aston text-5xl sm:text-6xl md:text-7xl leading-[1.05] tracking-tight mb-8"
+                            className="font-aston text-5xl sm:text-6xl md:text-6xl leading-[1.05] tracking-tight mb-8"
                         >
                             ¿Por qué hacer Investigación de Mercados?
                         </motion.h2>
 
                         <motion.p
                             variants={fadeUp}
-                            className="text-white/60 text-sm sm:text-base leading-relaxed"
+                            className="text-white/80 text-sm sm:text-base leading-relaxed"
                         >
                             Invertir en investigación de mercado es la forma más inteligente y precisa de tomar decisiones empresariales, ya sea para un nuevo proyecto o si está considerando un cambio o implementación importante, con investigación de mercados tendrá la confianza y la información necesaria para implementar las estrategias adecuadas y alcanzar sus objetivos.
                         </motion.p>

@@ -201,7 +201,7 @@ function TestimonialsSection() {
           <h2 className="font-aston text-white leading-tight mb-4 text-[32px] sm:text-[44px] lg:text-[64px]">
             No sólo lo decimos nosotros...
           </h2>
-          <p className="font-montserrat text-white/50 text-[14px] sm:text-[18px] max-w-3xl mx-auto">
+          <p className="font-montserrat text-white text-[17px] sm:text-[25px] max-w-5xl mx-auto">
             Somos una empresa atenta y profesional, y nuestros clientes comparten
             esa opinión. ¡Descubre lo que dicen de nosotros!
           </p>
