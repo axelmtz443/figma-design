@@ -45,7 +45,7 @@ const fadeUp: Variants = {
 
 export default function WhyMR() {
     return (
-        <section className="w-full py-20 sm:py-28 px-4 sm:px-6 lg:px-8 bg-transparent font-montserrat text-white">
+        <section className="w-full pt-20 pb-10 sm:pt-28 sm:pb-8 px-4 sm:px-6 lg:px-8 bg-transparent font-montserrat text-white">
             <div className="max-w-6xl mx-auto">
                 <div className="flex flex-col lg:flex-row gap-14 lg:gap-16 items-start">
 
