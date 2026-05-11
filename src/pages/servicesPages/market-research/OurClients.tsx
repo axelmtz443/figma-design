@@ -1,150 +1,137 @@
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useRef, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
-// @ts-ignore
-import 'swiper/css';
-// @ts-ignore
-import 'swiper/css/navigation';
+// Importación de imágenes de clientes — reemplaza los paths según tu estructura
+import clientCard1 from '../../../images/BackedByMR/DISCROLLS.png';
+import clientCard2 from '../../../images/BackedByMR/interceramic.png';
+import clientCard3 from '../../../images/BackedByMR/SENTIES.png';
+import clientCard4 from '../../../images/BackedByMR/kenworth.png';
+import clientCard5 from '../../../images/BackedByMR/kia.png';
 
-import Calaverandia from '../../../images/Brands/Calaverandia.png'
-import Cinepolis from '../../../images/Brands/Cinepolis.png'
-import GrupoCaliente from '../../../images/Brands/Grupo_Caliente_Logo.png'
-import GrupoCollins from '../../../images/Brands/GRUPOCOLLINS-min (1).png'
-import Heineken from '../../../images/Brands/Heineken-Logo.png'
-import Driscols from '../../../images/Brands/LogoDriscolls.png'
-import Ford from '../../../images/Brands/LogoFord.png'
-import HospitalJoya from '../../../images/Brands/LogoHospitalJoya.png'
-import HospitalSanJavier from '../../../images/Brands/LogoHospitalSanJavier.webp'
-import Interceramic from '../../../images/Brands/logoInterceramic.png'
-import Kenworth from '../../../images/Brands/LogoKenworth.svg'
-import KIA from '../../../images/Brands/LogoKIA.webp'
-import LogoSelloRojo from '../../../images/Brands/logo-sello-rojo.png'
-import Macdonalds from '../../../images/Brands/MACDONALDS-min.png'
-import Marisa from '../../../images/Brands/Marisa.png'
-import MercedesBenz from '../../../images/Brands/mercedes.png'
-import Nissan from '../../../images/Brands/Nissan.png'
-import OReilly from '../../../images/Brands/OReilly_Autopartes.png'
-import Pepsico from '../../../images/Brands/PEPSICO-min.png'
-import Televisa from '../../../images/Brands/TELEVISA-min.png'
-import UDG from '../../../images/Brands/UDG-min.png'
-import Vitromex from '../../../images/Brands/VITROMEX-min.png'
-import Volkswagen from '../../../images/Brands/Volkswagen_logopng.png'
+const clients = [
+  { id: 1, image: clientCard1, name: 'Cliente 1' },
+  { id: 2, image: clientCard2, name: 'Cliente 2' },
+  { id: 3, image: clientCard3, name: 'Cliente 3' },
+  { id: 4, image: clientCard4, name: 'Cliente 4' },
+  { id: 5, image: clientCard5, name: 'Cliente 5' },
+];
 
-const COLORS = {
-  red: '#FF3B30',
-  blue: '#007AFF',
-  green: '#34C759',
-  yellow: '#FF9500',
-};
+// Configuración de posiciones del fan (igual a la imagen)
+// La tarjeta central está al frente; las demás se rotan y desplazan
+const fanConfig = [
+  { rotate: -30, translateX: -220, translateY: 20,  scale: 0.85, zIndex: 1 },
+  { rotate: -15, translateX: -110, translateY: 10,  scale: 0.92, zIndex: 2 },
+  { rotate:   0, translateX:    0, translateY:  0,  scale: 1.00, zIndex: 5 }, // Centro
+  { rotate:  15, translateX:  110, translateY: 10,  scale: 0.92, zIndex: 2 },
+  { rotate:  30, translateX:  220, translateY: 20,  scale: 0.85, zIndex: 1 },
+];
 
-interface Brand {
-  name: string;
-  src?: string;
-  alt?: string;
-  isText?: boolean;
-  className?: string;
-}
-
-function OurClients() {
-  const brands: Brand[] = [
-    { name: 'Cinepolis', src: Cinepolis, alt: 'Cinepolis Logo' },
-    { name: 'Calaverandia', src: Calaverandia, alt: 'Calaverandia Logo' },
-    { name: 'Grupo Caliente', src: GrupoCaliente, alt: 'Grupo Caliente Logo' },
-    { name: 'Grupo Collins', src: GrupoCollins, alt: 'Grupo Collins Logo' },
-    { name: 'Heineken', src: Heineken, alt: 'Heineken Logo' },
-    { name: "Driscoll's", src: Driscols, alt: "Driscoll's Logo" },
-    { name: 'Ford', src: Ford, alt: 'Ford Logo' },
-    { name: 'Hospital Joya', src: HospitalJoya, alt: 'Hospital Joya Logo' },
-    { name: 'Hospital San Javier', src: HospitalSanJavier, alt: 'Hospital San Javier Logo' },
-    { name: 'Interceramic', src: Interceramic, alt: 'Interceramic Logo' },
-    { name: 'Kenworth', src: Kenworth, alt: 'Kenworth Logo' },
-    { name: 'KIA', src: KIA, alt: 'KIA Logo' },
-    { name: 'Sello Rojo', src: LogoSelloRojo, alt: 'Sello Rojo Logo' },
-    { name: "McDonald's", src: Macdonalds, alt: "McDonald's Logo" },
-    { name: 'Marisa', src: Marisa, alt: 'Marisa Logo' },
-    { name: 'Mercedes-Benz', src: MercedesBenz, alt: 'Mercedes-Benz Logo' },
-    { name: 'Nissan', src: Nissan, alt: 'Nissan Logo' },
-    { name: "O'Reilly", src: OReilly, alt: "O'Reilly Autopartes Logo" },
-    { name: 'Pepsico', src: Pepsico, alt: 'Pepsico Logo' },
-    { name: 'Televisa', src: Televisa, alt: 'Televisa Logo' },
-    { name: 'UDG', src: UDG, alt: 'UDG Logo' },
-    { name: 'Vitromex', src: Vitromex, alt: 'Vitromex Logo' },
-    { name: 'Volkswagen', src: Volkswagen, alt: 'Volkswagen Logo' },
-  ];
-
-  const stats = [
-    { number: '35+', label: 'Años de experiencia', color: COLORS.red },
-    { number: '1.000+', label: 'Clientes satisfechos', color: COLORS.blue },
-    { number: '12.000+', label: 'Proyectos completados', color: COLORS.green },
-    { number: '100%', label: 'Tasa de satisfacción', color: COLORS.yellow },
-  ];
-
-  const allBrands = [...brands, ...brands];
+const SectionFive = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative w-full pt-10 sm:pt-12 pb-14 sm:pb-4 overflow-hidden bg-transparent group">
+    <section className="relative w-full py-24 bg-transparent overflow-hidden flex flex-col items-center">
 
-      <div className="absolute top-0 left-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-r from-black to-transparent opacity-90" />
-      <div className="absolute top-0 right-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-l from-black to-transparent opacity-90" />
+      {/* Glow ambiental de fondo */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-white/5 blur-[120px] rounded-full pointer-events-none" />
 
-      <div className="relative w-full max-w-[1519px] mx-auto px-4 sm:px-8 z-10">
-
-        <p className="font-montserrat  text-[10px] sm:text-[18px] md:text-[20px] tracking-[-0.02em] text-white text-center mb-10 sm:mb-16">
-          Algunos clientes que han confiado en nuestro trabajo.
-        </p>
-
-        <div className="relative flex items-center">
-          <button className="prev-btn absolute left-0 z-30 p-2 text-white/50 hover:text-white transition-opacity opacity-0 group-hover:opacity-100 hidden md:block">
-            <ChevronLeft size={40} strokeWidth={1} />
-          </button>
-          <button className="next-btn absolute right-0 z-30 p-2 text-white/50 hover:text-white transition-opacity opacity-0 group-hover:opacity-100 hidden md:block">
-            <ChevronRight size={40} strokeWidth={1} />
-          </button>
-
-          <Swiper
-            modules={[Autoplay, Navigation]}
-            spaceBetween={30}
-            slidesPerView={2}
-            loop={true}
-            speed={4000}
-            autoplay={{ delay: 0, disableOnInteraction: false }}
-            navigation={{ prevEl: '.prev-btn', nextEl: '.next-btn' }}
-            breakpoints={{
-              480: { slidesPerView: 3, spaceBetween: 40 },
-              640: { slidesPerView: 3, spaceBetween: 50 },
-              1024: { slidesPerView: 5, spaceBetween: 50 },
-            }}
-            className="flex items-center"
-          >
-            {allBrands.map((brand, index) => (
-              <SwiperSlide key={index} className="flex items-center justify-center py-4">
-                <div className="flex items-center justify-center h-24 sm:h-28 w-full px-4 py-4 rounded-2xl bg-white border border-white/20 shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-white/10">
-                  {brand.isText ? (
-                    <span className={`${brand.className} text-black whitespace-nowrap`}>
-                      {brand.name}
-                    </span>
-                  ) : (
-                    <img
-                      src={brand.src}
-                      alt={brand.alt}
-                      className={`w-auto object-contain transition-all ${
-                        brand.name === 'KIA' ? 'h-10 sm:h-14 md:h-16' : 'h-7 sm:h-9 md:h-11'
-                      }`}
-                    />
-                  )}
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
-        
-
+      {/* Encabezado */}
+      <div className="container mx-auto px-6 text-center mb-16 relative z-10">
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          viewport={{ once: true }}
+          className="text-zinc-400 text-base md:text-lg font-light tracking-wide !font-montserrat mb-2"
+          style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}
+        >
+          Algunos Clientes que han confiado en nuestro trabajo
+        </motion.p>
       </div>
+
+      {/* Fan de Tarjetas */}
+      <motion.div
+        initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+        viewport={{ once: true }}
+        className="relative flex justify-center items-end w-full"
+        style={{ height: '340px' }}
+      >
+        {clients.map((client, i) => {
+          const cfg = fanConfig[i];
+          const isHovered = hoveredIndex === i;
+
+          return (
+            <motion.div
+              key={client.id}
+              className="absolute bottom-0 cursor-pointer select-none"
+              style={{
+                zIndex: isHovered ? 10 : cfg.zIndex,
+                transformOrigin: 'bottom center',
+              }}
+              initial={false}
+              animate={{
+                rotate: isHovered ? 0 : cfg.rotate,
+                x: isHovered ? cfg.translateX * 0.6 : cfg.translateX,
+                y: isHovered ? -20 : cfg.translateY,
+                scale: isHovered ? 1.08 : cfg.scale,
+              }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              onHoverStart={() => setHoveredIndex(i)}
+              onHoverEnd={() => setHoveredIndex(null)}
+            >
+              <div
+                className="relative rounded-[1.4rem] overflow-hidden shadow-2xl"
+                style={{
+                  width: '190px',
+                  height: '250px',
+                  boxShadow: isHovered
+                    ? '0 30px 80px rgba(0,0,0,0.7), 0 0 40px rgba(255,255,255,0.05)'
+                    : '0 20px 50px rgba(0,0,0,0.5)',
+                }}
+              >
+                <img
+                  src={client.image}
+                  alt={client.name}
+                  className="w-full h-full object-cover"
+                  draggable={false}
+                />
+                {/* Overlay sutil en los bordes */}
+                <div className="absolute inset-0 rounded-[1.4rem] ring-1 ring-white/10" />
+              </div>
+            </motion.div>
+          );
+        })}
+      </motion.div>
+
+      {/* Texto inferior + Botón */}
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
+        viewport={{ once: true }}
+        className="flex flex-col items-center gap-5 mt-14 relative z-10"
+      >
+        <h2
+          className="text-white text-4xl md:text-5xl font-normal text-center !font-aston"
+          style={{ fontFamily: 'var(--font-aston), sans-serif' }}
+        >
+          Nuestras clientas
+        </h2>
+
+        <motion.button
+          whileHover={{ scale: 1.04 }}
+          whileTap={{ scale: 0.97 }}
+          className="border border-white/30 hover:border-white/60 bg-white/5 hover:bg-white/10 text-white px-10 py-3 rounded-full text-sm md:text-base font-light tracking-wide !font-montserrat transition-all duration-300 backdrop-blur-sm"
+          style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}
+        >
+          Ver más
+        </motion.button>
+      </motion.div>
+
     </section>
   );
-}
+};
 
-export default OurClients;
+export default SectionFive;
