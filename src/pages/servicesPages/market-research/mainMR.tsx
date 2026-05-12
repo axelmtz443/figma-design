@@ -10,6 +10,7 @@ import ElPoderDeLaInformacion from './QuestionsMR';
 import TiposDeEstudios from './Studies';
 import DatesSection from './4dates';
 import CompanySection from '../../../components/Home/CompanySection';
+import MercedesBenz from './mercedesBenz';
 import OurClients from './OurClients';
 
 
@@ -53,6 +54,7 @@ export default function MarketResearch() {
             <ScrollReveal><TiposDeEstudios /></ScrollReveal>
             <ScrollReveal><DatesSection /></ScrollReveal>
             <ScrollReveal><CompanySection /></ScrollReveal>
+            <ScrollReveal><MercedesBenz /></ScrollReveal>
             <ScrollReveal><ContactoMR /></ScrollReveal>
             <Footer />
         </div>
