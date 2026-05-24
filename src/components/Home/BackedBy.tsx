@@ -45,33 +45,34 @@ interface Brand {
   alt?: string;
   isText?: boolean;
   className?: string;
+  sizeClass?: string; // Añadimos esto para controlar tamaños personalizados
 }
 
 function BackedBy() {
   const brands: Brand[] = [
     { name: 'Cinepolis', src: Cinepolis, alt: 'Cinepolis Logo' },
-    { name: 'Calaverandia', src: Calaverandia, alt: 'Calaverandia Logo' },
+    { name: 'Calaverandia', src: Calaverandia, alt: 'Calaverandia Logo', sizeClass: 'h-14 sm:h-16 md:h-18' },
     { name: 'Grupo Caliente', src: GrupoCaliente, alt: 'Grupo Caliente Logo' },
-    { name: 'Grupo Collins', src: GrupoCollins, alt: 'Grupo Collins Logo' },
-    { name: 'Heineken', src: Heineken, alt: 'Heineken Logo' },
+    { name: 'Grupo Collins', src: GrupoCollins, alt: 'Grupo Collins Logo', sizeClass: 'h-12 sm:h-16 md:h-20' },
+    { name: 'Heineken', src: Heineken, alt: 'Heineken Logo', sizeClass: 'h-16 sm:h-20 md:h-24' },
     { name: "Driscoll's", src: Driscols, alt: "Driscoll's Logo" },
-    { name: 'Ford', src: Ford, alt: 'Ford Logo' },
-    { name: 'Hospital Joya', src: HospitalJoya, alt: 'Hospital Joya Logo' },
-    { name: 'Hospital San Javier', src: HospitalSanJavier, alt: 'Hospital San Javier Logo' },
+    { name: 'Ford', src: Ford, alt: 'Ford Logo', sizeClass: 'h-8 sm:h-10 md:h-14' },
+    { name: 'Hospital Joya', src: HospitalJoya, alt: 'Hospital Joya Logo', sizeClass: 'h-12 sm:h-16 md:h-18' },
+    { name: 'Hospital San Javier', src: HospitalSanJavier, alt: 'Hospital San Javier Logo', sizeClass: 'h-14 sm:h-18 md:h-20' },
     { name: 'Interceramic', src: Interceramic, alt: 'Interceramic Logo' },
     { name: 'Kenworth', src: Kenworth, alt: 'Kenworth Logo' },
-    { name: 'KIA', src: KIA, alt: 'KIA Logo' },
-    { name: 'Sello Rojo', src: LogoSelloRojo, alt: 'Sello Rojo Logo' },
-    { name: "McDonald's", src: Macdonalds, alt: "McDonald's Logo" },
-    { name: 'Marisa', src: Marisa, alt: 'Marisa Logo' },
-    { name: 'Mercedes-Benz', src: MercedesBenz, alt: 'Mercedes-Benz Logo' },
-    { name: 'Nissan', src: Nissan, alt: 'Nissan Logo' },
-    { name: "O'Reilly", src: OReilly, alt: "O'Reilly Autopartes Logo" },
+    { name: 'KIA', src: KIA, alt: 'KIA Logo', sizeClass: 'h-20 sm:h-24 md:h-28' },
+    { name: 'Sello Rojo', src: LogoSelloRojo, alt: 'Sello Rojo Logo', sizeClass: 'h-16 sm:h-18 md:h-20' },
+    { name: "McDonald's", src: Macdonalds, alt: "McDonald's Logo", sizeClass: 'h-16 sm:h-18 md:h-20' },
+    { name: 'Marisa', src: Marisa, alt: 'Marisa Logo', sizeClass: 'h-12 sm:h-16 md:h-18' },
+    { name: 'Mercedes-Benz', src: MercedesBenz, alt: 'Mercedes-Benz Logo', sizeClass: 'h-16 sm:h-18 md:h-20' },
+    { name: 'Nissan', src: Nissan, alt: 'Nissan Logo', sizeClass: 'h-16 sm:h-18 md:h-20' },
+    { name: "O'Reilly", src: OReilly, alt: "O'Reilly Autopartes Logo", sizeClass: 'h-24 sm:h-28 md:h-32' },
     { name: 'Pepsico', src: Pepsico, alt: 'Pepsico Logo' },
-    { name: 'Televisa', src: Televisa, alt: 'Televisa Logo' },
-    { name: 'UDG', src: UDG, alt: 'UDG Logo' },
+    { name: 'Televisa', src: Televisa, alt: 'Televisa Logo', sizeClass: 'h-16 sm:h-18 md:h-20' },
+    { name: 'UDG', src: UDG, alt: 'UDG Logo', sizeClass: 'h-16 sm:h-18 md:h-20' },
     { name: 'Vitromex', src: Vitromex, alt: 'Vitromex Logo' },
-    { name: 'Volkswagen', src: Volkswagen, alt: 'Volkswagen Logo' },
+    { name: 'Volkswagen', src: Volkswagen, alt: 'Volkswagen Logo', sizeClass: 'h-16 sm:h-18 md:h-20' },
   ];
 
   const stats = [
@@ -125,15 +126,17 @@ function BackedBy() {
                     <span className={`${brand.className} text-black whitespace-nowrap`}>
                       {brand.name}
                     </span>
+
                   ) : (
                     <img
                       src={brand.src}
                       alt={brand.alt}
                       className={`w-auto object-contain transition-all ${
-                        brand.name === 'KIA' ? 'h-10 sm:h-14 md:h-16' : 'h-7 sm:h-9 md:h-11'
+                        brand.sizeClass ? brand.sizeClass : 'h-7 sm:h-9 md:h-11'
                       }`}
                     />
                   )}
+                  
                 </div>
               </SwiperSlide>
             ))}
