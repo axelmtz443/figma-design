@@ -10,8 +10,8 @@ import BlogSection from '../components/Home/BlogSection';
 import Testimonials from '../components/Home/Testimonial';
 
 import WhoWeAre from '../components/Home/WhoWeAre';
-
 import AboutIntro from '../components/Home/AboutIntro';
+import SuccessStories from './servicesPages/consultoria/SuccessStories';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -39,8 +39,12 @@ function Home({ isLoading }: { isLoading: boolean }) {
       </ScrollReveal>
 
       <ScrollReveal>
-        <ProjectResults />
+        <SuccessStories />
       </ScrollReveal>
+
+      {/* <ScrollReveal>
+        <ProjectResults />
+      </ScrollReveal> */}
 
       <ScrollReveal>
         <AboutIntro />
