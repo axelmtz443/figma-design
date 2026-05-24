@@ -17,7 +17,7 @@ const reviews = [
 
 const row1 = [...reviews.slice(0, 5), ...reviews.slice(0, 5)];
 const row2 = [...reviews.slice(5), ...reviews.slice(5)];
-const testimonialVideo = 'https://res.cloudinary.com/dexcrnwcu/video/upload/v1776655929/socialmedia2_zpab9s.mp4';
+const testimonialVideo = 'https://res.cloudinary.com/dodxaehv3/video/upload/v1779631999/tania-garcia_zjzonz.mp4';
 
 const StarRating = () => (
   <div className="flex gap-0.5">
