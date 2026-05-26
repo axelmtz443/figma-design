@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import logoImage from "../../images/OFICIALLOGO.png";
+import React from "react";
 
 export default function Loader() {
   const [progress, setProgress] = useState(0);

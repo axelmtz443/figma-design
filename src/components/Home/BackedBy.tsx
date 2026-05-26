@@ -92,7 +92,7 @@ function BackedBy() {
       <div className="relative w-full max-w-[1519px] mx-auto px-4 sm:px-8 z-10">
 
         <p className="font-montserrat font-light text-[18px] sm:text-[24px] md:text-[36px] tracking-[-0.02em] text-white/60 text-center mb-10 sm:mb-16 uppercase">
-          Backed by
+          Elegidos por las grandes marcas
         </p>
 
         <div className="relative flex items-center">

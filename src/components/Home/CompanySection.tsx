@@ -1,4 +1,5 @@
 import LogoIcon from "../../images/ISOTIPODEGRADADO.png";
+import React from "react";
 
 
 import { BarChart2, Target, Lightbulb, Handshake, ArrowUp, ArrowRight, ArrowDown, ArrowLeft } from 'lucide-react';

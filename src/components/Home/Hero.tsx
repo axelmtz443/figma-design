@@ -143,7 +143,7 @@ const css = `
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function Hero() {
+export default function Hero({ isLoading} : {isLoading: boolean}) {
   
   const contenedorRef = useRef<HTMLDivElement>(null);
   const marcasRefs    = useRef<HTMLDivElement[]>([]);
