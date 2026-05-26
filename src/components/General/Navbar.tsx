@@ -108,9 +108,10 @@ function Navbar() {
                   onMouseLeave={() => link.isDropdown && setIsServicesOpen(false)}
                 >
                   <Link
-                    to=""
+                    to={link.isDropdown ? "" : link.path}
                     className={`flex items-center gap-1 font-montserrat text-[14px] font-medium leading-[24px] tracking-[-0.02em] transition-colors ${
                       isActive(link.path)
+                      
                         ? 'text-white font-semibold'
                         : 'text-[#CACFD8] hover:text-white'
                     }`}
