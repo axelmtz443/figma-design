@@ -1,23 +1,26 @@
 import React, { useRef, useState } from 'react';
-import portada1 from '../../../images/portadaVideosInst/video1.png'
-import portada2 from '../../../images/portadaVideosInst/video2.png'
-import portada4 from '../../../images/portadaVideosInst/video4.png'
+
+import portada1 from '../../../images/portadaVideosInst/video1.png';
+import portada2 from '../../../images/portadaVideosInst/video2.png';
+import portada3 from '../../../images/portadaVideosInst/video3.png';
+import portada4 from '../../../images/portadaVideosInst/video4.png';
+
+// 👇 Cambia estas rutas por tus videos reales
+
 
 const video1 = 'https://res.cloudinary.com/dexcrnwcu/video/upload/v1776655985/Inst_1_yf6aip.mp4'
 const video2 = 'https://res.cloudinary.com/dexcrnwcu/video/upload/v1776657701/Inst_2_pjtdfe.mp4'
 const video3 = 'https://res.cloudinary.com/dexcrnwcu/video/upload/v1776655980/Inst_3_xcp3so.mp4'
 const video4 = 'https://res.cloudinary.com/dexcrnwcu/video/upload/v1776655946/Inst_4_qemsok.mp4'
 
-
-
 const videos = [
-    { src: video1, large: true },
-    { src: video2, large: true },
-    { src: video3, large: false },
-    { src: video4, large: false },
+    { src: video1, poster: portada1, large: true },
+    { src: video2, poster: portada2, large: true },
+    { src: video3, poster: portada3, large: false },
+    { src: video4, poster: portada4, large: false },
 ];
 
-const VideoCard = ({ src, large }: { src: string; large: boolean }) => {
+const VideoCard = ({ src, poster, large }: { src: string; poster: string; large: boolean }) => {
     const videoRef = useRef<HTMLVideoElement>(null);
     const [playing, setPlaying] = useState(false);
 
@@ -33,14 +36,14 @@ const VideoCard = ({ src, large }: { src: string; large: boolean }) => {
 
     return (
         <div
-            className={`relative overflow-hidden rounded-2xl cursor-pointer group bg-black ${large ? 'col-span-1' : 'col-span-1'
-                }`}
+            className="relative w-full h-full overflow-hidden rounded-lg cursor-pointer group bg-black"
             style={{ aspectRatio: '16/9' }}
             onClick={togglePlay}
         >
             <video
                 ref={videoRef}
                 src={src}
+                poster={poster}
                 className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loop
                 playsInline
@@ -64,7 +67,8 @@ const VideoCard = ({ src, large }: { src: string; large: boolean }) => {
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="white" style={{ marginLeft: 3 }}>
                             <polygon points="5,3 19,12 5,21" />
                         </svg>
-                    )}
+                    )
+                    }
                 </div>
             </div>
         </div>
@@ -95,17 +99,28 @@ const VideosInstitucionales = () => {
                 </p>
             </div>
 
-            <div className="w-full max-w-6xl flex flex-col gap-4">
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <VideoCard src={videos[0].src} large={true} />
-                    <VideoCard src={videos[1].src} large={true} />
+            {/* Contenedor maestro en vertical */}
+            {/* Contenedor maestro en vertical */}
+            <div className="w-full max-w-6xl flex flex-col gap-6">
+                
+                {/* Fila Superior: Alineada a la IZQUIERDA */}
+                <div className="w-full sm:w-[85%] flex flex-col sm:flex-row gap-4 self-start">
+                    <div className="flex-1">
+                        <VideoCard src={videos[0].src} poster={videos[0].poster} large={true} />
+                    </div>
+                    <div className="flex-1">
+                        <VideoCard src={videos[1].src} poster={videos[1].poster} large={true} />
+                    </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    <div className="hidden sm:block" />
-                    <VideoCard src={videos[2].src} large={false} />
-                    <VideoCard src={videos[3].src} large={false} />
+                {/* Fila Inferior: Alineada a la DERECHA */}
+                <div className="w-full sm:w-[85%] flex flex-col sm:flex-row gap-4 self-end">
+                    <div className="flex-1">
+                        <VideoCard src={videos[2].src} poster={videos[2].poster} large={false} />
+                    </div>
+                    <div className="flex-1">
+                        <VideoCard src={videos[3].src} poster={videos[3].poster} large={false} />
+                    </div>
                 </div>
 
             </div>

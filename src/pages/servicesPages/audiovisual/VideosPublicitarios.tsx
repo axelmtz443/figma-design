@@ -16,7 +16,13 @@ const video4 = 'https://res.cloudinary.com/dexcrnwcu/video/upload/v1776656012/fo
 const video5 = 'https://res.cloudinary.com/dexcrnwcu/video/upload/v1776655944/five_uahh64.mp4'
 
 
-const videos = [video1, video2, video3, video4, video5];
+const videos = [
+  { src: video1, poster: portada1 },
+  { src: video2, poster: portada2 },
+  { src: video3, poster: portada3 },
+  { src: video4, poster: portada4 },
+  { src: video5, poster: portada5 },
+];
 
 const VideosPublicitarios = () => {
   const [activeIndex, setActiveIndex] = useState(2);
@@ -25,14 +31,22 @@ const VideosPublicitarios = () => {
 
   const prev = () => {
     const currentVideo = videoRefs.current[activeIndex];
-    if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
+    if (currentVideo) { 
+      currentVideo.pause(); 
+      currentVideo.currentTime = 0; 
+      currentVideo.load(); // 👈 Fuerza al navegador a volver a pintar la portada
+    }
     setActiveIndex((i) => (i - 1 + videos.length) % videos.length);
     setPlayingIndex(null);
   };
 
   const next = () => {
     const currentVideo = videoRefs.current[activeIndex];
-    if (currentVideo) { currentVideo.pause(); currentVideo.currentTime = 0; }
+    if (currentVideo) { 
+      currentVideo.pause(); 
+      currentVideo.currentTime = 0; 
+      currentVideo.load(); // 👈 Fuerza al navegador a volver a pintar la portada
+    }
     setActiveIndex((i) => (i + 1) % videos.length);
     setPlayingIndex(null);
   };
@@ -96,7 +110,7 @@ const VideosPublicitarios = () => {
         </button>
 
         {/* Videos */}
-        {videos.map((src, index) => {
+        {videos.map((video, index) => {
           const pos = getPosition(index);
           const isActive = pos === 0;
           const isVisible = Math.abs(pos) <= 2;
@@ -123,7 +137,8 @@ const VideosPublicitarios = () => {
             >
               <video
                 ref={(el) => (videoRefs.current[index] = el)}
-                src={src}
+                src={video.src}
+                poster={video.poster}
                 className="w-full h-full object-cover"
                 loop
                 playsInline

@@ -8,9 +8,13 @@ const video1 = 'https://res.cloudinary.com/dexcrnwcu/video/upload/v1776655940/so
 const video2 = 'https://res.cloudinary.com/dexcrnwcu/video/upload/v1776655929/socialmedia2_zpab9s.mp4'
 const video3 = 'https://res.cloudinary.com/dexcrnwcu/video/upload/v1776655954/socialmedia3_eakbmm.mp4'
 
-const videos = [video1, video2, video3];
+const videos = [
+  { src: video1, poster: portada1 },
+  { src: video2, poster: portada2 },
+  { src: video3, poster: portada3 },
+];
 
-const VideoCard = ({ src }: { src: string }) => {
+const VideoCard = ({ src, poster }: { src: string; poster: string }) => {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
 
@@ -33,6 +37,7 @@ const VideoCard = ({ src }: { src: string }) => {
       <video
         ref={videoRef}
         src={src}
+        poster={poster}
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         loop
         playsInline
@@ -84,8 +89,8 @@ const SocialMedia = () => {
 
       {/* Grid de videos verticales */}
       <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {videos.map((src, index) => (
-          <VideoCard key={index} src={src} />
+        {videos.map((video, index) => (
+          <VideoCard key={index} src={video.src} poster={video.poster} />
         ))}
       </div>
 
