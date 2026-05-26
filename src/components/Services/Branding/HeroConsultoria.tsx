@@ -29,15 +29,15 @@ import heroRight from '../../../images/branding/hero-right.png';
 const brands = [
     { name: 'Cinepolis', src: Cinepolis, alt: 'Cinepolis Logo' },
     { name: 'Grupo Caliente', src: GrupoCaliente, alt: 'Grupo Caliente Logo' },
-    { name: 'Heineken', src: Heineken, alt: 'Heineken Logo' },
-    { name: 'Ford', src: Ford, alt: 'Ford Logo' },
-    { name: 'KIA', src: KIA, alt: 'KIA Logo' },
-    { name: "McDonald's", src: Macdonalds, alt: "McDonald's Logo" },
-    { name: 'Mercedes-Benz', src: MercedesBenz, alt: 'Mercedes-Benz Logo' },
-    { name: 'Nissan', src: Nissan, alt: 'Nissan Logo' },
+    { name: 'Heineken', src: Heineken, alt: 'Heineken Logo', sizeClass: 'h-16 sm:h-20 md:h-24' },
+    { name: 'Ford', src: Ford, alt: 'Ford Logo', sizeClass: 'h-8 sm:h-10 md:h-14' },
+    { name: 'KIA', src: KIA, alt: 'KIA Logo', sizeClass: 'h-20 sm:h-24 md:h-28' },
+    { name: "McDonald's", src: Macdonalds, alt: "McDonald's Logo", sizeClass: 'h-16 sm:h-18 md:h-20' },
+    { name: 'Mercedes-Benz', src: MercedesBenz, alt: 'Mercedes-Benz Logo', sizeClass: 'h-16 sm:h-18 md:h-20' },
+    { name: 'Nissan', src: Nissan, alt: 'Nissan Logo', sizeClass: 'h-16 sm:h-18 md:h-20' },
     { name: 'Pepsico', src: Pepsico, alt: 'Pepsico Logo' },
-    { name: 'Televisa', src: Televisa, alt: 'Televisa Logo' },
-    { name: 'Volkswagen', src: Volkswagen, alt: 'Volkswagen Logo' },
+    { name: 'Televisa', src: Televisa, alt: 'Televisa Logo', sizeClass: 'h-16 sm:h-18 md:h-20' },
+    { name: 'Volkswagen', src: Volkswagen, alt: 'Volkswagen Logo', sizeClass: 'h-16 sm:h-18 md:h-20' },
 ];
 
 
@@ -166,12 +166,15 @@ const ConsultoriaHero = () => {
                             {allBrands.map((brand, index) => (
                                 <SwiperSlide key={index} className="flex items-center justify-center py-4">
                                     <div className="flex items-center justify-center h-24 sm:h-28 w-full px-4 py-4 rounded-2xl bg-white border border-white/20 shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-white/10">
+
                                         <img
                                             src={brand.src}
                                             alt={brand.alt}
-                                            className={`w-auto object-contain transition-all ${brand.name === 'KIA' ? 'h-10 sm:h-14 md:h-16' : 'h-7 sm:h-9 md:h-11'
-                                                }`}
+                                            className={`w-auto object-contain transition-all ${
+                                                brand.sizeClass ? brand.sizeClass : 'h-7 sm:h-9 md:h-11'
+                                            }`}
                                         />
+                                        
                                     </div>
                                 </SwiperSlide>
                             ))}
