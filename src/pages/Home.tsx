@@ -10,6 +10,7 @@ import Testimonials from '../components/Home/Testimonial';
 import WhoWeAre from '../components/Home/WhoWeAre';
 import AboutIntro from '../components/Home/AboutIntro';
 import { useNavigate } from 'react-router-dom';
+import SuccessStories from "./servicesPages/consultoria/SuccessStories";
 
 // Importa el nuevo wrapper
 import ScrollReveal from '../components/General/ScrollReveal';
@@ -39,8 +40,12 @@ function Home({ isLoading }: HomeProps) {
       </ScrollReveal>
 
       <ScrollReveal>
-        <ProjectResults />
+        <SuccessStories />
       </ScrollReveal>
+
+      {/* <ScrollReveal>
+        <ProjectResults />
+      </ScrollReveal> */}
 
       <ScrollReveal>
         <AboutIntro />

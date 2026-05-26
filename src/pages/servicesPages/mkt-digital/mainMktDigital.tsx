@@ -12,6 +12,8 @@ import SectionFive from './sectionFive';
 import SectionSix from './sectionSix';
 import SectionSeven from './sectionSeven';
 
+import ProjectResults from '../../../services/ProjectResults';
+
 
 const MainMktDigital = () => {
   return (
@@ -26,8 +28,12 @@ const MainMktDigital = () => {
       </ScrollReveal>
 
       <ScrollReveal>
-        <SectionTres />
+        <ProjectResults />
       </ScrollReveal>
+
+      {/* <ScrollReveal>
+        <SectionTres />
+      </ScrollReveal> */}
 
       <ScrollReveal>
         <SectionFour />

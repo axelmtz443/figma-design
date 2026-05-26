@@ -9,9 +9,11 @@ import TestimonialMR from './TestimonialMR';
 import ElPoderDeLaInformacion from './QuestionsMR';
 import TiposDeEstudios from './Studies';
 import DatesSection from './4dates';
-import OurClients from './OurClients';
 import CompanySection from '../../../components/Home/CompanySection';
+import MercedesBenz from './mercedesBenz';
+import OurClients from './OurClients';
 import CaseStudiesMR from './mercedes';
+
 
 function ScrollReveal({ children }: { children: React.ReactNode }) {
     const ref = useRef<HTMLDivElement>(null);

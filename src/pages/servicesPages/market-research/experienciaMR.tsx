@@ -5,7 +5,7 @@ import fondoBombilla from '../../../images/section3.png';
 
 const ExperienciaMR = () => {
   return (
-    <section className="relative w-full py-16 bg-transparent overflow-hidden flex justify-center items-center">
+    <section className="relative w-full py-6 bg-transparent overflow-hidden flex justify-center items-center">
       <div className="container mx-auto px-6 flex justify-center">
 
         {/* Tarjeta principal: la imagen dicta las dimensiones */}
@@ -34,7 +34,7 @@ const ExperienciaMR = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
                 viewport={{ once: true }}
-                className="text-white text-3xl md:text-4xl lg:text-5xl font-normal leading-snug mb-5 !font-aston"
+                className="text-white text-2xl md:text-3xl lg:text-4xl font-normal leading-snug mb-5 !font-aston"
                 style={{ fontFamily: 'var(--font-aston), sans-serif' }}
               >
                 Agencia de Investigación de Mercados con Experiencia Global:
@@ -55,7 +55,7 @@ const ExperienciaMR = () => {
             </div>
 
             {/* Columna Derecha: Botón CTA + Descripción larga */}
-            <div className="flex flex-col justify-center gap-8 max-w-xs md:max-w-sm lg:max-w-md">
+            <div className="flex flex-col justify-end gap-8 max-w-xs md:max-w-sm lg:max-w-md">
 
               {/* Botón */}
               <motion.div
@@ -65,7 +65,7 @@ const ExperienciaMR = () => {
                 viewport={{ once: true }}
               >
                 <button
-                  className="bg-zinc-800/70 hover:bg-zinc-700/80 border border-white/20 text-white text-sm md:text-base font-montserrat px-6 py-3 rounded-full backdrop-blur-md transition-all duration-300 whitespace-nowrap"
+                  className="bg-zinc-800/70 hover:bg-zinc-700/80 border border-white/20 text-white text-sm md:text-base font-montserrat px-6 py-3 rounded-full backdrop-blur-md transition-all duration-300 whitespace-nowrap flex justify-end"
                   style={{ fontFamily: 'var(--font-montserrat), sans-serif' }}
                 >
                   Habla con uno de nuestros expertos
