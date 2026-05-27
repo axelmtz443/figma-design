@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Navbar from '../../../components/General/Navbar';
 import Footer from '../../../components/General/Footer';
 import HeroMR from './Hero';
+import TwoSectionBrands from './TwoSectionBrands';
 import WhyMR from './whyMR';
 import ExperienciaMR from './experienciaMR';
 import ContactoMR from './contactMR';
@@ -47,11 +48,13 @@ export default function MarketResearch() {
         <div className="min-h-screen bg-transparent overflow-x-hidden">
             <Navbar />
             <HeroMR />
+            <ScrollReveal><TwoSectionBrands /></ScrollReveal>
             <ScrollReveal><WhyMR /></ScrollReveal>
+            <ScrollReveal><ElPoderDeLaInformacion /></ScrollReveal>
             <ScrollReveal><ExperienciaMR /></ScrollReveal>
             <ScrollReveal><TestimonialMR /></ScrollReveal>
             <ScrollReveal><OurClients /></ScrollReveal>
-            <ScrollReveal><ElPoderDeLaInformacion /></ScrollReveal>
+            
             <ScrollReveal><TiposDeEstudios /></ScrollReveal>
             <ScrollReveal><DatesSection /></ScrollReveal>
             <ScrollReveal><CompanySection /></ScrollReveal>
