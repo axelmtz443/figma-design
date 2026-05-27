@@ -50,10 +50,11 @@ export default function MarketResearch() {
             <HeroMR />
             <ScrollReveal><TwoSectionBrands /></ScrollReveal>
             <ScrollReveal><WhyMR /></ScrollReveal>
+            <ScrollReveal><ElPoderDeLaInformacion /></ScrollReveal>
             <ScrollReveal><ExperienciaMR /></ScrollReveal>
             <ScrollReveal><TestimonialMR /></ScrollReveal>
             <ScrollReveal><OurClients /></ScrollReveal>
-            <ScrollReveal><ElPoderDeLaInformacion /></ScrollReveal>
+            
             <ScrollReveal><TiposDeEstudios /></ScrollReveal>
             <ScrollReveal><DatesSection /></ScrollReveal>
             <ScrollReveal><CompanySection /></ScrollReveal>

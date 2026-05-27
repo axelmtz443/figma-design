@@ -1,105 +1,174 @@
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 
-const questions = [
-  {
-    text: '¿Puede mi proyecto de negocio ser exitoso?',
-    bold: '',
-    image: 'https://images.unsplash.com/photo-1542051841857-5f90071e7989?w=1200&q=80', // Tokyo street
-  },
-  {
-    text: '¿Qué hacen mis competidores para',
-    bold: 'ganar clientes?',
-    image: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=1200&q=80', // Tokyo night
-  },
-  {
-    text: '¿Hacia dónde debería',
-    bold: 'expandir mi negocio?',
-    image: 'https://images.unsplash.com/photo-1513407030348-c983a97b98d8?w=1200&q=80', // City aerial
-  },
-  {
-    text: '¿Qué puedo hacer para',
-    bold: 'incrementar mis ventas?',
-    image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1200&q=80', // City crosswalk
-  },
-  {
-    text: 'Qué características deben tener mis productos o servicios?',
-    bold: 'Tienes que atraer más clientes?',
-    image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=1200&q=80', // Red tones city
-  },
-  {
-    text: 'Qué puedo hacer para mejorar o ?',
-    bold: 'aumentar mis ventas?',
-    image: 'https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=1200&q=80', // City buildings
-  },
-  {
-    text: '¿Cuál es el alcance real de ventas de mi negocio?',
-    bold: 'productos o servicios?',
-    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80', // City street
-  },
-];
+interface QuestionItem {
+  id: number;
+  text: string;
+  boldPart: string;
+  color: string;
+}
 
 export default function ElPoderDeLaInformacion() {
-  return (
-    <section className="w-full py-16 sm:py-24 bg-transparent font-montserrat text-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6">
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
 
-        {/* Header */}
+  // Paleta de colores oficial WeProm
+  const brand = {
+    red: '#c5362e',
+    blue: '#599ddf',
+    green: '#80b67d',
+    yellow: '#e6af41',
+  };
+
+  // Set unificado y corregido de preguntas estratégicas
+  const questions: QuestionItem[] = [
+    { 
+      id: 1, 
+      text: "¿Puede mi proyecto de negocio", 
+      boldPart: "SER EXITOSO?", 
+      color: brand.red,
+    },
+    { 
+      id: 2, 
+      text: "¿Qué hacen mis competidores para", 
+      boldPart: "GANAR CLIENTES?", 
+      color: brand.blue,
+    },
+    { 
+      id: 3, 
+      text: "¿Hacia dónde debería", 
+      boldPart: "EXPANDIR MI NEGOCIO?", 
+      color: brand.green,
+    },
+    { 
+      id: 4, 
+      text: "¿Qué puedo hacer para", 
+      boldPart: "INCREMENTAR MIS VENTAS?", 
+      color: brand.yellow,
+    },
+    { 
+      id: 5, 
+      text: "¿Qué debe tener mi proyecto para", 
+      boldPart: "GENERAR RESULTADOS?", 
+      color: brand.red, 
+    },
+  ];
+
+  return (
+    <section className="w-full py-20 sm:py-28 bg-transparent font-montserrat text-white select-none overflow-hidden">
+      
+      {/* Estilos locales seguros para fuentes y utilidades */}
+      <style dangerouslySetInnerHTML={{__html: `
+        .font-aston { font-family: 'ASTONPOLIZ', 'Anton', sans-serif; }
+      `}} />
+
+      <div className="max-w-5xl mx-auto px-6 sm:px-8">
+
+        {/* Encabezado Principal Premium */}
         <motion.div
-          className="text-center mb-10 sm:mb-14"
-          initial={{ opacity: 0, y: 20 }}
+          className="text-center mb-16 sm:mb-20"
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          <h2 className="font-aston text-3xl sm:text-4xl md:text-5xl mb-3">
+          
+          <h2 className="font-aston text-3xl sm:text-4xl md:text-5xl tracking-wide mb-5 bg-gradient-to-b from-white to-white/80 bg-clip-text text-transparent">
             El Poder de la Información
           </h2>
-          <p className="text-white/50 text-sm sm:text-base">
+          <div className="w-16 h-[2px] bg-white/20 mx-auto mb-5" />
+          <p className="text-white/90 text-base sm:text-xl max-w-xl mx-auto font-medium leading-relaxed">
             A través de la Investigación de Mercados podrás responder estas preguntas:
           </p>
         </motion.div>
 
-        {/* Question strips */}
-        <div className="flex flex-col rounded-2xl overflow-hidden border border-white/10">
+        {/* Contenedor de Franjas Interactivas */}
+        <div className="flex flex-col rounded-2xl overflow-hidden border border-white/10 bg-[#070708]/40 backdrop-blur-md shadow-2xl">
           {questions.map((q, index) => (
             <motion.div
-              key={index}
-              className="relative group overflow-hidden cursor-default"
-              style={{ height: '90px' }}
-              initial={{ opacity: 0, x: -20 }}
+              key={q.id}
+              onMouseEnter={() => setHoveredId(q.id)}
+              onMouseLeave={() => setHoveredId(null)}
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.5, delay: index * 0.07 }}
-              whileHover={{ height: 110 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="relative group cursor-pointer overflow-hidden border-b border-white/[0.06] last:border-b-0 transition-all duration-500 ease-[0.25,1,0.5,1]"
+              style={{
+                height: hoveredId === q.id ? '130px' : '90px',
+              }}
             >
-              {/* Background image */}
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                style={{ backgroundImage: `url(${q.image})` }}
+              {/* Fondo base oscuro profundo */}
+              <div className="absolute inset-0 bg-[#08080a] transition-colors duration-500 group-hover:bg-[#0c0c10]" />
+
+              {/* Relleno Gradual de Color de Marca (Brillo/Glow interno) */}
+              <div 
+                className="absolute inset-0 transition-all duration-700 ease-out pointer-events-none"
+                style={{
+                  background: `linear-gradient(90deg, ${q.color}18 0%, ${q.color}03 70%, transparent 100%)`,
+                  opacity: hoveredId === q.id ? 1 : 0,
+                }}
               />
 
-              {/* Dark overlay — lighter on hover */}
-              <div className="absolute inset-0 bg-black/60 group-hover:bg-black/45 transition-colors duration-500" />
+              {/* Contenido de la Franja */}
+              <div className="relative z-10 h-full flex items-center justify-between px-6 sm:px-12 md:px-16">
+                
+                {/* Estructura del Texto Adaptativa (Flex-row en desktop / Flex-col en mobile) */}
+                <div 
+                  className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 md:gap-4 transition-transform duration-500 ease-out"
+                  style={{
+                    transform: hoveredId === q.id ? 'translateX(12px)' : 'translateX(0px)'
+                  }}
+                >
+                  {/* Texto base de la pregunta */}
+                  <span className={`text-xs sm:text-base md:text-lg font-light tracking-wide transition-colors duration-300 ${hoveredId === q.id ? 'text-white/90' : 'text-white/50'}`}>
+                    {q.text}
+                  </span>
+                  
+                  {/* Texto destacado (Astonpoliz / Negrita) */}
+                  <span 
+                    className="text-sm sm:text-lg md:text-2xl font-aston tracking-widest font-bold leading-relaxec transition-all duration-500"
+                    style={{ 
+                      color: hoveredId === q.id ? '#white' : '#e2e8f0',
+                      textShadow: hoveredId === q.id ? `0 0 20px ${q.color}40` : 'none'
+                    }}
+                  >
+                    {q.boldPart}
+                  </span>
+                </div>
 
-              {/* Separator line */}
-              {index !== 0 && (
-                <div className="absolute top-0 left-0 right-0 h-px bg-white/15" />
-              )}
+                {/* Indicador estético derecho flotante (Opcional premium) */}
+                <div 
+                  className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full border border-white/10 text-white/30 transition-all duration-500"
+                  style={{
+                    borderColor: hoveredId === q.id ? `${q.color}50` : 'rgba(255,255,255,0.1)',
+                    color: hoveredId === q.id ? q.color : 'rgba(255,255,255,0.3)',
+                    transform: hoveredId === q.id ? 'rotate(45deg) scale(1.1)' : 'rotate(0deg)'
+                  }}
+                >
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                </div>
 
-              {/* Text */}
-              <div className="relative z-10 h-full flex flex-col items-center justify-center px-6 text-center">
-                <p className="text-white/90 text-sm sm:text-base md:text-lg leading-snug">
-                  {q.text}
-                </p>
-                {q.bold && (
-                  <p className="text-white font-bold text-sm sm:text-base md:text-lg mt-0.5">
-                    {q.bold}
-                  </p>
-                )}
               </div>
+
+              {/* Barra lateral izquierda de acento de marca */}
+              <div 
+                className="absolute left-0 top-0 bottom-0 w-[4px] z-20 transition-all duration-500 ease-out"
+                style={{ 
+                  backgroundColor: q.color,
+                  boxShadow: hoveredId === q.id ? `4px 0 30px ${q.color}` : 'none',
+                  transform: hoveredId === q.id ? 'scaleY(1)' : 'scaleY(0.4)'
+                }}
+              />
             </motion.div>
           ))}
         </div>
+
+        {/* Branding Footer Sutil */}
+        {/* <div className="mt-14 flex items-center justify-center opacity-15 hover:opacity-30 transition-opacity duration-700">
+           <span className="text-[9px] sm:text-[10px] tracking-[0.6em] text-white uppercase font-medium">
+             WeProm &middot; Market Research Excellence
+           </span>
+        </div> */}
 
       </div>
     </section>
