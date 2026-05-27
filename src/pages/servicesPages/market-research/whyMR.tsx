@@ -66,9 +66,16 @@ export default function WhyMR() {
 
                         <motion.p
                             variants={fadeUp}
-                            className="text-white/80 text-sm sm:text-base leading-relaxed"
+                            className="text-white text-base sm:text-xl leading-relaxed font-bold"
                         >
-                            Invertir en investigación de mercado es la forma más inteligente y precisa de tomar decisiones empresariales, ya sea para un nuevo proyecto o si está considerando un cambio o implementación importante, con investigación de mercados tendrá la confianza y la información necesaria para implementar las estrategias adecuadas y alcanzar sus objetivos.
+                            Decide con datos. No con suposiciones.
+                        </motion.p>
+
+                        <motion.p
+                            variants={fadeUp}
+                            className="text-white text-base sm:text-base leading-relaxed pt-10"
+                        >
+                            Cada decisión de negocio que se toma sin información tiene un costo. La investigación de mercados convierte la incertidumbre en <b>claridad para que actúes con fundamentos y no con corazonadas.</b>
                         </motion.p>
                     </motion.div>
 
@@ -99,7 +106,7 @@ export default function WhyMR() {
                                             <h3 className="font-bold text-xl sm:text-2xl mb-3 text-white">
                                                 {feature.title}
                                             </h3>
-                                            <p className="text-white/50 text-sm leading-relaxed">
+                                            <p className="text-white/70 text-sm leading-relaxed">
                                                 {feature.description}
                                             </p>
                                         </div>
@@ -121,6 +128,16 @@ export default function WhyMR() {
                     </motion.div>
                 </div>
             </div>
+
+            <div className="w-full flex justify-center mt-12 sm:mt-16">
+                    <button className="group relative w-full sm:w-auto px-8 py-4 bg-[#88221d] text-white rounded-full font-bold text-[13px] uppercase tracking-widest overflow-hidden transition-transform duration-300 hover:scale-[1.02] flex justify-center">
+                        <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
+                        <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-[#c5362e] transition-colors duration-300">
+                            Solicitar Cotización                        
+                        </span>
+                    </button>
+            </div>
+
         </section>
     );
 }
