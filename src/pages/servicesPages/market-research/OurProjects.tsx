@@ -1,26 +1,52 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { motion, AnimatePresence, useMotionValue } from 'framer-motion';
+import React, { useState, useEffect, useCallback } from 'react';
 
-// Íconos SVG nativos e impecables para evitar problemas de dependencias externas
-const ChevronLeft = ({ size = 20 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+// Íconos SVG integrados y optimizados para evitar dependencias externas que ralenticen la carga
+const ChevronLeft = ({ size = 24 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="m15 18-6-6 6-6" />
   </svg>
 );
 
-const ChevronRight = ({ size = 20 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-    <path d="m9 18 6-6-6-6" />
+const ChevronRight = ({ size = 24 }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="m9 18 6-6 6-6" />
   </svg>
 );
 
-const ArrowUpRight = ({ size = 15 }: { size?: number }) => (
+const ArrowUpRight = ({ size = 16 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M7 7h10v10" /><path d="M7 17 17 7" />
   </svg>
 );
 
-// Base de datos dinámica con assets nativos en producción
+// Estilos premium cargados directamente en el documento para garantizar uniformidad visual
+const customStyles = `
+  @import url('https://fonts.cdnfonts.com/css/astonpoliz');
+  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+  .font-astonpoliz {
+    font-family: 'Astonpoliz', 'Montserrat', sans-serif;
+    letter-spacing: 0.08em;
+  }
+
+  .font-montserrat {
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  /* Gradiente animado premium para el indicador de paginación activo */
+  @keyframes goldShimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .gold-active-bar {
+    background: linear-gradient(90deg, #e6af41, #fff3d1, #e6af41);
+    background-size: 200% auto;
+    animation: goldShimmer 3s ease infinite;
+  }
+`;
+
 const cases = [
   {
     id: 1,
@@ -85,7 +111,7 @@ const cases = [
   {
     id: 6,
     client: "PRO MÉXICO",
-    objetivos: "Conocer la percepción e imagen del país en mercados estratégicos internacionales, con el fin de diseñar campañas que fortalezcan la marca país \"México\" para la inversión extranjera directa y la exportación de bienes y servicios.",
+    objetivos: "Conocer la percepción e imagen del país en mercados estratégicos internacionales, con el fin de diseñar campaigns que fortalezcan la marca país \"México\" para la inversión extranjera directa y la exportación de bienes y servicios.",
     resultados: [
       "Se detectaron oportunidades de seguridad e innovación para el desarrollo industrial en los diferentes sectores productivos del país.",
       "Se creó \"México significa oportunidad\" para mejorar la percepción y el posicionamiento.",
@@ -144,337 +170,255 @@ const cases = [
   }
 ];
 
-const SWIPE_THRESHOLD = 50;
-
 export default function OurProjects() {
-  const [active, setActive] = useState(0);
-  const [direction, setDirection] = useState(1);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
-  const dragX = useMotionValue(0);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
-  const goTo = useCallback((index: number) => {
-    setDirection(index > active ? 1 : -1);
-    setActive(index);
-  }, [active]);
-
-  const prev = useCallback(() => {
-    setDirection(-1);
-    setActive(a => (a - 1 + cases.length) % cases.length);
+  const nextSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev + 1) % cases.length);
   }, []);
 
-  const next = useCallback(() => {
-    setDirection(1);
-    setActive(a => (a + 1) % cases.length);
+  const prevSlide = useCallback(() => {
+    setCurrentIndex((prev) => (prev - 1 + cases.length) % cases.length);
   }, []);
 
-  // Autoplay inteligente (se pausa si el usuario pasa el mouse por encima)
+  // Autoplay fluido e inteligente que se pausa con hover
   useEffect(() => {
     if (isHovered) return;
     const timer = setInterval(() => {
-      next();
+      nextSlide();
     }, 5000);
     return () => clearInterval(timer);
-  }, [isHovered, next]);
+  }, [isHovered, nextSlide]);
 
+  // Soporte de navegación por teclado
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
+    const handleKeyDown = (e) => {
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
     };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [prev, next]);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [nextSlide, prevSlide]);
 
-  const prevIndex = (active - 1 + cases.length) % cases.length;
-  const nextIndex = (active + 1) % cases.length;
-
-  const cardVariants = {
-    enter: (dir: number) => ({ x: dir > 0 ? '100%' : '-100%', opacity: 0, scale: 0.96 }),
-    center: { x: 0, opacity: 1, scale: 1 },
-    exit: (dir: number) => ({ x: dir > 0 ? '-100%' : '100%', opacity: 0, scale: 0.96 }),
+  // Gestos táctiles ultrarrápidos para dispositivos móviles, evitando conflictos de scroll vertical
+  const handleTouchStart = (e) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
   };
 
-  const handleDragEnd = (_: any, info: { offset: { x: number } }) => {
-    if (info.offset.x < -SWIPE_THRESHOLD) next();
-    else if (info.offset.x > SWIPE_THRESHOLD) prev();
+  const handleTouchMove = (e) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > 50;
+    const isRightSwipe = distance < -50;
+    if (isLeftSwipe) nextSlide();
+    if (isRightSwipe) prevSlide();
   };
 
   return (
     <section 
-      className="w-full bg-transparent py-16 sm:py-20 px-4 sm:px-6 md:px-12 font-sans relative overflow-hidden z-10 antialiased select-none"
+      className="w-full bg-transparent py-16 sm:py-20 px-4 sm:px-6 md:px-12 font-montserrat relative overflow-hidden z-10 antialiased select-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
-      <style dangerouslySetInnerHTML={{ __html: `
-        @import url('https://fonts.cdnfonts.com/css/astonpoliz');
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+      <style dangerouslySetInnerHTML={{ __html: customStyles }} />
 
-        .font-aston { font-family: 'ASTONPOLIZ', 'Astonpoliz', 'Anton', sans-serif; letter-spacing: 0.05em; }
-        .font-montserrat { font-family: 'Montserrat', sans-serif; }
+      <div className="max-w-7xl mx-auto flex flex-col items-center">
         
-        @keyframes shimmer {
-          0% { background-position: -200% center; }
-          100% { background-position: 200% center; }
-        }
-        .dot-active {
-          background: linear-gradient(90deg, #e6af41, #f0c060, #e6af41);
-          background-size: 200% auto;
-          animation: shimmer 2s linear infinite;
-        }
-        .preview-card {
-          transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-          opacity: 0.25;
-          filter: brightness(0.5) blur(1px);
-        }
-        .preview-card:hover {
-          opacity: 0.5;
-          transform: scale(1.02);
-          filter: brightness(0.8) blur(0px);
-        }
-        
-        /* Custom scrollbar para los paneles de cristal internos en móviles si es requerido */
-        .custom-scroll::-webkit-scrollbar { width: 4px; }
-        .custom-scroll::-webkit-scrollbar-track { background: transparent; }
-        .custom-scroll::-webkit-scrollbar-thumb { background: rgba(230, 175, 65, 0.3); border-radius: 10px; }
-      ` }} />
-
-      <div className="max-w-7xl mx-auto">
-
         {/* Título Principal */}
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center mb-10 sm:mb-14"
-        >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-normal tracking-wide text-white font-aston leading-tight">
-            Conoce algunos de nuestros proyectos
-          </h2>
-        </motion.div>
+        <h2 className="font-astonpoliz text-3xl sm:text-4xl md:text-5xl font-bold mb-10 md:mb-16 text-center text-white tracking-wide uppercase leading-tight">
+          Conoce algunos de nuestros proyectos
+        </h2>
 
-        {/* Estructura del Carrusel Flotante */}
-        <motion.div
-          initial={{ opacity: 0, y: 32 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-          className="relative flex items-center justify-center gap-4 lg:gap-6"
-        >
+        {/* Contenedor del Carrusel 3D Coverflow Premium */}
+        <div className="relative w-full h-[540px] sm:h-[480px] md:h-[500px] lg:h-[520px] flex items-center justify-center group">
+          
+          {cases.map((item, index) => {
+            const isActive = index === currentIndex;
+            const isPrev = index === (currentIndex - 1 + cases.length) % cases.length;
+            const isNext = index === (currentIndex + 1) % cases.length;
 
-          {/* Preview Track Izquierda — Desktop */}
-          <div
-            className="preview-card hidden lg:block w-[200px] xl:w-[240px] h-[520px] xl:h-[560px] flex-shrink-0 cursor-pointer rounded-2xl overflow-hidden border border-zinc-900 bg-zinc-950"
-            onClick={prev}
-          >
-            <img
-              src={cases[prevIndex].image}
-              alt={cases[prevIndex].client}
-              className="w-full h-full object-cover select-none pointer-events-none"
-              draggable={false}
-            />
-          </div>
-
-          {/* Caja Central Nativa de Alto Impacto */}
-          {/* Definimos alturas responsivas estrictas para evitar saltos bruscos de Layout */}
-          <div className="relative flex-1 w-full max-w-[840px] h-[580px] sm:h-[520px] md:h-[540px] lg:h-[520px] xl:h-[560px] rounded-2xl overflow-hidden border border-zinc-800 bg-zinc-950 shadow-2xl">
+            // Clases de profundidad 3D y transiciones sin parpadeos molestos de entrada/salida
+            let positionStyle = "opacity-0 scale-75 pointer-events-none absolute z-0";
             
-            <AnimatePresence custom={direction} mode="wait">
-              <motion.div
-                key={cases[active].id}
-                custom={direction}
-                variants={cardVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
-                drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                dragElastic={0.15}
-                onDragEnd={handleDragEnd}
-                style={{ x: dragX, position: 'absolute', inset: 0, cursor: 'grab' }}
-                whileDrag={{ cursor: 'grabbing', scale: 0.99 }}
-                className="w-full h-full relative overflow-hidden"
+            if (isActive) {
+              positionStyle = "opacity-100 scale-100 z-30 translate-x-0 relative cursor-default";
+            } else if (isPrev) {
+              positionStyle = "opacity-35 scale-90 -translate-x-[40%] sm:-translate-x-[50%] lg:-translate-x-[60%] xl:-translate-x-[55%] z-20 absolute cursor-pointer blur-[1px] hidden sm:block";
+            } else if (isNext) {
+              positionStyle = "opacity-35 scale-90 translate-x-[40%] sm:translate-x-[50%] lg:translate-x-[60%] xl:translate-x-[55%] z-20 absolute cursor-pointer blur-[1px] hidden sm:block";
+            }
+
+            return (
+              <div 
+                key={item.id}
+                className={`transition-all duration-700 ease-out w-full max-w-4xl h-full flex-shrink-0 rounded-2xl ${positionStyle}`}
+                onClick={() => {
+                  if (isNext) nextSlide();
+                  if (isPrev) prevSlide();
+                }}
               >
-                {/* Imagen de fondo nativa del caso */}
-                <img
-                  src={cases[active].image}
-                  alt={cases[active].client}
-                  className="w-full h-full object-cover brightness-[0.75] scale-105 transition-transform duration-700 select-none pointer-events-none"
-                  draggable={false}
-                />
-                
-                {/* Gradiente cinemático de oclusión */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/10" />
-
-                {/* Contenedor Flotante UI Glassmorphism */}
-                <div className="absolute bottom-4 left-4 right-4 sm:bottom-6 sm:left-6 sm:right-6 bg-black/40 backdrop-blur-xl border border-white/10 rounded-xl p-4 sm:p-5 md:p-6 flex flex-col gap-3 sm:gap-4 shadow-2xl max-h-[85%] overflow-y-auto custom-scroll">
+                <div className="w-full h-full relative rounded-2xl overflow-hidden border border-zinc-800/80 bg-zinc-950 shadow-[0_0_50px_rgba(0,0,0,0.85)]">
                   
-                  {/* Fila Superior: Logo & Identificador | Objetivos */}
-                  <div className="flex flex-col md:flex-row gap-4 md:gap-6">
-                    
-                    {/* Columna Izquierda: Identidad de Marca */}
-                    <div className="w-full md:w-1/3 flex flex-col justify-center items-start">
-                      <div className="h-12 sm:h-14 w-full max-w-[160px] flex items-center mb-2.5">
-                        <img 
-                          src={cases[active].logo} 
-                          alt={`Logo ${cases[active].client}`} 
-                          className="max-h-full max-w-full object-contain object-left pointer-events-none select-none"
-                        />
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-[2px] bg-[#e6af41]"></div>
-                        <span className="text-[#e6af41] font-semibold tracking-widest text-[11px] sm:text-xs uppercase font-montserrat">
-                          {cases[active].client}
-                        </span>
+                  {/* Imagen de Fondo del Caso */}
+                  <img 
+                    src={item.image} 
+                    alt={item.client}
+                    className={`w-full h-full object-cover transition-transform duration-1000 ease-out select-none pointer-events-none ${
+                      isActive ? 'scale-100 brightness-[0.35] blur-0' : 'scale-105 brightness-50 blur-[2px]'
+                    }`}
+                    draggable={false}
+                  />
+                  
+                  {/* Gradiente de Integración para excelente contraste del texto */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+
+                  {/* Contenido Textual Superior e Inferior (Solo visible si está activo) */}
+                  {isActive && (
+                    <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-6 md:p-8 animate-fade-in">
+                      
+                      {/* Panel Glassmorphic Premium con bordes estilizados */}
+                      <div className="w-full bg-black/45 backdrop-blur-xl border border-white/10 rounded-2xl p-5 sm:p-6 flex flex-col gap-5 shadow-2xl max-h-[85%] overflow-y-auto no-scrollbar">
+                        
+                        {/* Fila Superior: Identidad y Objetivos */}
+                        <div className="grid grid-cols-1 md:grid-cols-12 gap-5 md:gap-8 items-center">
+                          
+                          {/* Columna Izquierda: Logo de Marca */}
+                          <div className="md:col-span-4 flex flex-col justify-center items-start">
+                            <div className="h-12 sm:h-14 w-full max-w-[160px] flex items-center mb-3">
+                              <img 
+                                src={item.logo} 
+                                alt={`Logo ${item.client}`} 
+                                className="max-h-full max-w-full object-contain object-left pointer-events-none select-none"
+                                draggable={false}
+                              />
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <div className="w-6 h-[2px] bg-[#e6af41]"></div>
+                              <span className="text-[#e6af41] font-bold tracking-widest text-xs uppercase font-montserrat">
+                                {item.client}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Columna Derecha: Objetivos con Divisor */}
+                          <div className="md:col-span-8 md:border-l border-white/10 md:pl-6">
+                            <h4 className="text-[#e6af41] font-astonpoliz text-sm sm:text-base mb-1.5 uppercase tracking-wider font-semibold">
+                              Objetivos
+                            </h4>
+                            <p className="text-zinc-300 font-light text-xs sm:text-[13px] leading-relaxed font-montserrat">
+                              {item.objetivos}
+                            </p>
+                          </div>
+
+                        </div>
+
+                        {/* Separador Horizontal */}
+                        <div className="w-full h-px bg-white/10"></div>
+
+                        {/* Fila Inferior: Resultados de Negocio */}
+                        <div className="w-full">
+                          <h4 className="text-[#e6af41] font-astonpoliz text-sm sm:text-base mb-2.5 uppercase tracking-wider font-semibold">
+                            Resultados Obtenidos
+                          </h4>
+                          
+                          <ul className="text-zinc-300 font-light text-xs sm:text-[13px] leading-relaxed space-y-2 font-montserrat pl-1">
+                            {item.resultados.map((res, i) => (
+                              <li key={i} className="flex items-start gap-3">
+                                <span className="text-[#e6af41] text-xs mt-1 select-none">•</span>
+                                <span className="flex-1 text-zinc-300">{res}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
                       </div>
                     </div>
-
-                    {/* Columna Derecha: Objetivos del Proyecto */}
-                    <div className="w-full md:w-2/3 md:border-l border-white/10 md:pl-6 flex flex-col justify-center">
-                      <h4 className="text-[#e6af41] font-aston text-sm sm:text-base mb-1 uppercase tracking-wider font-semibold">
-                        Objetivos
-                      </h4>
-                      <p className="text-zinc-300 font-light text-xs sm:text-[13px] leading-relaxed font-montserrat">
-                        {cases[active].objetivos}
-                      </p>
-                    </div>
-
-                  </div>
-
-                  {/* Divisor Estilizado */}
-                  <div className="w-full h-px bg-white/10" />
-
-                  {/* Fila Inferior: Resultados de Negocio */}
-                  <div className="w-full">
-                    <h4 className="text-[#e6af41] font-aston text-sm sm:text-base mb-2 uppercase tracking-wider font-semibold">
-                      Resultados
-                    </h4>
-                    
-                    <ul className="text-zinc-300 font-light text-xs sm:text-[13px] leading-relaxed space-y-1.5 font-montserrat pl-1">
-                      {cases[active].resultados.map((res, i) => (
-                        <li key={i} className="flex items-start gap-2.5">
-                          <span className="text-[#e6af41] text-xs mt-0.5 select-none">•</span>
-                          <span className="flex-1">{res}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
+                  )}
                 </div>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Controles de Navegación Fluidos para Mobile/Tablet */}
-            <button
-              onClick={prev}
-              className="md:hidden absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-black/60 backdrop-blur-md border border-white/15 rounded-full flex items-center justify-center text-white active:bg-[#e6af41] active:text-black transition-colors duration-200"
-            >
-              <ChevronLeft size={16} />
-            </button>
-            <button
-              onClick={next}
-              className="md:hidden absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 bg-black/60 backdrop-blur-md border border-white/15 rounded-full flex items-center justify-center text-white active:bg-[#e6af41] active:text-black transition-colors duration-200"
-            >
-              <ChevronRight size={16} />
-            </button>
-          </div>
-
-          {/* Preview Track Derecha — Desktop */}
-          <div
-            className="preview-card hidden lg:block w-[200px] xl:w-[240px] h-[520px] xl:h-[560px] flex-shrink-0 cursor-pointer rounded-2xl overflow-hidden border border-zinc-900 bg-zinc-950"
-            onClick={next}
-          >
-            <img
-              src={cases[nextIndex].image}
-              alt={cases[nextIndex].client}
-              className="w-full h-full object-cover select-none pointer-events-none"
-              draggable={false}
-            />
-          </div>
+              </div>
+            );
+          })}
 
           {/* Botones de Navegación Flotantes - Desktop */}
-          <motion.button
-            onClick={prev}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.94 }}
-            className="hidden md:flex absolute left-4 lg:left-2 xl:-left-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-[#09090b]/80 backdrop-blur-md border border-zinc-800 rounded-full items-center justify-center text-white hover:border-[#e6af41]/50 hover:bg-zinc-900 transition-all duration-300 shadow-xl"
+          <button 
+            onClick={prevSlide}
+            className="absolute left-4 lg:-left-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#e6af41] hover:border-[#e6af41] hover:text-black hover:scale-110 shadow-xl hidden md:flex"
           >
-            <ChevronLeft size={20} />
-          </motion.button>
+            <ChevronLeft size={22} />
+          </button>
           
-          <motion.button
-            onClick={next}
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.94 }}
-            className="hidden md:flex absolute right-4 lg:right-2 xl:-right-6 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-[#09090b]/80 backdrop-blur-md border border-zinc-800 rounded-full items-center justify-center text-white hover:border-[#e6af41]/50 hover:bg-zinc-900 transition-all duration-300 shadow-xl"
+          <button 
+            onClick={nextSlide}
+            className="absolute right-4 lg:-right-6 top-1/2 -translate-y-1/2 z-40 w-12 h-12 rounded-full bg-black/60 border border-white/20 flex items-center justify-center text-white backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-[#e6af41] hover:border-[#e6af41] hover:text-black hover:scale-110 shadow-xl hidden md:flex"
           >
-            <ChevronRight size={20} />
-          </motion.button>
-        </motion.div>
+            <ChevronRight size={22} />
+          </button>
 
-        {/* Indicadores Dinámicos (Paginación) */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-          className="flex justify-center items-center gap-1.5 mt-8 sm:mt-10 flex-wrap max-w-md mx-auto px-4"
-        >
-          {cases.map((_, i) => (
+          {/* Controles de Navegación para Pantallas Táctiles (Mobile) */}
+          <button
+            onClick={prevSlide}
+            className="md:hidden absolute left-3 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-black/70 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white active:bg-[#e6af41] active:text-black transition-colors duration-200"
+          >
+            <ChevronLeft size={18} />
+          </button>
+          <button
+            onClick={nextSlide}
+            className="md:hidden absolute right-3 top-1/2 -translate-y-1/2 z-40 w-10 h-10 bg-black/70 backdrop-blur-md border border-white/10 rounded-full flex items-center justify-center text-white active:bg-[#e6af41] active:text-black transition-colors duration-200"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
+
+        {/* Indicadores Dinámicos (Paginación) con Shimmer Dorado */}
+        <div className="flex justify-center items-center gap-2 mt-12 sm:mt-16 flex-wrap max-w-md mx-auto px-4 z-45">
+          {cases.map((_, idx) => (
             <button
-              key={i}
-              onClick={() => goTo(i)}
-              className={`h-2 rounded-full transition-all duration-500 ease-[0.16, 1, 0.3, 1] ${
-                i === active ? 'w-7 dot-active opacity-100' : 'w-2 bg-white/20 hover:bg-white/40 opacity-60'
+              key={idx}
+              onClick={() => setCurrentIndex(idx)}
+              className={`transition-all duration-500 rounded-full ${
+                idx === currentIndex 
+                  ? 'w-10 h-2 gold-active-bar opacity-100' 
+                  : 'w-2 h-2 bg-white/20 hover:bg-white/50 opacity-60'
               }`}
-              style={{ minWidth: i === active ? '28px' : '8px' }}
             />
           ))}
-        </motion.div>
+        </div>
 
-        {/* Contador Estilizado */}
-        <motion.div
-          key={active}
-          initial={{ opacity: 0, y: 4 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.3 }}
-          className="text-center mt-3.5"
-        >
-          <span className="text-[11px] text-zinc-500 font-montserrat tracking-[0.2em] font-medium">
-            {String(active + 1).padStart(2, '0')} / {String(cases.length).padStart(2, '0')}
+        {/* Contador Numérico Minimalista */}
+        <div className="text-center mt-4">
+          <span className="text-[11px] text-zinc-500 font-montserrat tracking-[0.25em] font-semibold">
+            {String(currentIndex + 1).padStart(2, '0')} / {String(cases.length).padStart(2, '0')}
           </span>
-        </motion.div>
+        </div>
 
-        {/* Botón Call To Action (CTA) */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="flex justify-center mt-10 sm:mt-12"
-        >
-          <motion.a
-            href="https://xeryusinvest.com/portafolio"
-            target="_blank"
+        {/* Botón CTA - Ver Portafolio con Identidad Corporativa */}
+        <div className="mt-14 flex justify-center z-40">
+          <a 
+            href="https://xeryusinvest.com/portafolio" 
+            target="_blank" 
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.03 }}
-            whileTap={{ scale: 0.97 }}
-            className="group relative px-9 sm:px-11 py-3.5 sm:py-4 bg-transparent border-2 border-white/60 text-white rounded-full font-bold text-[11px] sm:text-xs uppercase tracking-[0.15em] overflow-hidden hover:border-white font-montserrat flex items-center justify-center"
+            className="group relative px-10 py-4 bg-transparent border-2 border-[#e6af41] text-[#e6af41] font-bold tracking-[0.18em] uppercase text-xs rounded-full overflow-hidden transition-all duration-300"
           >
-            <span className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out rounded-full" />
+            <span className="absolute inset-0 bg-[#e6af41] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out rounded-full" />
             <span className="relative z-10 flex items-center gap-2 group-hover:text-black transition-colors duration-300">
-              Ver Portafolio
-              <motion.span
-                className="inline-flex"
-                animate={{ x: [0, 2, 0], y: [0, -2, 0] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <ArrowUpRight size={14} />
-              </motion.span>
+              Ver portafolio
+              <span className="inline-flex transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300">
+                <ArrowUpRight size={15} />
+              </span>
             </span>
-          </motion.a>
-        </motion.div>
+          </a>
+        </div>
 
       </div>
     </section>
