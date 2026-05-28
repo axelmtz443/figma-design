@@ -16,9 +16,11 @@ import ResearchTools from './ResearchTools';
 import TiposDeEstudios from './Studies';
 import DatesSection from './4dates';
 import CompanySection from '../../../components/Home/CompanySection';
-import MercedesBenz from './mercedesBenz';
 import OurClients from './OurClients';
 import CaseStudiesMR from './mercedes';
+import BlogSection from '../../../components/Home/BlogSection';
+import ProjectsCarousel from './OurProjects';
+import OurProcess from './OurProcess';
 
 
 function ScrollReveal({ children }: { children: React.ReactNode }) {
@@ -60,13 +62,10 @@ export default function MarketResearch() {
 
             <ScrollReveal><OurEdge /></ScrollReveal>
             <ScrollReveal><ResearchTools /></ScrollReveal>
-            <ScrollReveal><ExperienciaMR /></ScrollReveal>
+            <ScrollReveal><ProjectsCarousel /></ScrollReveal>
+            <ScrollReveal><OurProcess /></ScrollReveal>
+            <ScrollReveal><BlogSection /></ScrollReveal>
             <ScrollReveal><TestimonialMR /></ScrollReveal>
-            <ScrollReveal><OurClients /></ScrollReveal>
-            <ScrollReveal><TiposDeEstudios /></ScrollReveal>
-            <ScrollReveal><DatesSection /></ScrollReveal>
-            <ScrollReveal><CompanySection /></ScrollReveal>
-            <ScrollReveal><CaseStudiesMR /></ScrollReveal>
             <ScrollReveal><ContactoMR /></ScrollReveal>
             <Footer />
         </div>
