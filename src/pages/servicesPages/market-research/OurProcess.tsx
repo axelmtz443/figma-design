@@ -6,40 +6,40 @@ const steps = [
     id: 1,
     title: 'Definición de objetivos',
     desc: 'Definimos juntos tus metas, analizamos el mercado y establecemos los plazos ideales para el éxito de tu proyecto.',
-    color: '#c5362e',
-    colorAlpha: 'rgba(197, 54, 46, 0.12)',
+    color: '#c5362e', // Rojo
+    colorAlpha: 'rgba(197, 54, 46, 0.08)',
     icon: Target,
   },
   {
     id: 2,
     title: 'Diseño metodológico',
     desc: 'Seleccionamos la estrategia perfecta, definimos el alcance y las herramientas de recolección necesarias.',
-    color: '#599ddf',
-    colorAlpha: 'rgba(89, 157, 223, 0.12)',
+    color: '#599ddf', // Azul
+    colorAlpha: 'rgba(89, 157, 223, 0.08)',
     icon: ClipboardList,
   },
   {
     id: 3,
     title: 'Presentación de propuesta',
     desc: 'Recibes un documento detallado con la solución, tiempos de ejecución y presupuesto ajustado a tu medida.',
-    color: '#80b67d',
-    colorAlpha: 'rgba(128, 182, 125, 0.12)',
+    color: '#80b67d', // Verde
+    colorAlpha: 'rgba(128, 182, 125, 0.08)',
     icon: CheckCircle2,
   },
   {
     id: 4,
     title: 'Desarrollo del proyecto',
     desc: 'Ejecutamos el plan de acción con rigor técnico, supervisión constante y control de calidad.',
-    color: '#e6af41',
-    colorAlpha: 'rgba(230, 175, 65, 0.12)',
+    color: '#e6af41', // Dorado / Amarillo
+    colorAlpha: 'rgba(230, 175, 65, 0.08)',
     icon: Code,
   },
   {
     id: 5,
     title: 'Entrega y acompañamiento',
     desc: 'Entregamos los resultados con insights clave y te acompañamos en la implementación de las recomendaciones.',
-    color: '#a855f7',
-    colorAlpha: 'rgba(168, 85, 247, 0.12)',
+    color: '#a855f7', // Morado
+    colorAlpha: 'rgba(168, 85, 247, 0.08)',
     icon: Award,
   },
 ];
@@ -49,17 +49,23 @@ export default function OurProcess() {
   const [autoplay, setAutoplay] = useState(true);
   const [animating, setAnimating] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
 
-  const activeData = steps.find(s => s.id === activeStep)!;
+  const activeData = steps.find((s) => s.id === activeStep) || steps[0];
   const ActiveIcon = activeData.icon;
 
   useEffect(() => {
     if (!autoplay) return;
     timerRef.current = setInterval(() => {
-      setActiveStep(prev => (prev === 5 ? 1 : prev + 1));
-    }, 4000);
-    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+      setAnimating(true);
+      setTimeout(() => {
+        setActiveStep((prev) => (prev === 5 ? 1 : prev + 1));
+        setAnimating(false);
+      }, 250);
+    }, 5000);
+
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
   }, [autoplay]);
 
   const handleStepClick = (stepId: number) => {
@@ -70,113 +76,80 @@ export default function OurProcess() {
     setTimeout(() => {
       setActiveStep(stepId);
       setAnimating(false);
-    }, 220);
+    }, 200);
   };
 
   return (
-    <section className="w-full bg-transparent py-20 px-4 sm:px-6 md:px-12 font-sans relative overflow-hidden z-10 antialiased">
-      <style dangerouslySetInnerHTML={{ __html: `
-        .font-aston { font-family: 'ASTONPOLIZ', 'Anton', sans-serif; }
-        .font-montserrat { font-family: 'Montserrat', sans-serif; }
-
-        .process-glow {
-          transition: background 1s ease, box-shadow 1s ease;
-        }
-
-        .step-card {
-          transition: opacity 0.22s ease, transform 0.22s ease;
-        }
-        .step-card.out {
-          opacity: 0;
-          transform: translateY(12px) scale(0.98);
-        }
-        .step-card.in {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-        }
-
-        .progress-bar {
-          transition: width 4s linear;
-        }
-
-        @keyframes pulse-dot {
-          0%, 100% { box-shadow: 0 0 0 0 currentColor; }
-          50% { box-shadow: 0 0 0 5px transparent; }
-        }
-
-        .timeline-dot-active {
-          animation: pulse-dot 2s ease-in-out infinite;
-        }
-
-        .step-row {
-          transition: color 0.3s ease;
-        }
-      ` }} />
-
-      {/* Glow de fondo que sigue el step activo */}
+    <section 
+      className="w-full bg-transparent py-24 px-6 sm:px-12 relative overflow-hidden z-10 antialiased select-none border-t border-zinc-900"
+      style={{ fontFamily: "'Montserrat', sans-serif" }}
+    >
+      {/* Resplandor cinético ambiental trasero (Alineado con el color del paso actual de image_e46c65.png) */}
+      {/* Resplandor cinético ambiental premium centrado en el fondo */}
       <div
-        className="process-glow absolute inset-0 pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] sm:w-[800px] h-[400px] sm:h-[500px] rounded-full pointer-events-none blur-[120px] sm:blur-[160px] opacity-25 transition-all duration-1000 ease-out z-0"
         style={{
-          background: `radial-gradient(ellipse 55% 45% at 75% 50%, ${activeData.colorAlpha} 0%, transparent 70%)`,
+          background: `radial-gradient(circle, ${activeData.color} 0%, transparent 65%)`,
         }}
       />
 
-      <div className="max-w-7xl mx-auto relative z-10">
+      <div className="max-w-6xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        {/* ── COLUMNA IZQUIERDA: Textos y Timeline (7 Columnas) ── */}
+        <div className="lg:col-span-7 flex flex-col space-y-12">
+          
+          {/* Títulos Principales de Alta Gama */}
+          <div>
+            <p className="text-[#e6af41] font-semibold tracking-[0.25em] text-xs sm:text-sm mb-3 uppercase">
+              Nuestro proceso de trabajo
+            </p>
+            <h2 
+              className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-wider text-white leading-[1.15]"
+              style={{ fontFamily: "'Astonpoliz', sans-serif" }}
+            >
+              Proyectos <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-zinc-500">
+                a la medida
+              </span>
+            </h2>
+          </div>
 
-        {/* Título */}
-        <div className="text-center mb-14">
-          <p className="text-[#e6af41] font-semibold tracking-[0.2em] text-xs sm:text-sm mb-3 uppercase font-montserrat">
-            Nuestro proceso de trabajo
-          </p>
-          <h2 className="text-4xl md:text-5xl font-normal tracking-wide text-white font-aston">
-            Proyectos a la medida
-          </h2>
-        </div>
-
-        {/* Grid principal */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 xl:gap-16 items-center">
-
-          {/* ── Columna izquierda: Timeline ── */}
+          {/* Timeline de Pasos */}
           <div className="relative pl-8">
-            {/* Línea vertical */}
-            <div className="absolute left-[15px] top-2 bottom-2 w-[2px] bg-gray-800 rounded-full" />
+            {/* Guía/Eje Vertical */}
+            <div className="absolute left-[11px] top-3 bottom-3 w-[2px] bg-zinc-800/80 rounded-full" />
 
-            <div className="flex flex-col space-y-7">
-              {steps.map(step => {
+            <div className="flex flex-col space-y-8">
+              {steps.map((step) => {
                 const isActive = activeStep === step.id;
-                const StepIcon = step.icon;
                 return (
                   <div
                     key={step.id}
                     onClick={() => handleStepClick(step.id)}
-                    className="step-row relative cursor-pointer group flex items-center gap-5"
+                    className="relative cursor-pointer group flex items-center py-1 will-change-transform"
                   >
-                    {/* Dot */}
-                    <div className="absolute -left-8 w-8 h-8 flex items-center justify-center z-10">
+                    {/* Contenedor del Nodo de la Línea de Tiempo */}
+                    <div className="absolute -left-[29px] w-6 h-6 rounded-full flex items-center justify-center bg-black z-20">
                       <div
-                        className={`w-3 h-3 rounded-full transition-all duration-500 ${isActive ? 'timeline-dot-active' : ''}`}
+                        className={`rounded-full transition-all duration-500 ${
+                          isActive ? 'scale-125' : 'scale-100'
+                        }`}
                         style={{
+                          width: isActive ? '12px' : '8px',
+                          height: isActive ? '12px' : '8px',
                           backgroundColor: isActive ? step.color : '#3f3f46',
-                          boxShadow: isActive ? `0 0 0 4px ${step.color}30` : 'none',
-                          transform: isActive ? 'scale(1.5)' : 'scale(1)',
+                          boxShadow: isActive ? `0 0 14px 4px ${step.color}60` : 'none',
                         }}
                       />
                     </div>
 
-                    {/* Ícono + Texto */}
-                    <div className="flex items-center gap-3 ml-2">
-                      <div
-                        className="p-2 rounded-xl flex-shrink-0 transition-all duration-300"
-                        style={{
-                          backgroundColor: isActive ? `${step.color}18` : 'transparent',
-                          color: isActive ? step.color : '#52525b',
-                        }}
-                      >
-                        <StepIcon size={18} strokeWidth={isActive ? 2 : 1.5} />
-                      </div>
+                    {/* Texto del Paso */}
+                    <div className="ml-6">
                       <h3
-                        className="text-lg sm:text-xl font-bold transition-all duration-300 font-aston"
-                        style={{ color: isActive ? '#ffffff' : '#52525b' }}
+                        className={`text-xl font-bold transition-all duration-300 tracking-wide ${
+                          isActive ? 'text-white translate-x-1' : 'text-zinc-600 group-hover:text-zinc-400'
+                        }`}
+                        style={{ fontFamily: "'Astonpoliz', sans-serif" }}
                       >
                         {step.title}
                       </h3>
@@ -186,96 +159,79 @@ export default function OurProcess() {
               })}
             </div>
           </div>
+        </div>
 
-          {/* ── Columna derecha: Card de detalle ── */}
-          <div className="flex items-center justify-center lg:justify-end">
+        {/* ── COLUMNA DERECHA: Glass Card de Detalle (5 Columnas) ── */}
+        <div className="lg:col-span-5 flex items-center justify-center lg:justify-end w-full">
+
+          
+          <div
+            className="w-full max-w-md aspect-square bg-[#121214]/40 backdrop-blur-xl border rounded-3xl p-8 sm:p-10 flex flex-col justify-between relative overflow-hidden transition-all duration-700 [box-shadow:none] group will-change-transform"
+            style={{
+              borderColor: `${activeData.color}25`,
+              boxShadow: `0 30px 60px -25px ${activeData.color}20`,
+            }}
+          >
+            {/* Ícono Sutil de Fondo (Efecto Marca de Agua en Esquina Superior Derecha de image_e46c65.png) */}
             <div
-              className="w-full max-w-md relative"
+              className="absolute top-0 right-0 p-6 transition-all duration-700 transform group-hover:scale-105 group-hover:rotate-6 pointer-events-none"
+              style={{ color: activeData.color, opacity: 0.15 }}
             >
-              {/* Card */}
-              <div
-                className="bg-[#0d0d0d]/80 backdrop-blur-md border rounded-3xl p-8 sm:p-10 min-h-[320px] sm:min-h-[360px] flex flex-col justify-between relative overflow-hidden transition-all duration-700"
-                style={{
-                  borderColor: `${activeData.color}35`,
-                  boxShadow: `0 24px 50px -20px ${activeData.color}25`,
-                }}
-              >
-                {/* Ícono decorativo de fondo */}
-                <div
-                  className="absolute top-0 right-0 p-6 transition-all duration-700"
-                  style={{ opacity: 0.12 }}
+              <ActiveIcon size={120} strokeWidth={1} />
+            </div>
+
+            {/* Contenedor con Opacidad Controlada para Transiciones Cinéticas */}
+            <div
+              className={`flex flex-col h-full justify-between transition-all duration-300 ${
+                animating ? 'opacity-0 translate-y-3' : 'opacity-100 translate-y-0'
+              }`}
+            >
+              {/* Número de Paso en la Parte Superior */}
+              <div className="flex items-start">
+                <span 
+                  className="text-6xl font-bold leading-none select-none tracking-tighter"
+                  style={{ color: '#ffffff', opacity: 0.95, fontFamily: "'Astonpoliz', sans-serif" }}
                 >
-                  <ActiveIcon size={130} color={activeData.color} strokeWidth={0.8} />
-                </div>
-
-                {/* Progress bar superior */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gray-800 rounded-t-3xl overflow-hidden">
-                  {autoplay && (
-                    <div
-                      key={activeStep}
-                      className="h-full rounded-full"
-                      style={{
-                        backgroundColor: activeData.color,
-                        animation: 'progress-fill 4s linear forwards',
-                      }}
-                    />
-                  )}
-                </div>
-                <style dangerouslySetInnerHTML={{ __html: `
-                  @keyframes progress-fill {
-                    from { width: 0%; }
-                    to { width: 100%; }
-                  }
-                ` }} />
-
-                {/* Contenido animado */}
-                <div className={`step-card relative z-10 flex flex-col h-full gap-6 ${animating ? 'out' : 'in'}`}>
-                  {/* Número */}
-                  <span
-                    className="font-aston text-6xl sm:text-7xl leading-none"
-                    style={{ color: activeData.color, opacity: 0.9 }}
-                  >
-                    0{activeData.id}
-                  </span>
-
-                  {/* Texto */}
-                  <div className="flex flex-col gap-3">
-                    <h4 className="text-2xl sm:text-3xl font-bold text-white font-aston leading-tight">
-                      {activeData.title}
-                    </h4>
-                    <p className="text-gray-400 text-sm sm:text-base leading-relaxed font-light font-montserrat">
-                      {activeData.desc}
-                    </p>
-                  </div>
-
-                  {/* Decorative line */}
-                  <div
-                    className="w-10 h-[2px] rounded-full mt-auto transition-all duration-500"
-                    style={{ backgroundColor: activeData.color }}
-                  />
-                </div>
+                  0{activeData.id}
+                </span>
               </div>
 
-              {/* Dots de navegación bajo la card */}
-              <div className="flex justify-center gap-2 mt-5">
-                {steps.map((s, i) => (
-                  <button
-                    key={i}
-                    onClick={() => handleStepClick(s.id)}
-                    className="rounded-full transition-all duration-300"
-                    style={{
-                      width: s.id === activeStep ? 24 : 8,
-                      height: 8,
-                      backgroundColor: s.id === activeStep ? activeData.color : 'rgba(255,255,255,0.2)',
-                    }}
-                  />
-                ))}
+              {/* Título y Descripción del Bloque Informativo */}
+              <div className="mt-auto">
+                <h4 className="text-2xl sm:text-3xl font-bold text-white mb-4 tracking-wide">
+                  {activeData.title}
+                </h4>
+                <p className="text-zinc-400 text-base sm:text-lg leading-relaxed font-light">
+                  {activeData.desc}
+                </p>
               </div>
             </div>
-          </div>
 
+            {/* Barra de Progreso Avanzada Sincronizada con el Autoplay (Borde Superior) */}
+            <div className="absolute top-0 left-0 right-0 h-[2.5px] bg-zinc-900 overflow-hidden rounded-t-3xl">
+              {autoplay && (
+                <div
+                  key={activeStep}
+                  className="h-full bg-white origin-left"
+                  style={{
+                    backgroundColor: activeData.color,
+                    animation: 'progressFill 5s linear forwards',
+                  }}
+                />
+              )}
+            </div>
+          </div>
         </div>
+
       </div>
+
+      {/* Inyección de Animación de Keyframes Nativa mediante Atributo Style Estructural */}
+      <style>{`
+        @keyframes progressFill {
+          from { transform: scaleX(0); }
+          to { transform: scaleX(1); }
+        }
+      `}</style>
     </section>
   );
 }

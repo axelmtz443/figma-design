@@ -18,7 +18,7 @@ import DatesSection from './4dates';
 import CompanySection from '../../../components/Home/CompanySection';
 import OurClients from './OurClients';
 import CaseStudiesMR from './mercedes';
-import BlogSection from '../../../components/Home/BlogSection';
+import BlogResearch from './BlogResearch';
 import ProjectsCarousel from './OurProjects';
 import OurProcess from './OurProcess';
 
@@ -64,7 +64,7 @@ export default function MarketResearch() {
             <ScrollReveal><ResearchTools /></ScrollReveal>
             <ScrollReveal><ProjectsCarousel /></ScrollReveal>
             <ScrollReveal><OurProcess /></ScrollReveal>
-            <ScrollReveal><BlogSection /></ScrollReveal>
+            <ScrollReveal><BlogResearch /></ScrollReveal>
             <ScrollReveal><TestimonialMR /></ScrollReveal>
             <ScrollReveal><ContactoMR /></ScrollReveal>
             <Footer />
