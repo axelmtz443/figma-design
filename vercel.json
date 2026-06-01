@@ -1,4 +1,6 @@
 {
+  "buildCommand": "echo 'Static files already built'",
+  "outputDirectory": "dist",
   "rewrites": [
     {
       "source": "/servicios/:path*",
