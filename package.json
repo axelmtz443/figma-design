@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node prerender.js",
+    "build": "vite build",
     "postbuild": "node prerender.js",
     "build:seo": "npm run build && npm run postbuild",
     "preview": "vite preview",
