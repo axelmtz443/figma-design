@@ -137,237 +137,239 @@ const OrbitSatellite: React.FC<SatelliteProps> = ({
 
 export default function HeroMR() {
   return (
-    <section className="relative w-full min-h-screen bg-transparent flex flex-col items-center justify-between overflow-hidden font-montserrat select-none pt-24 pb-12 md:pb-16">
-        
-        {/* Inyección de Keyframes de Animaciones 3D Avanzadas */}
-        <style dangerouslySetInnerHTML={{__html: `
-            .font-aston { font-family: 'ASTONPOLIZ', 'Anton', sans-serif; }
-            .perspective-1000 { perspective: 1000px; }
-            .preserve-3d { transform-style: preserve-3d; }
-            
-            @keyframes globe-spin {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(-50%); }
-            }
-            @keyframes orbit-spin-z {
-              from { transform: rotateZ(0deg); }
-              to { transform: rotateZ(360deg); }
-            }
-            @keyframes orbit-spin-z-reverse {
-              from { transform: rotateZ(360deg); }
-              to { transform: rotateZ(0deg); }
-            }
-
-            .animate-globe-spin { animation: globe-spin 40s linear infinite; }
-            .animate-spin-z { animation: orbit-spin-z linear infinite; }
-            .animate-reverse-spin-z { animation: orbit-spin-z-reverse linear infinite; }
-
-            .globe-mask {
-              -webkit-mask-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
-              -webkit-mask-size: 100% 100%;
-              -webkit-mask-repeat: no-repeat;
-              mask-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
-              mask-size: 100% 100%;
-              mask-repeat: no-repeat;
-            }
-        `}} />
-
-        {/* Vignette de profundidad premium */}
-        <div
-            className="absolute inset-0 pointer-events-none z-10"
-            style={{
-                background: 'radial-gradient(ellipse 70% 60% at 50% 50%, transparent 20%, rgba(0,0,0,0.7) 100%)',
-            }}
-        />
-
-        {/* Layout Contenedor Superior (Texto + Planeta) */}
-        <div className="relative z-20 max-w-7xl mx-auto w-full px-6 sm:px-8 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8 flex-grow">
+    <>
+      <section className="relative w-full min-h-screen bg-transparent flex flex-col items-center justify-center overflow-hidden font-montserrat select-none pt-24 pb-12">
           
-          {/* COLUMNA IZQUIERDA: Copywriting de la Agencia & CTAs */}
-          <div className="w-full lg:w-1/2 flex flex-col items-start text-left">
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="w-12 h-1 bg-[#c5362e] mb-6"
-            />
-
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-              className="font-aston text-4xl sm:text-5xl lg:text-[4.2rem] tracking-wide uppercase leading-[1.05] text-white mb-6"
-            >
-              Agencia de <br/>
-              Investigación <br/>
-              de Mercados
-            </motion.h1>
-
-            <motion.p 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-              className="text-base sm:text-lg text-[#CACFD8] leading-relaxed mb-10 max-w-xl font-light"
-            >
-              Desarrollamos proyectos de investigación que logran <strong className="text-white font-medium">objetivos de negocio</strong> y proporcionan información de valor para una <strong className="text-[#80b67d] font-medium">correcta planeación y toma de decisiones</strong>.
-            </motion.p>
-
-            {/* Acciones de Conversión */}
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex flex-col sm:flex-row items-center gap-5 w-full sm:w-auto"
-            >
-              <button className="group relative w-full sm:w-auto px-8 py-4 bg-[#c5362e] text-white rounded-xl font-bold text-[13px] uppercase tracking-widest overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
-                <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
-                <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-[#c5362e] transition-colors duration-300">
-                  Solicitar Cotización
-                  <ArrowRight className="transition-transform group-hover:translate-x-1" />
-                </span>
-              </button>
+          {/* Inyección de Keyframes de Animaciones 3D Avanzadas */}
+          <style dangerouslySetInnerHTML={{__html: `
+              .font-aston { font-family: 'ASTONPOLIZ', 'Anton', sans-serif; }
+              .perspective-1000 { perspective: 1000px; }
+              .preserve-3d { transform-style: preserve-3d; }
               
-              <button className="group relative w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-white/80 text-white rounded-xl font-bold text-[13px] uppercase tracking-widest overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:border-white">
-                <div className="absolute inset-0 bg-white translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-in-out" />
-                <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-black transition-colors duration-300">
-                  <Calendar className="transition-colors duration-300" />
-                  Agendar Videollamada
-                </span>
-              </button>
+              @keyframes globe-spin {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+              }
+              @keyframes orbit-spin-z {
+                from { transform: rotateZ(0deg); }
+                to { transform: rotateZ(360deg); }
+              }
+              @keyframes orbit-spin-z-reverse {
+                from { transform: rotateZ(360deg); }
+                to { transform: rotateZ(0deg); }
+              }
+
+              .animate-globe-spin { animation: globe-spin 40s linear infinite; }
+              .animate-spin-z { animation: orbit-spin-z linear infinite; }
+              .animate-reverse-spin-z { animation: orbit-spin-z-reverse linear infinite; }
+
+              .globe-mask {
+                -webkit-mask-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+                -webkit-mask-size: 100% 100%;
+                -webkit-mask-repeat: no-repeat;
+                mask-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+                mask-size: 100% 100%;
+                mask-repeat: no-repeat;
+              }
+          `}} />
+
+          {/* Vignette de profundidad premium */}
+          <div
+              className="absolute inset-0 pointer-events-none z-10"
+              style={{
+                  background: 'radial-gradient(ellipse 70% 60% at 50% 50%, transparent 20%, rgba(0,0,0,0.7) 100%)',
+              }}
+          />
+
+          {/* Layout Contenedor Superior (Texto + Planeta) */}
+          <div className="relative z-20 max-w-7xl mx-auto w-full px-6 sm:px-8 flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-8">
+            
+            {/* COLUMNA IZQUIERDA: Copywriting de la Agencia & CTAs */}
+            <div className="w-full lg:w-1/2 flex flex-col items-start text-left">
+              <motion.div 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="w-12 h-1 bg-[#c5362e] mb-6"
+              />
+
+              <motion.h1 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+                className="font-aston text-4xl sm:text-5xl lg:text-[4.2rem] tracking-wide leading-[1.05] text-white mb-6"
+              >
+                Agencia de <br/>
+                Investigación <br/>
+                de Mercados
+              </motion.h1>
+
+              <motion.p 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                className="text-base sm:text-lg text-[#CACFD8] leading-relaxed mb-10 max-w-xl font-light"
+              >
+                Desarrollamos proyectos de investigación que logran <strong className="text-white font-medium">objetivos de negocio</strong> y proporcionan información de valor para una <strong className="text-[#80b67d] font-medium">correcta planeación y toma de decisiones</strong>.
+              </motion.p>
+
+              {/* Acciones de Conversión */}
+              <motion.div 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+                className="flex flex-col sm:flex-row items-center gap-5 w-full sm:w-auto"
+              >
+                <button className="group relative w-full sm:w-auto px-8 py-4 bg-[#c5362e] text-white rounded-xl font-bold text-[13px] uppercase tracking-widest overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+                  <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
+                  <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-[#c5362e] transition-colors duration-300">
+                    Solicitar Cotización
+                    <ArrowRight className="transition-transform group-hover:translate-x-1" />
+                  </span>
+                </button>
+                
+                <button className="group relative w-full sm:w-auto px-8 py-4 bg-transparent border-2 border-white/80 text-white rounded-xl font-bold text-[13px] uppercase tracking-widest overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:border-white">
+                  <div className="absolute inset-0 bg-white translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-in-out" />
+                  <span className="relative z-10 flex items-center justify-center gap-3 group-hover:text-black transition-colors duration-300">
+                    <Calendar className="transition-colors duration-300" />
+                    Agendar Videollamada
+                  </span>
+                </button>
+              </motion.div>
+            </div>
+
+            {/* COLUMNA DERECHA: Zona del Planeta 3D y Satélites */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full lg:w-1/2 h-[350px] sm:h-[450px] lg:h-[520px] relative perspective-1000 flex items-center justify-center"
+            >
+              <div className="relative w-full max-w-[550px] h-full preserve-3d flex items-center justify-center scale-90 sm:scale-100">
+                
+                {/* Logo Corporativo Difuminado en Z-Depth tras el Planeta */}
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-25 blur-[6px] animate-pulse" style={{ transform: 'translateZ(-140px) scale(1.4)' }}>
+                  <WepromLogo />
+                </div>
+
+                {/* Planeta Tecnológico Central Esférico */}
+                <div className="relative z-10 w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-[#030914] shadow-[inset_-20px_-20px_40px_rgba(0,0,0,0.9),inset_10px_10px_30px_rgba(89,157,223,0.35),0_0_40px_rgba(89,157,223,0.15)] overflow-hidden flex items-center justify-center preserve-3d">
+                   
+                   {/* Capa del Mapa Mundial Rotatorio Continuo */}
+                   <div className="absolute top-0 left-0 h-full w-[400%] animate-globe-spin flex opacity-60 mix-blend-screen">
+                      <div className="w-[50%] h-full bg-[#599ddf] globe-mask"></div>
+                      <div className="w-[50%] h-full bg-[#599ddf] globe-mask"></div>
+                   </div>
+
+                   {/* Glow atmosférico interno */}
+                   <div className="absolute inset-0 rounded-full shadow-[inset_0_0_25px_#599ddf] pointer-events-none" />
+                   
+                   {/* Reflejo de luz ambiental */}
+                   <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.12),transparent_40%)] pointer-events-none" />
+                </div>
+
+                {/* --- ÓRBITAS INTERACTIVAS CONFIGURADAS --- */}
+                <OrbitSatellite 
+                  rotationX={70} 
+                  rotationY={-15} 
+                  diameter={260} 
+                  duration="16s" 
+                  color="#599ddf" 
+                  tooltipText="Insights de Consumo" 
+                  icon={<Target className="text-[#599ddf]" size={18} />} 
+                />
+
+                <OrbitSatellite 
+                  rotationX={65} 
+                  rotationY={25} 
+                  diameter={350} 
+                  duration="24s" 
+                  delay="-6s"
+                  color="#e6af41" 
+                  tooltipText="Tendencias de Mercado" 
+                  icon={<TrendingUp className="text-[#e6af41]" size={18} />} 
+                />
+
+                <OrbitSatellite 
+                  rotationX={75} 
+                  rotationY={5} 
+                  diameter={440} 
+                  duration="32s" 
+                  color="#80b67d" 
+                  tooltipText="Análisis Competitivo" 
+                  icon={<BarChart2 className="text-[#80b67d]" size={18} />} 
+                />
+
+                <OrbitSatellite 
+                  rotationX={75} 
+                  rotationY={5} 
+                  diameter={440} 
+                  duration="32s" 
+                  delay="-16s"
+                  color="#c5362e" 
+                  tooltipText="Análisis Predictivo" 
+                  icon={<Brain className="text-[#c5362e]" size={18} />} 
+                />
+
+                {/* Puntos estelares de ambiente */}
+                <div className="absolute top-[20%] left-[25%] w-1 h-1 bg-white rounded-full shadow-[0_0_8px_white] animate-pulse" style={{ transform: 'translateZ(100px)' }} />
+                <div className="absolute bottom-[25%] right-[20%] w-1.5 h-1.5 bg-[#80b67d] rounded-full shadow-[0_0_10px_#80b67d] animate-pulse" style={{ transform: 'translateZ(80px)' }} />
+              </div>
             </motion.div>
+
+          </div>
+      </section>
+
+      {/* Sección Independiente de Métricas (Aparece con el Scroll) */}
+      <div className="relative z-25 w-full bg-transparent px-6 sm:px-8 max-w-7xl mx-auto pb-20 md:pb-28">
+        <motion.div 
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4 border-t border-white/10 pt-12"
+        >
+          {/* Métrica 1 */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left px-2">
+            <span className="font-aston text-3xl sm:text-4xl lg:text-5xl tracking-wide text-[#c5362e] drop-shadow-[0_4px_12px_rgba(197,54,46,0.15)]">
+              +35
+            </span>
+            <span className="mt-2 text-[10px] sm:text-xs text-[#CACFD8]/80 font-bold tracking-[0.15em] leading-snug">
+              Años de Experiencia
+            </span>
           </div>
 
-          {/* COLUMNA DERECHA: Zona del Planeta 3D y Satélites */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full lg:w-1/2 h-[350px] sm:h-[450px] lg:h-[520px] relative perspective-1000 flex items-center justify-center"
-          >
-            <div className="relative w-full max-w-[550px] h-full preserve-3d flex items-center justify-center scale-90 sm:scale-100">
-              
-              {/* Logo Corporativo Difuminado en Z-Depth tras el Planeta */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-25 blur-[6px] animate-pulse" style={{ transform: 'translateZ(-140px) scale(1.4)' }}>
-                <WepromLogo />
-              </div>
+          {/* Métrica 2 */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left px-2 border-l-0 sm:border-l md:border-l border-white/5 md:pl-6">
+            <span className="font-aston text-3xl sm:text-4xl lg:text-5xl tracking-wide text-[#599ddf] drop-shadow-[0_4px_12px_rgba(89,157,223,0.15)]">
+              +10,000
+            </span>
+            <span className="mt-2 text-[10px] sm:text-xs text-[#CACFD8]/80 font-bold tracking-[0.15em] leading-snug">
+              Proyectos Realizados
+            </span>
+          </div>
 
-              {/* Planeta Tecnológico Central Esférico */}
-              <div className="relative z-10 w-44 h-44 sm:w-52 sm:h-52 rounded-full bg-[#030914] shadow-[inset_-20px_-20px_40px_rgba(0,0,0,0.9),inset_10px_10px_30px_rgba(89,157,223,0.35),0_0_40px_rgba(89,157,223,0.15)] overflow-hidden flex items-center justify-center preserve-3d">
-                 
-                 {/* Capa del Mapa Mundial Rotatorio Continuo */}
-                 <div className="absolute top-0 left-0 h-full w-[400%] animate-globe-spin flex opacity-60 mix-blend-screen">
-                    <div className="w-[50%] h-full bg-[#599ddf] globe-mask"></div>
-                    <div className="w-[50%] h-full bg-[#599ddf] globe-mask"></div>
-                 </div>
+          {/* Métrica 3 */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left px-2 border-l-0 md:border-l border-white/5 md:pl-6">
+            <span className="font-aston text-3xl sm:text-4xl lg:text-5xl tracking-wide text-[#80b67d] drop-shadow-[0_4px_12px_rgba(128,182,125,0.15)]">
+              +1000
+            </span>
+            <span className="mt-2 text-[10px] sm:text-xs text-[#CACFD8]/80 font-bold tracking-[0.15em] leading-snug">
+             Clientes Globales
+            </span>
+          </div>
 
-                 {/* Glow atmosférico interno */}
-                 <div className="absolute inset-0 rounded-full shadow-[inset_0_0_25px_#599ddf] pointer-events-none" />
-                 
-                 {/* Reflejo de luz ambiental */}
-                 <div className="absolute top-[-10%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.12),transparent_40%)] pointer-events-none" />
-              </div>
-
-              {/* --- ÓRBITAS INTERACTIVAS CONFIGURADAS --- */}
-              <OrbitSatellite 
-                rotationX={70} 
-                rotationY={-15} 
-                diameter={260} 
-                duration="16s" 
-                color="#599ddf" 
-                tooltipText="Insights de Consumo" 
-                icon={<Target className="text-[#599ddf]" size={18} />} 
-              />
-
-              <OrbitSatellite 
-                rotationX={65} 
-                rotationY={25} 
-                diameter={350} 
-                duration="24s" 
-                delay="-6s"
-                color="#e6af41" 
-                tooltipText="Tendencias de Mercado" 
-                icon={<TrendingUp className="text-[#e6af41]" size={18} />} 
-              />
-
-              <OrbitSatellite 
-                rotationX={75} 
-                rotationY={5} 
-                diameter={440} 
-                duration="32s" 
-                color="#80b67d" 
-                tooltipText="Análisis Competitivo" 
-                icon={<BarChart2 className="text-[#80b67d]" size={18} />} 
-              />
-
-              <OrbitSatellite 
-                rotationX={75} 
-                rotationY={5} 
-                diameter={440} 
-                duration="32s" 
-                delay="-16s"
-                color="#c5362e" 
-                tooltipText="Análisis Predictivo" 
-                icon={<Brain className="text-[#c5362e]" size={18} />} 
-              />
-
-              {/* Puntos estelares de ambiente */}
-              <div className="absolute top-[20%] left-[25%] w-1 h-1 bg-white rounded-full shadow-[0_0_8px_white] animate-pulse" style={{ transform: 'translateZ(100px)' }} />
-              <div className="absolute bottom-[25%] right-[20%] w-1.5 h-1.5 bg-[#80b67d] rounded-full shadow-[0_0_10px_#80b67d] animate-pulse" style={{ transform: 'translateZ(80px)' }} />
-            </div>
-          </motion.div>
-
-        </div>
-
-        {/* Grid de Métricas Corporativas (Flujo de Cierre con Margin-Top Seguro) */}
-        <div className="relative z-20 w-full mt-16 lg:mt-8 px-6 sm:px-8 max-w-7xl mx-auto">
-          <motion.div 
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4 border-t border-white/10 pt-10"
-          >
-            {/* Métrica 1 */}
-            <div className="flex flex-col items-center md:items-start text-center md:text-left px-2">
-              <span className="font-aston text-3xl sm:text-4xl lg:text-5xl tracking-wide text-[#c5362e] drop-shadow-[0_4px_12px_rgba(197,54,46,0.15)]">
-                +1,000
-              </span>
-              <span className="mt-2 text-[10px] sm:text-xs text-[#CACFD8]/80 font-bold tracking-[0.15em] uppercase leading-snug">
-                Proyectos Terminados
-              </span>
-            </div>
-
-            {/* Métrica 2 */}
-            <div className="flex flex-col items-center md:items-start text-center md:text-left px-2 border-l-0 sm:border-l md:border-l border-white/5 md:pl-6">
-              <span className="font-aston text-3xl sm:text-4xl lg:text-5xl tracking-wide text-[#599ddf] drop-shadow-[0_4px_12px_rgba(89,157,223,0.15)]">
-                100%
-              </span>
-              <span className="mt-2 text-[10px] sm:text-xs text-[#CACFD8]/80 font-bold tracking-[0.15em] uppercase leading-snug">
-                Clientes Satisfechos
-              </span>
-            </div>
-
-            {/* Métrica 3 */}
-            <div className="flex flex-col items-center md:items-start text-center md:text-left px-2 border-l-0 md:border-l border-white/5 md:pl-6">
-              <span className="font-aston text-3xl sm:text-4xl lg:text-5xl tracking-wide text-[#80b67d] drop-shadow-[0_4px_12px_rgba(128,182,125,0.15)]">
-                +35
-              </span>
-              <span className="mt-2 text-[10px] sm:text-xs text-[#CACFD8]/80 font-bold tracking-[0.15em] uppercase leading-snug">
-               Años De Experiencia
-              </span>
-            </div>
-
-            {/* Métrica 4 */}
-            <div className="flex flex-col items-center md:items-start text-center md:text-left px-2 border-l-0 sm:border-l md:border-l border-white/5 md:pl-6">
-              <span className="font-aston text-3xl sm:text-4xl lg:text-5xl tracking-wide text-[#e6af41] drop-shadow-[0_4px_12px_rgba(230,175,65,0.15)]">
-                +50
-              </span>
-              <span className="mt-2 text-[10px] sm:text-xs text-[#CACFD8]/80 font-bold tracking-[0.15em] uppercase leading-snug">
-                Industrias Analizadas
-              </span>
-            </div>
-          </motion.div>
-        </div>
-
-    </section>
+          {/* Métrica 4 */}
+          <div className="flex flex-col items-center md:items-start text-center md:text-left px-2 border-l-0 sm:border-l md:border-l border-white/5 md:pl-6">
+            <span className="font-aston text-3xl sm:text-4xl lg:text-5xl tracking-wide text-[#e6af41] drop-shadow-[0_4px_12px_rgba(230,175,65,0.15)]">
+              +3
+            </span>
+            <span className="mt-2 text-[10px] sm:text-xs text-[#CACFD8]/80 font-bold tracking-[0.15em] leading-snug">
+              Sedes Internacionales
+            </span>
+          </div>
+        </motion.div>
+      </div>
+    </>
   );
 }
