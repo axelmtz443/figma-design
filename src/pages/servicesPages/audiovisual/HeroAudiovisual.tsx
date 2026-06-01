@@ -88,7 +88,7 @@ const AudiovisualHero = () => {
                         Quédate para siempre en la mente de tus clientes con proyectos que sí cumplen objetivos.
                     </motion.p>
 
-                    {/* Acciones de Conversión Duplicadas de Hero Investigación */}
+                    {/* Acciones de Conversión */}
                     <motion.div 
                         initial={{ y: 40, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
@@ -115,9 +115,16 @@ const AudiovisualHero = () => {
             </section>
 
             {/* ── CARRUSEL DE MARCAS ── */}
-            <section className="relative w-full pt-10 sm:pt-12 pb-14 sm:pb-4 overflow-hidden bg-transparent group">
+            <section className="relative w-full py-24 md:py-32 flex flex-col items-center justify-center overflow-hidden bg-transparent group select-none">
                 <div className="absolute top-0 left-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-r from-black to-transparent opacity-90" />
                 <div className="absolute top-0 right-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-l from-black to-transparent opacity-90" />
+
+                {/* Texto superior integrado */}
+                <div className="text-center mb-16 relative z-10">
+                    <h2 className="font-aston text-3xl sm:text-4xl md:text-5xl font-medium text-white tracking-wide">
+                        Algunos de nuestros clientes
+                    </h2>
+                </div>
 
                 <div className="relative w-full max-w-[1519px] mx-auto px-4 sm:px-8 z-10">
                     <div className="relative flex items-center">
