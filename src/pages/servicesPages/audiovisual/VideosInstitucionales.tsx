@@ -24,19 +24,38 @@ const VideoCard = ({ src, poster, large }: { src: string; poster: string; large:
     const videoRef = useRef<HTMLVideoElement>(null);
     const [playing, setPlaying] = useState(false);
 
-    const togglePlay = () => {
+    useEffect(() => {
+        const video = videoRef.current;
+        if (!video) return;
+
+        const handlePlay = () => setPlaying(true);
+        const handlePause = () => setPlaying(false);
+
+        video.addEventListener('play', handlePlay);
+        video.addEventListener('pause', handlePause);
+
+        return () => {
+            video.removeEventListener('play', handlePlay);
+            video.removeEventListener('pause', handlePause);
+        };
+    }, []);
+
+    const togglePlay = (e: React.MouseEvent) => {
         if (!videoRef.current) return;
+        
+        // Si el usuario hace clic directamente en los controles nativos del video, no interferimos
+        if (e.target === videoRef.current && playing) return;
+
         if (playing) {
             videoRef.current.pause();
         } else {
             videoRef.current.play();
         }
-        setPlaying(!playing);
     };
 
     return (
         <div
-            className="relative w-full h-full overflow-hidden rounded-lg cursor-pointer group bg-black"
+            className="relative w-full h-full overflow-hidden rounded-lg bg-black"
             style={{ aspectRatio: '16/9' }}
             onClick={togglePlay}
         >
@@ -44,33 +63,27 @@ const VideoCard = ({ src, poster, large }: { src: string; poster: string; large:
                 ref={videoRef}
                 src={src}
                 poster={poster}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                controls={playing} // Muestra los controles nativos solo al estar reproduciéndose
+                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                 loop
                 playsInline
             />
 
-            {/* Overlay oscuro al hover */}
-            <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            {/* Overlay oscuro al hover (solo visible si no está reproduciéndose) */}
+            {!playing && (
+                <div className="absolute inset-0 bg-black/30 opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+            )}
 
-            {/* Botón play */}
-            <div
-                className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${playing ? 'opacity-0 group-hover:opacity-100' : 'opacity-100'
-                    }`}
-            >
-                <div className="w-14 h-14 rounded-full bg-black/50 border border-white/40 backdrop-blur-sm flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
-                    {playing ? (
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="white">
-                            <rect x="5" y="3" width="4" height="18" rx="1" />
-                            <rect x="15" y="3" width="4" height="18" rx="1" />
-                        </svg>
-                    ) : (
+            {/* Botón play personalizado (desaparece por completo al reproducir para no estorbar los controles) */}
+            {!playing && (
+                <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-14 h-14 rounded-full bg-black/50 border border-white/40 backdrop-blur-sm flex items-center justify-center">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="white" style={{ marginLeft: 3 }}>
                             <polygon points="5,3 19,12 5,21" />
                         </svg>
-                    )
-                    }
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };
