@@ -92,7 +92,7 @@ export default function ElPoderDeLaInformacion() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="relative group cursor-pointer overflow-hidden border-b border-white/[0.06] last:border-b-0 transition-all duration-500 ease-[0.25,1,0.5,1]"
+              className="relative group overflow-hidden border-b border-white/[0.06] last:border-b-0 transition-all duration-500 ease-[0.25,1,0.5,1]"
               style={{
                 height: hoveredId === q.id ? '130px' : '90px',
               }}
@@ -134,18 +134,6 @@ export default function ElPoderDeLaInformacion() {
                   >
                     {q.boldPart}
                   </span>
-                </div>
-
-                {/* Indicador estético derecho flotante (Opcional premium) */}
-                <div 
-                  className="hidden sm:flex items-center justify-center w-8 h-8 rounded-full border border-white/10 text-white/30 transition-all duration-500"
-                  style={{
-                    borderColor: hoveredId === q.id ? `${q.color}50` : 'rgba(255,255,255,0.1)',
-                    color: hoveredId === q.id ? q.color : 'rgba(255,255,255,0.3)',
-                    transform: hoveredId === q.id ? 'rotate(45deg) scale(1.1)' : 'rotate(0deg)'
-                  }}
-                >
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 </div>
 
               </div>
