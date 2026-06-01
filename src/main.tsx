@@ -1,14 +1,20 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
 import { BrowserRouter } from 'react-router-dom';
+import App from './App';
 import './index.css';
 import React from 'react';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <BrowserRouter>
-    <App />
-    </BrowserRouter>
-  </StrictMode>
-);
+// Este es el punto de entrada para el navegador
+const root = document.getElementById('root');
+if (root) {
+  createRoot(root).render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </React.StrictMode>
+  );
+}
+
+// Exporta el componente para que vite-ssg lo use durante el build
+export { App };
