@@ -313,15 +313,15 @@ export default function HeroMR() {
           </div>
       </section>
 
-      {/* Sección Independiente de Métricas (Aparece con el Scroll) */}
-      <div className="relative z-25 w-full bg-transparent px-6 sm:px-8 max-w-7xl mx-auto pb-20 md:pb-28">
-        <motion.div 
-          initial={{ opacity: 0, y: 25 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4 border-t border-white/10 pt-16 mt-4"
-        >
+        {/* Sección Independiente de Métricas (Aparece con el Scroll) */}
+        <div className="relative z-25 w-full bg-transparent px-6 sm:px-8 max-w-7xl mx-auto pb-20 md:pb-28 pt-12">
+          <motion.div 
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+            className="grid grid-cols-2 md:grid-cols-4 gap-y-8 gap-x-4 border-t border-white/10 pt-12"
+          >
           {/* Métrica 1 */}
           <div className="flex flex-col items-center text-center px-2">
             <span className="font-aston text-3xl sm:text-4xl lg:text-5xl tracking-wide text-[#c5362e] drop-shadow-[0_4px_12px_rgba(197,54,46,0.15)]">
