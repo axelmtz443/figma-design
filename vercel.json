@@ -2,17 +2,8 @@
   "buildCommand": "echo 'Static files already built'",
   "outputDirectory": "dist",
   "rewrites": [
-    {
-      "source": "/servicios/:path*",
-      "destination": "/servicios/:path*.html"
-    },
-    {
-      "source": "/:path*",
-      "destination": "/:path*.html"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
+    { "source": "/servicios/(.*)", "destination": "/servicios/$1.html" },
+    { "source": "/(.*)", "destination": "/$1.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
