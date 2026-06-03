@@ -16,7 +16,6 @@ const Branding = () => {
     <main className="min-h-screen bg-transparent">
       <Navbar />
 
-      {/* La sección Hero suele ir sin ScrollReveal para carga inmediata o con un delay suave */}
       <Hero />
 
       <ScrollReveal>
@@ -28,9 +27,11 @@ const Branding = () => {
       </ScrollReveal>
 
 
-      <ScrollReveal>
-        <OurServices />
-      </ScrollReveal>
+      <div id="nuestros-servicios">
+        <ScrollReveal>
+          <OurServices />
+        </ScrollReveal>
+      </div>
 
 
       <ScrollReveal>
@@ -46,8 +47,6 @@ const Branding = () => {
       <ScrollReveal>
         <WhyChooseUs />
       </ScrollReveal>
-
-
 
       
       <ScrollReveal>
