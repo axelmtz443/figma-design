@@ -1,8 +1,7 @@
 import React from 'react';
 
-// Isotipo proporcionado
 const WepromLogo = ({ className = "" }) => (
-  <svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 780.55 712.65" className={`${className}`}>
+  <svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 780.55 712.65" className={className}>
     <defs>
       <style>{`
         .cls-1 { fill: url(#Degradado_sin_nombre_6); }
@@ -17,11 +16,11 @@ const WepromLogo = ({ className = "" }) => (
       <linearGradient id="Degradado_sin_nombre_194" data-name="Degradado sin nombre 194" x1="689.73" y1="503.15" x2="689.73" y2="506.87" gradientUnits="userSpaceOnUse">
         <stop offset="0" stopColor="#f09428" /><stop offset=".21" stopColor="#f29d2b" /><stop offset=".64" stopColor="#f7ac31" /><stop offset="1" stopColor="#f9b233" />
       </linearGradient>
-      <linearGradient id="Degradado_sin_nombre_194-2" data-name="Degradado sin nombre 194" x1="734.92" y1="96.62" x2="734.92" y2="554.63" xlinkHref="#Degradado_sin_nombre_194" />
+      <linearGradient id="Degradado_sin_nombre_194-2" x1="734.92" y1="96.62" x2="734.92" y2="554.63" xlinkHref="#Degradado_sin_nombre_194" />
       <linearGradient id="Degradado_sin_nombre_6" data-name="Degradado sin nombre 6" x1="3.05" y1="515.94" x2="3.11" y2="515.84" gradientUnits="userSpaceOnUse">
         <stop offset=".07" stopColor="#e6332a" /><stop offset=".11" stopColor="#d53a36" /><stop offset=".29" stopColor="#95586a" /><stop offset=".47" stopColor="#607195" /><stop offset=".64" stopColor="#3685b7" /><stop offset=".78" stopColor="#1893cf" /><stop offset=".91" stopColor="#069bdd" /><stop offset="1" stopColor="#009fe3" />
       </linearGradient>
-      <linearGradient id="Degradado_sin_nombre_6-2" data-name="Degradado sin nombre 6" x1="81.77" y1="583.27" x2="374.34" y2="76.54" xlinkHref="#Degradado_sin_nombre_6" />
+      <linearGradient id="Degradado_sin_nombre_6-2" x1="81.77" y1="583.27" x2="374.34" y2="76.54" xlinkHref="#Degradado_sin_nombre_6" />
       <linearGradient id="Degradado_sin_nombre_22" data-name="Degradado sin nombre 22" x1="42.84" y1="505.91" x2="42.84" y2="271.32" gradientUnits="userSpaceOnUse">
         <stop offset=".01" stopColor="#a3332a" /><stop offset="1" stopColor="#e6332a" />
       </linearGradient>
@@ -58,135 +57,135 @@ export default function Hero() {
   const scrollToServices = () => {
     const element = document.getElementById('nuestros-servicios');
     if (element) {
-      // Método alternativo más robusto si scrollIntoView falla por culpa de ScrollReveal
       const offsetTop = element.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({
-        top: offsetTop - 80, // Resta la altura aproximada de tu Navbar para que no tape el título
-        behavior: 'smooth'
-      });
+      window.scrollTo({ top: offsetTop - 80, behavior: 'smooth' });
     }
   };
 
   return (
-    {/* Cambiamos h-screen por min-h-screen estricto y eliminamos flex-col/justify-center en el contenedor padre para evitar colapsos */}
-<section className="relative w-full flex flex-col justify-center items-center px-6 md:px-12 lg:px-24 bg-black overflow-visible" style={{ minHeight: 'calc(100vh - 80px)', paddingTop: '80px', paddingBottom: '80px' }}>      
+    <section
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#000',
+        overflow: 'hidden',
+        padding: '0 24px',
+      }}
+    >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
-        
-        @font-face {
-          font-family: 'Astonpoliz';
-          src: local('Astonpoliz'), local('Asonpoliz'); 
-          font-display: swap;
-        }
-
-        .font-title { font-family: 'Astonpoliz', 'Montserrat', sans-serif; font-weight: 800; }
-        .font-text { font-family: 'Montserrat', sans-serif; }
-
+        .font-title { font-family: 'Montserrat', sans-serif; font-weight: 800; }
+        .font-text  { font-family: 'Montserrat', sans-serif; }
         .logo-path {
           stroke: #ffffff;
           stroke-width: 2;
           stroke-dasharray: 2000;
           animation: logoCycle 10s ease-in-out infinite;
         }
-
         @keyframes logoCycle {
-          0% { stroke-dashoffset: 2000; fill-opacity: 0; stroke: #ffffff; stroke-width: 2; opacity: 0; }
-          5% { stroke-dashoffset: 2000; fill-opacity: 0; stroke: #ffffff; stroke-width: 2; opacity: 1; }
-          30% { stroke-dashoffset: 0; fill-opacity: 0; stroke: #ffffff; stroke-width: 2; }
-          40% { stroke-dashoffset: 0; fill-opacity: 1; stroke: transparent; stroke-width: 0; }
-          85% { stroke-dashoffset: 0; fill-opacity: 1; stroke: transparent; stroke-width: 0; opacity: 1; }
-          95%, 100% { stroke-dashoffset: 0; fill-opacity: 1; stroke: transparent; stroke-width: 0; opacity: 0; }
+          0%       { stroke-dashoffset: 2000; fill-opacity: 0; stroke: #ffffff; stroke-width: 2; opacity: 0; }
+          5%       { stroke-dashoffset: 2000; fill-opacity: 0; stroke: #ffffff; stroke-width: 2; opacity: 1; }
+          30%      { stroke-dashoffset: 0;    fill-opacity: 0; stroke: #ffffff; stroke-width: 2; }
+          40%      { stroke-dashoffset: 0;    fill-opacity: 1; stroke: transparent; stroke-width: 0; }
+          85%      { stroke-dashoffset: 0;    fill-opacity: 1; stroke: transparent; stroke-width: 0; opacity: 1; }
+          95%, 100%{ stroke-dashoffset: 0;    fill-opacity: 1; stroke: transparent; stroke-width: 0; opacity: 0; }
         }
-
-        .generic-logo {
-          animation: fadeReject 10s infinite;
-        }
-
+        .generic-logo { animation: fadeReject 10s infinite; }
         @keyframes fadeReject {
-          0%, 5% { opacity: 0; transform: scale(0.8) translateY(0); filter: grayscale(100%); }
-          15% { opacity: 0.3; transform: scale(1) translateY(-10px); }
-          25% { opacity: 0.3; transform: scale(1) translateY(-10px); }
-          35%, 100% { opacity: 0; transform: scale(0.5) translateY(50px) rotate(20deg); }
+          0%, 5%   { opacity: 0; transform: scale(0.8) translateY(0);   filter: grayscale(100%); }
+          15%      { opacity: 0.3; transform: scale(1) translateY(-10px); }
+          25%      { opacity: 0.3; transform: scale(1) translateY(-10px); }
+          35%, 100%{ opacity: 0; transform: scale(0.5) translateY(50px) rotate(20deg); }
         }
-
-        .glow-text {
-          text-shadow: 0 0 20px rgba(89, 157, 223, 0.4);
-        }
-        
+        .glow-text { text-shadow: 0 0 20px rgba(89,157,223,0.4); }
         .btn-gradient {
           background: linear-gradient(90deg, #c5362e, #e6af41, #80b67d, #599ddf);
           background-size: 300% 100%;
           animation: gradientShift 6s ease infinite;
         }
-
         @keyframes gradientShift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
+          0%   { background-position: 0%   50%; }
+          50%  { background-position: 100% 50%; }
+          100% { background-position: 0%   50%; }
         }
       `}</style>
 
-      {/* Grid de fondo tipo "boceto" estático */}
-      <div className="absolute inset-0 z-0 opacity-20 pointer-events-none"
-           style={{
-             backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)',
-             backgroundSize: '40px 40px'
-           }}>
-      </div>
+      {/* Fondo cuadriculado */}
+      <div
+        style={{
+          position: 'absolute', inset: 0, zIndex: 0, opacity: 0.2, pointerEvents: 'none',
+          backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+        }}
+      />
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-12 lg:gap-20">
-        
-        {/* Columna Izquierda: Textos */}
-        <div className="w-full text-left space-y-8 order-2 md:order-1">
-          <h1 className="font-title text-5xl md:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-[#599ddf] leading-tight glow-text tracking-tight">
+      {/* Contenido principal */}
+      <div style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', alignItems: 'center', gap: '48px' }}>
+
+        {/* Columna izquierda — textos */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
+          <h1 className="font-title glow-text"
+            style={{ fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', lineHeight: 1.15, fontWeight: 800,
+              background: 'linear-gradient(90deg, #fff, #e2e8f0, #599ddf)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}
+          >
             Professional <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#c5362e] via-[#e6af41] to-[#80b67d]">Branding</span>
+            <span style={{ background: 'linear-gradient(90deg, #c5362e, #e6af41, #80b67d)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              Branding
+            </span>
           </h1>
-          
-          <p className="font-text text-gray-300 text-lg md:text-xl lg:text-2xl font-medium max-w-2xl mx-0 leading-relaxed">
+
+          <p className="font-text"
+            style={{ color: '#d1d5db', fontSize: 'clamp(1rem, 1.4vw, 1.2rem)', lineHeight: 1.7, margin: 0, maxWidth: '480px' }}>
             Hacemos marcas memorables, creativas y de alto impacto para que te vean, te recuerden y se queden contigo.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-start gap-6 pt-4">
-            <button className="btn-gradient font-text font-bold text-white px-8 py-4 rounded-full text-lg shadow-[0_0_20px_rgba(197,54,46,0.5)] hover:shadow-[0_0_40px_rgba(230,175,65,0.8)] transition-all duration-300 transform hover:-translate-y-1 w-full sm:w-auto">
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
+            <button className="btn-gradient font-text"
+              style={{ fontWeight: 700, color: '#fff', padding: '14px 32px', borderRadius: '9999px',
+                fontSize: '1rem', border: 'none', cursor: 'pointer',
+                boxShadow: '0 0 20px rgba(197,54,46,0.5)', transition: 'all 0.3s' }}>
               Cotizar Proyecto
             </button>
-            {/* Se añade la propiedad onClick para disparar el scroll suave */}
-            <button 
-              onClick={scrollToServices}
-              className="font-text font-bold text-white px-8 py-4 rounded-full text-lg border border-gray-600 hover:border-white hover:bg-white hover:text-black transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2 group"
-            >
-              Servicios
-              <span className="group-hover:translate-x-1 transition-transform">→</span>
+            <button className="font-text" onClick={scrollToServices}
+              style={{ fontWeight: 700, color: '#fff', padding: '14px 32px', borderRadius: '9999px',
+                fontSize: '1rem', background: 'transparent', border: '1px solid #4b5563',
+                cursor: 'pointer', transition: 'all 0.3s', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              Servicios <span>→</span>
             </button>
           </div>
         </div>
 
-        {/* Columna Derecha: Ilustración y Logo */}
-        <div className="w-full relative flex justify-center items-center h-[400px] lg:h-[500px] order-1 md:order-2">
-          <div className="absolute w-64 h-64 bg-[#599ddf] rounded-full blur-[120px] opacity-20 animate-pulse"></div>
+        {/* Columna derecha — logo */}
+        <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', height: '460px' }}>
+          <div style={{ position: 'absolute', width: '256px', height: '256px', background: '#599ddf',
+            borderRadius: '50%', filter: 'blur(120px)', opacity: 0.2 }} />
 
-          <div className="absolute top-10 left-10 generic-logo" style={{ animationDelay: '0.2s' }}>
+          <div className="generic-logo" style={{ position: 'absolute', top: '40px', left: '40px', animationDelay: '0.2s' }}>
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
           </div>
-          <div className="absolute bottom-20 right-10 generic-logo" style={{ animationDelay: '0.6s' }}>
+          <div className="generic-logo" style={{ position: 'absolute', bottom: '80px', right: '40px', animationDelay: '0.6s' }}>
             <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2"><circle cx="12" cy="12" r="10"/></svg>
           </div>
-          <div className="absolute top-20 right-20 generic-logo" style={{ animationDelay: '0.4s' }}>
+          <div className="generic-logo" style={{ position: 'absolute', top: '80px', right: '80px', animationDelay: '0.4s' }}>
             <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2"><polygon points="12 2 22 22 2 22"/></svg>
           </div>
 
-          <div className="relative z-20 drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
-             <WepromLogo className="w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px]" />
+          <div style={{ position: 'relative', zIndex: 20 }}>
+            <WepromLogo style={{ width: 'clamp(220px, 28vw, 380px)', height: 'clamp(220px, 28vw, 380px)' }} />
           </div>
 
-          <svg className="absolute inset-0 w-full h-full z-10 pointer-events-none opacity-40" viewBox="0 0 500 500">
-             <circle cx="250" cy="250" r="180" stroke="#80b67d" strokeWidth="1" strokeDasharray="10 10" fill="none" />
-             <line x1="50" y1="250" x2="450" y2="250" stroke="#599ddf" strokeWidth="1" strokeDasharray="5 5" />
-             <line x1="250" y1="50" x2="250" y2="450" stroke="#599ddf" strokeWidth="1" strokeDasharray="5 5" />
+          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 10, pointerEvents: 'none', opacity: 0.4 }} viewBox="0 0 500 500">
+            <circle cx="250" cy="250" r="180" stroke="#80b67d" strokeWidth="1" strokeDasharray="10 10" fill="none" />
+            <line x1="50" y1="250" x2="450" y2="250" stroke="#599ddf" strokeWidth="1" strokeDasharray="5 5" />
+            <line x1="250" y1="50" x2="250" y2="450" stroke="#599ddf" strokeWidth="1" strokeDasharray="5 5" />
           </svg>
         </div>
-
       </div>
     </section>
   );
