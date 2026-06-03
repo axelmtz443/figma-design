@@ -68,8 +68,9 @@ export default function Hero() {
   };
 
   return (
-    /* Forzamos h-screen/min-h-screen de forma estricta y aumentamos drásticamente el padding superior */
-    <section className="relative w-full min-h-screen flex flex-col justify-center items-center py-24 md:py-32 px-6 md:px-12 lg:px-24 bg-black overflow-visible">      <style>{`
+    {/* Cambiamos h-screen por min-h-screen estricto y eliminamos flex-col/justify-center en el contenedor padre para evitar colapsos */}
+<section className="relative w-full min-h-screen bg-black overflow-visible pt-32 pb-20 px-6 md:px-12 lg:px-24 flex items-center justify-center">      
+      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
         
         @font-face {
