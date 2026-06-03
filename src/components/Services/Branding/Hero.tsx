@@ -55,22 +55,29 @@ const WepromLogo = ({ className = "" }) => (
 );
 
 export default function Hero() {
+  // Función para hacer scroll suave a la sección
+  const scrollToServices = () => {
+    const element = document.getElementById('nuestros-servicios');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
-    <section className="relative w-full bg-black min-h-[85vh] flex items-center justify-center overflow-hidden py-16 px-6 md:px-12 lg:px-24">
+    /* Cambiado a min-h-screen y aumentado el padding vertical (py-24 md:py-32) */
+    <section className="relative w-full bg-black min-h-screen flex items-center justify-center overflow-hidden py-24 md:py-32 px-6 md:px-12 lg:px-24">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
         
         @font-face {
           font-family: 'Astonpoliz';
           src: local('Astonpoliz'), local('Asonpoliz'); 
-          /* Fallback creativo moderno en caso de que Astonpoliz local no exista */
           font-display: swap;
         }
 
         .font-title { font-family: 'Astonpoliz', 'Montserrat', sans-serif; font-weight: 800; }
         .font-text { font-family: 'Montserrat', sans-serif; }
 
-        /* Animación de construcción del logo en Bucle (10 segundos) */
         .logo-path {
           stroke: #ffffff;
           stroke-width: 2;
@@ -87,9 +94,6 @@ export default function Hero() {
           95%, 100% { stroke-dashoffset: 0; fill-opacity: 1; stroke: transparent; stroke-width: 0; opacity: 0; }
         }
 
-        /* Lápiz flotante dibujando (Sincronizado) */
-
-        /* Logos rechazados (competencia) sincronizados */
         .generic-logo {
           animation: fadeReject 10s infinite;
         }
@@ -143,20 +147,21 @@ export default function Hero() {
             <button className="btn-gradient font-text font-bold text-white px-8 py-4 rounded-full text-lg shadow-[0_0_20px_rgba(197,54,46,0.5)] hover:shadow-[0_0_40px_rgba(230,175,65,0.8)] transition-all duration-300 transform hover:-translate-y-1 w-full sm:w-auto">
               Cotizar Proyecto
             </button>
-            <button className="font-text font-bold text-white px-8 py-4 rounded-full text-lg border border-gray-600 hover:border-white hover:bg-white hover:text-black transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2 group">
+            {/* Se añade la propiedad onClick para disparar el scroll suave */}
+            <button 
+              onClick={scrollToServices}
+              className="font-text font-bold text-white px-8 py-4 rounded-full text-lg border border-gray-600 hover:border-white hover:bg-white hover:text-black transition-all duration-300 w-full sm:w-auto flex items-center justify-center gap-2 group"
+            >
               Servicios
               <span className="group-hover:translate-x-1 transition-transform">→</span>
             </button>
           </div>
         </div>
 
-        {/* Columna Derecha: Ilustración y Logo sin movimiento de mouse */}
+        {/* Columna Derecha: Ilustración y Logo */}
         <div className="w-full relative flex justify-center items-center h-[400px] lg:h-[500px] order-1 md:order-2">
-             
-          {/* Círculo de resplandor de fondo */}
           <div className="absolute w-64 h-64 bg-[#599ddf] rounded-full blur-[120px] opacity-20 animate-pulse"></div>
 
-          {/* Logos "Aburridos" descartándose (Competencia) */}
           <div className="absolute top-10 left-10 generic-logo" style={{ animationDelay: '0.2s' }}>
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
           </div>
@@ -167,19 +172,17 @@ export default function Hero() {
             <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2"><polygon points="12 2 22 22 2 22"/></svg>
           </div>
 
-          {/* Logo Principal (Weprom) */}
           <div className="relative z-20 drop-shadow-[0_0_30px_rgba(255,255,255,0.1)]">
              <WepromLogo className="w-64 h-64 md:w-80 md:h-80 lg:w-[400px] lg:h-[400px]" />
           </div>
 
-          {/* Líneas abstractas de diseño (Blueprint) */}
           <svg className="absolute inset-0 w-full h-full z-10 pointer-events-none opacity-40" viewBox="0 0 500 500">
              <circle cx="250" cy="250" r="180" stroke="#80b67d" strokeWidth="1" strokeDasharray="10 10" fill="none" />
              <line x1="50" y1="250" x2="450" y2="250" stroke="#599ddf" strokeWidth="1" strokeDasharray="5 5" />
              <line x1="250" y1="50" x2="250" y2="450" stroke="#599ddf" strokeWidth="1" strokeDasharray="5 5" />
           </svg>
-
         </div>
+
       </div>
     </section>
   );
