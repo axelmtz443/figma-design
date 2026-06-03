@@ -34,31 +34,51 @@ async function prerender() {
     shell: true,
   });
 
-  await new Promise(resolve => setTimeout(resolve, 5000));
+  await new Promise(resolve => setTimeout(resolve, 4000));
   console.log('✅ Servidor corriendo en http://localhost:4173');
 
   const browser = await puppeteer.launch({ 
     headless: true,
-    args: ['--no-sandbox', '--disable-setuid-sandbox'] // útil en algunos entornos
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu']
   });
   const page = await browser.newPage();
 
-  // Configurar un timeout global más alto
-  page.setDefaultNavigationTimeout(60000); // 60 segundos
+  // Desactivar la carga de recursos externos innecesarios para acelerar el Prerenderizado
+  await page.setRequestInterception(true);
+  page.on('request', (req) => {
+    const resourceType = req.resourceType();
+    // Bloqueamos tracking, fuentes de terceros externas o analytics si causan timeouts
+    if (['image', 'media', 'font'].includes(resourceType) && !req.url().includes('localhost')) {
+      req.abort();
+    } else {
+      req.continue();
+    }
+  });
+
+  page.on('pageerror', error => {
+    console.error(`💥 ERROR DE JS EN LA PÁGINA:`, error.message);
+  });
+  
+  page.on('console', msg => {
+    if (msg.type() === 'error') console.error(`🚫 CONSOLA:`, msg.text());
+  });
+
+  // Reducimos el timeout a 10 segundos por ruta. Si se pasa, extrae lo que tenga en el DOM.
+  page.setDefaultNavigationTimeout(10000); 
 
   for (const route of routes) {
     console.log(`📄 Prerenderizando ${route}`);
     const url = `http://localhost:4173${route}`;
     
     try {
-      // Navegar con opciones más flexibles
+      // 'domcontentloaded' es el punto ideal: el HTML ya está construido en el cliente por React.
       await page.goto(url, { 
-        waitUntil: 'load',        // 'networkidle0' a veces nunca ocurre, 'load' es suficiente
-        timeout: 60000 
+        waitUntil: 'domcontentloaded', 
+        timeout: 12000 
       });
       
-      // Pequeña espera para contenido asíncrono (animaciones, fetch)
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Espera de cortesía estándar para asegurar la inyección de componentes reactivos
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
       const html = await page.content();
       
@@ -73,14 +93,22 @@ async function prerender() {
       await fs.writeFile(filePath, html);
       console.log(`✅ Guardado: ${filePath}`);
     } catch (err) {
-      console.error(`❌ Error en ${route}:`, err.message);
-      // Continuar con la siguiente ruta
+      console.error(`⚠️ Nota en ${route}: ${err.message}. Intentando guardar snapshot actual...`);
+      try {
+        const html = await page.content();
+        let filePath = route === '/' ? path.join(distPath, 'index.html') : path.join(distPath, `${route}.html`);
+        if (route.includes('/') && route !== '/') await fs.mkdir(path.dirname(filePath), { recursive: true });
+        await fs.writeFile(filePath, html);
+        console.log(`✅ Guardado (con contingencia): ${filePath}`);
+      } catch (innerErr) {
+        console.error(`❌ No se pudo guardar la ruta ${route}:`, innerErr.message);
+      }
     }
   }
 
   await browser.close();
   preview.kill();
-  console.log('🎉 Prerenderizado completado (con posibles errores controlados)');
+  console.log('🎉 Prerenderizado completado exitosamente.');
 }
 
 prerender().catch(console.error);

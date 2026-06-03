@@ -4,6 +4,14 @@ import App from './App';
 import './index.css';
 import React from 'react';
 
+
+// Al inicio de src/main.tsx o src/App.tsx
+if (typeof window !== 'undefined') {
+  (window as any).initMap = () => {
+    console.log("Google Maps initMap callback ejecutado.");
+  };
+}
+
 // Este es el punto de entrada para el navegador
 const root = document.getElementById('root');
 if (root) {
