@@ -55,18 +55,21 @@ const WepromLogo = ({ className = "" }) => (
 );
 
 export default function Hero() {
-  // Función para hacer scroll suave a la sección
   const scrollToServices = () => {
     const element = document.getElementById('nuestros-servicios');
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      // Método alternativo más robusto si scrollIntoView falla por culpa de ScrollReveal
+      const offsetTop = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({
+        top: offsetTop - 80, // Resta la altura aproximada de tu Navbar para que no tape el título
+        behavior: 'smooth'
+      });
     }
   };
 
   return (
-    /* Cambiado a min-h-screen y aumentado el padding vertical (py-24 md:py-32) */
-    <section className="relative w-full bg-black min-h-screen flex items-center justify-center overflow-hidden py-24 md:py-32 px-6 md:px-12 lg:px-24">
-      <style>{`
+    /* Forzamos h-screen/min-h-screen de forma estricta y aumentamos drásticamente el padding superior */
+    <section className="relative w-full bg-black h-screen min-h-screen flex items-center justify-center overflow-hidden pt-32 pb-20 px-6 md:px-12 lg:px-24 z-10">      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
         
         @font-face {
