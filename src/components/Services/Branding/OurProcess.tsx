@@ -1,393 +1,356 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Clock, Search, Lightbulb, MousePointer2, ClipboardCheck, Rocket } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { PieChart, Search, Lightbulb, PenTool, ClipboardCheck, Rocket } from 'lucide-react';
 
-const steps = [
+type AlignType = 'left' | 'center' | 'right';
+
+interface Step {
+  id: string;
+  title: string;
+  description: string;
+  color: string;
+  icon: React.ReactNode;
+}
+
+interface StepCardProps {
+  step: Step;
+  isHovered: boolean;
+  align?: AlignType;
+}
+
+interface TimelineItemProps {
+  step: Step;
+  index: number;
+  isVisible: boolean;
+}
+
+const STEPS: Step[] = [
   {
-    number: '01',
-    title: 'DIAGNÓSTICO',
-    subtitle: 'Antes de crear, hay que entender.',
-    desc: 'Conocemos y analizamos tu negocio y objetivos para establecer una base sólida.',
-    icon: Clock,
-    accent: '#c5362e',
+    id: "01",
+    title: "Diagnóstico",
+    description: "Conocemos y analizamos tu negocio y objetivos para establecer una base sólida.",
+    color: "#c5362e",
+    icon: <PieChart strokeWidth={1.5} size={28} />,
   },
   {
-    number: '02',
-    title: 'INVESTIGACIÓN',
-    subtitle: 'Una marca sin datos es una apuesta.',
-    desc: 'Profundizamos en tu industria, audiencia y competencia para minimizar riesgos.',
-    icon: Search,
-    accent: '#599ddf',
+    id: "02",
+    title: "Investigación",
+    description: "Profundizamos en tu industria, audiencia y competencia para minimizar riesgos.",
+    color: "#80b67d",
+    icon: <Search strokeWidth={1.5} size={28} />,
   },
   {
-    number: '03',
-    title: 'BRAINSTORMING',
-    subtitle: 'Las mejores ideas no se fuerzan, se exploran.',
-    desc: 'Abrimos todas las posibilidades creativas sin filtros iniciales.',
-    icon: Lightbulb,
-    accent: '#e6af41',
+    id: "03",
+    title: "Brainstorming",
+    description: "Abrimos todas las posibilidades creativas sin filtros iniciales.",
+    color: "#599ddf",
+    icon: <Lightbulb strokeWidth={1.5} size={28} />,
   },
   {
-    number: '04',
-    title: 'CONCEPTO CREATIVO',
-    subtitle: 'Aterrizando el impacto.',
-    desc: 'Con todo lo explorado, desarrollamos las rutas con mayor potencial de conexión.',
-    icon: MousePointer2,
-    accent: '#80b67d',
+    id: "04",
+    title: "Concepto",
+    description: "Desarrollamos las ideas con mayor potencial de conexión.",
+    color: "#e6af41",
+    icon: <PenTool strokeWidth={1.5} size={28} />,
   },
   {
-    number: '05',
-    title: 'DISEÑO Y DESARROLLO',
-    subtitle: 'El concepto se vuelve visual.',
-    desc: 'Logotipo, sistema gráfico y aplicaciones ejecutadas con máxima precisión técnica.',
-    icon: ClipboardCheck,
-    accent: '#c5362e',
+    id: "05",
+    title: "Desarrollo",
+    description: "Logotipo y sistema gráfico ejecutados con máxima precisión técnica.",
+    color: "#c5362e",
+    icon: <ClipboardCheck strokeWidth={1.5} size={28} />,
   },
   {
-    number: '06',
-    title: 'ENTREGA',
-    subtitle: 'Listo para el mercado.',
-    desc: 'Te proporcionamos todos los materiales para que tu marca destaque desde el primer día.',
-    icon: Rocket,
-    accent: '#599ddf',
+    id: "06",
+    title: "Entrega",
+    description: "Te proporcionamos los materiales para destacar desde el primer día.",
+    color: "#80b67d",
+    icon: <Rocket strokeWidth={1.5} size={28} />,
   },
 ];
 
-/* ── Single Step Card (sticky scroll panel) ── */
-const StepPanel = ({
-  step,
-  index,
-  total,
-  progress,
-}: {
-  step: (typeof steps)[0];
-  index: number;
-  total: number;
-  progress: number; // 0-1 how far this panel has been scrolled through
-}) => {
-  const Icon = step.icon;
-
-  // Derive visibility: panel appears when its "slot" is active
-  const visible = progress > 0 && progress <= 1;
-
+function StepCard({ step, isHovered, align = 'left' }: StepCardProps) {
   return (
-    <motion.div
-      className="w-full h-full flex"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: visible ? 1 : 0 }}
-      transition={{ duration: 0.5 }}
+    <div
+      className="relative flex flex-col justify-between p-4 xl:p-5 rounded-2xl bg-[#0a0a0a] border transition-all duration-500 w-full overflow-hidden min-h-[160px] md:min-h-[180px] xl:min-h-[210px]"
+      style={{
+        borderColor: isHovered ? `${step.color}50` : '#1f2937',
+        boxShadow: isHovered ? `0 15px 35px -10px ${step.color}30` : '0 4px 20px -5px rgba(0,0,0,0.5)',
+        transform: isHovered
+          ? align === 'center' ? 'scale(1.03)' : align === 'right' ? 'translateX(-8px)' : 'translateX(8px)'
+          : 'scale(1)',
+        textAlign: align,
+        zIndex: isHovered ? 50 : 10,
+      }}
     >
-      {/* ── LEFT HALF: Giant number ── */}
+      {/* Accent corner glow */}
       <div
-        className="w-[40%] flex items-center justify-center relative overflow-hidden flex-shrink-0"
-        style={{ background: `${step.accent}18` }}
-      >
-        {/* Subtle radial glow behind number */}
+        className={`absolute top-0 w-32 h-32 opacity-10 transition-all duration-500 pointer-events-none
+          ${align === 'right' ? 'right-0' : align === 'center' ? 'left-1/2 -translate-x-1/2' : 'left-0'}`}
+        style={{
+          background: `radial-gradient(circle at ${align === 'right' ? 'top right' : align === 'center' ? 'top' : 'top left'}, ${step.color}, transparent)`,
+          transform: isHovered ? 'scale(1.5)' : 'scale(1)',
+        }}
+      />
+
+      {/* Large background number (desktop center cards) */}
+      {align === 'center' && (
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-8xl font-title opacity-[0.03] transition-transform duration-700 pointer-events-none"
           style={{
-            background: `radial-gradient(ellipse 80% 80% at 50% 50%, ${step.accent}30 0%, transparent 70%)`,
-          }}
-        />
-        <motion.span
-          key={step.number}
-          initial={{ opacity: 0, scale: 0.85, y: 40 }}
-          animate={{ opacity: visible ? 1 : 0, scale: visible ? 1 : 0.85, y: visible ? 0 : 40 }}
-          transition={{ duration: 0.7, ease: [0.23, 1, 0.32, 1] }}
-          className="font-montserrat font-black leading-none select-none relative z-10"
-          style={{
-            fontSize: 'clamp(120px, 18vw, 220px)',
-            color: step.accent,
-            opacity: 0.85,
-            letterSpacing: '-0.04em',
+            color: step.color,
+            transform: isHovered
+              ? 'translate(-50%, -50%) scale(1.1) rotate(-5deg)'
+              : 'translate(-50%, -50%) scale(1)',
           }}
         >
-          {step.number}
-        </motion.span>
+          {step.id}
+        </div>
+      )}
 
-        {/* Vertical divider line */}
-        <div
-          className="absolute right-0 top-[10%] h-[80%] w-px"
-          style={{ background: `${step.accent}30` }}
-        />
-      </div>
-
-      {/* ── RIGHT HALF: Content ── */}
-      <div className="flex-1 flex flex-col items-start justify-center px-10 sm:px-14 lg:px-20 gap-5">
-        {/* Icon + step indicator */}
-        <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : -20 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-          className="flex items-center gap-3"
-        >
-          <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center"
-            style={{ background: `${step.accent}20`, border: `1px solid ${step.accent}50` }}
-          >
-            <Icon size={18} style={{ color: step.accent }} strokeWidth={1.8} />
-          </div>
-          <span
-            className="font-montserrat text-xs tracking-[0.25em] uppercase font-semibold"
-            style={{ color: step.accent }}
-          >
-            Paso {index + 1} de {total}
-          </span>
-        </motion.div>
-
-        {/* Title */}
-        <motion.h3
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 30 }}
-          transition={{ duration: 0.65, delay: 0.15, ease: [0.23, 1, 0.32, 1] }}
-          className="font-montserrat font-black text-white leading-[0.95] tracking-tight"
-          style={{ fontSize: 'clamp(36px, 5vw, 72px)' }}
+      <div className="relative z-10 flex flex-col items-center h-full">
+        <h3
+          className="font-title text-base xl:text-lg mb-2 transition-colors duration-300"
+          style={{ color: isHovered ? step.color : '#ffffff' }}
         >
           {step.title}
-        </motion.h3>
-
-        {/* Subtitle in accent color */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 20 }}
-          transition={{ duration: 0.55, delay: 0.22 }}
-          className="font-montserrat font-semibold uppercase tracking-widest text-sm"
-          style={{ color: step.accent }}
-        >
-          {step.subtitle}
-        </motion.p>
-
-        {/* Description */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: visible ? 1 : 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="font-montserrat text-white/65 text-base sm:text-lg leading-relaxed max-w-md"
-        >
-          {step.desc}
-        </motion.p>
-
-        {/* Progress bar for this step */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: visible ? 1 : 0 }}
-          transition={{ duration: 0.4, delay: 0.35 }}
-          className="w-48 h-[2px] bg-white/10 rounded-full overflow-hidden mt-2"
-        >
-          <motion.div
-            className="h-full rounded-full"
-            style={{ backgroundColor: step.accent }}
-            animate={{ width: visible ? '100%' : '0%' }}
-            transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
-          />
-        </motion.div>
+        </h3>
+        <p className="font-text text-gray-400 text-xs xl:text-sm leading-relaxed mt-auto">
+          {step.description}
+        </p>
       </div>
-    </motion.div>
+    </div>
   );
-};
+}
 
-/* ── Mobile fallback: simple vertical list ── */
-const MobileProcess = () => (
-  <div className="flex flex-col gap-12 py-16 px-6">
-    {steps.map((step, i) => {
-      const Icon = step.icon;
-      return (
-        <motion.div
-          key={i}
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.7, delay: i * 0.05 }}
-          className="flex gap-6 items-start"
+function MobileTimelineItem({ step, index, isVisible }: TimelineItemProps) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      className={`relative flex items-center w-full mb-12 transition-all duration-1000 ease-out ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+      }`}
+      style={{ transitionDelay: `${index * 150}ms` }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Icon node */}
+      <div className="absolute left-[28px] md:left-[40px] flex flex-col items-center justify-center z-20">
+        <div
+          className="absolute -top-6 font-title text-sm md:text-base font-bold transition-all duration-300"
+          style={{ color: isHovered ? step.color : '#4b5563' }}
         >
-          {/* Number */}
-          <span
-            className="font-montserrat font-black leading-none flex-shrink-0 mt-1"
-            style={{ fontSize: 56, color: step.accent, opacity: 0.9 }}
+          {step.id}
+        </div>
+        <div
+          className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center transition-all duration-500 relative overflow-hidden"
+          style={{
+            borderColor: isHovered ? step.color : '#374151',
+            boxShadow: isHovered ? `0 0 20px ${step.color}60` : 'none',
+            transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+            color: isHovered ? '#fff' : '#9ca3af',
+          }}
+        >
+          {step.icon}
+        </div>
+        {/* Horizontal connector to card */}
+        <div
+          className="absolute top-1/2 left-full h-[2px] transition-all duration-500 -z-10"
+          style={{
+            width: isHovered ? '1.5rem' : '1rem',
+            backgroundColor: isHovered ? step.color : '#374151',
+            boxShadow: isHovered ? `0 0 10px ${step.color}80` : 'none',
+          }}
+        />
+      </div>
+
+      {/* Card */}
+      <div className="w-full pl-[80px] md:pl-[120px]">
+        <StepCard step={step} isHovered={isHovered} align="left" />
+      </div>
+    </div>
+  );
+}
+
+function DesktopGridItem({ step, index, isVisible }: TimelineItemProps) {
+  const [isHovered, setIsHovered] = useState(false);
+  const isTop = index % 2 === 0;
+
+  return (
+    <div
+      className={`relative w-full h-[450px] xl:h-[500px] flex flex-col items-center justify-center transition-all duration-1000 ease-out ${
+        isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
+      }`}
+      style={{ transitionDelay: `${index * 150}ms` }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {/* Central node */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
+        <div
+          className="absolute -top-8 left-1/2 -translate-x-1/2 font-title text-sm xl:text-base font-bold transition-all duration-300"
+          style={{ color: isHovered ? step.color : '#4b5563' }}
+        >
+          {step.id}
+        </div>
+        <div
+          className="w-12 h-12 xl:w-14 xl:h-14 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center transition-all duration-500 overflow-hidden cursor-pointer"
+          style={{
+            borderColor: isHovered ? step.color : '#374151',
+            boxShadow: isHovered ? `0 0 25px ${step.color}80, inset 0 0 10px ${step.color}40` : 'none',
+            transform: isHovered ? 'scale(1.2)' : 'scale(1)',
+            color: isHovered ? '#fff' : '#9ca3af',
+          }}
+        >
+          <div className="relative z-10 scale-90">{step.icon}</div>
+        </div>
+      </div>
+
+      {/* Card above the line */}
+      {isTop && (
+        <div className="absolute bottom-1/2 pb-10 xl:pb-12 flex flex-col items-center w-full z-10">
+          <div
+            className="w-[170px] lg:w-[190px] xl:w-[210px] mb-4 transition-all duration-500 origin-bottom"
+            style={{ transform: isHovered ? 'translateY(8px)' : 'translateY(0)' }}
           >
-            {step.number}
-          </span>
-
-          <div className="flex flex-col gap-2">
-            <div
-              className="w-9 h-9 rounded-xl flex items-center justify-center mb-1"
-              style={{ background: `${step.accent}20`, border: `1px solid ${step.accent}50` }}
-            >
-              <Icon size={16} style={{ color: step.accent }} strokeWidth={1.8} />
-            </div>
-            <h3 className="font-montserrat font-black text-white text-2xl tracking-tight leading-tight">
-              {step.title}
-            </h3>
-            <p className="font-montserrat font-semibold text-xs uppercase tracking-widest" style={{ color: step.accent }}>
-              {step.subtitle}
-            </p>
-            <p className="font-montserrat text-white/60 text-sm leading-relaxed">{step.desc}</p>
+            <StepCard step={step} isHovered={isHovered} align="center" />
           </div>
-        </motion.div>
-      );
-    })}
-  </div>
-);
+          <div
+            className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[2px] h-10 xl:h-12 transition-all duration-500"
+            style={{
+              backgroundColor: isHovered ? step.color : '#374151',
+              boxShadow: isHovered ? `0 0 15px ${step.color}90` : 'none',
+            }}
+          />
+        </div>
+      )}
 
-/* ── Main Component ── */
-const OurProcess = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [activeStep, setActiveStep] = useState(0);
-  const [stepProgress, setStepProgress] = useState<number[]>(steps.map(() => 0));
+      {/* Card below the line */}
+      {!isTop && (
+        <div className="absolute top-1/2 pt-10 xl:pt-12 flex flex-col items-center w-full z-10">
+          <div
+            className="absolute top-0 left-1/2 -translate-x-1/2 w-[2px] h-10 xl:h-12 transition-all duration-500"
+            style={{
+              backgroundColor: isHovered ? step.color : '#374151',
+              boxShadow: isHovered ? `0 0 15px ${step.color}90` : 'none',
+            }}
+          />
+          <div
+            className="w-[170px] lg:w-[190px] xl:w-[210px] mt-4 transition-all duration-500 origin-top"
+            style={{ transform: isHovered ? 'translateY(-8px)' : 'translateY(0)' }}
+          >
+            <StepCard step={step} isHovered={isHovered} align="center" />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
-  // Total scroll height = viewport height × number of steps (each step gets 1 full vh of scroll)
-  const STEP_SCROLL_HEIGHT = 1; // in vh units per step
+export default function OurProcess() {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
 
-    const handleScroll = () => {
-      const rect = container.getBoundingClientRect();
-      const containerScrolled = -rect.top; // px scrolled into container
-      const totalScrollable = container.offsetHeight - window.innerHeight;
-      const totalProgress = Math.max(0, Math.min(1, containerScrolled / totalScrollable));
-
-      // Map total progress to individual step progress
-      const newProgresses = steps.map((_, i) => {
-        const start = i / steps.length;
-        const end = (i + 1) / steps.length;
-        const p = (totalProgress - start) / (end - start);
-        return Math.max(0, Math.min(1, p));
-      });
-
-      setStepProgress(newProgresses);
-
-      // Active step = which slot we're in
-      const rawActive = Math.floor(totalProgress * steps.length);
-      setActiveStep(Math.min(rawActive, steps.length - 1));
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
   }, []);
 
   return (
-    <section className="w-full bg-transparent">
+    <section
+      ref={sectionRef}
+      className="relative w-full bg-black min-h-screen py-24 overflow-hidden flex flex-col justify-center"
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap');
 
-      {/* ── Section header ── */}
-      <div className="max-w-7xl mx-auto px-6 md:px-20 pt-24 pb-16">
-        <div className="flex flex-col lg:flex-row justify-between items-start gap-8">
-          <div>
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="font-montserrat text-white text-3xl sm:text-4xl lg:text-5xl font-light leading-tight"
-            >
-              Nuestro Proceso
-            </motion.h2>
-            <motion.h3
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="font-aston text-white text-5xl sm:text-7xl lg:text-8xl font-normal tracking-wide mt-1"
-            >
-              Creativo
-            </motion.h3>
-          </div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="max-w-[35rem] font-montserrat text-white/65 text-lg leading-relaxed pt-2 lg:pt-6"
-          >
-            Cada proyecto sigue una metodología probada. Aplicamos el{' '}
-            <span className="font-bold text-white">WeProm Branding System®</span>{' '}
-            para garantizar coherencia y resultados medibles desde el primer día.
-          </motion.p>
+        .font-title { font-family: 'Astonpoliz', 'Montserrat', sans-serif; font-weight: 800; }
+        .font-text  { font-family: 'Montserrat', sans-serif; }
+
+        .traveling-line-y {
+          position: absolute;
+          top: -150px;
+          left: 0;
+          width: 100%;
+          height: 150px;
+          background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.8), transparent);
+          animation: travelDown 4s ease-in-out infinite;
+          opacity: 0.5;
+        }
+
+        .traveling-line-x {
+          position: absolute;
+          top: 0;
+          left: -250px;
+          height: 100%;
+          width: 250px;
+          background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
+          animation: travelRight 5s ease-in-out infinite;
+          opacity: 0.5;
+        }
+
+        @keyframes travelDown {
+          0%   { top: -150px; opacity: 0; }
+          20%  { opacity: 0.8; }
+          80%  { opacity: 0.8; }
+          100% { top: 100%; opacity: 0; }
+        }
+
+        @keyframes travelRight {
+          0%   { left: -250px; opacity: 0; }
+          20%  { opacity: 0.8; }
+          80%  { opacity: 0.8; }
+          100% { left: 100%; opacity: 0; }
+        }
+      `}</style>
+
+      {/* Header */}
+      <div
+        className={`text-center max-w-3xl mx-auto mb-12 px-6 lg:mb-16 space-y-6 transition-all duration-1000 ease-out z-20 relative ${
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
+        }`}
+      >
+        <h2 className="font-title text-4xl md:text-5xl lg:text-6xl text-white tracking-tight">
+          Nuestro Proceso <b>Creativo</b>
+        </h2>
+        <p className="font-text text-gray-400 text-lg md:text-xl leading-relaxed">
+          Un proceso estructurado para transformar ideas en marcas que lideran. Sin pasos innecesarios, solo resultados.
+        </p>
+      </div>
+
+      {/* Mobile timeline */}
+      <div className="block lg:hidden relative w-full max-w-2xl mx-auto px-6">
+        <div className="absolute left-[52px] md:left-[64px] top-0 bottom-0 w-[2px] bg-gray-800 -translate-x-1/2 overflow-hidden rounded-full">
+          <div className="traveling-line-y" />
+        </div>
+        <div className="relative z-10 pt-8 pb-8">
+          {STEPS.map((step, index) => (
+            <MobileTimelineItem key={step.id} step={step} index={index} isVisible={isVisible} />
+          ))}
         </div>
       </div>
 
-      {/* ── Desktop: Sticky scroll ── */}
-      <div className="hidden lg:block" ref={containerRef} style={{ height: `${steps.length * 100}vh` }}>
-        {/* Sticky viewport */}
-        <div className="sticky top-0 h-screen overflow-hidden">
-
-          {/* Global progress bar (top) */}
-          <div className="absolute top-0 left-0 right-0 h-[3px] bg-white/5 z-30">
-            <motion.div
-              className="h-full"
-              style={{
-                backgroundColor: steps[activeStep]?.accent ?? '#c5362e',
-                width: `${((activeStep) / (steps.length - 1)) * 100}%`,
-              }}
-              transition={{ duration: 0.3 }}
-            />
-          </div>
-
-          {/* Step indicator pills */}
-          <div className="absolute top-6 left-1/2 -translate-x-1/2 flex items-center gap-2 z-30">
-            {steps.map((s, i) => (
-              <div
-                key={i}
-                className="rounded-full transition-all duration-500"
-                style={{
-                  width: i === activeStep ? 28 : 8,
-                  height: 8,
-                  backgroundColor:
-                    i <= activeStep ? s.accent : 'rgba(255,255,255,0.15)',
-                }}
-              />
-            ))}
-          </div>
-
-          {/* Steps stacked, only active is visible */}
-          <div className="w-full h-full relative">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeStep}
-                className="absolute inset-0"
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -50 }}
-                transition={{ duration: 0.55, ease: [0.23, 1, 0.32, 1] }}
-              >
-                <StepPanel
-                  step={steps[activeStep]}
-                  index={activeStep}
-                  total={steps.length}
-                  progress={stepProgress[activeStep]}
-                />
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          {/* Bottom progress bar */}
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 w-64 h-[2px] bg-white/10 rounded-full overflow-hidden z-30">
-            <motion.div
-              className="h-full rounded-full"
-              style={{
-                backgroundColor: steps[activeStep]?.accent ?? '#c5362e',
-                width: `${((activeStep + (stepProgress[activeStep] ?? 0)) / steps.length) * 100}%`,
-              }}
-            />
-          </div>
-
-          {/* Step counter */}
-          <div className="absolute bottom-8 right-16 z-30">
-            <span className="font-montserrat text-white/25 text-sm tracking-widest">
-              {String(activeStep + 1).padStart(2, '0')} / {String(steps.length).padStart(2, '0')}
-            </span>
-          </div>
+      {/* Desktop timeline */}
+      <div className="hidden lg:grid grid-cols-6 relative w-full max-w-[1100px] xl:max-w-[1300px] mx-auto px-6 lg:px-12 xl:px-16">
+        {/* Horizontal center line */}
+        <div className="absolute left-[8.33%] right-[8.33%] top-1/2 -translate-y-1/2 h-[2px] bg-gray-800 overflow-hidden rounded-full z-0">
+          <div className="traveling-line-x" />
         </div>
-      </div>
 
-      {/* ── Mobile: simple vertical list ── */}
-      <div className="lg:hidden">
-        <MobileProcess />
+        {STEPS.map((step, index) => (
+          <DesktopGridItem key={step.id} step={step} index={index} isVisible={isVisible} />
+        ))}
       </div>
-
     </section>
   );
-};
-
-export default OurProcess;
+}
