@@ -269,7 +269,7 @@ export default function OurProcess() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-black min-h-screen py-24 overflow-hidden flex flex-col justify-center"
+      className="relative w-full bg-transparent min-h-screen py-24 overflow-hidden flex flex-col justify-center"
     >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap');

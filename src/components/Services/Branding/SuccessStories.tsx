@@ -188,7 +188,7 @@ export default function SuccessStories() {
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-montserrat flex flex-col items-center p-4 sm:p-8 relative overflow-hidden py-12 md:py-20">
+    <div className="min-h-screen bg-transparent text-white font-montserrat flex flex-col items-center p-4 sm:p-8 relative overflow-hidden py-12 md:py-20">
       <style dangerouslySetInnerHTML={{ __html: customStyles }} />
       <div className="absolute inset-0 bg-noise z-0" />
 

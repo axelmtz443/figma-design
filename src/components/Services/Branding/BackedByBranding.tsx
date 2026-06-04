@@ -51,35 +51,35 @@ interface Brand {
 
 function BackedByBranding() {
   const brands: Brand[] = [
-  { src: LOGO1 },
-  { src: LOGO2 },
-  { src: LOGO3 },
-  { src: LOGO4 },
-  { src: LOGO5 },
-  { src: LOGO6 },
-  { src: LOGO7 },
-  { src: LOGO8 },
-  { src: LOGO9 },
-  { src: LOGO10 },
-  { src: LOGO11 },
-  { src: LOGO12 },
-  { src: LOGO13 },
-  { src: LOGO14 },
-  { src: LOGO15 },
-  { src: LOGO16 },
-  { src: LOGO17 },
-  { src: LOGO18 },
-  { src: LOGO19 },
-  { src: LOGO20 },
-  { src: LOGO21 },
-  { src: LOGO22 },
-  { src: LOGO23 },
-  { src: LOGO24 },
-  { src: LOGO25 },
-  { src: LOGO26 },
-  { src: LOGO27 },
-  { src: LOGO28 },
-];
+    { src: LOGO1, sizeClass: 'h-20 sm:h-22 md:h-24' },  // Super grande (CSLOGOROSA)
+    { src: LOGO2 },
+    { src: LOGO3 },
+    { src: LOGO4, sizeClass: 'h-24 sm:h-28 md:h-32' },
+    { src: LOGO5, sizeClass: 'h-24 sm:h-28 md:h-32' },
+    { src: LOGO6 },
+    { src: LOGO7 },
+    { src: LOGO8, sizeClass: 'h-7 sm:h-9 md:h-11' },    // Pequeño (LogosParaWeb-09)
+    { src: LOGO9 },
+    { src: LOGO10, sizeClass: 'h-24 sm:h-28 md:h-32' },  // Super grande (CSLOGOROSA)
+    { src: LOGO11 },
+    { src: LOGO12 },
+    { src: LOGO13 },
+    { src: LOGO14 },
+    { src: LOGO15 },
+    { src: LOGO16 },
+    { src: LOGO17, sizeClass: 'h-20 sm:h-22 md:h-24' }, // Super grande (LogosParaWeb-21)
+    { src: LOGO18 },
+    { src: LOGO19, sizeClass: 'h-20 sm:h-22 md:h-24' }, // Super grande (LogosParaWeb-23)
+    { src: LOGO20, sizeClass: 'h-20 sm:h-22 md:h-24' }, // Super grande (LogosParaWeb-24)
+    { src: LOGO21, sizeClass: 'h-24 sm:h-28 md:h-32' }, // Super grande (LOGOTIPOCOMBAZUL)
+    { src: LOGO22 },
+    { src: LOGO23, sizeClass: 'h-40 sm:h-48 md:h-56' }, // Super grande (Mesa de trabajo 1 (3))
+    { src: LOGO24 },
+    { src: LOGO25, sizeClass: 'h-24 sm:h-28 md:h-32' }, // Super grande (Mesa de trabajo 2@2x (1))
+    { src: LOGO26, sizeClass: 'h-20 sm:h-22 md:h-24' }, // Super grande (Mesa de trabajo 4)
+    { src: LOGO27, sizeClass: 'h-7 sm:h-9 md:h-11' },    // Pequeño (Mesa de trabajo 5 (1))
+    { src: LOGO28, sizeClass: 'h-7 sm:h-9 md:h-11' },    // Pequeño (Mesa de trabajo 12)
+  ];
 
 
   const allBrands = [...brands, ...brands];
@@ -127,10 +127,12 @@ function BackedByBranding() {
                   ) : (
                     <img
                       src={brand.src}
+                      alt="Brand Logo"
                       className={`w-auto object-contain transition-all ${
-                        brand.sizeClass ? brand.sizeClass : 'h-7 sm:h-9 md:h-11'
+                        brand.sizeClass ? brand.sizeClass : 'h-14 sm:h-16 md:h-18'
                       }`}
                     />
+                    
                   )}
                   
                 </div>
