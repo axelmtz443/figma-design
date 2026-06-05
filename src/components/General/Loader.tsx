@@ -79,10 +79,10 @@ export default function Loader() {
           <div className="flex justify-between items-baseline">
             <div className="flex flex-col">
               <span className="text-[10px] text-white/30 uppercase tracking-[0.4em] font-montserrat">
-                We Prom Marketing
+                WeProm Marketing
               </span>
               <span className="text-[8px] text-white/10 uppercase tracking-[0.2em]">
-                Creative Studio &copy; 2026
+                Cargando Experiencia Personalizada
               </span>
             </div>
             <div className="flex items-end gap-1">
