@@ -1,7 +1,7 @@
 import React from 'react';
 
-const WepromLogo = ({ className = "" }) => (
-  <svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 780.55 712.65" className={className}>
+const WepromLogo = ({ className = "", style = {} }) => (
+  <svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 780.55 712.65" className={className} style={style}>
     <defs>
       <style>{`
         .cls-1 { fill: url(#Degradado_sin_nombre_6); }
@@ -80,20 +80,22 @@ export default function Hero() {
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
         .font-title { font-family: 'Montserrat', sans-serif; font-weight: 800; }
         .font-text  { font-family: 'Montserrat', sans-serif; }
+
         .logo-path {
           stroke: #ffffff;
-          stroke-width: 2;
-          stroke-dasharray: 2000;
-          animation: logoCycle 10s ease-in-out infinite;
+          stroke-width: 1.5;
+          stroke-dasharray: 2500;
+          stroke-dashoffset: 2500;
+          animation: logoCycle 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
         }
         @keyframes logoCycle {
-          0%       { stroke-dashoffset: 2000; fill-opacity: 0; stroke: #ffffff; stroke-width: 2; opacity: 0; }
-          5%       { stroke-dashoffset: 2000; fill-opacity: 0; stroke: #ffffff; stroke-width: 2; opacity: 1; }
-          30%      { stroke-dashoffset: 0;    fill-opacity: 0; stroke: #ffffff; stroke-width: 2; }
-          40%      { stroke-dashoffset: 0;    fill-opacity: 1; stroke: transparent; stroke-width: 0; }
-          85%      { stroke-dashoffset: 0;    fill-opacity: 1; stroke: transparent; stroke-width: 0; opacity: 1; }
-          95%, 100%{ stroke-dashoffset: 0;    fill-opacity: 1; stroke: transparent; stroke-width: 0; opacity: 0; }
+          0% { stroke-dashoffset: 2500; fill-opacity: 0; opacity: 0; }
+          10% { stroke-dashoffset: 2500; fill-opacity: 0; opacity: 1; }
+          40% { stroke-dashoffset: 0; fill-opacity: 0; stroke: #ffffff; }
+          55%, 90% { stroke-dashoffset: 0; fill-opacity: 1; stroke: rgba(255,255,255,0.2); opacity: 1; }
+          98%, 100% { stroke-dashoffset: 0; fill-opacity: 1; opacity: 0; }
         }
+
         .generic-logo { animation: fadeReject 10s infinite; }
         @keyframes fadeReject {
           0%, 5%   { opacity: 0; transform: scale(0.8) translateY(0);   filter: grayscale(100%); }
@@ -124,7 +126,7 @@ export default function Hero() {
       />
 
       {/* Contenido principal */}
-      <div style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '1280px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', alignItems: 'center', gap: '48px' }}>
+      <div style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '1050px', margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', alignItems: 'center', gap: '40px' }}>
 
         {/* Columna izquierda — textos */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '32px' }}>
@@ -176,8 +178,8 @@ export default function Hero() {
             <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2"><polygon points="12 2 22 22 2 22"/></svg>
           </div>
 
-          <div style={{ position: 'relative', zIndex: 20 }}>
-            <WepromLogo style={{ width: 'clamp(220px, 28vw, 380px)', height: 'clamp(220px, 28vw, 380px)' }} />
+          <div style={{ position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <WepromLogo style={{ width: '100%', height: '100%', maxWidth: '360px', maxHeight: '360px' }} />
           </div>
 
           <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 10, pointerEvents: 'none', opacity: 0.4 }} viewBox="0 0 500 500">
