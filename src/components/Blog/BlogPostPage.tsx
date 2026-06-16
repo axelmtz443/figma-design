@@ -149,8 +149,8 @@ export default function BlogPostPage({
     },
     types: {
       image: ({ value }: any) => (
-        <div className="my-6 rounded-xl overflow-hidden border border-white/10">
-          <img src={value.url} alt={value.alt || 'Blog Image'} className="w-full h-auto object-cover" />
+        <div className="my-2 rounded-xl overflow-hidden flex justify-center items-center">
+          <img src={value.url} alt={value.alt || 'Blog Image'} className="w-[50%] h-auto object-cover rounded-lg" />
         </div>
       ),
     },
@@ -228,21 +228,10 @@ export default function BlogPostPage({
         </motion.div>
 
         {/* Hero image */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="w-full aspect-[16/7] rounded-3xl overflow-hidden mb-12"
-          style={{ background: post.image }}
-        >
-          <div
-            className="w-full h-full opacity-20 mix-blend-overlay"
-            style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}
-          />
-        </motion.div>
+        
 
         {/* Two-column layout */}
-        <div className="flex flex-col lg:flex-row gap-10">
+        <div className="flex flex-col gap-10">
 
           {/* Article body */}
           <motion.article
