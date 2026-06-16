@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 import { getPostBySlug, getAllPosts, BlogPost } from '../lib/sanityQueries';
 import BlogPostPageComponent from '../components/Blog/BlogPostPage';
 
+import Navbar from '../components/General/Navbar';
+import Footer from '../components/General/Footer';
+
 export default function BlogPostPageWrapper() {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -36,11 +39,19 @@ export default function BlogPostPageWrapper() {
   }
 
   return (
-    <BlogPostPageComponent
-      post={post}
-      relatedPosts={relatedPosts}
-      onBack={() => navigate('/blog')}
-      onNavigate={(newPost) => navigate(`/blog/${newPost.slug}`)}
-    />
+    <div className="min-h-screen bg-transparent text-white flex flex-col justify-between">
+      <Navbar />
+      
+      <main className="flex-grow">
+        <BlogPostPageComponent
+          post={post}
+          relatedPosts={relatedPosts}
+          onBack={() => navigate('/blog')}
+          onNavigate={(newPost) => navigate(`/blog/${newPost.slug}`)}
+        />
+      </main>
+
+      <Footer />
+    </div>
   );
 }

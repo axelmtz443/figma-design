@@ -170,7 +170,7 @@ export default function BlogPostPage({
       transition={{ duration: 0.4 }}
       className="w-full bg-transparent min-h-screen py-12 px-4 sm:px-8"
     >
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-5xl mx-auto p-16">
 
         {/* Back Button */}
         <motion.button
@@ -178,7 +178,7 @@ export default function BlogPostPage({
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.1 }}
           onClick={onBack}
-          className="font-montserrat text-[12px] text-white/40 hover:text-white/80 transition-colors mb-8 flex items-center gap-2"
+          className="font-montserrat text-[12px] text-white/40 hover:text-white/80 transition-colors mb-2 flex items-center gap-2"
         >
           ← Back to Blog
         </motion.button>
