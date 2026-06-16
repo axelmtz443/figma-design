@@ -127,12 +127,23 @@ function BlogCard({ post, index, onClick }: { post: BlogPost; index: number; onC
       onClick={onClick}
       className="group flex flex-col rounded-3xl overflow-hidden border border-white/10 bg-white/[0.02] cursor-pointer transition-all hover:border-white/20 hover:bg-white/[0.04]"
     >
-      <div className="relative w-full aspect-[4/3] overflow-hidden" style={{ background: post.image }}>
-        <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }} />
-        <span className="absolute top-3 left-3 font-montserrat text-[10px] font-semibold uppercase tracking-widest text-white px-2.5 py-1 rounded-full" style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.12)' }}>
+      
+      <div className="relative w-full aspect-[4/3] overflow-hidden bg-white/[0.03]">
+        {post.image ? (
+          <img 
+            src={post.image} 
+            alt={post.title || 'Blog cover'} 
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+          />
+        ) : (
+          <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900" />
+        )}
+        <div className="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }} />
+        <span className="absolute top-3 left-3 font-montserrat text-[10px] font-semibold uppercase tracking-widest text-white px-2.5 py-1 rounded-full z-10" style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.12)' }}>
           {post.category}
         </span>
       </div>
+
       <div className="p-4 flex flex-col flex-1 gap-2">
         <h3 className="font-montserrat font-semibold text-white text-[13px] leading-snug group-hover:text-white/90 transition-colors line-clamp-2">
           {post.title}
