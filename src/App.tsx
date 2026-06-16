@@ -16,6 +16,8 @@ import ConsultoriaDeMarketing from './pages/servicesPages/consultoria/mainConsul
 import MainMktDigital from './pages/servicesPages/mkt-digital/mainMktDigital';
 import MarketResearch from './pages/servicesPages/market-research/mainMR';
 
+import BlogPostPageWrapper from './pages/BlogPostPageWrapper';
+
 function App() {
   const [showLoader, setShowLoader] = useState(true);
   const [loading, setLoading] = useState(true);
@@ -55,6 +57,7 @@ function App() {
         <Route path="/servicios/investigacion-de-mercados" element={<MarketResearch />} />
 
         <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogPostPageWrapper />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
     </>

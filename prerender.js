@@ -4,22 +4,38 @@ import { spawn } from 'child_process';
 import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { getAllSlugs } from './src/lib/sanityQueries.node.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const routes = [
-  '/',
-  '/nosotros',
-  '/servicios',
-  '/servicios/branding',
-  '/servicios/audiovisual',
-  '/servicios/consultoriademarketing',
-  '/servicios/marketing-digital',
-  '/servicios/investigacion-de-mercados',
-  '/blog',
-  '/contact'
-];
 
 async function prerender() {
+  // Obtener slugs dinámicos desde Sanity
+  let dynamicRoutes = [];
+  try {
+    console.log('📡 Obteniendo slugs desde Sanity...');
+    dynamicRoutes = await getAllSlugs();
+    console.log(`✅ Obtenidos ${dynamicRoutes.length} slugs desde Sanity`);
+  } catch (error) {
+    console.error('⚠️ No se pudo conectar con Sanity:', error.message);
+    console.log('ℹ️ Continuando con rutas fijas solamente');
+  }
+
+  const routes = [
+    '/',
+    '/nosotros',
+    '/servicios',
+    '/servicios/branding',
+    '/servicios/audiovisual',
+    '/servicios/consultoriademarketing',
+    '/servicios/marketing-digital',
+    '/servicios/investigacion-de-mercados',
+    '/blog',
+    '/contact',
+    ...dynamicRoutes
+  ];
+
+  console.log(`📋 Total de rutas a prerenderizar: ${routes.length}`);
+
   const distPath = path.join(__dirname, 'dist');
   try {
     await fs.access(distPath);
@@ -34,20 +50,19 @@ async function prerender() {
     shell: true,
   });
 
-  await new Promise(resolve => setTimeout(resolve, 4000));
+  await new Promise(resolve => setTimeout(resolve, 5000));
   console.log('✅ Servidor corriendo en http://localhost:4173');
 
-  const browser = await puppeteer.launch({ 
+  const browser = await puppeteer.launch({
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu']
   });
   const page = await browser.newPage();
 
-  // Desactivar la carga de recursos externos innecesarios para acelerar el Prerenderizado
+  // Desactivar recursos externos para acelerar
   await page.setRequestInterception(true);
   page.on('request', (req) => {
     const resourceType = req.resourceType();
-    // Bloqueamos tracking, fuentes de terceros externas o analytics si causan timeouts
     if (['image', 'media', 'font'].includes(resourceType) && !req.url().includes('localhost')) {
       req.abort();
     } else {
@@ -58,34 +73,27 @@ async function prerender() {
   page.on('pageerror', error => {
     console.error(`💥 ERROR DE JS EN LA PÁGINA:`, error.message);
   });
-  
-  page.on('console', msg => {
-    if (msg.type() === 'error') console.error(`🚫 CONSOLA:`, msg.text());
-  });
 
-  // Reducimos el timeout a 10 segundos por ruta. Si se pasa, extrae lo que tenga en el DOM.
-  page.setDefaultNavigationTimeout(10000); 
+  page.setDefaultNavigationTimeout(15000);
 
   for (const route of routes) {
     console.log(`📄 Prerenderizando ${route}`);
     const url = `http://localhost:4173${route}`;
-    
+
     try {
-      // 'domcontentloaded' es el punto ideal: el HTML ya está construido en el cliente por React.
-      await page.goto(url, { 
-        waitUntil: 'domcontentloaded', 
-        timeout: 12000 
+      await page.goto(url, {
+        waitUntil: 'domcontentloaded',
+        timeout: 15000
       });
-      
-      // Espera de cortesía estándar para asegurar la inyección de componentes reactivos
+
       await new Promise(resolve => setTimeout(resolve, 1500));
-      
+
       const html = await page.content();
-      
-      let filePath = route === '/' 
+
+      let filePath = route === '/'
         ? path.join(distPath, 'index.html')
         : path.join(distPath, `${route}.html`);
-      
+
       if (route.includes('/') && route !== '/') {
         const dir = path.dirname(filePath);
         await fs.mkdir(dir, { recursive: true });
@@ -93,15 +101,16 @@ async function prerender() {
       await fs.writeFile(filePath, html);
       console.log(`✅ Guardado: ${filePath}`);
     } catch (err) {
-      console.error(`⚠️ Nota en ${route}: ${err.message}. Intentando guardar snapshot actual...`);
+      console.error(`⚠️ Error en ${route}: ${err.message}`);
+      // Intentar guardar lo que haya
       try {
         const html = await page.content();
         let filePath = route === '/' ? path.join(distPath, 'index.html') : path.join(distPath, `${route}.html`);
         if (route.includes('/') && route !== '/') await fs.mkdir(path.dirname(filePath), { recursive: true });
         await fs.writeFile(filePath, html);
-        console.log(`✅ Guardado (con contingencia): ${filePath}`);
+        console.log(`✅ Guardado (contingencia): ${filePath}`);
       } catch (innerErr) {
-        console.error(`❌ No se pudo guardar la ruta ${route}:`, innerErr.message);
+        console.error(`❌ No se pudo guardar ${route}:`, innerErr.message);
       }
     }
   }

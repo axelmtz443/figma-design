@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
-import BlogPostPage, { BlogPost, POSTS } from './BlogPostPage';
+import { useState, useEffect } from 'react';
+import { getAllPosts, BlogPost } from '../../lib/sanityQueries';
+import { useNavigate } from 'react-router-dom';
 
 // ─── Gradient helpers ─────────────────────────────────────────────────────────
 const FULL_GRADIENT = 'linear-gradient(90deg, #DA3731, #1096D6, #F7B033)';
@@ -115,15 +116,7 @@ function Pagination({
 }
 
 // ─── Single Blog Card ─────────────────────────────────────────────────────────
-function BlogCard({
-  post,
-  index,
-  onClick,
-}: {
-  post: BlogPost;
-  index: number;
-  onClick: () => void;
-}) {
+function BlogCard({ post, index, onClick }: { post: BlogPost; index: number; onClick: () => void }) {
   return (
     <motion.article
       initial={{ opacity: 0, y: 24 }}
@@ -134,22 +127,12 @@ function BlogCard({
       onClick={onClick}
       className="group flex flex-col rounded-3xl overflow-hidden border border-white/10 bg-white/[0.02] cursor-pointer transition-all hover:border-white/20 hover:bg-white/[0.04]"
     >
-      <div
-        className="relative w-full aspect-[4/3] overflow-hidden"
-        style={{ background: post.image }}
-      >
-        <div
-          className="absolute inset-0 opacity-20 mix-blend-overlay"
-          style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}
-        />
-        <span
-          className="absolute top-3 left-3 font-montserrat text-[10px] font-semibold uppercase tracking-widest text-white px-2.5 py-1 rounded-full"
-          style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.12)' }}
-        >
+      <div className="relative w-full aspect-[4/3] overflow-hidden" style={{ background: post.image }}>
+        <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }} />
+        <span className="absolute top-3 left-3 font-montserrat text-[10px] font-semibold uppercase tracking-widest text-white px-2.5 py-1 rounded-full" style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.12)' }}>
           {post.category}
         </span>
       </div>
-
       <div className="p-4 flex flex-col flex-1 gap-2">
         <h3 className="font-montserrat font-semibold text-white text-[13px] leading-snug group-hover:text-white/90 transition-colors line-clamp-2">
           {post.title}
@@ -162,39 +145,39 @@ function BlogCard({
 
 // ─── Main Section ─────────────────────────────────────────────────────────────
 function BlogSection() {
+  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
-  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const navigate = useNavigate();
 
-  const totalPages = Math.ceil(POSTS.length / POSTS_PER_PAGE);
-  const visiblePosts = POSTS.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE);
+  useEffect(() => {
+    getAllPosts().then((data) => {
+      setPosts(data);
+      setLoading(false);
+    });
+  }, []);
+
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE);
+  const visiblePosts = posts.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE);
 
   const handlePage = (n: number) => {
     setPage(n);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // ── Render post detail ──
-  if (selectedPost) {
+  if (loading) {
     return (
-      <BlogPostPage
-        post={selectedPost}
-        onBack={() => {
-          setSelectedPost(null);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-        onNavigate={(p: BlogPost) => {
-          setSelectedPost(p);
-          window.scrollTo({ top: 0, behavior: 'smooth' });
-        }}
-      />
+      <section className="w-full bg-transparent py-24 px-4 sm:px-8">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="font-montserrat text-white/60">Cargando artículos...</div>
+        </div>
+      </section>
     );
   }
 
-  // ── Render listing ──
   return (
     <section className="w-full bg-transparent py-24 px-4 sm:px-8 overflow-hidden">
       <div className="max-w-5xl mx-auto">
-
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -204,23 +187,20 @@ function BlogSection() {
         >
           <GradientLine />
           <h1 className="font-aston text-[36px] sm:text-[52px] lg:text-[60px] text-white leading-tight tracking-tight mb-3">
-            Stay Ahead in Web3
+            Blog
           </h1>
           <p className="font-montserrat text-white/40 text-[13px] sm:text-[14px] max-w-md leading-relaxed">
-            Explore expert insights, industry trends, and best practices for building in the decentralized future.
+            Explora insights, tendencias y mejores prácticas de marketing y publicidad.
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {visiblePosts.map((post, i) => (
             <BlogCard
-              key={post.id}
+              key={post._id}
               post={post}
               index={i}
-              onClick={() => {
-                setSelectedPost(post);
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
+              onClick={() => navigate(`/blog/${post.slug}`)}
             />
           ))}
         </div>
