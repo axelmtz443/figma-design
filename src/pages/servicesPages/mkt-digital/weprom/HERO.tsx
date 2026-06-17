@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from 'react';
-import { TrendingUp, ChartPie as PieChart, ChartLine as LineChart, Target, Trophy, ArrowRight, Calendar } from 'lucide-react';
+import { TrendingUp, PieChart, LineChart, Target, Trophy, ArrowRight, Calendar } from 'lucide-react';
 
 const FONTS = {
   heading: "'Astonpoliz', sans-serif",
@@ -233,7 +233,7 @@ export default function HeroWeprom() {
             className="text-sm sm:text-base lg:text-lg text-zinc-400 leading-relaxed max-w-5xl mx-auto font-light"
             style={{ fontFamily: FONTS.body }}
           >
-            Más de 30 años trabajando con las grandes marcas nos han mostrado el camino al éxito.{' '}
+            Más de 35 años trabajando con las grandes marcas nos han mostrado el camino al éxito.{' '}
             <strong className="text-white font-semibold">
               Por eso sabemos como desarrollar a las pequeñas, consolidar a las medianas y expandir a las grandes.
             </strong>

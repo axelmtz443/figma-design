@@ -4,13 +4,13 @@ import Footer from '../../../components/General/Footer';
 import ScrollReveal from '../../../components/General/ScrollReveal';
 
 import HeroWeprom from './weprom/HERO';
-import TwoSectionBrands from '../market-research/TwoSectionBrands';
+import BrandsCarouselHero from './weprom/BrandsCarouselHero';
 import MetaSection from './weprom/MetaSection';
 import GoogleSection from './weprom/GoogleSection';
 import InfluencerSection from './weprom/InfluencerSection';
 import AudiovisualSection from './weprom/AudiovisualSection';
 import ProjectResults from '../../../services/ProjectResults';
-import SectionFour from './sectionFour';
+import WePromMethodology from './weprom/WePromMethodology';
 import ContactMktDigital from './weprom/ContactMktDigital';
 
 const MainMktDigital = () => {
@@ -18,45 +18,35 @@ const MainMktDigital = () => {
     <div className="min-h-screen bg-transparent overflow-x-hidden">
       <Navbar />
 
-      {/* Hero con logo orbital de WeProm */}
       <HeroWeprom />
 
-      {/* Carrusel de clientes */}
-      <ScrollReveal>
-        <TwoSectionBrands />
-      </ScrollReveal>
+      {/* Carrusel de marcas sin encabezado — continúa visualmente desde el hero */}
+      <BrandsCarouselHero />
 
-      {/* Servicios: Meta Ads */}
       <ScrollReveal>
         <MetaSection />
       </ScrollReveal>
 
-      {/* Servicios: Google Ads */}
       <ScrollReveal>
         <GoogleSection />
       </ScrollReveal>
 
-      {/* Servicios: Influencer / UGC */}
       <ScrollReveal>
         <InfluencerSection />
       </ScrollReveal>
 
-      {/* Servicios: Producción Audiovisual */}
       <ScrollReveal>
         <AudiovisualSection />
       </ScrollReveal>
 
-      {/* Casos de éxito */}
       <ScrollReveal>
         <ProjectResults />
       </ScrollReveal>
 
-      {/* Nuestra metodología */}
       <ScrollReveal>
-        <SectionFour />
+        <WePromMethodology />
       </ScrollReveal>
 
-      {/* Formulario de contacto */}
       <ScrollReveal>
         <ContactMktDigital />
       </ScrollReveal>
