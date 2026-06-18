@@ -104,7 +104,7 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
           className="flex transition-transform duration-500 ease-in-out"
           style={{
             gap: `${gap}px`,
-            transform: `translateX(calc(50% - ${cardWidth / 2 + index * (cardWidth + gap)}px))`
+            transform: `translateX(calc(50vw - ${cardWidth / 2 + index * (cardWidth + gap)}px))`
           }}
         >
           {items.map((item, i) => (
