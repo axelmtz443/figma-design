@@ -1,22 +1,27 @@
 import React, { useState } from 'react';
 import worldMap from '../../../images/world-map.svg';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
 
-// Tipado estricto para las ubicaciones del mapa interactivo
 interface LocationPin {
   id: number;
   city: string;
   country: string;
-  top: string;
-  left: string;
+  lat: number;
+  lon: number;
   color: string;
 }
 
+// Equirectangular projection: converts lat/lon to SVG coords (viewBox 0 0 1000 500)
+const geoToSvg = (lat: number, lon: number) => ({
+  x: (lon + 180) / 360 * 1000,
+  y: (90 - lat) / 180 * 500,
+});
+
 const locations: LocationPin[] = [
-  { id: 1, city: 'Austin', country: 'USA', top: '40%', left: '25%', color: 'bg-blue-500' },
-  { id: 2, city: 'Guadalajara', country: 'MX', top: '46%', left: '21%', color: 'bg-emerald-500' },
-  { id: 3, city: 'Paris', country: 'FR', top: '35%', left: '49%', color: 'bg-indigo-500' },
+  { id: 1, city: 'Austin',      country: 'USA', lat: 30.27, lon: -97.74,  color: '#3b82f6' },
+  { id: 2, city: 'Guadalajara', country: 'MX',  lat: 20.66, lon: -103.35, color: '#10b981' },
+  { id: 3, city: 'Paris',       country: 'FR',  lat: 48.86, lon:   2.35,  color: '#6366f1' },
 ];
 
 const ContactoMR = () => {
@@ -77,58 +82,64 @@ const ContactoMR = () => {
           {/* ── COLUMNA IZQUIERDA: ASIMÉTRICA Y VISUAL (5 Columnas en Desktop) ── */}
           <div className="lg:col-span-5 flex flex-col gap-6 w-full h-full justify-between">
             
-            {/* Bloque del Mapa Interactivo Premium */}
-            <motion.div 
+            {/* Mapa Interactivo */}
+            <motion.div
               initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               viewport={{ once: true }}
-              className="relative h-[320px] sm:h-[380px] bg-[#0c0c0e]/60 rounded-3xl border border-zinc-800/80 overflow-hidden shadow-2xl group flex items-center justify-center"
+              className="relative h-[320px] sm:h-[380px] bg-[#0c0c0e]/60 rounded-3xl border border-zinc-800/80 overflow-hidden shadow-2xl group"
             >
-              {/* Fondo de Textura Fina */}
               <div className="absolute inset-0 opacity-15 mix-blend-overlay pointer-events-none bg-[url('/textures/stardust.png')]" />
-              
-              {/* SVG del Mapa Mundial Proporcional */}
-              <div className="absolute inset-0 p-6 flex items-center justify-center">
-                <img 
-                  src={worldMap}
-                  alt="World Map" 
-                  className="w-full h-full object-contain opacity-[0.07] grayscale invert brightness-150 transition-opacity duration-500 group-hover:opacity-[0.1]"
+
+              {/* Mapa + pines en un único sistema de coordenadas SVG */}
+              <svg
+                viewBox="0 0 1000 500"
+                preserveAspectRatio="xMidYMid meet"
+                className="absolute inset-0 w-full h-full"
+              >
+                <image
+                  href={worldMap}
+                  x="0" y="0" width="1000" height="500"
+                  style={{ opacity: 0.07, filter: 'grayscale(1) invert(1) brightness(1.5)' }}
                 />
-              </div>
 
-              {/* Renderizado de Pines de Posicionamiento */}
-              {locations.map((loc) => (
-                <div 
-                  key={loc.id}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10"
-                  style={{ top: loc.top, left: loc.left }}
-                  onMouseEnter={() => setHoveredLoc(loc.id)}
-                  onMouseLeave={() => setHoveredLoc(null)}
-                >
-                  <div className="relative flex items-center justify-center cursor-pointer">
-                    <span className={`animate-ping absolute inline-flex h-6 w-6 rounded-full ${loc.color} opacity-20`}></span>
-                    <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${loc.color} shadow-[0_0_15px_rgba(255,255,255,0.4)] border border-white/10`}></span>
-                    
-                    {/* Tooltip con AnimatePresence */}
-                    <AnimatePresence>
-                      {hoveredLoc === loc.id && (
-                        <motion.div 
-                          initial={{ opacity: 0, y: 5, scale: 0.95 }}
-                          animate={{ opacity: 1, y: -35, scale: 1 }}
-                          exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                          className="absolute whitespace-nowrap bg-zinc-900 border border-zinc-800 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-wider shadow-xl z-20"
-                        >
-                          {loc.city.toUpperCase()}, {loc.country}
-                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-zinc-900 border-r border-b border-zinc-800 rotate-45" />
-                        </motion.div>
+                {locations.map((loc) => {
+                  const { x, y } = geoToSvg(loc.lat, loc.lon);
+                  const hovered = hoveredLoc === loc.id;
+                  return (
+                    <g
+                      key={loc.id}
+                      transform={`translate(${x}, ${y})`}
+                      onMouseEnter={() => setHoveredLoc(loc.id)}
+                      onMouseLeave={() => setHoveredLoc(null)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      {/* Anillo de pulso */}
+                      <circle r="4" fill={loc.color} opacity="0.25">
+                        <animate attributeName="r"       values="4;14;4"     dur="2s" repeatCount="indefinite" />
+                        <animate attributeName="opacity" values="0.25;0;0.25" dur="2s" repeatCount="indefinite" />
+                      </circle>
+                      {/* Punto central */}
+                      <circle r="4" fill={loc.color} stroke="rgba(255,255,255,0.4)" strokeWidth="0.8" />
+
+                      {/* Tooltip */}
+                      {hovered && (
+                        <g transform="translate(0, -22)">
+                          <rect x="-38" y="-14" width="76" height="18" rx="4"
+                            fill="#18181b" stroke="#3f3f46" strokeWidth="0.8" />
+                          <text x="0" y="-2" textAnchor="middle" fill="white"
+                            fontSize="8" fontWeight="bold" letterSpacing="1"
+                            style={{ fontFamily: 'Montserrat, sans-serif' }}>
+                            {loc.city.toUpperCase()}, {loc.country}
+                          </text>
+                        </g>
                       )}
-                    </AnimatePresence>
-                  </div>
-                </div>
-              ))}
+                    </g>
+                  );
+                })}
+              </svg>
 
-              {/* Marca de agua institucional sutil abajo a la izquierda */}
               <div className="absolute bottom-6 left-6 select-none pointer-events-none">
                 <h3 className="text-white/[0.03] text-4xl font-bold tracking-widest font-serif">WEPROM</h3>
               </div>
