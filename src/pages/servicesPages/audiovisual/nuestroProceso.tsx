@@ -1,77 +1,160 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { Lightbulb, ClipboardList, Video, MonitorPlay } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-
-const STEPS = [
-  {
-    title: 'Conceptualización',
-    desc: 'Análisis de marca y objetivos, traduciéndolo en una idea creativa clara.',
-    color: '#c5362e',
-  },
-  {
-    title: 'Planeación',
-    desc: 'Desarrollo de guión, herramientas y logística integral.',
-    color: '#599ddf',
-  },
-  {
-    title: 'Producción',
-    desc: 'Grabación y dirección creativa-técnica en locación.',
-    color: '#80b67d',
-  },
-  {
-    title: 'Postproducción y Entrega',
-    desc: 'Edición, diseño sonoro e integración gráfica para generar impacto real.',
-    color: '#e6af41',
-  },
-];
 
 const NuestroProceso = () => {
   const navigate = useNavigate();
+  const [activeStep, setActiveStep] = useState(-1);
+  const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  const colors = ['#c5362e', '#599ddf', '#80b67d', '#e6af41'];
+
+  const steps = [
+    {
+      title: 'Conceptualización',
+      description: 'Análisis de marca y objetivos, traduciéndolo en una idea creativa clara.',
+      icon: <Lightbulb size={24} />,
+    },
+    {
+      title: 'Planeación',
+      description: 'Desarrollo de guión, herramientas y logística integral.',
+      icon: <ClipboardList size={24} />,
+    },
+    {
+      title: 'Producción',
+      description: 'Grabación y dirección creativa-técnica en locación.',
+      icon: <Video size={24} />,
+    },
+    {
+      title: 'Postproducción y Entrega',
+      description: 'Edición, diseño sonoro e integración gráfica para generar impacto real.',
+      icon: <MonitorPlay size={24} />,
+    },
+  ];
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowCenter = window.innerHeight / 2;
+      let currentStep = -1;
+      stepRefs.current.forEach((ref, index) => {
+        if (ref) {
+          const rect = ref.getBoundingClientRect();
+          if (rect.top <= windowCenter + 50) currentStep = index;
+        }
+      });
+      setActiveStep(currentStep);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <section className="w-full bg-transparent py-20 px-4 sm:px-8 font-montserrat text-white">
+    <section className="w-full bg-transparent py-16 px-4 sm:px-6 lg:px-8 font-montserrat text-white">
       <div className="max-w-4xl mx-auto">
 
-        <div className="flex flex-col gap-0 mb-14">
-          {STEPS.map((step, index) => (
-            <div
-              key={index}
-              className="flex items-start gap-8 py-10 border-b border-white/5 group"
-            >
-              {/* Number */}
-              <span
-                className="text-6xl font-black opacity-10 leading-none flex-shrink-0 w-16 text-right select-none group-hover:opacity-20 transition-opacity duration-300"
-                style={{ color: step.color }}
-              >
-                {String(index + 1).padStart(2, '0')}
-              </span>
-
-              {/* Content */}
-              <div className="flex-1 pt-1">
-                <h3
-                  className="font-aston text-2xl md:text-3xl text-white mb-2 group-hover:opacity-90 transition-colors duration-300"
-                >
-                  {step.title}
-                </h3>
-                <p className="text-zinc-400 text-base font-light leading-relaxed">
-                  {step.desc}
-                </p>
-              </div>
-
-              {/* Color bar */}
-              <div
-                className="w-1 self-stretch rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex-shrink-0"
-                style={{ backgroundColor: step.color }}
-              />
-            </div>
-          ))}
+        {/* Encabezado */}
+        <div className="text-center mb-16 max-w-2xl mx-auto">
+          <h2 className="text-3xl md:text-5xl font-aston tracking-tight mb-4">
+            Nuestro Proceso Creativo
+          </h2>
+          <p className="text-white font-normal text-base md:text-lg leading-relaxed">
+            Metodología paso a paso para asegurar que cada proyecto supere tus expectativas y cumpla sus objetivos.
+          </p>
         </div>
 
-        <div className="flex justify-center">
-          <button
-            onClick={() => navigate('/contact')}
-            className="px-10 py-4 font-montserrat font-semibold text-sm tracking-[0.2em] uppercase rounded-full border border-white/15 text-white hover:border-white/40 hover:scale-105 transition-all duration-300"
-          >
-            Cotizar Producción
-          </button>
+        <div className="relative">
+
+          {/* Línea de fondo */}
+          <div className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-1.5 bg-neutral-900 rounded-full" />
+
+          {/* Línea de progreso */}
+          <div
+            className="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 w-1.5 rounded-full transition-all duration-500 ease-in-out"
+            style={{
+              height: activeStep >= 0 ? `${(activeStep / steps.length) * 100}%` : '0%',
+              background: activeStep >= 0
+                ? `linear-gradient(to bottom, ${colors[0]}, ${colors[activeStep % colors.length]})`
+                : 'transparent',
+            }}
+          />
+
+          {steps.map((step, index) => {
+            const isActive  = index <= activeStep;
+            const isCurrent = index === activeStep;
+            const color     = colors[index % colors.length];
+            const isEven    = index % 2 === 0;
+
+            return (
+              <div
+                key={index}
+                ref={(el) => (stepRefs.current[index] = el)}
+                className="relative z-10 flex items-center justify-between mb-24 md:mb-16 w-full"
+              >
+                {/* Tarjeta izquierda — solo desktop, pasos pares */}
+                <div className={`hidden md:block w-5/12 text-right pr-8 transition-all duration-700 ${
+                  isEven ? (isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8') : 'opacity-0 pointer-events-none'
+                }`}>
+                  {isEven && (
+                    <div
+                      className={`p-6 rounded-xl bg-neutral-900 border-b-4 transition-all duration-500 ${isCurrent ? 'scale-105' : ''}`}
+                      style={{ borderBottomColor: isActive ? color : '#262626' }}
+                    >
+                      <h3 className="text-xl font-bold mb-2 transition-colors duration-500" style={{ color: isActive ? color : '#525252' }}>
+                        {step.title}
+                      </h3>
+                      <p className="text-white/60 text-sm leading-relaxed">{step.description}</p>
+                    </div>
+                  )}
+                </div>
+
+                {/* Nodo central */}
+                <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center">
+                  <div
+                    className={`w-12 h-12 rounded-full flex items-center justify-center border-4 transition-all duration-700 z-20 bg-black ${
+                      isActive ? 'scale-110' : 'scale-100 border-neutral-800 text-neutral-600'
+                    }`}
+                    style={{
+                      borderColor: isActive ? color : '',
+                      color:       isActive ? color : '',
+                      boxShadow:   isActive ? `0 0 20px ${color}40` : '',
+                    }}
+                  >
+                    {step.icon}
+                  </div>
+                </div>
+
+                {/* Tarjeta derecha — desktop impares / móvil todos */}
+                <div className={`w-full pl-24 md:pl-8 md:w-5/12 transition-all duration-700 ${
+                  !isEven ? (isActive ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8') : 'md:opacity-0 md:pointer-events-none'
+                }`}>
+                  <div
+                    className={`p-6 rounded-xl bg-neutral-900 border-b-4 transition-all duration-500 md:${!isEven ? 'block' : 'hidden'} ${isCurrent ? 'scale-105' : ''}`}
+                    style={{ borderBottomColor: isActive ? color : '#262626' }}
+                  >
+                    <h3 className="text-xl font-bold mb-2 transition-colors duration-500" style={{ color: isActive ? color : '#525252' }}>
+                      {step.title}
+                    </h3>
+                    <p className="text-white/60 text-sm leading-relaxed">{step.description}</p>
+                  </div>
+                </div>
+
+              </div>
+            );
+          })}
+
+          {/* CTA final */}
+          <div className="relative z-10 flex items-center justify-center mt-16 w-full pb-8">
+            <button
+              onClick={() => navigate('/contact')}
+              className="px-10 py-4 font-montserrat font-semibold text-sm tracking-[0.2em] uppercase rounded-full border border-white/15 text-white hover:border-white/40 hover:scale-105 transition-all duration-300"
+            >
+              Cotizar Producción
+            </button>
+          </div>
+
+          <div className="h-[30vh] w-full" />
         </div>
 
       </div>
