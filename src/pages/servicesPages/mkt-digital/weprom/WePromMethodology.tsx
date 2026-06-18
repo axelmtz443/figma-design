@@ -70,15 +70,15 @@ export default function WePromMethodology() {
   }, []);
 
   return (
-    <div className="min-h-screen text-white p-6 md:p-12 lg:p-20 flex flex-col font-montserrat">
+    <div className="text-white py-16 px-6 md:px-12 lg:px-20 flex flex-col font-montserrat">
 
-      <header className="max-w-7xl w-full mx-auto mb-16 z-20">
+      <header className="max-w-7xl w-full mx-auto mb-12 z-20">
         <h1 className="font-aston text-4xl md:text-5xl lg:text-6xl leading-tight text-white text-center">
           Proyectos a la medida<br />de tus objetivos
         </h1>
       </header>
 
-      <main className="w-full max-w-6xl mx-auto relative flex-grow min-h-[450px] md:min-h-[500px] mb-16">
+      <main className="w-full max-w-6xl mx-auto relative min-h-[280px] mb-10">
 
         <ConnectingLine />
 
