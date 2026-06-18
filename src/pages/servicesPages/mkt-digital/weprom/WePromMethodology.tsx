@@ -12,14 +12,13 @@ const THEME = {
 };
 
 const STEPS = [
-  { id: 1, title: "Diagnóstico",         desc: "Identificamos tus objetivos",                color: THEME.colors.yellow, icon: Target,       x: 15, y: 30 },
-  { id: 2, title: "Propuesta de Trabajo", desc: "Definimos las herramientas necesarias",      color: THEME.colors.blue,   icon: ClipboardList, x: 85, y: 30 },
-  { id: 3, title: "Ejecución",            desc: "Desarrollamos la estrategia y lanzamos",    color: THEME.colors.red,    icon: Magnet,        x: 85, y: 70 },
-  { id: 4, title: "Optimización",         desc: "Medimos resultados y escalamos",             color: THEME.colors.green,  icon: TrendingUp,    x: 15, y: 70 },
+  { id: 1, title: "Diagnóstico",          desc: "Identificamos tus objetivos",              color: THEME.colors.yellow, icon: Target,        x: 10, y: 50 },
+  { id: 2, title: "Propuesta de Trabajo", desc: "Definimos las herramientas necesarias",    color: THEME.colors.blue,   icon: ClipboardList, x: 37, y: 50 },
+  { id: 3, title: "Ejecución",            desc: "Desarrollamos la estrategia y lanzamos",  color: THEME.colors.red,    icon: Magnet,        x: 63, y: 50 },
+  { id: 4, title: "Optimización",         desc: "Medimos resultados y escalamos",           color: THEME.colors.green,  icon: TrendingUp,    x: 90, y: 50 },
 ];
 
-// Path that connects 4 nodes in a U shape: left→right, curve down, right→left
-const pathData = "M 15 30 L 85 30 C 105 30, 105 70, 85 70 L 15 70";
+const pathData = "M 10 50 L 90 50";
 
 const ConnectingLine = () => (
   <div className="absolute inset-0 w-full h-full pointer-events-none z-0 hidden md:block">
