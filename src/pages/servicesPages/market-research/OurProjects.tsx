@@ -1,4 +1,28 @@
 import React, { useState, useEffect, useCallback } from 'react';
+
+// Fondos de casos de éxito
+import fondoCoca from '../../../images/fondos_casos-de-exito/fondo_coca.png';
+import fondoMercedes from '../../../images/fondos_casos-de-exito/fondo_mercedes.png';
+import fondoOreilly from '../../../images/fondos_casos-de-exito/fondo_oreilly.png';
+import fondoIteso from '../../../images/fondos_casos-de-exito/fondo_iteso.png';
+import fondoJaver from '../../../images/fondos_casos-de-exito/fondo_javer.jpg';
+import fondoPromexico from '../../../images/fondos_casos-de-exito/fondo_promexico.png';
+import fondoCpt from '../../../images/fondos_casos-de-exito/fondo_cpt.png';
+import fondoLizmuebles from '../../../images/fondos_casos-de-exito/fondo_lizmuebles.png';
+import fondoHuizache from '../../../images/fondos_casos-de-exito/fondo_tequilahuizache.png';
+import fondoChizychiz from '../../../images/fondos_casos-de-exito/fondo_chizychiz.png';
+
+// Logos de clientes
+import logoCocaCola from '../../../images/fondos_casos-de-exito/fondo_coca.png';
+import logoMercedes from '../../../images/Logos_Clientes/logo_mercedes.png';
+import logoOreilly from '../../../images/Logos_Clientes/logo_oreilly.png';
+import logoIteso from '../../../images/Logos_Clientes/logo_iteso.png';
+import logoJaver from '../../../images/Logos_Clientes/logo_javer.png';
+import logoPromexico from '../../../images/Logos_Clientes/logo_promexico.png';
+import logoCpt from '../../../images/Logos_Clientes/logo_cpt.png';
+import logoLizmuebles from '../../../images/fondos_casos-de-exito/fondo_lizmuebles.png';
+import logoHuizache from '../../../images/fondos_casos-de-exito/fondo_tequilahuizache.png';
+import logoChizychiz from '../../../images/Logos_Clientes/logo_chizychiz.png';
 // Íconos SVG nativos con coordenadas estándar y limpias de Lucide
 const ChevronLeft = ({ size = 24 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -56,8 +80,8 @@ const cases = [
       "Se realizaron estrategias de marketing de alto impacto para reposicionar las diferentes marcas del grupo.",
       "Se lograron récords en ventas tras la implementación de las estrategias comerciales y de comunicación."
     ],
-    image: "https://grupoweprom.com/wp-content/uploads/2026/05/fondo_coca.png",
-    logo: "https://grupoweprom.com/wp-content/uploads/2025/11/Coca-Cola_CE.webp",
+    image: fondoCoca,
+    logo: logoCocaCola,
   },
   {
     id: 2,
@@ -68,8 +92,8 @@ const cases = [
       "Se identificaron los nichos de clientes y sus hábitos de consumo.",
       "Se validó la viabilidad comercial de la fusión de los puntos de venta."
     ],
-    image: "https://grupoweprom.com/wp-content/uploads/2026/05/fondo_mercedes.png",
-    logo: "https://grupoweprom.com/wp-content/uploads/2026/05/mercedes.png",
+    image: fondoMercedes,
+    logo: logoMercedes,
   },
   {
     id: 3,
@@ -80,8 +104,8 @@ const cases = [
       "Se diseñaron estrategias localizadas por las diferencias regionales detectadas.",
       "Se revelaron fortalezas competitivas en fidelización y percepción de precios."
     ],
-    image: "https://grupoweprom.com/wp-content/uploads/2026/05/fondo_oreilly.png",
-    logo: "https://grupoweprom.com/wp-content/uploads/2026/05/oreilly.png",
+    image: fondoOreilly,
+    logo: logoOreilly,
   },
   {
     id: 4,
@@ -92,8 +116,8 @@ const cases = [
       "Se propusieron denominaciones más claras y atractivas con base en votaciones.",
       "Se detectaron áreas de mejora en estrategia de comunicación y conexión con mercado laboral."
     ],
-    image: "https://grupoweprom.com/wp-content/uploads/2026/05/fondo_iteso.png",
-    logo: "https://grupoweprom.com/wp-content/uploads/2026/05/iteso.png",
+    image: fondoIteso,
+    logo: logoIteso,
   },
   {
     id: 5,
@@ -104,8 +128,8 @@ const cases = [
       "Se determinaron los atributos de mayor valor y percepción para el consumidor final.",
       "Se establecieron estrategias comerciales, de producto y de comunicación para fortalecer el posicionamiento de la marca."
     ],
-    image: "https://grupoweprom.com/wp-content/uploads/2026/05/Fondo_javer.jpg",
-    logo: "https://grupoweprom.com/wp-content/uploads/2026/05/javer.png",
+    image: fondoJaver,
+    logo: logoJaver,
   },
   {
     id: 6,
@@ -116,8 +140,8 @@ const cases = [
       "Se creó \"México significa oportunidad\" para mejorar la percepción y el posicionamiento.",
       "Se atrajeron cientos de millones de dólares para el desarrollo sectorial automotriz, aeroespacial, de energía, entre otros."
     ],
-    image: "https://grupoweprom.com/wp-content/uploads/2026/05/fondo_promexico.png",
-    logo: "https://grupoweprom.com/wp-content/uploads/2026/05/promexico.png",
+    image: fondoPromexico,
+    logo: logoPromexico,
   },
   {
     id: 7,
@@ -128,8 +152,8 @@ const cases = [
       "Se detectaron oportunidades clave para la modernización tecnológica y operativa.",
       "Se identificaron a tiempo brechas de satisfacción y riesgos de fuga para los socios.",
     ],
-    image: "https://grupoweprom.com/wp-content/uploads/2026/05/fondo_cpt.png",
-    logo: "https://grupoweprom.com/wp-content/uploads/2026/05/cpt.png",
+    image: fondoCpt,
+    logo: logoCpt,
   },
   {
     id: 8,
@@ -140,8 +164,8 @@ const cases = [
       "Propuestas de desarrollo de nuevos productos para el mercado centroamericano.",
       "Estrategias de posicionamiento e incursión para Centroamérica."
     ],
-    image: "https://grupoweprom.com/wp-content/uploads/2026/05/fondo_lizmuebles.png",
-    logo: "https://grupoweprom.com/wp-content/uploads/2025/11/Liz-Logo.webp",
+    image: fondoLizmuebles,
+    logo: logoLizmuebles,
   },
   {
     id: 9,
@@ -152,8 +176,8 @@ const cases = [
       "Se identificaron los principales canales de distribución potenciales.",
       "Se diseñaron propuestas de estrategias comerciales para la incursión en nuevos mercados."
     ],
-    image: "https://grupoweprom.com/wp-content/uploads/2026/05/fondo_tequilahuizache.png",
-    logo: "https://grupoweprom.com/wp-content/uploads/2025/11/Huizache-Logo.webp",
+    image: fondoHuizache,
+    logo: logoHuizache,
   },
   {
     id: 10,
@@ -164,8 +188,8 @@ const cases = [
       "Se analizó el nivel de recomendación y lealtad por parte de los clientes.",
       "Se identificaron las expectativas y necesidades del mercado meta.",
     ],
-    image: "https://grupoweprom.com/wp-content/uploads/2026/05/fondo_chizychiz.png",
-    logo: "https://grupoweprom.com/wp-content/uploads/2026/05/chizychiz.png",
+    image: fondoChizychiz,
+    logo: logoChizychiz,
   }
 ];
 

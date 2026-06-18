@@ -3,8 +3,6 @@ import { motion } from 'framer-motion';
 import Navbar from '../components/General/Navbar';
 import Footer from '../components/General/Footer';
 import SectionOne from '../components/About/sectionOne';
-import SectionTwo from '../components/About/sectionTwoWhoWeAre';
-import CallToAction from '../components/Home/callToAction';
 import AboutBackedBy from '../components/About/aboutBackedBy';
 import TeamSection from '../components/About/team';
 import GroupSection from '../components/About/groupSection';

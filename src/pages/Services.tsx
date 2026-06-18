@@ -3,7 +3,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import { TrendingUp, Palette, Target, Camera, Search, ArrowRight, ChevronDown } from 'lucide-react';
 import Navbar from '../components/General/Navbar';
 import Footer from '../components/General/Footer';
-import IsotipoImg from '../images/ISOTIPODEGRADADO.png';
 
 // ─── Brand data ───────────────────────────────────────────────────────────────
 
@@ -176,7 +175,7 @@ const DECOS = [DecoTrend, DecoBranding, DecoConsultoria, DecoAudiovisual, DecoIn
 // ─── ServiceCard ──────────────────────────────────────────────────────────────
 
 function ServiceCard({ service, idx, fullWidth }: { service: typeof SERVICES[0]; idx: number; fullWidth?: boolean }) {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLAnchorElement>(null);
   const [visible, setVisible] = useState(false);
   const Icon = service.icon;
   const Deco = DECOS[idx];
@@ -205,7 +204,7 @@ function ServiceCard({ service, idx, fullWidth }: { service: typeof SERVICES[0];
   return (
     <Link
       to={service.path}
-      ref={cardRef as React.RefObject<HTMLAnchorElement>}
+      ref={cardRef}
       className="block h-full group"
       style={{
         opacity: visible ? 1 : 0,

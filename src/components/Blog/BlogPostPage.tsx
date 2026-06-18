@@ -91,7 +91,7 @@ function RelatedCard({ post, onClick }: { post: BlogPost; onClick: () => void })
       className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] cursor-pointer hover:border-white/20 transition-all"
     >
       <div className="relative w-full aspect-[4/3]" style={{ background: post.image }}>
-        <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }} />
+        <div className="absolute inset-0 opacity-20 mix-blend-overlay" style={{ backgroundImage: 'url("/textures/noise.svg")' }} />
         <span 
           className="absolute top-3 left-3 font-montserrat text-[10px] font-semibold uppercase tracking-widest text-white px-2.5 py-1 rounded-full" 
           style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.12)' }}

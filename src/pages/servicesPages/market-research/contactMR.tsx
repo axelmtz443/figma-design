@@ -1,22 +1,7 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Send } from 'lucide-react';
-
-// Tipado estricto para las ubicaciones del mapa interactivo
-interface LocationPin {
-  id: number;
-  city: string;
-  country: string;
-  top: string;
-  left: string;
-  color: string;
-}
-
-const locations: LocationPin[] = [
-  { id: 1, city: 'Austin', country: 'USA', top: '38%', left: '32%', color: 'bg-blue-500' },
-  { id: 2, city: 'Guadalajara', country: 'MX', top: '46%', left: '27%', color: 'bg-emerald-500' },
-  { id: 3, city: 'Paris', country: 'FR', top: '34%', left: '49%', color: 'bg-indigo-500' },
-];
+import WorldMap from '../../../components/General/WorldMap';
 
 const ContactoMR = () => {
   const [formData, setFormData] = useState({
@@ -28,7 +13,6 @@ const ContactoMR = () => {
   });
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-  const [hoveredLoc, setHoveredLoc] = useState<number | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -76,62 +60,8 @@ const ContactoMR = () => {
           {/* ── COLUMNA IZQUIERDA: ASIMÉTRICA Y VISUAL (5 Columnas en Desktop) ── */}
           <div className="lg:col-span-5 flex flex-col gap-6 w-full h-full justify-between">
             
-            {/* Bloque del Mapa Interactivo Premium */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.98 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              viewport={{ once: true }}
-              className="relative h-[320px] sm:h-[380px] bg-[#0c0c0e]/60 rounded-3xl border border-zinc-800/80 overflow-hidden shadow-2xl group flex items-center justify-center"
-            >
-              {/* Fondo de Textura Fina */}
-              <div className="absolute inset-0 opacity-15 mix-blend-overlay pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
-              
-              {/* SVG del Mapa Mundial Proporcional */}
-              <div className="absolute inset-0 p-6 flex items-center justify-center">
-                <img 
-                  src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" 
-                  alt="World Map" 
-                  className="w-full h-full object-contain opacity-[0.07] grayscale invert brightness-150 transition-opacity duration-500 group-hover:opacity-[0.1]"
-                />
-              </div>
-
-              {/* Renderizado de Pines de Posicionamiento */}
-              {locations.map((loc) => (
-                <div 
-                  key={loc.id}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10"
-                  style={{ top: loc.top, left: loc.left }}
-                  onMouseEnter={() => setHoveredLoc(loc.id)}
-                  onMouseLeave={() => setHoveredLoc(null)}
-                >
-                  <div className="relative flex items-center justify-center cursor-pointer">
-                    <span className={`animate-ping absolute inline-flex h-6 w-6 rounded-full ${loc.color} opacity-20`}></span>
-                    <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${loc.color} shadow-[0_0_15px_rgba(255,255,255,0.4)] border border-white/10`}></span>
-                    
-                    {/* Tooltip con AnimatePresence */}
-                    <AnimatePresence>
-                      {hoveredLoc === loc.id && (
-                        <motion.div 
-                          initial={{ opacity: 0, y: 5, scale: 0.95 }}
-                          animate={{ opacity: 1, y: -35, scale: 1 }}
-                          exit={{ opacity: 0, y: 5, scale: 0.95 }}
-                          className="absolute whitespace-nowrap bg-zinc-900 border border-zinc-800 text-white px-3 py-1.5 rounded-lg text-[10px] font-bold tracking-wider shadow-xl z-20"
-                        >
-                          {loc.city.toUpperCase()}, {loc.country}
-                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-zinc-900 border-r border-b border-zinc-800 rotate-45" />
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                </div>
-              ))}
-
-              {/* Marca de agua institucional sutil abajo a la izquierda */}
-              <div className="absolute bottom-6 left-6 select-none pointer-events-none">
-                <h3 className="text-white/[0.03] text-4xl font-bold tracking-widest font-serif">WEPROM</h3>
-              </div>
-            </motion.div>
+            {/* Mapa Interactivo */}
+            <WorldMap />
 
             {/* Card ADN de Visión de Negocio */}
             <motion.div 

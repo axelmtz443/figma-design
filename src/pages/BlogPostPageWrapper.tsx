@@ -19,8 +19,18 @@ export default function BlogPostPageWrapper() {
       .then(([singlePost, allPosts]) => {
         if (singlePost) {
           setPost(singlePost);
-          const related = allPosts.filter(p => p.slug !== slug).slice(0, 3);
-          setRelatedPosts(related);
+
+          // Track view in localStorage
+          try {
+            const stored = JSON.parse(localStorage.getItem('blog_post_views') || '{}');
+            stored[slug] = (stored[slug] || 0) + 1;
+            localStorage.setItem('blog_post_views', JSON.stringify(stored));
+          } catch {}
+
+          // Related: same category first, then any other posts
+          const sameCategory = allPosts.filter(p => p.slug !== slug && p.category === singlePost.category);
+          const others       = allPosts.filter(p => p.slug !== slug && p.category !== singlePost.category);
+          setRelatedPosts([...sameCategory, ...others].slice(0, 3));
         }
         setLoading(false);
       })

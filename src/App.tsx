@@ -10,7 +10,7 @@ import { useState, useEffect } from 'react';
 
 import InteractiveBackground from './components/General/InteractiveBackground';
 
-import Branding from './pages/servicesPages/Branding';
+import Branding from './pages/servicesPages/branding/mainBranding';
 import Audiovisual from './pages/servicesPages/audiovisual/mainAudiovisual';
 import ConsultoriaDeMarketing from './pages/servicesPages/consultoria/mainConsultoria';
 import MainMktDigital from './pages/servicesPages/mkt-digital/mainMktDigital';

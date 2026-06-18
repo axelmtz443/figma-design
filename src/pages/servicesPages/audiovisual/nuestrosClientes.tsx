@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-
-// 👇 Cambia esta ruta por tu video real
+import googleLogo from '../../../images/google-logo.png';
 
 const reviews = [
   { name: 'Jessica Zamora', tag: 'Cliente verificado en Google', avatar: 'JZ', color: '#c5362e', text: 'Tienen un servicio excelente y son súper amables! Todo es muy profesional, el equipo es muy atento y te acompañan en todo el proceso. ¡Super recomendados!' },
@@ -178,7 +177,7 @@ const NuestrosClientes = () => {
             <div className="bg-neutral-900 border border-neutral-800 rounded-2xl px-5 py-4 flex items-center gap-3 mt-auto">
 
               <div className="p-[10px] bg-white rounded-2xl shadow-xl">
-                <img src="https://images.seeklogo.com/logo-png/62/1/google-new-logo-png_seeklogo-622426.png" className="w-10 h-10 rounded-[10px]" alt="Google" />
+                <img src={googleLogo} className="w-10 h-10 rounded-[10px]" alt="Google" />
               </div>
 
               <div className="ml-2">

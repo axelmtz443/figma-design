@@ -9,7 +9,7 @@ import MetaSection from './weprom/MetaSection';
 import GoogleSection from './weprom/GoogleSection';
 import InfluencerSection from './weprom/InfluencerSection';
 import AudiovisualSection from './weprom/AudiovisualSection';
-import ProjectResults from '../../../services/ProjectResults';
+import ProjectResults from '../../../components/Home/ProjectResults';
 import WePromMethodology from './weprom/WePromMethodology';
 import ContactMktDigital from './weprom/ContactMktDigital';
 

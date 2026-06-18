@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import googleLogo from '../../images/google-logo.png';
 
 
 interface Testimonial {
@@ -366,7 +367,7 @@ function TestimonialsSection() {
              <div className="mx-4 mt-4 p-8 rounded-[32px] bg-gradient-to-br from-white/10 to-transparent border border-white/10 flex flex-col sm:flex-row items-center justify-between gap-6 backdrop-blur-sm">
               <div className="flex items-center gap-5">
                 <div className="p-4 bg-white rounded-2xl shadow-xl">
-                  <img src="https://images.seeklogo.com/logo-png/62/1/google-new-logo-png_seeklogo-622426.png" className="w-10 h-10" alt="Google" />
+                  <img src={googleLogo} className="w-10 h-10" alt="Google" />
                 </div>
                 <div>
                   <p className="text-white font-bold text-xl tracking-tight">Puntuación de {stats.rating.toFixed(1)} estrellas</p>

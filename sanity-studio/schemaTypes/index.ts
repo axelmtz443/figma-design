@@ -91,6 +91,21 @@ export const post = defineType({
             decorators: [
               {title: 'Strong', value: 'strong'},
               {title: 'Emphasis', value: 'em'}
+            ],
+            annotations: [
+              defineField({
+                name: 'link',
+                type: 'object',
+                title: 'Link',
+                fields: [
+                  defineField({
+                    name: 'href',
+                    type: 'url',
+                    title: 'URL',
+                    validation: Rule => Rule.required()
+                  })
+                ]
+              })
             ]
           }
         },

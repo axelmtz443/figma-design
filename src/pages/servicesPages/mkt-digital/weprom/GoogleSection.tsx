@@ -1,5 +1,5 @@
 import { ImageWithFallback, FONTS } from './utils';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 type GoogleAdType = 'search' | 'display' | 'shopping' | 'video';
 
@@ -93,21 +93,48 @@ interface SectionCarouselProps {
 }
 
 function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps) {
-  const [index, setIndex] = useState(0);
   const gap = 24;
-  const total = items.length;
+  const len = items.length;
+  const [index, setIndex] = useState(len); // start at middle copy
+  const [transitioning, setTransitioning] = useState(false);
+  const stripRef = useRef<HTMLDivElement>(null);
+
+  const go = (dir: number) => {
+    if (transitioning) return;
+    setTransitioning(true);
+    setIndex(i => i + dir);
+  };
+
+  const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget) return;
+    setTransitioning(false);
+    setIndex(prev => {
+      const next = prev >= len * 2 ? prev - len : prev < len ? prev + len : prev;
+      if (next !== prev && stripRef.current) {
+        stripRef.current.style.transition = 'none';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          if (stripRef.current) stripRef.current.style.transition = '';
+        }));
+      }
+      return next;
+    });
+  };
+
+  const dotIndex = index % len;
 
   return (
     <div className="relative w-full select-none">
       <div className="overflow-hidden" style={{ height: `${cardHeight}px` }}>
         <div
+          ref={stripRef}
           className="flex transition-transform duration-500 ease-in-out"
           style={{
             gap: `${gap}px`,
-            transform: `translateX(calc(50% - ${cardWidth / 2 + index * (cardWidth + gap)}px))`
+            transform: `translateX(calc(50vw - ${cardWidth / 2 + index * (cardWidth + gap)}px))`,
           }}
+          onTransitionEnd={handleTransitionEnd}
         >
-          {items.map((item, i) => (
+          {[...items, ...items, ...items].map((item, i) => (
             <div key={i} style={{ width: `${cardWidth}px`, height: `${cardHeight}px`, flexShrink: 0 }}>
               {item}
             </div>
@@ -115,30 +142,31 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
         </div>
       </div>
 
+      {/* Left arrow — always active */}
       <button
-        onClick={() => setIndex(p => Math.max(0, p - 1))}
-        disabled={index === 0}
-        className={`absolute left-4 z-20 w-12 h-12 rounded-full border flex items-center justify-center text-white transition-all ${index === 0 ? 'opacity-20 cursor-not-allowed border-white/10 bg-white/5' : 'border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40'}`}
+        onClick={() => go(-1)}
+        className="absolute left-4 z-20 w-12 h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
         style={{ top: `${cardHeight / 2}px`, transform: 'translateY(-50%)' }}
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
       </button>
 
+      {/* Right arrow — always active */}
       <button
-        onClick={() => setIndex(p => Math.min(total - 1, p + 1))}
-        disabled={index === total - 1}
-        className={`absolute right-4 z-20 w-12 h-12 rounded-full border flex items-center justify-center text-white transition-all ${index === total - 1 ? 'opacity-20 cursor-not-allowed border-white/10 bg-white/5' : 'border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40'}`}
+        onClick={() => go(1)}
+        className="absolute right-4 z-20 w-12 h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
         style={{ top: `${cardHeight / 2}px`, transform: 'translateY(-50%)' }}
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
       </button>
 
+      {/* Dots */}
       <div className="flex justify-center gap-2 mt-6">
         {items.map((_, i) => (
           <button
             key={i}
-            onClick={() => setIndex(i)}
-            className={`rounded-full transition-all duration-300 ${i === index ? 'w-6 h-2 bg-white' : 'w-2 h-2 bg-white/30 hover:bg-white/50'}`}
+            onClick={() => { if (!transitioning) setIndex(len + i); }}
+            className={`rounded-full transition-all duration-300 ${dotIndex === i ? 'w-6 h-2 bg-white' : 'w-2 h-2 bg-white/30 hover:bg-white/50'}`}
           />
         ))}
       </div>

@@ -35,7 +35,7 @@ export default function Loader() {
       </div>
 
       {/* RUIDO TEXTURIZADO (Efecto papel/premium) */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('/textures/noise.svg')]" />
 
       <div className="relative flex flex-col items-center">
         

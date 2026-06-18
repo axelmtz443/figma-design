@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
+import worldMap from '../../images/world-map.svg';
 
 const locations = [
   { id: 1, city: 'Austin', country: 'USA', top: '38%', left: '32%', color: 'bg-blue-500' },
@@ -40,12 +41,12 @@ const WorldPresence = () => {
             className="lg:col-span-2 relative h-[500px] bg-[#0A0A0A] rounded-[40px] border border-white/10 overflow-hidden shadow-2xl group"
           >
             {/* Fondo de Grano/Textura */}
-            <div className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/stardust.png')]" />
+            <div className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none bg-[url('/textures/stardust.png')]" />
             
             {/* El Mapa Mundial (SVG de Alta Calidad) */}
             <div className="absolute inset-0 p-12 flex items-center justify-center">
               <img 
-                src="https://upload.wikimedia.org/wikipedia/commons/8/80/World_map_-_low_resolution.svg" 
+                src={worldMap}
                 alt="World Map" 
                 className="w-full h-full object-contain opacity-20 grayscale invert brightness-200"
               />

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import worldMapBlank from '../../../images/world-map-blank.svg';
 
 // --- Iconos SVG Locales Integrados ---
 const ArrowRight = ({ size = 20, className = "" }) => (
@@ -163,10 +164,10 @@ export default function HeroMR() {
               .animate-reverse-spin-z { animation: orbit-spin-z-reverse linear infinite; }
 
               .globe-mask {
-                -webkit-mask-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+                -webkit-mask-image: url('${worldMapBlank}');
                 -webkit-mask-size: 100% 100%;
                 -webkit-mask-repeat: no-repeat;
-                mask-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+                mask-image: url('${worldMapBlank}');
                 mask-size: 100% 100%;
                 mask-repeat: no-repeat;
               }

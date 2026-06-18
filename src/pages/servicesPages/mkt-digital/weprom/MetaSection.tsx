@@ -1,6 +1,28 @@
 import { useState, useRef, useEffect } from 'react';
 import { ImageWithFallback, ExpandableText, SocialActions, FONTS } from './utils';
 
+// Logos de páginas (reemplaza Facebook CDN expirados)
+import logoAndreaAragon from '../../../../images/mktdigital_meta/logo_Andrea Aragón.jpg';
+import logoMercedesEurostern from '../../../../images/mktdigital_meta/logo_Mercedes.jpg';
+import logoJustoSierra from '../../../../images/mktdigital_meta/logo_justo-sierra.jpg';
+import logoCPTMeta from '../../../../images/mktdigital_meta/logo_CPT.jpg';
+import logoMayorkMeta from '../../../../images/mktdigital_meta/logo_mayork.jpg';
+
+// Imágenes de anuncios
+import imgAA1 from '../../../../images/mktdigital_meta/AA1.jpg';
+import imgAA2 from '../../../../images/mktdigital_meta/AA2.jpg';
+import imgAA3 from '../../../../images/mktdigital_meta/AA3.jpg';
+import imgAA4 from '../../../../images/mktdigital_meta/AA4.jpg';
+import imgCPT1 from '../../../../images/mktdigital_meta/CPT1.jpg';
+import imgCPT2 from '../../../../images/mktdigital_meta/CPT2.jpg';
+import imgCPT3 from '../../../../images/mktdigital_meta/CPT3.jpg';
+import imgCPT4 from '../../../../images/mktdigital_meta/CPT4.jpg';
+import imgMayork from '../../../../images/mktdigital_meta/mayork.jpg';
+
+// Videos
+import videoMercedes from '../../../../images/mktdigital_meta/Mercedes.mp4';
+import videoJustoSierra from '../../../../images/mktdigital_meta/Justo Sierra.mp4';
+
 interface CarouselCard {
   image: string;
   fallbackImage: string;
@@ -26,23 +48,23 @@ interface MetaAd {
   carouselCards?: CarouselCard[];
 }
 
-const ANDREA_ARAGON_LOGO = "https://scontent.fgdl1-3.fna.fbcdn.net/v/t39.35426-6/569215694_785230714354745_2652805572567146935_n.jpg?stp=dst-jpg_s60x60_tt6&_nc_cat=107&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=VxiFgeGMgaAQ7kNvw-Iazi&_nc_oc=Ado6aRPYTev_b6tCig4H4oZBj7Poq1FB83aUKhpFQQztdywxCjLfrNcJ5JsunpaNWZo&_nc_zt=14&_nc_ht=scontent.fgdl1-3.fna&_nc_gid=XSt0fDCaOkGZLRjISeGSaA&_nc_ss=7b2a8&oh=00_Af_x9CirHoqtcAHjT1KPeWgkPNCLQaaeJYUYtT2Xj1h0ig&oe=6A27A048";
+const ANDREA_ARAGON_LOGO = logoAndreaAragon;
 const ANDREA_ARAGON_TEXT = "Sabemos que un cambio de color es una decisión importante. Por eso, en nuestro estudio, cada transformación comienza con una asesoría experta para crear el diseño que respete la salud de tu cabello y refleje tu verdadera esencia.\n\nNuestros servicios de colorimetría incluyen:\n• Diseño de Color (Master, Senior & Semisenior)\n• Tinte de Raíz y Color Completo\n• Extracciones de Color Profesionales\n• ¡Y mucho más!\n\n📍Te esperamos en Desierto de los Leones 52, San Ángel. Agenda tu cita. ✨";
 const ANDREA_ARAGON_CARDS: CarouselCard[] = [
-  { image: "https://grupoweprom.com/mktgdigital/AA1.jpg", fallbackImage: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "El color perfecto", ctaText: "Agendar cita" },
-  { image: "https://grupoweprom.com/mktgdigital/AA2.jpg", fallbackImage: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Diseño de color", ctaText: "Agendar cita" },
-  { image: "https://grupoweprom.com/mktgdigital/AA3.jpg", fallbackImage: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Babylights y Balayage", ctaText: "Agendar cita" },
-  { image: "https://grupoweprom.com/mktgdigital/AA4.jpg", fallbackImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Expertas en colorimetría", ctaText: "Agendar cita" }
+  { image: imgAA1, fallbackImage: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "El color perfecto", ctaText: "Agendar cita" },
+  { image: imgAA2, fallbackImage: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Diseño de color", ctaText: "Agendar cita" },
+  { image: imgAA3, fallbackImage: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Babylights y Balayage", ctaText: "Agendar cita" },
+  { image: imgAA4, fallbackImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Expertas en colorimetría", ctaText: "Agendar cita" }
 ];
 
 const ADS_DATABASE: MetaAd[] = [
   {
     id: "mercedes-benz",
     pageName: "Mercedes-Benz Eurostern",
-    pageLogo: "https://scontent.fgdl1-4.fna.fbcdn.net/v/t39.35426-6/686937757_932455416463158_3639699404661957555_n.jpg?stp=dst-jpg_s60x60_tt6&_nc_cat=109&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=g1TEQKdcSUAQ7kNvwFHbBD9&_nc_oc=Adqt5_hgYfbb-kSXZrDdpA1KKkk87mNJHZbRWFEQnr-iYQpmYy03tVL3L79A6HEQF8U&_nc_zt=14&_nc_ht=scontent.fgdl1-4.fna&_nc_gid=Mb6uxD19_Wfvo8VxE4hNoA&_nc_ss=7b2a8&oh=00_Af9BBPK3pQuEZ0-fBVKyIH9TF_fIZeSdu7UpsifAKVhhRw&oe=6A27AA25",
+    pageLogo: logoMercedesEurostern,
     mainText: "Los sistemas de asistencia te respaldan para hacer de cada trayecto una certeza. Adquiere GLS 580 4MATIC MH 2026 con bono exclusivo.",
     type: "single-video",
-    videoUrl: "https://grupoweprom.com/mktgdigital/Mercedes.mp4",
+    videoUrl: videoMercedes,
     ctaDomain: "API.WHATSAPP.COM", ctaTitle: "Adquiere GLS 2026", ctaDesc: "Con beneficios exclusivos", ctaBtnText: "Enviar mensaje"
   },
   {
@@ -57,33 +79,33 @@ const ADS_DATABASE: MetaAd[] = [
   {
     id: "ortopedia-justo-sierra",
     pageName: "Ortopedia Justo Sierra",
-    pageLogo: "https://scontent.fgdl1-4.fna.fbcdn.net/v/t39.35426-6/697045892_2598343853960156_4298980226771185265_n.jpg?stp=dst-jpg_s60x60_tt6&_nc_cat=110&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=---mYyBTn8UQ7kNvwGm8B-G&_nc_oc=Ado_TJgWkhxcURnNxeT1Z3LH8r5_K7NYiEpOKY09s5FCqcE6P0ry9gdydYkPfqNaq-I&_nc_zt=14&_nc_ht=scontent.fgdl1-4.fna&_nc_gid=XveLqqErr2-kkRd1PJt20A&_nc_ss=7b2a8&oh=00_Af-OZ0SfgSsNMKRVxepgS1Z4i28sgDIlWpHSdrSkbZMFLg&oe=6A27AFEC",
+    pageLogo: logoJustoSierra,
     mainText: "Si tienes un problem grave en la rodilla, no necesitas a un médico que hoy opere una mano y mañana un pie; necesitas a alguien que dedique el 100% de su vida a reconstruir rodillas.\n\nEsa es la diferencia de nuestro grupo médico en Guadalajara. Somos un equipo de 5 traumatólogos con subespecialidades específicas. Nuestro modelo es simple pero poderoso: el experto en columna de la columna, el de hombro ve el hombro.\n\nEntrar a un quirófano es un paso importante. Antes de tomar cualquier decisión, permite que el experto exacto revise tu caso.\n✅ Diagnósticos respaldados por certificaciones internacionales. \n✅ Un equipo completo analizando los casos más complejos.",
     type: "single-video",
-    videoUrl: "https://grupoweprom.com/mktgdigital/Justo Sierra.mp4",
+    videoUrl: videoJustoSierra,
     ctaDomain: "ORTOPEDIAJUSTOSIERRA.MX", ctaTitle: "Certeza absoluta", ctaDesc: "Certeza absoluta", ctaBtnText: "Ver detalles"
   },
   {
     id: "caja-popular-tamazula",
     pageName: "Caja Popular Tamazula",
-    pageLogo: "https://scontent.fgdl10-1.fna.fbcdn.net/v/t39.35426-6/641056979_901553679134968_4967818985228303169_n.jpg?stp=dst-jpg_s60x60_tt6&_nc_cat=106&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=CkHUcXrmXcMQ7kNvwHJ7SqY&_nc_oc=AdqvjbfveFLQ17fkNvuWE7Vf8A6dW4D0BI7T8I5bV3aRmHC81Hhw3TxEOQOR585DlzoHOWtQ5jCw9zI_fLC8V0S_&_nc_zt=14&_nc_ht=scontent.fgdl10-1.fna&_nc_gid=HA0fki1PWCFifoBNqrOrng&_nc_ss=7b2a8&oh=00_Af_11yNOacQM6M5W4u72ruRmOUAn5jBYrIBBAxvSCKhVpQ&oe=6A2CB385",
+    pageLogo: logoCPTMeta,
     mainText: "Haz que tu esfuerzo rinda por dos. Al ahorrar con nosotros, no solo guardas tu guardadito, también le abres la puerta a tus hijos para ganar BECAS escolares y vales para sus útiles. 🎒 \n\nTu familia merece este respaldo. \n\nAbre tu cuenta hoy dando clic abajo. 👇",
     type: "carousel",
     ctaDomain: "API.WHATSAPP.COM", ctaTitle: "Abre tu cuenta", ctaDesc: "Banking", ctaBtnText: "Enviar Mensaje",
     carouselCards: [
-      { image: "https://grupoweprom.com/mktgdigital/CPT1.jpg", fallbackImage: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Tu ahorro te da BECAS 🎓", ctaText: "Enviar Mensaje" },
-      { image: "https://grupoweprom.com/mktgdigital/CPT2.jpg", fallbackImage: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Vales médicos GRATIS 🩺", ctaText: "Enviar Mensaje" },
-      { image: "https://grupoweprom.com/mktgdigital/CPT3.jpg", fallbackImage: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "$600 cuidan a tu familia", ctaText: "Enviar Mensaje" },
-      { image: "https://grupoweprom.com/mktgdigital/CPT4.jpg", fallbackImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Invierte y gana beneficios", ctaText: "Enviar Mensaje" }
+      { image: imgCPT1, fallbackImage: "https://images.unsplash.com/photo-1546410531-bb4caa6b424d?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Tu ahorro te da BECAS 🎓", ctaText: "Enviar Mensaje" },
+      { image: imgCPT2, fallbackImage: "https://images.unsplash.com/photo-1505751172876-fa1923c5c528?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Vales médicos GRATIS 🩺", ctaText: "Enviar Mensaje" },
+      { image: imgCPT3, fallbackImage: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "$600 cuidan a tu familia", ctaText: "Enviar Mensaje" },
+      { image: imgCPT4, fallbackImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&q=80&w=600", domain: "API.WHATSAPP.COM", title: "Invierte y gana beneficios", ctaText: "Enviar Mensaje" }
     ]
   },
   {
     id: "mayork-mx",
     pageName: "MayorK",
-    pageLogo: "https://scontent.fgdl10-1.fna.fbcdn.net/v/t39.35426-6/713423785_994570676705058_5843368131829230779_n.jpg?stp=dst-jpg_s60x60_tt6&_nc_cat=100&ccb=1-7&_nc_sid=c53f8f&_nc_ohc=dzhd3DMNLFIQ7kNvwEUP4V5&_nc_oc=AdqcCX1isMe2ItY1lhTLwy7W3rQVzqwOULtie1sHJfBmgxl2jt__0bLDBToj5VINlQPjSMq9tM3AIKWMeXgEJwgL&_nc_zt=14&_nc_ht=scontent.fgdl10-1.fna&_nc_gid=wdAJUitANk0cY4-Roeps5Q&_nc_ss=7b2a8&oh=00_Af8JTXXSptJ7aNRIgK6Aql0swsjq1d51GmDZie59RTRy6A&oe=6A2CD2BC",
+    pageLogo: logoMayorkMeta,
     mainText: "Dos modelos diseñados para ofrecer comodidad, estilo y una mejor presentación para tu equipo de trabajo. ✨ \n✔ Polo Fit: flexible, moderna y cómoda \n✔ Polo Waffle: textura premium y apariencia sofisticada \nAprovecha el 10% OFF durante todo junio.",
     type: "single-image",
-    imageUrl: "https://grupoweprom.com/mktgdigital/mayork.jpg",
+    imageUrl: imgMayork,
     imageFallback: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&q=80&w=600",
     ctaDomain: "FACEBOOK.COM", ctaTitle: "¡Cotizar mayoreo!", ctaDesc: "Clothing", ctaBtnText: "Enviar mensaje"
   },
@@ -107,22 +129,48 @@ interface SectionCarouselProps {
 }
 
 function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps) {
-  const [index, setIndex] = useState(0);
   const gap = 24;
-  const total = items.length;
+  const len = items.length;
+  const [index, setIndex] = useState(len); // start at middle copy
+  const [transitioning, setTransitioning] = useState(false);
+  const stripRef = useRef<HTMLDivElement>(null);
+
+  const go = (dir: number) => {
+    if (transitioning) return;
+    setTransitioning(true);
+    setIndex(i => i + dir);
+  };
+
+  const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
+    if (e.target !== e.currentTarget) return;
+    setTransitioning(false);
+    setIndex(prev => {
+      const next = prev >= len * 2 ? prev - len : prev < len ? prev + len : prev;
+      if (next !== prev && stripRef.current) {
+        stripRef.current.style.transition = 'none';
+        requestAnimationFrame(() => requestAnimationFrame(() => {
+          if (stripRef.current) stripRef.current.style.transition = '';
+        }));
+      }
+      return next;
+    });
+  };
+
+  const dotIndex = index % len;
 
   return (
     <div className="relative w-full select-none">
-      {/* Cards strip */}
       <div className="overflow-hidden" style={{ height: `${cardHeight}px` }}>
         <div
+          ref={stripRef}
           className="flex transition-transform duration-500 ease-in-out"
           style={{
             gap: `${gap}px`,
-            transform: `translateX(calc(50% - ${cardWidth / 2 + index * (cardWidth + gap)}px))`
+            transform: `translateX(calc(50vw - ${cardWidth / 2 + index * (cardWidth + gap)}px))`,
           }}
+          onTransitionEnd={handleTransitionEnd}
         >
-          {items.map((item, i) => (
+          {[...items, ...items, ...items].map((item, i) => (
             <div key={i} style={{ width: `${cardWidth}px`, height: `${cardHeight}px`, flexShrink: 0 }}>
               {item}
             </div>
@@ -130,21 +178,19 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
         </div>
       </div>
 
-      {/* Left arrow */}
+      {/* Left arrow — always active */}
       <button
-        onClick={() => setIndex(p => Math.max(0, p - 1))}
-        disabled={index === 0}
-        className={`absolute left-4 z-20 w-12 h-12 rounded-full border flex items-center justify-center text-white transition-all ${index === 0 ? 'opacity-20 cursor-not-allowed border-white/10 bg-white/5' : 'border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40'}`}
+        onClick={() => go(-1)}
+        className="absolute left-4 z-20 w-12 h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
         style={{ top: `${cardHeight / 2}px`, transform: 'translateY(-50%)' }}
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
       </button>
 
-      {/* Right arrow */}
+      {/* Right arrow — always active */}
       <button
-        onClick={() => setIndex(p => Math.min(total - 1, p + 1))}
-        disabled={index === total - 1}
-        className={`absolute right-4 z-20 w-12 h-12 rounded-full border flex items-center justify-center text-white transition-all ${index === total - 1 ? 'opacity-20 cursor-not-allowed border-white/10 bg-white/5' : 'border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40'}`}
+        onClick={() => go(1)}
+        className="absolute right-4 z-20 w-12 h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
         style={{ top: `${cardHeight / 2}px`, transform: 'translateY(-50%)' }}
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
@@ -155,8 +201,8 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
         {items.map((_, i) => (
           <button
             key={i}
-            onClick={() => setIndex(i)}
-            className={`rounded-full transition-all duration-300 ${i === index ? 'w-6 h-2 bg-white' : 'w-2 h-2 bg-white/30 hover:bg-white/50'}`}
+            onClick={() => { if (!transitioning) setIndex(len + i); }}
+            className={`rounded-full transition-all duration-300 ${dotIndex === i ? 'w-6 h-2 bg-white' : 'w-2 h-2 bg-white/30 hover:bg-white/50'}`}
           />
         ))}
       </div>
