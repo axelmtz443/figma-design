@@ -1,94 +1,47 @@
-import borderFrame1 from '../../images/1.png';
-import borderFrame2 from '../../images/2.png';
-import borderFrame3 from '../../images/3.png';
+import { Link } from 'react-router-dom';
 
 interface BlogCardProps {
+  slug: string;
   image: string;
   title: string;
   date: string;
   category?: string;
-  glowColor?: 'blue' | 'green' | 'purple' | 'none';
 }
 
-function BlogCard({ image, title, date, category, glowColor = 'none' }: BlogCardProps) {
-  const getBorderFrame = () => {
-    switch(glowColor) {
-      case 'blue':   return borderFrame1;
-      case 'green':  return borderFrame2;
-      case 'purple': return borderFrame3;
-      default:       return null;
-    }
-  };
-
-  const borderFrame = getBorderFrame();
-
+function BlogCard({ slug, image, title, date, category }: BlogCardProps) {
   return (
-    <div 
-      className="relative flex flex-col overflow-hidden transition-all duration-500 hover:scale-[1.02] group cursor-pointer w-full max-w-[340px] mx-auto"
-      style={{ aspectRatio: '340 / 460' }}
+    <Link
+      to={`/blog/${slug}`}
+      className="group block w-full rounded-2xl overflow-hidden bg-white/[0.04] border border-white/10 hover:border-white/20 transition-all duration-400 hover:scale-[1.02] hover:bg-white/[0.06]"
     >
-      {/* Imagen del artículo */}
-      <div className="absolute top-[8.7%] left-[2.4%] right-[2.4%] h-[47.8%] overflow-hidden rounded-t-[8%] z-0">
-        <img 
+      <div className="h-48 sm:h-52 overflow-hidden">
+        <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-600 group-hover:scale-105"
         />
       </div>
 
-      {/* Marco con borde */}
-      {borderFrame && (
-        <img 
-          src={borderFrame} 
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-10"
-        />
-      )}
-
-      {/* Fondo glassmorphic cuando no hay marco */}
-      {!borderFrame && (
-        <div 
-          className="absolute inset-0 z-10"
-          style={{
-            backgroundColor: '#FFFFFF26',
-            borderRadius: '36px',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-          }}
-        />
-      )}
-
-      {/* Hover glow */}
-      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none z-20">
-        <div className="absolute inset-0 bg-gradient-to-br from-white/5 via-transparent to-transparent rounded-[36px]" />
-      </div>
-
-      {/* Spacer para empujar el texto hacia abajo */}
-      <div className="relative w-full h-[52%] z-30">
+      <div className="p-5 sm:p-6">
         {category && (
-          <div className="absolute top-4 left-4 px-3 py-1.5" />
+          <span className="text-[11px] font-semibold uppercase tracking-[0.15em] text-amber-400/80 mb-3 block">
+            {category}
+          </span>
         )}
-      </div>
-
-      {/* Texto */}
-      <div className="relative z-30 flex flex-col justify-between flex-1 p-6 sm:p-8 lg:p-10">
-        <div className="flex-1">
-          <h3 
-            className="font-montserrat font-semibold text-white mb-3 leading-tight transition-colors duration-300 group-hover:text-white/90 text-[18px] sm:text-[20px] lg:text-[22px]"
-            style={{ lineHeight: '1.35', letterSpacing: '-0.02em' }}
-          >
-            {title}
-          </h3>
-        </div>
-
+        <h3 className="font-montserrat font-semibold text-white text-[17px] sm:text-[19px] leading-snug mb-4 group-hover:text-white/90 transition-colors">
+          {title}
+        </h3>
         <div className="flex items-center justify-between">
-          <span 
-            className="font-montserrat font-normal text-soft-gray transition-colors duration-300 group-hover:text-white/80 text-[12px] sm:text-[14px] mb-4"
-          >
-            {date}
+          <span className="text-[13px] text-zinc-500">{date}</span>
+          <span className="text-[12px] text-white/30 group-hover:text-white/60 transition-colors flex items-center gap-1">
+            Leer
+            <svg className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 

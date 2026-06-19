@@ -1,12 +1,18 @@
 import React from 'react';
 import Home from './pages/Home';
 import About from './pages/About';
-import Services from './pages/Services'; 
+import Services from './pages/Services';
 import Loader from './components/General/Loader';
 import Blog from './pages/Blog'
 import Contact from './pages/Contact';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
 
 import InteractiveBackground from './components/General/InteractiveBackground';
 
@@ -43,6 +49,7 @@ function App() {
     <>
       {showLoader && <Loader />}
       <InteractiveBackground />
+      <ScrollToTop />
 
       <Routes>
         <Route path="/" element={<Home isLoading={loading} />} />

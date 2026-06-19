@@ -3,14 +3,14 @@ import Navbar from '../components/General/Navbar';
 import Hero from '../components/Home/Hero';
 import BackedBy from '../components/Home/BackedBy';
 import Services from '../components/Home/Services';
-import ProjectResults from '../components/Home/ProjectResults';
+import ProjectResults from './servicesPages/mkt-digital/weprom/ProjectResults';
 import Footer from '../components/General/Footer';
 import BlogSection from '../components/Home/BlogSection';
 import Testimonials from '../components/Home/Testimonial';
 import WhoWeAre from '../components/Home/WhoWeAre';
 import AboutIntro from '../components/Home/AboutIntro';
 import { useNavigate } from 'react-router-dom';
-import SuccessStories from "./servicesPages/consultoria/SuccessStories";
+import OurProjectsHome from '../components/Home/OurProjectsHome';
 
 // Importa el nuevo wrapper
 import ScrollReveal from '../components/General/ScrollReveal';
@@ -40,7 +40,7 @@ function Home({ isLoading }: HomeProps) {
       </ScrollReveal>
 
       <ScrollReveal>
-        <SuccessStories />
+        <OurProjectsHome />
       </ScrollReveal>
 
       {/* <ScrollReveal>
