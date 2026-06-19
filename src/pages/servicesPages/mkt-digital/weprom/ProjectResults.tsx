@@ -6,23 +6,63 @@ import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import metaLogo from '../../images/Meta-Logo.png';
+import metaLogo from '../../../../images/Meta-Logo.png';
 
-import logoSenties from '../../images/Logos_Clientes/Logo_Senties.png';
-import logoFortuna from '../../images/Logos_Clientes/Logo_Fortuna.png';
-import logoCAB from '../../images/Logos_Clientes/Logo_cab.png';
-import logoMayorkCard from '../../images/Logos_Clientes/Logo_-k.png';
-import logoSistemik from '../../images/Logos_Clientes/Logo_sistemik.png';
-import logoAlteso from '../../images/Logos_Clientes/Logo_alteso.png';
-import logoDeyun from '../../images/Logos_Clientes/Logo_deyun-ctro-de-especialidades.png';
-import logoVagual from '../../images/Logos_Clientes/Logo_vagual.png';
+import logoSenties from '../../../../images/Logos_Clientes/Logo_Senties.png';
+import logoFortuna from '../../../../images/Logos_Clientes/Logo_Fortuna.png';
+import logoCAB from '../../../../images/Logos_Clientes/Logo_cab.png';
+import logoMayorkCard from '../../../../images/Logos_Clientes/Logo_-k.png';
+import logoSistemik from '../../../../images/Logos_Clientes/Logo_sistemik.png';
+import logoAlteso from '../../../../images/Logos_Clientes/Logo_alteso.png';
+import logoDeyun from '../../../../images/Logos_Clientes/Logo_deyun-ctro-de-especialidades.png';
+import logoVagual from '../../../../images/Logos_Clientes/Logo_vagual.png';
+import logoMercedes from '../../../../images/Logos_Clientes/logo_mercedes.png';
+import logoAndreaAragon from '../../../../images/Logos_Clientes/Andrea Aragón_Logotipo bco.png';
+
+import cardSenties from '../../../../images/mktdigital_meta/datacards/mktcard_Senties.png';
+import cardFortuna from '../../../../images/mktdigital_meta/datacards/mktcard_Fortuna.png';
+import cardCAB from '../../../../images/mktdigital_meta/datacards/mktcard_CAB.png';
+import cardMayork from '../../../../images/mktdigital_meta/datacards/mktcard_Mayork.png';
+import cardSistemik from '../../../../images/mktdigital_meta/datacards/mktcard_Sistemik.png';
+import cardAlteso from '../../../../images/mktdigital_meta/datacards/mktcard_Alteso.png';
+import cardDeyun from '../../../../images/mktdigital_meta/datacards/mktcard_Centro de Espacialidades.png';
+import cardVagual from '../../../../images/mktdigital_meta/datacards/mktcard_Vagual.png';
+import cardMercedes from '../../../../images/mktdigital_meta/datacards/mktcard_Mercedes.png';
+import cardAndreaAragon from '../../../../images/mktdigital_meta/datacards/mktcard_AA.png';
 
 const PROJECTS = [
   {
     id: 1,
+    name: "Mercedes-Benz",
+    subname: "Eurostern",
+    logo: logoMercedes,
+    cardImg: cardMercedes,
+    traffic: "+2.45M",
+    accounts: "+818%",
+    conversations: "+315",
+    interactions: "+2,900",
+    color: "#3b82f6",
+    glow: "rgba(59, 130, 246, 0.2)"
+  },
+  {
+    id: 2,
+    name: "Andrea Aragón",
+    subname: "Studio",
+    logo: logoAndreaAragon,
+    cardImg: cardAndreaAragon,
+    traffic: "+250,000",
+    accounts: "31.9%",
+    conversations: "+375%",
+    interactions: "+650%",
+    color: "#f59e0b",
+    glow: "rgba(245, 158, 11, 0.2)"
+  },
+  {
+    id: 3,
     name: "Senties",
+    subname: "",
     logo: logoSenties,
-    cardImg: "https://weprommexico.com/mktcards/Senties.png",
+    cardImg: cardSenties,
     traffic: "+50,000",
     accounts: "+230%",
     conversations: "+240%",
@@ -31,10 +71,11 @@ const PROJECTS = [
     glow: "rgba(197, 54, 46, 0.2)"
   },
   {
-    id: 2,
+    id: 4,
     name: "Fortuna",
+    subname: "",
     logo: logoFortuna,
-    cardImg: "https://weprommexico.com/mktcards/Fortuna.png",
+    cardImg: cardFortuna,
     traffic: "+38,000",
     accounts: "+180%",
     conversations: "+200%",
@@ -43,10 +84,11 @@ const PROJECTS = [
     glow: "rgba(230, 175, 65, 0.2)"
   },
   {
-    id: 3,
+    id: 5,
     name: "CAB",
+    subname: "",
     logo: logoCAB,
-    cardImg: "https://weprommexico.com/mktcards/CAB.png",
+    cardImg: cardCAB,
     traffic: "+45,000",
     accounts: "+120%",
     conversations: "+205%",
@@ -55,10 +97,11 @@ const PROJECTS = [
     glow: "rgba(89, 157, 223, 0.2)"
   },
   {
-    id: 4,
+    id: 6,
     name: "Mayork",
+    subname: "",
     logo: logoMayorkCard,
-    cardImg: "https://weprommexico.com/mktcards/Mayork.png",
+    cardImg: cardMayork,
     traffic: "+180,000",
     accounts: "+350%",
     conversations: "+270%",
@@ -67,10 +110,11 @@ const PROJECTS = [
     glow: "rgba(89, 157, 223, 0.2)"
   },
   {
-    id: 5,
+    id: 7,
     name: "Sistemik",
+    subname: "",
     logo: logoSistemik,
-    cardImg: "https://weprommexico.com/mktcards/Sistemik.png",
+    cardImg: cardSistemik,
     traffic: "+62,000",
     accounts: "+230%",
     conversations: "+240%",
@@ -79,10 +123,11 @@ const PROJECTS = [
     glow: "rgba(197, 54, 46, 0.2)"
   },
   {
-    id: 6,
+    id: 8,
     name: "Alteso",
+    subname: "",
     logo: logoAlteso,
-    cardImg: "https://weprommexico.com/mktcards/Alteso.png",
+    cardImg: cardAlteso,
     traffic: "+70,000",
     accounts: "+380%",
     conversations: "+320%",
@@ -91,10 +136,11 @@ const PROJECTS = [
     glow: "rgba(128, 182, 125, 0.2)"
   },
   {
-    id: 7,
+    id: 9,
     name: "Deyun",
+    subname: "",
     logo: logoDeyun,
-    cardImg: "https://weprommexico.com/mktcards/Centro%20de%20Espacialidades.png",
+    cardImg: cardDeyun,
     traffic: "+38,000",
     accounts: "+240%",
     conversations: "+100%",
@@ -103,10 +149,11 @@ const PROJECTS = [
     glow: "rgba(197, 54, 46, 0.2)"
   },
   {
-    id: 8,
+    id: 10,
     name: "Vagual",
+    subname: "",
     logo: logoVagual,
-    cardImg: "https://weprommexico.com/mktcards/Vagual.png",
+    cardImg: cardVagual,
     traffic: "+62,000",
     accounts: "+315%",
     conversations: "+300%",
