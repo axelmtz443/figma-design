@@ -22,7 +22,7 @@ const CAMPAIGNS: Campaign[] = [
     brand: "CBR",
     handle: "@cbr",
     niche: "Lifestyle & Moda",
-    videoUrl: "/videos/CBR3.mp4",
+    videoUrl: "https://res.cloudinary.com/dodxaehv3/video/upload/q_auto,f_auto/v1782150637/CBR3_jbiphu.mp4",
     caption: "El estilo que defines tú ✨ Nueva colección disponible #CBR #Moda #Lifestyle",
     audio: "Audio original · CBR",
     platform: "tiktok",
@@ -36,7 +36,7 @@ const CAMPAIGNS: Campaign[] = [
     brand: "Batros Marina Residences",
     handle: "@batrosmarinaresidences",
     niche: "Bienes Raíces · Puerto Vallarta",
-    videoUrl: "/videos/BATROS2.mp4",
+    videoUrl: "https://res.cloudinary.com/dodxaehv3/video/upload/q_auto,f_auto/v1782150652/BATROS2_ou2e99.mp4",
     caption: "Vive frente al mar en Marina Vallarta 🌊 Preventa disponible #BatrosMarina #PuertoVallarta",
     audio: "Audio original · Batros Marina",
     platform: "instagram",
@@ -50,7 +50,7 @@ const CAMPAIGNS: Campaign[] = [
     brand: "Mercedes-Benz Eurostern",
     handle: "@mb_eurostern",
     niche: "Automotriz · Guadalajara",
-    videoUrl: "/videos/GLC300.mp4",
+    videoUrl: "https://res.cloudinary.com/dodxaehv3/video/upload/q_auto,f_auto/v1782150899/GLC300_ogcygl.mp4",
     caption: "GLC 300 2026. La perfección tiene nombre 🚗 #MercedesBenz #Eurostern #GLC300",
     audio: "Audio original · Mercedes-Benz Eurostern",
     platform: "facebook",
@@ -216,8 +216,19 @@ function VideoCard({ campaign }: { campaign: Campaign }) {
         onClick={togglePlay}
       >
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-black/50 z-10 pointer-events-none" />
-        <video ref={videoRef} src={campaign.videoUrl} className="absolute inset-0 w-full h-full object-cover" playsInline loop muted={isMuted}
-          onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)} />
+        
+        <video 
+          ref={videoRef} 
+          src={campaign.videoUrl} 
+          className="absolute inset-0 w-full h-full object-cover" 
+          playsInline 
+          loop 
+          muted={isMuted}
+          preload="metadata" // <- Descarga solo la duración y dimensiones iniciales. Ideal para SEO y rendimiento.
+          onPlay={() => setIsPlaying(true)} 
+          onPause={() => setIsPlaying(false)} 
+        />
+
         {campaign.platform === 'tiktok' && <TikTokOverlay c={campaign} isPlaying={isPlaying} />}
         {campaign.platform === 'instagram' && <InstagramOverlay c={campaign} isPlaying={isPlaying} />}
         {campaign.platform === 'facebook' && <FacebookOverlay c={campaign} isPlaying={isPlaying} />}
