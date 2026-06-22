@@ -50,8 +50,8 @@ function ServiceCard({ icon, title, description, blurColor = 'none', isOpen, onT
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      onClick={onToggle} // Ahora toda la tarjeta activa el toggle
-      className="relative flex flex-col min-h-[180px] h-fit overflow-hidden transition-all duration-500 ease-out group/card w-full border border-white/10 hover:border-white/30 cursor-pointer select-none"
+      onClick={onToggle}
+      className="relative flex flex-col min-h-[160px] sm:min-h-[180px] h-fit overflow-hidden transition-all duration-500 ease-out group/card w-full border border-white/10 hover:border-white/30 cursor-pointer select-none"
       style={{
         backgroundColor: '#121212',
         borderRadius: '32px',
@@ -94,7 +94,7 @@ function ServiceCard({ icon, title, description, blurColor = 'none', isOpen, onT
               </p>
               <button
                 onClick={(e) => { 
-                  e.stopPropagation(); // Evita que se cierre la tarjeta al querer navegar
+                  e.stopPropagation();
                   onLearnMore(); 
                 }}
                 className="pointer-events-auto px-4 py-2 rounded-full border border-white/20 bg-white/5 hover:bg-white hover:text-black transition-all duration-300 text-[10px] font-bold uppercase tracking-widest mb-2"

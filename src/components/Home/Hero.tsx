@@ -23,9 +23,6 @@ import LOGO20 from "../../images/Atomo/log20.png";
 
 import LogoIcon from "../../images/ISOTIPODEGRADADO.png";
 
-
-// ─── Types ────────────────────────────────────────────────────────────────────
-
 interface FisicaNodo {
   x: number;
   y: number;
@@ -39,8 +36,6 @@ interface MouseState {
   activo: boolean;
 }
 
-// ─── Config ───────────────────────────────────────────────────────────────────
-
 const CONFIG = {
   escalaGlobal: 1.0,
   grosorOrbita: 12,
@@ -53,8 +48,6 @@ const CONFIG = {
   velocidadGiro: 0.003,
   areaGravedadCursor: 220,
 };
-
-// ─── Styles ───────────────────────────────────────────────────────────────────
 
 const css = `
   .logo-chip {
@@ -91,10 +84,8 @@ const css = `
 
   .logo-chip:hover img {
     transform: scale(1.35);
+  }
 
-
-
-  /* Animación de brillo para el botón principal */
   @keyframes shine {
     100% { left: 125%; }
   }
@@ -125,7 +116,6 @@ const css = `
     animation: shine 0.75s forwards;
   }
 
-  /* Animación de gradiente giratorio para el segundo botón */
   @keyframes rotate-grad {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -134,14 +124,7 @@ const css = `
   .animate-rotate-slow {
     animation: rotate-grad 3s linear infinite;
   }
-
-
-
-
-  }
 `;
-
-// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function Hero({ isLoading} : {isLoading: boolean}) {
   
@@ -272,30 +255,24 @@ export default function Hero({ isLoading} : {isLoading: boolean}) {
     <>
       <style>{css}</style>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[7rem] sm:pt-[8rem] lg:pt-[9rem] pb-2 sm:pb-2 lg:pb-24 grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-4 items-center">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[7rem] sm:pt-[8rem] lg:pt-[9rem] pb-6 sm:pb-10 lg:pb-24 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-4 items-center">
 
-        {/* ── Texto (sin cambios) ── */}
+        {/* ── Texto ── */}
         <div className="flex flex-col items-center justify-center text-center md:block md:text-left">
-          <h1 className="font-aston text-[48px] sm:text-[56px] lg:text-[70px] font-normal mb-2 leading-[1.1] tracking-tight-custom text-white">
+          <h1 className="font-aston text-[36px] sm:text-[48px] md:text-[56px] lg:text-[70px] font-normal mb-2 leading-[1.1] tracking-tight-custom text-white">
             El Poder de las Grandes Marcas
           </h1>
-          <p className="font-montserrat text-soft-gray text-[18px] sm:text-[20px] lg:text-[25px] font-medium mb-6 sm:mb-8 leading-[1.4] max-w-xl">
+          <p className="font-montserrat text-soft-gray text-[15px] sm:text-[18px] md:text-[20px] lg:text-[25px] font-medium mb-6 sm:mb-8 leading-[1.4] max-w-xl">
             Desarrollamos estrategias de marketing online y offline para elevar tu marca, producto o servicio, ayudándote a destacar por encima de la competencia.
           </p>
 
-
           <div className="flex flex-wrap gap-3 sm:gap-4 justify-center md:justify-start">
-            {/* Botón Contáctanos: Efecto Shimmer + Elevación */}
             <button className="btn-shimmer bg-white text-black hover:bg-gray-100 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-montserrat font-bold text-[14px] sm:text-[16px] transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_20px_rgba(255,255,255,0.15)] active:scale-95">
               Contáctanos
             </button>
             
-            {/* Botón Nosotros: Borde Dinámico + Glow */}
             <button className="relative p-[1.5px] inline-flex items-center justify-center overflow-hidden rounded-full group active:scale-95 transition-all duration-300 hover:scale-105">
-              {/* Capa del Gradiente Giratorio (aparece en hover) */}
               <span className="absolute inset-0 bg-border-grad opacity-90 group-hover:opacity-100 group-hover:animate-rotate-slow transition-opacity"></span>
-              
-              {/* Cuerpo del botón */}
               <span className="relative px-6 sm:px-8 py-2.5 sm:py-3 transition-all duration-300 bg-black rounded-full group-hover:bg-[#0a0a0a]">
                 <span className="relative text-white font-montserrat font-medium text-[14px] sm:text-[16px] group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">
                   Nosotros
@@ -303,8 +280,6 @@ export default function Hero({ isLoading} : {isLoading: boolean}) {
               </span>
             </button>
           </div>
-
-
         </div>
 
         {/* ── Átomo orbital ── */}

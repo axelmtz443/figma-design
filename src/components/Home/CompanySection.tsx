@@ -1,7 +1,6 @@
 import LogoIcon from "../../images/ISOTIPODEGRADADO.png";
 import React from "react";
 
-
 import { BarChart2, Target, Lightbulb, Handshake, ArrowUp, ArrowRight, ArrowDown, ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 
@@ -60,7 +59,7 @@ function CompanySection() {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center overflow-hidden py-16">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center overflow-hidden py-10 sm:py-14 lg:py-16">
       
       {/* Columna Izquierda: Textos */}
       <div className="flex flex-col items-start lg:items-end order-last lg:order-first z-20">
@@ -69,13 +68,13 @@ function CompanySection() {
           <span className="font-montserrat font-bold block">enfocada en</span>
           <span className="text-soft-gray block mt-2">Resultados</span>
         </h2>
-        <p className="font-montserrat text-zinc-400 text-lg md:text-xl font-light max-w-xl text-left lg:text-right leading-relaxed">
+        <p className="font-montserrat text-zinc-400 text-base md:text-lg lg:text-xl font-light max-w-xl text-left lg:text-right leading-relaxed">
           Creamos planes basados en tus objetivos, logrando resultados de crecimiento a corto, mediano y largo plazo.
         </p>
       </div>
 
       {/* Columna Derecha: El Diagrama Circular */}
-      <div className="relative flex items-center justify-center min-h-[500px] md:min-h-[650px]">
+      <div className="relative flex items-center justify-center min-h-[350px] sm:min-h-[480px] md:min-h-[580px] lg:min-h-[650px]">
         
         <div className="relative w-full max-w-[550px] aspect-square">
           
@@ -115,7 +114,6 @@ function CompanySection() {
                   onMouseLeave={() => setActiveId(null)}
                   className={`absolute ${step.positionClass} w-[26%] aspect-square p-3 md:p-4 z-30 flex flex-col justify-center cursor-pointer rounded-[1.5rem] backdrop-blur-md`}
                   style={{
-                    // Solo cambian propiedades visuales, NUNCA transform
                     background: isActive ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)',
                     border: `1px solid ${isActive ? step.color + '99' : 'rgba(255,255,255,0.05)'}`,
                     boxShadow: isActive
@@ -147,11 +145,7 @@ function CompanySection() {
                   </div>
                 </div>
 
-                {/* Flecha Indicadora
-                    FIX CLAVE: Se elimina el `transform` inline en hover.
-                    El posicionado (translate) lo maneja Tailwind via arrowClass.
-                    Aquí solo se cambian propiedades visuales: borderColor, color, boxShadow.
-                */}
+                {/* Flecha Indicadora */}
                 <div 
                   className={`absolute ${step.arrowClass} z-20 w-8 h-8 md:w-10 md:h-10 rounded-full bg-[#111] flex items-center justify-center`}
                   style={{ 
@@ -161,7 +155,6 @@ function CompanySection() {
                     color: isActive ? step.color : 'rgba(255,255,255,0.3)',
                     boxShadow: isActive ? `0 0 15px ${step.glow}` : 'none',
                     transition: 'border-color 0.4s ease, color 0.4s ease, box-shadow 0.4s ease',
-                    // ❌ SIN transform aquí — Tailwind ya pone el translate correcto vía arrowClass
                   }}
                 >
                   {step.arrow}
