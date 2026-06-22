@@ -45,7 +45,7 @@ interface Brand {
   alt?: string;
   isText?: boolean;
   className?: string;
-  sizeClass?: string; // Añadimos esto para controlar tamaños personalizados
+  sizeClass?: string;
 }
 
 function BackedBy() {
@@ -85,7 +85,7 @@ function BackedBy() {
   const allBrands = [...brands, ...brands];
 
   return (
-    <section className="relative w-full pt-10 sm:pt-12 pb-14 sm:pb-4 overflow-hidden bg-transparent group">
+    <section className="relative w-full pt-8 sm:pt-10 md:pt-12 pb-10 sm:pb-14 md:pb-4 overflow-hidden bg-transparent group">
 
       <div className="absolute top-0 left-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-r from-black to-transparent opacity-90" />
       <div className="absolute top-0 right-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-l from-black to-transparent opacity-90" />
@@ -126,7 +126,6 @@ function BackedBy() {
                     <span className={`${brand.className} text-black whitespace-nowrap`}>
                       {brand.name}
                     </span>
-
                   ) : (
                     <img
                       src={brand.src}
@@ -136,7 +135,6 @@ function BackedBy() {
                       }`}
                     />
                   )}
-                  
                 </div>
               </SwiperSlide>
             ))}
@@ -149,13 +147,13 @@ function BackedBy() {
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="rounded-2xl p-8 sm:p-12 mb-12 mt-12"
+          className="rounded-2xl p-5 sm:p-8 md:p-12 mb-8 sm:mb-12 mt-8 sm:mt-12"
           style={{
             background: 'linear-gradient(135deg, rgba(255,59,48,0.05), rgba(255,149,0,0.05), rgba(0,122,255,0.05))',
             border: '1px solid rgba(255,255,255,0.1)',
           }}
         >
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
@@ -166,7 +164,7 @@ function BackedBy() {
                 className="text-center group/stat"
               >
                 <div
-                  className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-2 transition-transform duration-300 group-hover/stat:scale-110"
+                  className="text-2xl sm:text-3xl lg:text-5xl font-extrabold mb-2 transition-transform duration-300 group-hover/stat:scale-110"
                   style={{
                     background: `linear-gradient(to bottom, ${stat.color}, ${stat.color}B3)`,
                     WebkitBackgroundClip: 'text',
@@ -176,7 +174,7 @@ function BackedBy() {
                 >
                   {stat.number}
                 </div>
-                <div className="text-sm sm:text-base text-white/60 font-medium">
+                <div className="text-xs sm:text-sm md:text-base text-white/60 font-medium">
                   {stat.label}
                 </div>
                 <div

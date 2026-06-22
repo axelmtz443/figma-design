@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, Variants } from 'framer-motion';
 import { TrendingUp, Lightbulb, LineChart, Users, ChevronDown } from 'lucide-react';
 
-// --- Logos SVG ---
 const LogoRed = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 4100 4100" className={className}>
     <path fill="#e6332a" d="M211.4,2806.07s0,.02,0,.02c0-.01,0-.02,0-.03,0,0,0,0,0,0Z"/>
@@ -46,7 +45,6 @@ const LogoYellow = ({ className }: { className?: string }) => (
   </svg>
 );
 
-// --- Helpers ---
 const hexToRgb = (hex: string) => {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
@@ -54,7 +52,6 @@ const hexToRgb = (hex: string) => {
   return `${r}, ${g}, ${b}`;
 };
 
-// --- Componentes Internos ---
 const GlassCard = ({ title, description, Icon, color, progress, endStyle, LogoComponent, isMobile }: any) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -109,29 +106,29 @@ const GlassCard = ({ title, description, Icon, color, progress, endStyle, LogoCo
         <LogoComponent className="w-full h-full" />
       </div>
       
-      <div className="relative z-10 flex flex-col h-full p-6 md:p-10" style={{ opacity: contentOpacity, pointerEvents: progress > 0.9 ? 'auto' : 'none' }}>
+      <div className="relative z-10 flex flex-col h-full p-4 sm:p-6 md:p-10" style={{ opacity: contentOpacity, pointerEvents: progress > 0.9 ? 'auto' : 'none' }}>
         <div 
-          className="mb-4 md:mb-6 inline-flex w-fit rounded-2xl p-3 md:p-4 ring-1 shadow-lg"
+          className="mb-3 sm:mb-4 md:mb-6 inline-flex w-fit rounded-2xl p-3 md:p-4 shadow-lg"
           style={{ 
             backgroundColor: `rgba(${rgb}, 0.1)`,
-            ringColor: `rgba(${rgb}, 0.2)`,
-            boxShadow: `0 0 20px rgba(${rgb}, 0.15)`
+            boxShadow: `0 0 0 1px rgba(${rgb}, 0.2), 0 0 20px rgba(${rgb}, 0.15)`
           }}
         >
-          <Icon className="h-6 w-6 md:h-8 md:w-8" strokeWidth={1.5} style={{ color: color }} />
+          <Icon className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8" strokeWidth={1.5} style={{ color: color }} />
         </div>
         
-        <h3 className="mb-2 md:mb-4 text-2xl md:text-3xl font-bold tracking-wide font-montserrat text-white" style={{ color: color }}>
+        <h3 className="mb-2 md:mb-4 text-xl sm:text-2xl md:text-3xl font-bold tracking-wide font-montserrat text-white" style={{ color: color }}>
           {title}
         </h3>
         
-        <p className="text-white/80 leading-relaxed text-[14px] md:text-[15px] font-montserrat mt-auto">
+        <p className="text-white/80 leading-relaxed text-[13px] sm:text-[14px] md:text-[15px] font-montserrat mt-auto">
           {description}
         </p>
       </div>
     </div>
   );
 };
+
 const WhoWeAre = () => {
   const [isMobile, setIsMobile] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -141,12 +138,7 @@ const WhoWeAre = () => {
     offset: ["start start", "end end"]
   });
 
-
-
-
-  // AHORA EMPIEZA DESDE 0 PARA UN EFECTO FLUIDO
   const rawProgress = useTransform(scrollYProgress, [0, 0.8], [0, 1]);
-
   const [currentProgress, setCurrentProgress] = useState(0);
 
   const smoothProgress = useSpring(rawProgress, { 
@@ -226,11 +218,10 @@ const WhoWeAre = () => {
   };
 
   return (
-    <section ref={wrapperRef} className="relative w-full h-[350vh] bg-transparent font-sans pb-40">
+    <section ref={wrapperRef} className="relative w-full h-[350vh] bg-transparent font-sans pb-20 sm:pb-32 md:pb-40">
       <div className="sticky top-0 h-screen w-full flex items-center justify-center overflow-hidden">
         
-        {/* EL CONTENEDOR DE TARJETAS AHORA ES EL CENTRO TOTAL */}
-        <div className="relative z-10 w-full max-w-5xl px-4 h-[70vh] md:h-[80vh]">
+        <div className="relative z-10 w-full max-w-5xl px-4 sm:px-6 h-[70vh] md:h-[80vh]">
           {cardsData.map((card) => (
             <GlassCard 
               key={card.id} 
@@ -254,6 +245,5 @@ const WhoWeAre = () => {
     </section>
   );
 };
-
 
 export default WhoWeAre;

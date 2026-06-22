@@ -52,17 +52,17 @@ function Services() {
   const colors: ('red' | 'blue' | 'green' | 'yellow' | 'blue')[] = ['red', 'blue', 'green', 'yellow', 'blue'];
 
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <div className="text-center mb-16">
-        <h2 className="font-aston text-[40px] md:text-[60px] text-white leading-tight mb-4">
+    <section className="w-full max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20">
+      <div className="text-center mb-10 sm:mb-14 md:mb-16">
+        <h2 className="font-aston text-[30px] sm:text-[40px] md:text-[52px] lg:text-[60px] text-white leading-tight mb-4">
           Nuestros Servicios
         </h2>
-        <p className="font-montserrat font-light text-white/70 text-[18px] md:text-[24px] max-w-3xl mx-auto">
+        <p className="font-montserrat font-light text-white/70 text-[14px] sm:text-[18px] md:text-[20px] lg:text-[24px] max-w-3xl mx-auto">
           Soluciones estratégicas para el posicionamiento de tu marca.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-start">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-5 items-start">
         {services.map((service, index) => (
           <ServiceCard
             key={service.title}

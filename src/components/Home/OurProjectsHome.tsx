@@ -1,30 +1,48 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from "react";
 
-import fondoMercedes from '../../images/fondos_casos-de-exito/fondo_mercedes.png';
-import fondoHuizache from '../../images/fondos_casos-de-exito/fondo_tequilahuizache.png';
-import fondoCoca from '../../images/fondos_casos-de-exito/fondo_coca.png';
-import fondoLizmuebles from '../../images/fondos_casos-de-exito/fondo_lizmuebles.png';
-import fondoSelloRojo from '../../images/fondos_casos-de-exito/fondo_SelloRojo.png';
-import fondoKia from '../../images/fondos_casos-de-exito/fondo_Kia.jpeg';
-import fondoFortia from '../../images/fondos_casos-de-exito/fondo_fortia.jpg';
-import fondoVitromex from '../../images/fondos_casos-de-exito/fondo_Vitromex.png';
-import logoMercedes from '../../images/Logos_Clientes/Logo_mercedes.png';
-import logoHuizache from '../../images/Logos_Clientes/Tequila_huizache.png';
-import logoSelloRojo from '../../images/Logos_Clientes/SelloRojo.png';
-import logoKia from '../../images/Logos_Clientes/KIA.png';
-import logoCoca from '../../images/Logos_Clientes/Cocacola.png';
-import logoVitromex from '../../images/Logos_Clientes/Vitromex.png';
-import logoFortia from '../../images/Logos_Clientes/Fortia.png';
-import logoLiz from '../../images/Logos_Clientes/Liz_muebles.png';
+import fondoMercedes from "../../images/fondos_casos-de-exito/fondo_mercedes.png";
+import fondoHuizache from "../../images/fondos_casos-de-exito/fondo_tequilahuizache.png";
+import fondoCoca from "../../images/fondos_casos-de-exito/fondo_coca.png";
+import fondoLizmuebles from "../../images/fondos_casos-de-exito/fondo_lizmuebles.png";
+import fondoSelloRojo from "../../images/fondos_casos-de-exito/fondo_SelloRojo.png";
+import fondoKia from "../../images/fondos_casos-de-exito/fondo_Kia.jpeg";
+import fondoFortia from "../../images/fondos_casos-de-exito/fondo_fortia.jpg";
+import fondoVitromex from "../../images/fondos_casos-de-exito/fondo_Vitromex.png";
+import logoMercedes from "../../images/Logos_Clientes/logo_mercedes.png";
+import logoHuizache from "../../images/Logos_Clientes/Tequila_huizache.png";
+import logoSelloRojo from "../../images/Logos_Clientes/SelloRojo.png";
+import logoKia from "../../images/Logos_Clientes/KIA.png";
+import logoCoca from "../../images/Logos_Clientes/Cocacola.png";
+import logoVitromex from "../../images/Logos_Clientes/Vitromex.png";
+import logoFortia from "../../images/Logos_Clientes/Fortia.png";
+import logoLiz from "../../images/Logos_Clientes/Liz_muebles.png";
 
 const ChevronLeft = ({ size = 24 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <polyline points="15 18 9 12 15 6" />
   </svg>
 );
 
 const ChevronRight = ({ size = 24 }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
     <polyline points="9 18 15 12 9 6" />
   </svg>
 );
@@ -63,73 +81,89 @@ const cases: Case[] = [
     id: 1,
     client: "Mercedes-Benz EQ",
     tag: "Lanzamiento de Marca",
-    description: "Desarrollo de campaña de comunicación y posicionamiento de marca para el lanzamiento de la línea eléctrica EQ de Mercedes-Benz en México.",
+    description:
+      "Desarrollo de campaña de comunicación y posicionamiento de marca para el lanzamiento de la línea eléctrica EQ de Mercedes-Benz en México.",
     image: fondoMercedes,
     logo: logoMercedes,
-    gradientFallback: "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
+    gradientFallback:
+      "linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)",
   },
   {
     id: 2,
     client: "Tequila Huizache",
     tag: "Branding Internacional",
-    description: "Desarrollo de imagen de marca, estrategia de posicionamiento, e identificación de nicho de negocio con exitosa entrada al mercado de exportación.",
+    description:
+      "Desarrollo de imagen de marca, estrategia de posicionamiento, e identificación de nicho de negocio con exitosa entrada al mercado de exportación.",
     image: fondoHuizache,
     logo: logoHuizache,
-    gradientFallback: "linear-gradient(135deg, #2d1b00 0%, #4a2c00 50%, #6b3f00 100%)",
+    gradientFallback:
+      "linear-gradient(135deg, #2d1b00 0%, #4a2c00 50%, #6b3f00 100%)",
   },
   {
     id: 3,
     client: "Sello Rojo",
     tag: "Marketing Promocional",
-    description: "Estrategia de posicionamiento de marca para las nuevas líneas de productos a través de campañas promocionales a nivel nacional.",
+    description:
+      "Estrategia de posicionamiento de marca para las nuevas líneas de productos a través de campañas promocionales a nivel nacional.",
     image: fondoSelloRojo,
     logo: logoSelloRojo,
-    gradientFallback: "linear-gradient(135deg, #2d0000 0%, #5c0000 50%, #8b0000 100%)",
+    gradientFallback:
+      "linear-gradient(135deg, #2d0000 0%, #5c0000 50%, #8b0000 100%)",
   },
   {
     id: 4,
     client: "KIA",
     tag: "Trade Marketing / Fidelización",
-    description: "Creación de estrategia promocional, de lealtad y de posicionamiento de marca para más de 13 concesionarios a nivel nacional.",
+    description:
+      "Creación de estrategia promocional, de lealtad y de posicionamiento de marca para más de 13 concesionarios a nivel nacional.",
     image: fondoKia,
     logo: logoKia,
-    gradientFallback: "linear-gradient(135deg, #1a0000 0%, #3d0000 50%, #660000 100%)",
+    gradientFallback:
+      "linear-gradient(135deg, #1a0000 0%, #3d0000 50%, #660000 100%)",
   },
   {
     id: 5,
     client: "Coca-Cola",
     tag: "Marketing Comercial",
-    description: "Desarrollo de estrategia de marketing comercial y proyectos especiales para América Latina, rompiendo récord histórico de ventas.",
+    description:
+      "Desarrollo de estrategia de marketing comercial y proyectos especiales para América Latina, rompiendo récord histórico de ventas.",
     image: fondoCoca,
     logo: logoCoca,
-    gradientFallback: "linear-gradient(135deg, #3d0000 0%, #6b0000 50%, #990000 100%)",
+    gradientFallback:
+      "linear-gradient(135deg, #3d0000 0%, #6b0000 50%, #990000 100%)",
   },
   {
     id: 6,
     client: "Vitromex",
     tag: "Marketing Estratégico",
-    description: "Creación y desarrollo de estrategia de comercialización y de marketing a nivel nacional, consolidando la marca como líder en el mercado.",
+    description:
+      "Creación y desarrollo de estrategia de comercialización y de marketing a nivel nacional, consolidando la marca como líder en el mercado.",
     image: fondoVitromex,
     logo: logoVitromex,
-    gradientFallback: "linear-gradient(135deg, #003d00 0%, #006b00 50%, #009900 100%)",
+    gradientFallback:
+      "linear-gradient(135deg, #003d00 0%, #006b00 50%, #009900 100%)",
   },
   {
     id: 7,
     client: "Fortia Technologies",
     tag: "Marketing Digital",
-    description: "Desarrollo de estrategia de marketing, comunicación y publicidad digital a nivel nacional e internacional.",
+    description:
+      "Desarrollo de estrategia de marketing, comunicación y publicidad digital a nivel nacional e internacional.",
     image: fondoFortia,
     logo: logoFortia,
-    gradientFallback: "linear-gradient(135deg, #001a3d 0%, #002e6b 50%, #004299 100%)",
+    gradientFallback:
+      "linear-gradient(135deg, #001a3d 0%, #002e6b 50%, #004299 100%)",
   },
   {
     id: 8,
     client: "Muebles Liz",
     tag: "Marketing Integral",
-    description: "Desarrollo de Estrategia Integral de Marketing y Comercialización en México y Centroamérica.",
+    description:
+      "Desarrollo de Estrategia Integral de Marketing y Comercialización en México y Centroamérica.",
     image: fondoLizmuebles,
     logo: logoLiz,
-    gradientFallback: "linear-gradient(135deg, #1a0033 0%, #33006b 50%, #4d0099 100%)",
+    gradientFallback:
+      "linear-gradient(135deg, #1a0033 0%, #33006b 50%, #4d0099 100%)",
   },
 ];
 
@@ -155,18 +189,19 @@ export default function OurProjectsHome() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') prevSlide();
-      if (e.key === 'ArrowRight') nextSlide();
+      if (e.key === "ArrowLeft") prevSlide();
+      if (e.key === "ArrowRight") nextSlide();
     };
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [nextSlide, prevSlide]);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null);
     setTouchStart(e.targetTouches[0].clientX);
   };
-  const handleTouchMove = (e: React.TouchEvent) => setTouchEnd(e.targetTouches[0].clientX);
+  const handleTouchMove = (e: React.TouchEvent) =>
+    setTouchEnd(e.targetTouches[0].clientX);
   const handleTouchEnd = () => {
     if (!touchStart || !touchEnd) return;
     const dist = touchStart - touchEnd;
@@ -176,7 +211,7 @@ export default function OurProjectsHome() {
 
   return (
     <section
-      className="w-full bg-transparent py-16 sm:py-20 px-4 sm:px-6 md:px-12 font-montserrat relative overflow-hidden z-10 antialiased select-none"
+      className="w-full bg-transparent py-12 sm:py-16 md:py-20 px-4 sm:px-6 md:px-12 font-montserrat relative overflow-hidden z-10 antialiased select-none"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       onTouchStart={handleTouchStart}
@@ -186,32 +221,35 @@ export default function OurProjectsHome() {
       <style dangerouslySetInnerHTML={{ __html: customStyles }} />
 
       <div className="max-w-7xl mx-auto flex flex-col items-center">
-
         {/* Header */}
-        <div className="w-full mb-10 md:mb-16">
+        <div className="w-full mb-8 sm:mb-10 md:mb-16">
           <h2 className="font-astonpoliz text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-wide uppercase leading-tight mb-3">
             Casos de Éxito
           </h2>
-          <p className="text-white/50 font-montserrat text-base sm:text-lg font-light">
+          <p className="text-white/50 font-montserrat text-sm sm:text-base md:text-lg font-light">
             Resultados comprobados por marcas y empresas líderes en su sector
           </p>
         </div>
 
         {/* Carrusel coverflow */}
-        <div className="relative w-full h-[480px] sm:h-[440px] md:h-[460px] lg:h-[480px] flex items-center justify-center group">
-
+        <div className="relative w-full h-[400px] sm:h-[440px] md:h-[460px] lg:h-[480px] flex items-center justify-center group">
           {cases.map((item, index) => {
             const isActive = index === currentIndex;
-            const isPrev = index === (currentIndex - 1 + cases.length) % cases.length;
+            const isPrev =
+              index === (currentIndex - 1 + cases.length) % cases.length;
             const isNext = index === (currentIndex + 1) % cases.length;
 
-            let positionStyle = "opacity-0 scale-75 pointer-events-none absolute z-0";
+            let positionStyle =
+              "opacity-0 scale-75 pointer-events-none absolute z-0";
             if (isActive) {
-              positionStyle = "opacity-100 scale-100 z-30 translate-x-0 relative cursor-default";
+              positionStyle =
+                "opacity-100 scale-100 z-30 translate-x-0 relative cursor-default";
             } else if (isPrev) {
-              positionStyle = "opacity-35 scale-90 -translate-x-[40%] sm:-translate-x-[50%] lg:-translate-x-[60%] xl:-translate-x-[55%] z-20 absolute cursor-pointer blur-[1px] hidden sm:block";
+              positionStyle =
+                "opacity-35 scale-90 -translate-x-[40%] sm:-translate-x-[50%] lg:-translate-x-[60%] xl:-translate-x-[55%] z-20 absolute cursor-pointer blur-[1px] hidden sm:block";
             } else if (isNext) {
-              positionStyle = "opacity-35 scale-90 translate-x-[40%] sm:translate-x-[50%] lg:translate-x-[60%] xl:translate-x-[55%] z-20 absolute cursor-pointer blur-[1px] hidden sm:block";
+              positionStyle =
+                "opacity-35 scale-90 translate-x-[40%] sm:translate-x-[50%] lg:translate-x-[60%] xl:translate-x-[55%] z-20 absolute cursor-pointer blur-[1px] hidden sm:block";
             }
 
             return (
@@ -224,14 +262,14 @@ export default function OurProjectsHome() {
                 }}
               >
                 <div className="w-full h-full relative rounded-2xl overflow-hidden border border-zinc-800/80 bg-zinc-950 shadow-[0_0_50px_rgba(0,0,0,0.85)]">
-
-                  {/* Fondo: imagen o gradiente */}
                   {item.image ? (
                     <img
                       src={item.image}
                       alt={item.client}
                       className={`w-full h-full object-cover transition-transform duration-1000 ease-out select-none pointer-events-none ${
-                        isActive ? 'scale-100 brightness-[0.25]' : 'scale-105 brightness-40 blur-[2px]'
+                        isActive
+                          ? "scale-100 brightness-[0.25]"
+                          : "scale-105 brightness-40 blur-[2px]"
                       }`}
                       draggable={false}
                     />
@@ -245,47 +283,43 @@ export default function OurProjectsHome() {
                     />
                   )}
 
-                  {/* Gradiente más pronunciado para que el panel sea el foco */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/75 to-black/10" />
 
-                  {/* Panel — ocupa la mitad inferior de la tarjeta */}
                   {isActive && (
-                    <div className="absolute inset-x-0 bottom-0 p-4 sm:p-6 md:p-8" style={{ height: '58%' }}>
-                      <div className="w-full h-full bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl p-5 sm:p-7 flex flex-col justify-between shadow-2xl">
-
-                        {/* Fila superior: logo + nombre + tag */}
+                    <div
+                      className="absolute inset-x-0 bottom-0 p-3 sm:p-6 md:p-8"
+                      style={{ height: "58%" }}
+                    >
+                      <div className="w-full h-full bg-black/50 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6 md:p-7 flex flex-col justify-between shadow-2xl">
                         <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
                           {item.logo && (
-                            <div className="h-12 sm:h-14 flex-shrink-0 flex items-center">
+                            <div className="h-10 sm:h-14 flex-shrink-0 flex items-center">
                               <img
                                 src={item.logo}
                                 alt={`Logo ${item.client}`}
-                                className="max-h-full max-w-[160px] object-contain object-left pointer-events-none select-none"
+                                className="max-h-full max-w-[140px] sm:max-w-[160px] object-contain object-left pointer-events-none select-none"
                                 draggable={false}
                               />
                             </div>
                           )}
-                          <div className="flex flex-col gap-2">
+                          <div className="flex flex-col gap-1 sm:gap-2">
                             <div className="flex items-center gap-2">
                               <div className="w-6 h-[2px] bg-[#e6af41]" />
-                              <span className="text-[#e6af41] font-bold tracking-widest text-sm uppercase font-montserrat">
+                              <span className="text-[#e6af41] font-bold tracking-widest text-xs sm:text-sm uppercase font-montserrat">
                                 {item.client}
                               </span>
                             </div>
-                            <span className="self-start inline-flex items-center px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest border border-[#e6af41]/40 text-[#e6af41]/80 bg-[#e6af41]/[0.08]">
+                            <span className="self-start inline-flex items-center px-3 py-1 rounded-full text-[10px] sm:text-[11px] font-bold uppercase tracking-widest border border-[#e6af41]/40 text-[#e6af41]/80 bg-[#e6af41]/[0.08]">
                               {item.tag}
                             </span>
                           </div>
                         </div>
 
-                        {/* Separador */}
                         <div className="w-full h-px bg-white/10 my-1" />
 
-                        {/* Descripción */}
-                        <p className="text-zinc-200 font-light text-sm sm:text-base leading-relaxed font-montserrat">
+                        <p className="text-zinc-200 font-light text-xs sm:text-sm md:text-base leading-relaxed font-montserrat">
                           {item.description}
                         </p>
-
                       </div>
                     </div>
                   )}
@@ -324,15 +358,15 @@ export default function OurProjectsHome() {
         </div>
 
         {/* Dots */}
-        <div className="flex justify-center items-center gap-2 mt-12 sm:mt-16 flex-wrap max-w-md mx-auto px-4">
+        <div className="flex justify-center items-center gap-2 mt-10 sm:mt-16 flex-wrap max-w-md mx-auto px-4">
           {cases.map((_, idx) => (
             <button
               key={idx}
               onClick={() => setCurrentIndex(idx)}
               className={`transition-all duration-500 rounded-full ${
                 idx === currentIndex
-                  ? 'w-10 h-2 gold-active-bar opacity-100'
-                  : 'w-2 h-2 bg-white/20 hover:bg-white/50 opacity-60'
+                  ? "w-10 h-2 gold-active-bar opacity-100"
+                  : "w-2 h-2 bg-white/20 hover:bg-white/50 opacity-60"
               }`}
             />
           ))}
@@ -341,10 +375,10 @@ export default function OurProjectsHome() {
         {/* Contador */}
         <div className="text-center mt-4">
           <span className="text-[11px] text-zinc-500 font-montserrat tracking-[0.25em] font-semibold">
-            {String(currentIndex + 1).padStart(2, '0')} / {String(cases.length).padStart(2, '0')}
+            {String(currentIndex + 1).padStart(2, "0")} /{" "}
+            {String(cases.length).padStart(2, "0")}
           </span>
         </div>
-
       </div>
     </section>
   );
