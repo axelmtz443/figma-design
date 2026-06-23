@@ -69,14 +69,13 @@ function AboutBackedBy() {
   const allBrands = [...brands, ...brands];
 
   return (
-    <section className="relative w-full pt-10 sm:pt-12 pb-14 sm:pb-20 overflow-hidden bg-transparent group">
+    <section className="relative w-full overflow-x-hidden pt-8 sm:pt-10 md:pt-12 pb-10 sm:pb-14 md:pb-20 bg-transparent group">
+      {/* Gradientes laterales - más pequeños en mobile */}
+      <div className="absolute top-0 left-0 w-12 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-r from-black to-transparent opacity-90" />
+      <div className="absolute top-0 right-0 w-12 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-l from-black to-transparent opacity-90" />
 
-      <div className="absolute top-0 left-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-r from-black to-transparent opacity-90" />
-      <div className="absolute top-0 right-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-l from-black to-transparent opacity-90" />
-
-      <div className="relative w-full max-w-[1519px] mx-auto px-4 sm:px-8 z-10">
-
-        <p className="font-aston text-[24px] sm:text-[30px] md:text-[42px] tracking-[-0.01em] text-white/100 text-center mb-10 sm:mb-16">
+      <div className="relative w-full max-w-[1519px] mx-auto px-3 sm:px-8 z-10">
+        <p className="font-aston text-[20px] sm:text-[30px] md:text-[42px] tracking-[-0.01em] text-white text-center mb-6 sm:mb-12 md:mb-16">
           Nuestros clientes
         </p>
 
@@ -91,31 +90,31 @@ function AboutBackedBy() {
 
           <Swiper
             modules={[Autoplay, Navigation]}
-            spaceBetween={30}
+            spaceBetween={20}
             slidesPerView={2}
             loop={true}
             speed={4000}
             autoplay={{ delay: 0, disableOnInteraction: false }}
             navigation={{ prevEl: '.prev-btn', nextEl: '.next-btn' }}
             breakpoints={{
-              480: { slidesPerView: 3, spaceBetween: 40 },
-              640: { slidesPerView: 3, spaceBetween: 50 },
+              480: { slidesPerView: 3, spaceBetween: 30 },
+              640: { slidesPerView: 3, spaceBetween: 40 },
               1024: { slidesPerView: 5, spaceBetween: 50 },
             }}
-            className="flex items-center"
+            className="flex items-center w-full"
           >
             {allBrands.map((brand, index) => (
-              <SwiperSlide key={index} className="flex items-center justify-center py-4">
-                <div className="flex items-center justify-center h-24 sm:h-28 w-full px-4 py-4 rounded-2xl bg-white border border-white/20 shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-white/10">
+              <SwiperSlide key={index} className="flex items-center justify-center py-3 sm:py-4">
+                <div className="flex items-center justify-center h-16 sm:h-24 md:h-28 w-full px-3 sm:px-4 py-3 sm:py-4 rounded-2xl bg-white border border-white/20 shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-white/10">
                   {brand.isText ? (
-                    <span className={`${brand.className} text-white whitespace-nowrap`}>
+                    <span className={`${brand.className} text-white whitespace-nowrap text-sm sm:text-base`}>
                       {brand.name}
                     </span>
                   ) : (
                     <img
                       src={brand.src}
                       alt={brand.alt}
-                      className="h-8 sm:h-12 md:h-16 w-auto object-contain"
+                      className="h-6 sm:h-10 md:h-14 w-auto object-contain max-w-[120px] sm:max-w-none"
                     />
                   )}
                 </div>
