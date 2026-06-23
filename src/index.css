@@ -4,10 +4,15 @@
 
 @font-face {
   font-family: 'Astonpoliz';
-  src: url('./assets/fonts/Astonpoliz.ttf') format('truetype');
+  src: url('./assets/fonts/Astonpoliz/Astonpoliz.ttf') format('truetype');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+}
+
+/* Clase explícita para blindar la fuente y asegurar que aplique en todas las vistas */
+.font-aston {
+  font-family: 'Astonpoliz', sans-serif !important;
 }
 
 /* =============================================
@@ -164,10 +169,6 @@ body {
 html {
   background-color: #000;
 }
-
-
-
-
 
 
 

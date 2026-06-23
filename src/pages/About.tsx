@@ -34,7 +34,7 @@ function About() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="bg-transparent text-white w-full selection:bg-blue-500/30">
+    <div className="bg-transparent text-white w-full selection:bg-blue-500/30 overflow-x-hidden">
       <Navbar />
       
       <motion.main
@@ -45,7 +45,7 @@ function About() {
         {/* El Hero suele ir sin ScrollReveal o con uno muy rápido para feedback inmediato */}
         <SectionOne />
 
-        <ScrollReveal>
+        <ScrollReveal direction="left">
           <CompanySection />
         </ScrollReveal>
         
@@ -63,7 +63,7 @@ function About() {
           <TeamSection />
         </ScrollReveal>
 
-        <ScrollReveal>
+        <ScrollReveal direction="right">
           <AboutBackedBy />
         </ScrollReveal>
 
