@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* =============================================
+   FONTS
+   ============================================= */
 @font-face {
   font-family: 'Astonpoliz';
   src: url('./assets/fonts/Astonpoliz.ttf') format('truetype');
@@ -11,29 +14,77 @@
 }
 
 /* =============================================
-   FIX: Previene el movimiento horizontal
-   causado por el scrollbar que aparece/desaparece
+   RESET Y PREVENCIÓN DE SCROLL HORIZONTAL
    ============================================= */
 html {
-  overflow-y: scroll;         
-  scrollbar-gutter: stable; 
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+  background-color: #000;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
   max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  background-color: #000;
 }
 
-
-/*#root {
+/* Previene scroll horizontal en toda la app */
+html, body {
   overflow-x: hidden;
-  
-}*/
+  max-width: 100vw;
+}
+
+/* Mejora el scroll en mobile */
+* {
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
+/* Asegura que las imágenes no desborden */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
 
 /* =============================================
-   Botón con borde degradado
+   CONTENEDOR PRINCIPAL - EVITA OVERFLOW
    ============================================= */
+#root {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
 
-/* Swiper Customization */
+/* =============================================
+   SCROLLBAR ESTILIZADA (Opcional)
+   ============================================= */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #facc15, #4ade80, #60a5fa, #ef4444);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #fde047, #86efac, #93c5fd, #f87171);
+}
+
+/* =============================================
+   SWIPER CUSTOMIZATIONS
+   ============================================= */
 .projects-swiper .swiper-pagination-bullet {
   background: rgba(255, 255, 255, 0.2) !important;
   opacity: 1;
@@ -62,16 +113,14 @@ body {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Glassmorphism Hover Effect */
+/* =============================================
+   GLASSMORPHISM
+   ============================================= */
 .glass-card:hover {
   border-color: var(--brand-color) !important;
   box-shadow: 0 0 40px var(--brand-glow);
 }
 
-
-
-
-/* Glassmorphism Dinámico */
 .glass-card:hover {
   background: rgba(255, 255, 255, 0.05) !important;
   border-color: var(--hover-color) !important;
@@ -79,13 +128,23 @@ body {
   transform: scale(1.005) !important;
 }
 
-/* Animación de rotación muy lenta para el contenedor */
+.glass-card:hover {
+  border-color: var(--brand-color) !important;
+  box-shadow: 0 0 50px -10px var(--brand-glow) !important;
+}
+
+.glass-card img {
+  pointer-events: none;
+}
+
+/* =============================================
+   ANIMACIONES
+   ============================================= */
 @keyframes slow-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
 
-/* Aplicar a los orbes o al contenedor si quieres movimiento continuo */
 .animate-slow-spin-container {
   animation: float-diagram 10s ease-in-out infinite;
 }
@@ -95,20 +154,34 @@ body {
   50% { transform: translateY(-2px) scale(1); }
 }
 
-
 @keyframes gradient {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* Asegurar que las tarjetas no hereden el giro si decides rotar el contenedor */
-/* Por ahora solo pusimos un efecto de "flotación" para que sea elegante pero legible */
+@keyframes rotate-gradient {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 
+.animate-rotate-slow {
+  animation: rotate-gradient 4s linear infinite;
+}
 
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
 
-/* src/index.css */
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
 
+/* =============================================
+   GRAIN TEXTURE
+   ============================================= */
 .bg-grain {
   position: relative;
 }
@@ -120,62 +193,86 @@ body {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  z-index: 50; /* Por encima de todo pero sin bloquear clicks */
-  opacity: 0.04; /* Muy sutil */
+  z-index: 50;
+  opacity: 0.04;
   background-image: url("https://grainy-gradients.vercel.app/noise.svg");
   filter: contrast(150%) brightness(100%);
 }
 
-
-/* src/index.css */
-.glass-card:hover {
-  border-color: var(--brand-color) !important;
-  box-shadow: 0 0 50px -10px var(--brand-glow) !important;
-}
-
-/* Efecto suave para las imágenes de las tarjetas */
-.glass-card img {
-  pointer-events: none;
-}
-
-
-@keyframes rotate-gradient {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.animate-rotate-slow {
-  animation: rotate-gradient 4s linear infinite;
-}
-
-
-
-
 /* =============================================
-   CUSTOM SCROLLBAR PREMIUM (Multi-color FIXED)
-   ============================================= */
-/* =============================================
-   CUSTOM SCROLLBAR BRAND-MATCH (Premium Thick)
+   UTILIDADES RESPONSIVE ADICIONALES
    ============================================= */
 
-
-
-/* Refuerzo de fondo para evitar saltos de color */
-html {
-  background-color: #000;
+/* Ocultar scrollbar pero mantener funcionalidad */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-
-
-
-
-
-
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-  100% { transform: translateY(0px); }
+/* Scroll suave en iOS */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
 }
-.animate-float {
-  animation: float 6s ease-in-out infinite;
+
+/* Optimización de rendimiento para animaciones */
+.will-change-transform {
+  will-change: transform;
+}
+
+/* =============================================
+   FONT FALLBACKS
+   ============================================= */
+.font-aston {
+  font-family: 'Astonpoliz', 'Arial Black', sans-serif;
+}
+
+.font-montserrat {
+  font-family: 'Montserrat', 'Arial', sans-serif;
+}
+
+/* =============================================
+   UTILIDADES DE GRADIENTE PARA BORDES
+   ============================================= */
+.bg-border-grad {
+  background: linear-gradient(135deg, #facc15, #4ade80, #60a5fa, #ef4444);
+  background-size: 300% 300%;
+  animation: gradient 6s ease-in-out infinite;
+}
+
+/* =============================================
+   FIX: PREVIENE QUE ELEMENTOS ABSOLUTOS 
+   CAUSEN SCROLL HORIZONTAL EN MOBILE
+   ============================================= */
+.overflow-x-hidden {
+  overflow-x: hidden !important;
+}
+
+.max-w-full {
+  max-width: 100% !important;
+}
+
+/* =============================================
+   MEDIA QUERIES PARA AJUSTES FINOS
+   ============================================= */
+
+/* Teléfonos pequeños (< 480px) */
+@media (max-width: 480px) {
+  .glass-card {
+    border-radius: 12px !important;
+  }
+  
+  .swiper-slide {
+    padding: 8px 0 !important;
+  }
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .container-cards {
+    padding: 0 20px;
+  }
 }

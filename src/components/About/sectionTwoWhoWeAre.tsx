@@ -2,8 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useSpring, Variants } from 'framer-motion';
 import { TrendingUp, Lightbulb, LineChart, Users, ChevronDown } from 'lucide-react';
 
-
-
 const LogoRed = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 4100 4100" className={className}>
     <path fill="#e6332a" d="M211.4,2806.07s0,.02,0,.02c0-.01,0-.02,0-.03,0,0,0,0,0,0Z"/>
@@ -32,14 +30,14 @@ const LogoGreen = ({ className }: { className?: string }) => (
 const LogoYellow = ({ className }: { className?: string }) => (
   <svg viewBox="0 0 4100 4100" className={className}>
     <defs>
-      <linearGradient id="Degradado_sin_nombre_194" data-name="Degradado sin nombre 194" x1="3475.55" y1="2745.24" x2="3475.55" y2="2762.93" gradientUnits="userSpaceOnUse">
+      <linearGradient id="Degradado_sin_nombre_194" x1="3475.55" y1="2745.24" x2="3475.55" y2="2762.93" gradientUnits="userSpaceOnUse">
         <stop offset="0" stopColor="#f09428"/>
         <stop offset=".21" stopColor="#f29d2b"/>
         <stop offset=".64" stopColor="#f7ac31"/>
         <stop offset="1" stopColor="#f9b233"/>
       </linearGradient>
-      <linearGradient id="Degradado_sin_nombre_194-2" data-name="Degradado sin nombre 194" x1="3690.38" y1="812.69" x2="3690.38" y2="2989.98" href="#Degradado_sin_nombre_194"/>
-      <linearGradient id="Degradado_sin_nombre_194-3" data-name="Degradado sin nombre 194" x1="2346.38" y1="2873.01" x2="3884.41" y2="2873.01" href="#Degradado_sin_nombre_194"/>
+      <linearGradient id="Degradado_sin_nombre_194-2" x1="3690.38" y1="812.69" x2="3690.38" y2="2989.98" href="#Degradado_sin_nombre_194"/>
+      <linearGradient id="Degradado_sin_nombre_194-3" x1="2346.38" y1="2873.01" x2="3884.41" y2="2873.01" href="#Degradado_sin_nombre_194"/>
     </defs>
     <path fill="url(#Degradado_sin_nombre_194)" d="M3475.2,2746.69c-.1,5.76.18,11.46.72,17.12,0-1.61,0-3.2,0-4.83-.46-4.84-.68-9.72-.68-14.63-.01.78-.02,1.61-.04,2.34Z"/>
     <path fill="url(#Degradado_sin_nombre_194-2)" d="M3475.09,702.94c-2.39,151.7,2.9,1815.32.23,2034.83.32,7.21.52,14.28.59,21.21,18.55,197.08,408.5,333.94,408.5,333.94-.1,1.56-.21,3.12-.32,4.64.21.07.32.11.32.11,4.99-295.61,20.07-1812.46,21.89-1996.09-106.86-318.84-340.5-385.2-431.22-398.65Z"/>
@@ -54,17 +52,6 @@ const hexToRgb = (hex: string) => {
   return `${r}, ${g}, ${b}`;
 };
 
-interface GlassCardProps {
-  title: string;
-  description: string;
-  Icon: any;
-  color: string;
-  progress: number;
-  endStyle: React.CSSProperties;
-  LogoComponent: any;
-  isMobile: boolean;
-}
-
 const GlassCard = ({ title, description, Icon, color, progress, endStyle, LogoComponent, isMobile }: any) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
@@ -76,22 +63,16 @@ const GlassCard = ({ title, description, Icon, color, progress, endStyle, LogoCo
     setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   };
 
-
   const rgb = hexToRgb(color);
-  // Ajuste de tiempos: el logo desaparece en el primer 40%, el contenido aparece después
-  const logoOpacity = Math.max(0, 1 - progress * 2.5); 
+  const logoOpacity = Math.max(0, 1 - progress * 2.5);
   const contentOpacity = Math.max(0, (progress - 0.6) * 2.5);
 
   const isFullyExpanded = progress >= 0.98;
-  
   const currentBgAlpha = isFullyExpanded && isHovered ? 0.15 : 0.05 * progress;
   const currentBorderAlpha = isFullyExpanded && isHovered ? 0.6 : 0.2 * progress;
 
-
-  const startSize = isMobile ? '180px' : '240px';
-  const startPos = isMobile ? 'calc(50% - 90px)' : 'calc(50% - 120px)';
-
-  
+  const startSize = isMobile ? '120px' : '240px';
+  const startPos  = isMobile ? 'calc(50% - 60px)' : 'calc(50% - 120px)';
 
   return (
     <div
@@ -101,52 +82,62 @@ const GlassCard = ({ title, description, Icon, color, progress, endStyle, LogoCo
       onMouseLeave={() => setIsHovered(false)}
       className="absolute overflow-hidden border cursor-pointer backdrop-blur-sm"
       style={{
-      
-        top: `calc((${startPos}) * (1 - ${progress}) + (${endStyle.top}) * ${progress})`,
-        left: `calc((${startPos}) * (1 - ${progress}) + (${endStyle.left}) * ${progress})`,
-        width: `calc((${startSize}) * (1 - ${progress}) + (${endStyle.width}) * ${progress})`,
+        top:    `calc((${startPos}) * (1 - ${progress}) + (${endStyle.top})   * ${progress})`,
+        left:   `calc((${startPos}) * (1 - ${progress}) + (${endStyle.left})  * ${progress})`,
+        width:  `calc((${startSize}) * (1 - ${progress}) + (${endStyle.width})  * ${progress})`,
         height: `calc((${startSize}) * (1 - ${progress}) + (${endStyle.height}) * ${progress})`,
-        borderRadius: progress > 0.5 ? '24px' : '0px',
+        borderRadius: progress > 0.5 ? (isMobile ? '12px' : '20px') : '0px',
         backgroundColor: `rgba(${rgb}, ${currentBgAlpha})`,
         borderColor: `rgba(${rgb}, ${currentBorderAlpha})`,
-        boxShadow: isFullyExpanded && isHovered ? `0 20px 50px -10px rgba(${rgb}, 0.3)` : 'none',
+        boxShadow: isFullyExpanded && isHovered
+          ? `0 20px 50px -10px rgba(${rgb}, 0.3)`
+          : 'none',
         transform: isFullyExpanded && isHovered ? 'scale(1.02)' : 'scale(1)',
         transition: 'box-shadow 0.4s ease, transform 0.4s ease, background-color 0.4s ease',
         zIndex: isFullyExpanded && isHovered ? 50 : 10,
-
       }}
     >
       <div
-        className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300"
+        className="pointer-events-none absolute -inset-px transition-opacity duration-300"
         style={{
           opacity: isFullyExpanded && isHovered ? 1 : 0,
           background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(${rgb}, 0.2), transparent 40%)`,
         }}
       />
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none p-8" style={{ opacity: logoOpacity }}>
+
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none p-4 sm:p-8"
+        style={{ opacity: logoOpacity }}
+      >
         <LogoComponent className="w-full h-full" />
       </div>
-      
-      <div className="relative z-10 flex flex-col h-full p-6 md:p-10" style={{ opacity: contentOpacity, pointerEvents: progress > 0.9 ? 'auto' : 'none' }}>
 
-
-
-        <div 
-          className="mb-4 md:mb-6 inline-flex w-fit rounded-2xl p-3 md:p-4 ring-1 shadow-lg"
-          style={{ 
+      <div
+        className="relative z-10 flex flex-col h-full p-3 sm:p-6 md:p-10"
+        style={{ opacity: contentOpacity, pointerEvents: progress > 0.9 ? 'auto' : 'none' }}
+      >
+        <div
+          className="mb-2 sm:mb-4 md:mb-6 inline-flex w-fit rounded-2xl p-2 sm:p-3 md:p-4 shadow-lg flex-shrink-0"
+          style={{
             backgroundColor: `rgba(${rgb}, 0.1)`,
-            ringColor: `rgba(${rgb}, 0.2)`,
-            boxShadow: `0 0 20px rgba(${rgb}, 0.15)`
+            boxShadow: `0 0 20px rgba(${rgb}, 0.15), 0 0 0 1px rgba(${rgb}, 0.2)`,
           }}
         >
-          <Icon className="h-6 w-6 md:h-8 md:w-8" strokeWidth={1.5} style={{ color: color }} />
+          <Icon
+            className="h-3 w-3 sm:h-5 sm:w-5 md:h-7 md:w-7"
+            strokeWidth={1.5}
+            style={{ color }}
+          />
         </div>
-        
-        <h3 className="mb-2 md:mb-4 text-2xl md:text-3xl font-bold tracking-wide font-montserrat text-white" style={{ color: color }}>
+
+        <h3
+          className="mb-0.5 sm:mb-2 md:mb-4 text-sm sm:text-xl md:text-3xl font-bold tracking-wide font-montserrat leading-tight"
+          style={{ color }}
+        >
           {title}
         </h3>
-        
-        <p className="text-white/80 leading-relaxed text-[14px] md:text-[15px] font-montserrat mt-auto">
+
+        <p className="text-white/80 leading-relaxed text-[10px] sm:text-[13px] md:text-[15px] font-montserrat mt-auto">
           {description}
         </p>
       </div>
@@ -154,119 +145,46 @@ const GlassCard = ({ title, description, Icon, color, progress, endStyle, LogoCo
   );
 };
 
-
-
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 }
-  }
-};
-
-const itemVariants: Variants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.8, ease: "easeOut" }
-  }
-};
-
 const sentence = "¿Quiénes somos?";
 const wordVariants: Variants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } }
+  hidden:  { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
 };
 
-
 function SectionTwo() {
-  
   const [isMobile, setIsMobile] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
-
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
-    offset: ["start start", "end end"] // Empieza cuando el inicio llega arriba, termina cuando el final llega abajo
+    offset: ['start start', 'end end'],
   });
-
-
 
   const [currentProgress, setCurrentProgress] = useState(0);
+  const rawProgress    = useTransform(scrollYProgress, [0.1, 0.9], [0, 1]);
+  const smoothProgress = useSpring(rawProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  // Definimos un progreso crudo (del 10% al 80% del scroll)
-  const rawProgress = useTransform(scrollYProgress, [0.1, 0.9], [0, 1]);
-  
-  // Aplicamos el suavizado (Spring)
-  const smoothProgress = useSpring(rawProgress, { 
-    stiffness: 100, 
-    damping: 30, 
-    restDelta: 0.001 
-  });
-  
-  useEffect(() => {
-    return smoothProgress.onChange(v => setCurrentProgress(v));
-  }, [smoothProgress]);
-
-
+  useEffect(() => smoothProgress.onChange(v => setCurrentProgress(v)), [smoothProgress]);
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    const onResize = () => setIsMobile(window.innerWidth < 768);
+    onResize();
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, []);
 
-  /*useEffect(() => {
-    const handleScroll = () => {
-      if (!wrapperRef.current) return;
-      const rect = wrapperRef.current.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-      
-      const totalScroll = rect.height - windowHeight;
-      const currentScroll = -rect.top;
-      
-      
-
-      const animationEndLimit = 0.8; 
-      let p = (currentScroll / totalScroll) / animationEndLimit;
-      p = Math.max(0, Math.min(1, p));
-
-      setProgress(p);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);*/
-
-  /*const endStylesDesktop = {
-    expertos: { top: '0%', left: '0%', width: 'calc(49% - 6px)', height: 'calc(49% - 6px)' },
-    especialistas: { top: '0%', left: 'calc(50% + 6px)', width: 'calc(49% - 6px)', height: 'calc(49% - 6px)' },
-    analistas: { top: 'calc(50% + 6px)', left: '0%', width: 'calc(49% - 6px)', height: 'calc(49% - 6px)' },
-    aliados: { top: 'calc(50% + 6px)', left: 'calc(50% + 6px)', width: 'calc(49% - 6px)', height: 'calc(49% - 6px)' }
-  };
-
-  const endStylesMobile = {
-    expertos: { top: '0%', left: '0%', width: '100%', height: 'calc(25% - 12px)' },
-    especialistas: { top: 'calc(25% + 4px)', left: '0%', width: '100%', height: 'calc(25% - 12px)' },
-    analistas: { top: 'calc(50% + 8px)', left: '0%', width: '100%', height: 'calc(25% - 12px)' },
-    aliados: { top: 'calc(75% + 12px)', left: '0%', width: '100%', height: 'calc(25% - 12px)' }
-  };*/
-
   const endStylesDesktop = {
-    expertos: { top: '8%', left: '2.5%', width: '46%', height: '50%' },
-    especialistas: { top: '8%', left: '50%', width: '46%', height: '50%' },
-    analistas: { top: '61%', left: '2.5%', width: '46%', height: '50%' },
-    aliados: { top: '61%', left: '50%', width: '46%', height: '50%' }
+    expertos:      { top: '8%',  left: '2.5%', width: '46%', height: '50%' },
+    especialistas: { top: '8%',  left: '50%',  width: '46%', height: '50%' },
+    analistas:     { top: '61%', left: '2.5%', width: '46%', height: '50%' },
+    aliados:       { top: '61%', left: '50%',  width: '46%', height: '50%' },
   };
 
   const endStylesMobile = {
-    expertos: { top: '-30%', left: '0%', width: '100%', height: '30%' },
-    especialistas: { top: '3%', left: '0%', width: '100%', height: '30%' },
-    analistas: { top: '36%', left: '0%', width: '100%', height: '30%' },
-    aliados: { top: '69%', left: '0%', width: '100%', height: '30%' }
+    expertos:      { top: '0%',   left: '0%', width: '100%', height: '22%' },
+    especialistas: { top: '24%',  left: '0%', width: '100%', height: '22%' },
+    analistas:     { top: '48%',  left: '0%', width: '100%', height: '22%' },
+    aliados:       { top: '72%',  left: '0%', width: '100%', height: '28%' },
   };
 
   const currentStyles = isMobile ? endStylesMobile : endStylesDesktop;
@@ -274,84 +192,85 @@ function SectionTwo() {
   const cardsData = [
     {
       id: 'expertos',
-      title: "Los Expertos",
-      description: "Somos Expertos en Estrategias de Marketing, Promoción e Imagen Pública y de Marca. Cualquier tipo de Empresa o Grupo.",
+      title: 'Los Expertos',
+      description: 'Somos Expertos en Estrategias de Marketing, Promoción e Imagen Pública y de Marca. Cualquier tipo de Empresa o Grupo.',
       Icon: TrendingUp,
-      color: "#c5362e", // Rojo solicitado
+      color: '#c5362e',
       LogoComponent: LogoRed,
-      endStyle: currentStyles.expertos
+      endStyle: currentStyles.expertos,
     },
     {
       id: 'especialistas',
-      title: "Los Especialistas",
-      description: "Creamos y Generamos grandes ideas para Promover Marcas, Empresas y Personas.",
+      title: 'Los Especialistas',
+      description: 'Creamos y Generamos grandes ideas para Promover Marcas, Empresas y Personas.',
       Icon: Lightbulb,
-      color: "#599ddf", // Azul solicitado
+      color: '#599ddf',
       LogoComponent: LogoBlue,
-      endStyle: currentStyles.especialistas
+      endStyle: currentStyles.especialistas,
     },
     {
       id: 'analistas',
-      title: "Los Analistas",
-      description: "Somos gente joven, entusiasta y dinámica, trabajando de la mano con la experiencia.",
+      title: 'Los Analistas',
+      description: 'Somos gente joven, entusiasta y dinámica, trabajando de la mano con la experiencia.',
       Icon: LineChart,
-      color: "#80b67d", // Verde solicitado
+      color: '#80b67d',
       LogoComponent: LogoGreen,
-      endStyle: currentStyles.analistas
+      endStyle: currentStyles.analistas,
     },
     {
       id: 'aliados',
-      title: "Tus Aliados",
-      description: "Nos involucramos en cada proyecto como si fuera nuestro, comprometiéndonos con los objetivos y el crecimiento de nuestros clientes.",
+      title: 'Tus Aliados',
+      description: 'Nos involucramos en cada proyecto como si fuera nuestro, comprometiéndonos con los objetivos y el crecimiento de nuestros clientes.',
       Icon: Users,
-      color: "#e6af41", // Amarillo solicitado
+      color: '#e6af41',
       LogoComponent: LogoYellow,
-      endStyle: currentStyles.aliados
-    }
+      endStyle: currentStyles.aliados,
+    },
   ];
 
   return (
-    <section ref={wrapperRef} className="relative w-full h-[400vh] bg-transparent font-sans">
-      
-      <div className="sticky top-0 min-h-[130vh] w-full flex flex-col items-center justify-center overflow-hidden py-10 md:py-20">
-        
-        {/* Textos originales con Framer Motion intactos */}
-        
-        
-        <div className="w-full max-w-4xl mx-auto px-6 text-center absolute top-[5vh] md:top-[8vh] z-30 pointer-events-none">
-
-          <motion.h1 
-            className="font-aston text-[8vw] md:text-[60px] lg:text-[75px] text-white leading-[1.1] tracking-tight mb-2"
+    <section
+      ref={wrapperRef}
+      className="relative w-full h-[400vh] bg-transparent font-sans overflow-x-hidden"
+    >
+      <div className="sticky top-0 h-screen w-full max-w-full flex flex-col items-center justify-center overflow-hidden">
+        <div className="w-full max-w-4xl mx-auto px-3 sm:px-6 text-center absolute top-[2vh] sm:top-[4vh] md:top-[8vh] z-30 pointer-events-none">
+          <motion.h1
+            className="font-aston text-[28px] sm:text-[48px] md:text-[60px] lg:text-[75px] text-white leading-[1.1] tracking-tight mb-1 sm:mb-2"
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
             transition={{ staggerChildren: 0.1 }}
           >
-            {sentence.split(" ").map((word, i) => (
-              <motion.span key={i} variants={wordVariants} className="inline-block mr-3">
-
+            {sentence.split(' ').map((word, i) => (
+              <motion.span key={i} variants={wordVariants} className="inline-block mr-1 sm:mr-3">
                 {word}
               </motion.span>
             ))}
           </motion.h1>
 
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ delay: 0.6 }}
-            className="font-montserrat text-white/70 text-[15px] sm:text-[18px] leading-relaxed max-w-xl mx-auto"
+            className="font-montserrat text-white/70 text-[11px] sm:text-[15px] md:text-[18px] leading-relaxed max-w-xl mx-auto px-2"
           >
             Somos WeProm, tus próximos aliados en el posicionamiento de tu empresa, marca o producto.
           </motion.p>
         </div>
 
-        {/* Contenedor de las tarjetas animadas por scroll */}
-        <div className="relative z-10 w-full max-w-5xl px-4 mt-[20vh] md:mt-2">
-          <div className="relative w-full h-[65vh] md:h-[80vh] max-h-[800px] mx-auto">
-
+        <div className="relative w-full max-w-5xl px-3 sm:px-4 mt-[14vh] sm:mt-[20vh] md:mt-[14vh]">
+          <div 
+            className="relative w-full mx-auto overflow-hidden"
+            style={{ 
+              height: isMobile ? '76vh' : '62vh',
+              maxHeight: isMobile ? '560px' : '820px',
+              minHeight: isMobile ? '400px' : 'auto',
+            }}
+          >
             {cardsData.map((card) => (
-              <GlassCard 
-                key={card.id} 
+              <GlassCard
+                key={card.id}
                 {...card}
                 progress={currentProgress}
                 isMobile={isMobile}
@@ -359,12 +278,18 @@ function SectionTwo() {
             ))}
           </div>
 
-          <div 
-            className="absolute bottom-[-12rem] left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/90 transition-opacity duration-300"
-            style={{ opacity: 1 - currentProgress }}
+          <div
+            className="absolute left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 sm:gap-2 text-white/70 pointer-events-none"
+            style={{
+              bottom: isMobile ? '-1.5rem' : '-3.5rem',
+              opacity: Math.max(0, 1 - currentProgress * 3),
+              transition: 'opacity 0.3s ease',
+            }}
           >
-            <span className="text-[10px] tracking-[0.3em] uppercase">Descubre más</span>
-            <ChevronDown className="w-4 h-4 animate-bounce" />
+            <span className="text-[8px] sm:text-[10px] tracking-[0.3em] uppercase whitespace-nowrap">
+              Descubre más
+            </span>
+            <ChevronDown className="w-3 h-3 sm:w-4 sm:h-4 animate-bounce" />
           </div>
         </div>
 

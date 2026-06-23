@@ -1,8 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 
-// ─────────────────────────────────────────────
-// Importaciones de imágenes del equipo
-// ─────────────────────────────────────────────
 import ale            from '../../images/About/team/Ale.png';
 import alejandroV     from '../../images/About/team/Alejandro Villamar.png';
 import alexLarios     from '../../images/About/team/Alex Larios.png';
@@ -46,9 +43,6 @@ import stefania       from '../../images/About/team/stefania.png';
 import veronica       from '../../images/About/team/veronica.png';
 import vicenteMeza    from '../../images/About/team/Vicente Meza.png';
 
-// ─────────────────────────────────────────────
-// Array del equipo
-// ─────────────────────────────────────────────
 const team = [
   { id: 1,  name: 'Juan Carlos Ventura Michel',    role: 'Director General',                        image: juanCarlos },
   { id: 2,  name: 'José Miguel Ventura Michel',    role: 'Director Asociado de Operaciones',        image: juanCarlosVsr },
@@ -94,10 +88,6 @@ const team = [
   { id: 42, name: 'José Carlos',                   role: 'Encuestador',                             image: joseCarlos },
 ];
 
-// ─────────────────────────────────────────────
-// CSS keyframes — arcos siempre girando,
-// separados 180° entre sí, nunca se tocan
-// ─────────────────────────────────────────────
 const STYLES = `
   @keyframes arc-spin-cw {
     from { transform: rotate(0deg); }
@@ -111,7 +101,6 @@ const STYLES = `
     from { stroke-dashoffset: 553; }
     to   { stroke-dashoffset: 0; }
   }
-
   .arc-cw {
     transform-origin: 96px 96px;
     animation: arc-spin-cw 5s linear infinite;
@@ -134,19 +123,13 @@ function injectStyles() {
   stylesInjected = true;
 }
 
-// ─────────────────────────────────────────────
-// Arcos SVG
-// ─────────────────────────────────────────────
 function AnimatedRings({ active }: { active: boolean }) {
   useEffect(() => { injectStyles(); }, []);
 
   const r    = 88;
   const cx   = 96;
   const cy   = 96;
-  const circ = 2 * Math.PI * r; // ≈ 552.9
-
-  // Cada arco ocupa ~30% de la circunferencia
-  // Los dos arcos están siempre separados 180° → nunca se encuentran
+  const circ = 2 * Math.PI * r;
   const arcLen = circ * 0.30;
   const gap    = circ - arcLen;
 
@@ -156,7 +139,6 @@ function AnimatedRings({ active }: { active: boolean }) {
       viewBox="0 0 192 192"
       fill="none"
     >
-      {/* Arco 1 — gira en sentido horario */}
       <circle
         cx={cx} cy={cy} r={r}
         stroke="#3B82F6"
@@ -164,14 +146,8 @@ function AnimatedRings({ active }: { active: boolean }) {
         strokeLinecap="round"
         strokeDasharray={`${arcLen} ${gap}`}
         className="arc-cw"
-        style={{
-          opacity: active ? 0 : 1,
-          transition: 'opacity 0.15s ease',
-        }}
+        style={{ opacity: active ? 0 : 1, transition: 'opacity 0.15s ease' }}
       />
-
-      {/* Arco 2 — gira en sentido horario también pero parte desde 180°
-          → ambos se mueven juntos pero siempre opuestos */}
       <circle
         cx={cx} cy={cy} r={r}
         stroke="#3B82F6"
@@ -179,13 +155,8 @@ function AnimatedRings({ active }: { active: boolean }) {
         strokeLinecap="round"
         strokeDasharray={`${arcLen} ${gap}`}
         className="arc-ccw"
-        style={{
-          opacity: active ? 0 : 1,
-          transition: 'opacity 0.15s ease',
-        }}
+        style={{ opacity: active ? 0 : 1, transition: 'opacity 0.15s ease' }}
       />
-
-      {/* Círculo completo — se dibuja al hacer click */}
       {active && (
         <circle
           key="ring-active"
@@ -196,38 +167,37 @@ function AnimatedRings({ active }: { active: boolean }) {
           strokeDasharray={`${circ}`}
           strokeDashoffset={circ}
           className="ring-draw-anim"
-          style={{
-            filter: 'drop-shadow(0 0 8px rgba(59,130,246,0.8))',
-          }}
+          style={{ filter: 'drop-shadow(0 0 8px rgba(59,130,246,0.8))' }}
         />
       )}
     </svg>
   );
 }
 
-// ─────────────────────────────────────────────
-// Tarjeta individual
-// ─────────────────────────────────────────────
 function TeamCard({
   name,
   role,
   image,
   isActive,
   onClick,
+  cardSize,
 }: {
   name: string;
   role: string;
   image: string;
   isActive: boolean;
   onClick: () => void;
+  cardSize: number;
 }) {
+  const innerSize = cardSize - 32;
+
   return (
     <div
       className="flex-shrink-0 flex flex-col items-center cursor-pointer select-none"
-      style={{ width: 192 }}
+      style={{ width: cardSize }}
       onClick={onClick}
     >
-      <div className="relative" style={{ width: 192, height: 192 }}>
+      <div className="relative" style={{ width: cardSize, height: cardSize }}>
         <AnimatedRings active={isActive} />
 
         <div
@@ -235,12 +205,11 @@ function TeamCard({
           style={{
             top: 16,
             left: 16,
-            width: 160,
-            height: 160,
+            width: innerSize,
+            height: innerSize,
             borderRadius: '50%',
           }}
         >
-          {/* Foto */}
           <img
             src={image}
             alt={name}
@@ -253,7 +222,6 @@ function TeamCard({
             }}
           />
 
-          {/* Overlay oscuro */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -263,11 +231,10 @@ function TeamCard({
             }}
           />
 
-          {/* Nombre y cargo sobre la imagen */}
           <div
             className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none"
             style={{
-              padding: '0 14px',
+              padding: '0 8px',
               opacity: isActive ? 1 : 0,
               transform: isActive ? 'translateY(0)' : 'translateY(10px)',
               transition: 'opacity 0.35s ease 0.12s, transform 0.35s ease 0.12s',
@@ -277,7 +244,7 @@ function TeamCard({
               style={{
                 color: '#60A5FA',
                 fontFamily: 'Montserrat, sans-serif',
-                fontSize: 12,
+                fontSize: cardSize < 160 ? 9 : 12,
                 fontWeight: 700,
                 textAlign: 'center',
                 lineHeight: 1.35,
@@ -287,10 +254,10 @@ function TeamCard({
             </p>
             <div
               style={{
-                width: 28,
+                width: 20,
                 height: 1.5,
                 background: '#3B82F6',
-                margin: '7px auto',
+                margin: '4px auto',
                 borderRadius: 99,
                 opacity: 0.8,
               }}
@@ -299,7 +266,7 @@ function TeamCard({
               style={{
                 color: 'rgba(255,255,255,0.85)',
                 fontFamily: 'Montserrat, sans-serif',
-                fontSize: 10.5,
+                fontSize: cardSize < 160 ? 8 : 10.5,
                 textAlign: 'center',
                 lineHeight: 1.4,
               }}
@@ -313,19 +280,27 @@ function TeamCard({
   );
 }
 
-// ─────────────────────────────────────────────
-// Sección principal
-// ─────────────────────────────────────────────
 export default function TeamSection() {
   const [activeId, setActiveId] = useState<number | null>(null);
+  const [cardSize, setCardSize] = useState(192);
   const trackRef = useRef<HTMLDivElement>(null);
   const rafRef   = useRef<number | null>(null);
 
-  // ── Auto-scroll continuo ──
+  useEffect(() => {
+    const updateSize = () => {
+      const width = window.innerWidth;
+      if (width < 480) setCardSize(120);
+      else if (width < 768) setCardSize(140);
+      else setCardSize(192);
+    };
+    updateSize();
+    window.addEventListener('resize', updateSize);
+    return () => window.removeEventListener('resize', updateSize);
+  }, []);
+
   useEffect(() => {
     let lastTime = 0;
     const SPEED  = 0.8;
-
     const step = (now: number) => {
       const dt = now - lastTime;
       lastTime  = now;
@@ -340,12 +315,10 @@ export default function TeamSection() {
       }
       rafRef.current = requestAnimationFrame(step);
     };
-
     rafRef.current = requestAnimationFrame(step);
     return () => { if (rafRef.current) cancelAnimationFrame(rafRef.current); };
   }, []);
 
-  // ── Drag to scroll ──
   const isDragging  = useRef(false);
   const startX      = useRef(0);
   const scrollStart = useRef(0);
@@ -374,38 +347,32 @@ export default function TeamSection() {
   };
 
   return (
-    <section className="w-full py-20 sm:py-28 overflow-hidden bg-transparent">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="w-full overflow-x-hidden py-10 sm:py-20 md:py-28 bg-transparent">
+      <div className="max-w-6xl mx-auto px-3 sm:px-4">
 
-        {/* Header */}
-        <div className="text-center mb-14">
+        <div className="text-center mb-8 sm:mb-14">
           <h2
-            className="font-montserrat text-[38px] sm:text-[54px] font-bold leading-tight tracking-tight"
-            style={{ color: '#fff' }}
+            className="font-montserrat text-[26px] sm:text-[42px] md:text-[54px] font-bold leading-tight tracking-tight text-white"
           >
             Nuestro <span style={{ color: '#3B82F6' }}>Equipo</span>
           </h2>
           <p
-            className=" font-aston mt-4 text-[20px] sm:text-[21px] max-w-xl mx-auto"
-            style={{
-              color: 'rgba(255,255,255,0.55)',
-              lineHeight: 1.7,
-            }}
+            className="font-aston mt-2 sm:mt-4 text-[14px] sm:text-[19px] md:text-[21px] max-w-xl mx-auto px-4"
+            style={{ color: 'rgba(255,255,255,0.55)', lineHeight: 1.7 }}
           >
             Diferentes talentos, un mismo ADN:<br />
             Colaborar en proyectos que generen impacto real.
           </p>
         </div>
 
-        {/* Carrusel — sin barra indicadora */}
         <div
           ref={trackRef}
-          className="flex font-aston gap-6 pb-2"
+          className="flex gap-3 sm:gap-6 pb-2 overflow-x-auto"
           style={{
-            overflowX: 'auto',
             cursor: isDragging.current ? 'grabbing' : 'grab',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch',
           }}
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}
@@ -414,7 +381,7 @@ export default function TeamSection() {
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
         >
-          <div className=" font-aston flex-shrink-0" style={{ width: 24 }} />
+          <div className="flex-shrink-0" style={{ width: 8 }} />
           {team.map((member) => (
             <TeamCard
               key={member.id}
@@ -422,10 +389,11 @@ export default function TeamSection() {
               role={member.role}
               image={member.image}
               isActive={activeId === member.id}
+              cardSize={cardSize}
               onClick={() => setActiveId((prev) => prev === member.id ? null : member.id)}
             />
           ))}
-          <div className="flex-shrink-0" style={{ width: 24 }} />
+          <div className="flex-shrink-0" style={{ width: 8 }} />
         </div>
 
       </div>
