@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 
 // Imports de imágenes (Fila 1: 6 imágenes)
 import b1_1 from '../../../images/branding/banner1_1.png';
-import b1_2 from '../../../images/branding/banner1_2.png';
 import b1_3 from '../../../images/branding/banner1_3.png';
 import b1_4 from '../../../images/branding/banner1_4.png';
 import b1_5 from '../../../images/branding/banner1_5.png';
@@ -15,7 +14,7 @@ import b2_3 from '../../../images/branding/banner2_3.png';
 import b2_4 from '../../../images/branding/banner2_4.png';
 import b2_5 from '../../../images/branding/banner2_5.png';
 
-const imagesRow1 = [b1_1, b1_2, b1_3, b1_4, b1_5, b1_6];
+const imagesRow1 = [b1_1, b1_3, b1_4, b1_5, b1_6];
 const imagesRow2 = [b2_1, b2_2, b2_3, b2_4, b2_5];
 
 const ScrollingRow = ({ images, direction = 1 }: { images: string[], direction?: number }) => {

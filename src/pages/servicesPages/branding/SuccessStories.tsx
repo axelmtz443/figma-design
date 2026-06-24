@@ -13,12 +13,6 @@ const customStyles = `
   .font-montserrat {
     font-family: 'Montserrat', sans-serif;
   }
-
-  .bg-noise {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    opacity: 0.03;
-    pointer-events: none;
-  }
 `;
 
 interface FallbackImages {
@@ -189,9 +183,6 @@ export default function SuccessStories() {
 
   return (
     <div className="min-h-screen bg-transparent text-white font-montserrat flex flex-col items-center p-4 sm:p-8 relative overflow-hidden py-12 md:py-20">
-      <style dangerouslySetInnerHTML={{ __html: customStyles }} />
-      <div className="absolute inset-0 bg-noise z-0" />
-
       <div className="w-full max-w-7xl mx-auto z-10 flex flex-col items-center">
 
         {/* Encabezado */}
