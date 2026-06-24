@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin } from 'lucide-react';
 import LogoWeProm from '../../images/OFICIALLOGO.png';
+import { openCookieSettings } from './CookieBanner';
 
 function Footer() {
   return (
@@ -140,10 +141,10 @@ function Footer() {
         {/* Bottom Footer */}
         <div className="flex flex-col sm:flex-row justify-between items-center gap-4 pt-6 sm:pt-8 text-xs sm:text-sm text-gray-400">
           <p>© 2026 WeProm Marketing Todos los Derechos Reservados</p>
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-8">
-            <Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link>
-            <Link to="/terms" className="hover:text-white transition-colors">Terms & Condition</Link>
-            <Link to="/security" className="hover:text-white transition-colors">Security Policy</Link>
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
+            <Link to="/aviso-de-privacidad" className="hover:text-white transition-colors">Aviso de Privacidad</Link>
+            <Link to="/aclaratoria-legal" className="hover:text-white transition-colors">Aclaratoria de Marcas</Link>
+            <button onClick={openCookieSettings} className="hover:text-white transition-colors cursor-pointer">Gestionar cookies</button>
           </div>
         </div>
       </div>

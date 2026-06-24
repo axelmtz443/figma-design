@@ -77,15 +77,6 @@ const ADS_DATABASE: MetaAd[] = [
     ctaDomain: "", ctaTitle: "", ctaDesc: "", ctaBtnText: ""
   },
   {
-    id: "ortopedia-justo-sierra",
-    pageName: "Ortopedia Justo Sierra",
-    pageLogo: logoJustoSierra,
-    mainText: "Si tienes un problem grave en la rodilla, no necesitas a un médico que hoy opere una mano y mañana un pie; necesitas a alguien que dedique el 100% de su vida a reconstruir rodillas.\n\nEsa es la diferencia de nuestro grupo médico en Guadalajara. Somos un equipo de 5 traumatólogos con subespecialidades específicas. Nuestro modelo es simple pero poderoso: el experto en columna de la columna, el de hombro ve el hombro.\n\nEntrar a un quirófano es un paso importante. Antes de tomar cualquier decisión, permite que el experto exacto revise tu caso.\n✅ Diagnósticos respaldados por certificaciones internacionales. \n✅ Un equipo completo analizando los casos más complejos.",
-    type: "single-video",
-    videoUrl: videoJustoSierra,
-    ctaDomain: "ORTOPEDIAJUSTOSIERRA.MX", ctaTitle: "Certeza absoluta", ctaDesc: "Certeza absoluta", ctaBtnText: "Ver detalles"
-  },
-  {
     id: "caja-popular-tamazula",
     pageName: "Caja Popular Tamazula",
     pageLogo: logoCPTMeta,
@@ -110,13 +101,13 @@ const ADS_DATABASE: MetaAd[] = [
     ctaDomain: "FACEBOOK.COM", ctaTitle: "¡Cotizar mayoreo!", ctaDesc: "Clothing", ctaBtnText: "Enviar mensaje"
   },
   {
-    id: "andrea-aragon-tiktok",
-    pageName: "Studio Andrea Aragón Maquillaje Y Peinado Novias",
-    pageLogo: ANDREA_ARAGON_LOGO,
-    mainText: ANDREA_ARAGON_TEXT,
-    type: "carousel",
-    carouselCards: ANDREA_ARAGON_CARDS,
-    ctaDomain: "API.WHATSAPP.COM", ctaTitle: "Studio Andrea Aragón", ctaDesc: "Colorimetría & Peinados", ctaBtnText: "Agendar cita"
+    id: "ortopedia-justo-sierra-tiktok",
+    pageName: "Ortopedia Justo Sierra",
+    pageLogo: logoJustoSierra,
+    mainText: "Si tienes un problema grave en la rodilla, no necesitas a un médico que hoy opere una mano y mañana un pie; necesitas a alguien que dedique el 100% de su vida a reconstruir rodillas.\n\nEsa es la diferencia de nuestro grupo médico en Guadalajara.",
+    type: "single-video",
+    videoUrl: videoJustoSierra,
+    ctaDomain: "ORTOPEDIAJUSTOSIERRA.MX", ctaTitle: "Certeza absoluta", ctaDesc: "Certeza absoluta", ctaBtnText: "Ver detalles"
   }
 ];
 
@@ -612,6 +603,106 @@ function TikTokCarouselAd({ ad }: { ad: MetaAd }) {
   );
 }
 
+function TikTokVideoAd({ ad }: { ad: MetaAd }) {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const togglePlay = () => {
+    if (!videoRef.current) return;
+    if (isPlaying) { videoRef.current.pause(); setIsPlaying(false); }
+    else { videoRef.current.play().then(() => setIsPlaying(true)).catch(() => {}); }
+  };
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!videoRef.current) return;
+    videoRef.current.muted = !videoRef.current.muted;
+    setIsMuted(videoRef.current.muted);
+  };
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    const onTime = () => setProgress((video.currentTime / video.duration) * 100 || 0);
+    video.addEventListener('timeupdate', onTime);
+    return () => video.removeEventListener('timeupdate', onTime);
+  }, []);
+
+  return (
+    <div className="w-full bg-[#161823] rounded-xl shadow-2xl border border-zinc-800/40 overflow-hidden font-sans flex-shrink-0 h-full flex flex-col">
+      <div className="px-3 py-1.5 flex items-center gap-1.5 border-b border-white/5">
+        <svg className="w-3.5 h-3.5 flex-shrink-0" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.28 6.28 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.67a8.18 8.18 0 004.79 1.52V6.72a4.85 4.85 0 01-1.02-.03z" style={{ fill: 'white' }}/></svg>
+        <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-white">TikTok Ads</span>
+      </div>
+      <div className="relative bg-black overflow-hidden flex-1 min-h-0" onClick={togglePlay}>
+        <video ref={videoRef} className="w-full h-full object-cover cursor-pointer" playsInline loop muted={isMuted} preload="metadata">
+          <source src={`${ad.videoUrl}#t=0.001`} type="video/mp4" />
+        </video>
+        <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/60 to-transparent pointer-events-none" />
+        <div className="absolute bottom-0 left-0 right-0 h-52 bg-gradient-to-t from-black/95 to-transparent pointer-events-none" />
+        {!isPlaying && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="w-14 h-14 rounded-full bg-black/40 flex items-center justify-center backdrop-blur-sm border border-white/20">
+              <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+          </div>
+        )}
+        <div className="absolute top-0 left-0 right-0 pt-3 pb-2 flex items-center justify-center z-20 pointer-events-none">
+          <span className="text-white/50 text-[13px] font-medium px-3">Siguiendo</span>
+          <span className="text-white text-[13px] font-bold px-3 border-b-2 border-white pb-0.5">Para ti</span>
+          <span className="text-white/50 text-[13px] font-medium px-3">Amigos</span>
+        </div>
+        <button onClick={toggleMute} className="absolute top-12 right-3 w-7 h-7 rounded-full bg-black/40 flex items-center justify-center text-white backdrop-blur-sm border border-white/10 z-10">
+          {isMuted ? <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM4 9v6h4l5 5V4L8 9H4zM19 12c0 2.97-1.75 5.51-4.25 6.64l1.42 1.42C19.34 18.33 21 15.35 21 12s-1.66-6.33-4.83-8.06l-1.42 1.42C17.25 6.49 19 9.03 19 12z"/></svg> : <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L8 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>}
+        </button>
+        <div className="absolute right-2.5 bottom-36 flex flex-col items-center gap-4 z-20">
+          <div className="relative mb-1">
+            <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-white shadow-md">
+              <ImageWithFallback src={ad.pageLogo} fallback={`https://ui-avatars.com/api/?name=${encodeURIComponent(ad.pageName)}&background=333&color=fff`} alt={ad.pageName} className="w-full h-full object-cover" />
+            </div>
+            <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-[#ff0050] flex items-center justify-center border border-[#161823]">
+              <svg className="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 5v14m-7-7h14"/></svg>
+            </div>
+          </div>
+          {[{ icon: 'heart', count: '4.8k' }, { icon: 'comment', count: '312' }, { icon: 'share', count: 'Reenviar' }].map(({ icon, count }) => (
+            <div key={icon} className="flex flex-col items-center gap-0.5">
+              <button className="text-white p-1" onClick={e => e.stopPropagation()}>
+                {icon === 'heart' && <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>}
+                {icon === 'comment' && <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"/></svg>}
+                {icon === 'share' && <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z"/></svg>}
+              </button>
+              <span className="text-white text-[10px] font-semibold">{count}</span>
+            </div>
+          ))}
+          <div className="w-8 h-8 rounded-full border-2 border-white/30 bg-zinc-800/60 flex items-center justify-center animate-[spin_4s_linear_infinite]">
+            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v9.28a4 4 0 00-1-.28 4 4 0 100 8 4 4 0 004-4V7h4V3h-7z"/></svg>
+          </div>
+        </div>
+        <div className="absolute bottom-3 left-3 right-14 space-y-2 z-20">
+          <div className="flex items-center gap-2">
+            <span className="text-white font-bold text-[13px]">@{ad.pageName.split(' ')[0].toLowerCase().replace(/[^a-z0-9]/g, '')}</span>
+            <span className="bg-[#ff0050] text-white text-[9px] font-bold px-1.5 py-0.5 rounded">Patrocinado</span>
+          </div>
+          <p className="text-white text-[12px] leading-snug opacity-90 line-clamp-2">{ad.mainText.split('\n')[0]}</p>
+          <button className="w-full flex items-center justify-center gap-2 bg-white/15 backdrop-blur-sm border border-white/25 text-white font-bold text-[12px] px-4 py-2 rounded-full hover:bg-white/25 transition">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+            {ad.ctaBtnText}
+          </button>
+          <div className="flex items-center gap-2 pt-0.5">
+            <svg className="w-3 h-3 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3v9.28a4 4 0 00-1-.28 4 4 0 100 8 4 4 0 004-4V7h4V3h-7z"/></svg>
+            <span className="text-white text-[10px] opacity-75 truncate">Audio original · {ad.pageName.split(' ')[0]}</span>
+          </div>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/20 z-10">
+          <div className="h-full bg-white transition-all duration-100" style={{ width: `${progress}%` }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function LinkedInAd({ ad }: { ad: MetaAd }) {
   const [expanded, setExpanded] = useState(false);
   const LIMIT = 200;
@@ -772,9 +863,8 @@ function InstagramReelAd({ ad }: { ad: MetaAd }) {
 
 function renderMetaAd(ad: MetaAd): React.ReactNode {
   if (ad.id === 'andrea-aragon') return <InstagramCarouselAd ad={ad} />;
-  if (ad.id === 'andrea-aragon-tiktok') return <TikTokCarouselAd ad={ad} />;
   if (ad.id === 'mayork-mx') return <LinkedInAd ad={ad} />;
-  if (ad.id === 'ortopedia-justo-sierra') return <InstagramReelAd ad={ad} />;
+  if (ad.id === 'ortopedia-justo-sierra-tiktok') return <TikTokVideoAd ad={ad} />;
   if (ad.type === 'carousel') return <CarouselAd ad={ad} />;
   if (ad.type === 'single-image') return <SingleImageAd ad={ad} />;
   return <SingleMediaAd ad={ad} />;
