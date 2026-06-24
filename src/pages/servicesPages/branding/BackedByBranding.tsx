@@ -1,146 +1,101 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Navigation } from 'swiper/modules';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Autoplay, FreeMode } from 'swiper/modules';
 
 // @ts-ignore
 import 'swiper/css';
 // @ts-ignore
-import 'swiper/css/navigation';
+import 'swiper/css/free-mode';
 
-import LOGO1 from '../../../images/branding/BrandsCarrusel/CSLOGOROSA.png'
-import LOGO2 from '../../../images/branding/BrandsCarrusel/LOGOGRANBRAVOEDITABLE.png'
-import LOGO3 from '../../../images/branding/BrandsCarrusel/LogosParaWeb_Mesa de trabajo 1 (1).png'
-import LOGO4 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-04.png'
-import LOGO5 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-05.png'
-import LOGO6 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-06.png'
-import LOGO7 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-08.png'
-import LOGO8 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-09.png'
-import LOGO9 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-12.png'
-import LOGO10 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-14.png'
-import LOGO11 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-15.png'
-import LOGO12 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-16.png'
-import LOGO13 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-17.png'
-import LOGO14 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-18.png'
-import LOGO15 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-19.png'
-import LOGO16 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-20.png'
-import LOGO17 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-21.png'
-import LOGO18 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-22.png'
-import LOGO19 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-23.png'
-import LOGO20 from '../../../images/branding/BrandsCarrusel/LogosParaWeb-24.png'
-import LOGO21 from '../../../images/branding/BrandsCarrusel/LOGOTIPOCOMBAZUL.png'
-import LOGO22 from '../../../images/branding/BrandsCarrusel/Mesa de trabajo 1 (2).png'
-import LOGO23 from '../../../images/branding/BrandsCarrusel/Mesa de trabajo 1 (3).png'
-import LOGO24 from '../../../images/branding/BrandsCarrusel/Mesa de trabajo 2 (2).png'
-import LOGO25 from '../../../images/branding/BrandsCarrusel/Mesa de trabajo 2@2x (1).png'
-import LOGO26 from '../../../images/branding/BrandsCarrusel/Mesa de trabajo 4.png'
-import LOGO27 from '../../../images/branding/BrandsCarrusel/Mesa de trabajo 5 (1).png'
-import LOGO28 from '../../../images/branding/BrandsCarrusel/Mesa de trabajo 12.png'
+import CASASOK from '../../../images/branding/BrandsCarrusel/CASASOK_BCO.png';
+import GRANBRAVO from '../../../images/branding/BrandsCarrusel/GRANBRAVO_BCO.png';
+import ULTRANAV from '../../../images/branding/BrandsCarrusel/ULTRANAV_BCO.png';
+import PERFECTSTONES from '../../../images/branding/BrandsCarrusel/PERFECTSTONES_BCO.png';
+import MAREAPLATA from '../../../images/branding/BrandsCarrusel/MAREAPLATA_BCO.png';
+import AGUACALIENTE from '../../../images/branding/BrandsCarrusel/AGUACALIENTE_BCO.png';
+import LOUNASH from '../../../images/branding/BrandsCarrusel/LOU&NASH_BCO.png';
+import OPALY from '../../../images/branding/BrandsCarrusel/OPALY_BCO.png';
+import KOENE from '../../../images/branding/BrandsCarrusel/KOENE_BCO.png';
+import BASALTIKA from '../../../images/branding/BrandsCarrusel/BASALTIKA_BCO.png';
+import BIDAULT from '../../../images/branding/BrandsCarrusel/BIDAULT_BCO.png';
+import BLACKANTFIT from '../../../images/branding/BrandsCarrusel/BLACK-ANT-FIT_BCO.png';
+import CANTU from '../../../images/branding/BrandsCarrusel/CANTU_BCO.png';
+import RUFFINI from '../../../images/branding/BrandsCarrusel/RUFFINI_BCO.png';
+import ALDORA from '../../../images/branding/BrandsCarrusel/ALDORA_BCO.png';
+import AJSGREENHOUSES from '../../../images/branding/BrandsCarrusel/AJS-GREENHOUSES_BCO.png';
+import KUXTAL from '../../../images/branding/BrandsCarrusel/KUXTAL_BCO.png';
+import VAGUAL from '../../../images/branding/BrandsCarrusel/VAGUAL_BCO.png';
+import XERYUS from '../../../images/branding/BrandsCarrusel/XERYUS_BCO.png';
+import GGPHARMAS from '../../../images/branding/BrandsCarrusel/GG-PHARMAS_BCO.png';
+import GRUPOWEPROM from '../../../images/branding/BrandsCarrusel/GRUPO-WEPROM_BCO.png';
+import HOMEBOYS from '../../../images/branding/BrandsCarrusel/HOME-BOYS_BCO.png';
+import DEYUNPHARMA from '../../../images/branding/BrandsCarrusel/DEYUN-PHARMA_BCO.png';
+import GUITRONSANDOVAL from '../../../images/branding/BrandsCarrusel/GÜITRON-SANDOVAL_BCO.png';
+import GLOBALMINDSCHOOL from '../../../images/branding/BrandsCarrusel/GLOBAL-MIND-SCHOOL_BCO.png';
+import IMPERIUM from '../../../images/branding/BrandsCarrusel/IMPERIUM_BCO.png';
+import DOKARAI from '../../../images/branding/BrandsCarrusel/DOKARAI_BCO.png';
 
+const logos = [
+  CASASOK, GRANBRAVO, ULTRANAV, PERFECTSTONES, MAREAPLATA,
+  AGUACALIENTE, LOUNASH, OPALY, KOENE, BASALTIKA,
+  BIDAULT, BLACKANTFIT, CANTU, RUFFINI, ALDORA,
+  AJSGREENHOUSES, KUXTAL, VAGUAL, XERYUS, GGPHARMAS,
+  GRUPOWEPROM, HOMEBOYS, DEYUNPHARMA, GUITRONSANDOVAL,
+  GLOBALMINDSCHOOL, IMPERIUM, DOKARAI,
+];
 
-
-
-
-
-interface Brand {
-  src?: string;
-  isText?: boolean;
-  className?: string;
-  sizeClass?: string; // Añadimos esto para controlar tamaños personalizados
-}
+const allLogos = [...logos, ...logos];
 
 function BackedByBranding() {
-  const brands: Brand[] = [
-    { src: LOGO1, sizeClass: 'h-20 sm:h-22 md:h-24' },  // Super grande (CSLOGOROSA)
-    { src: LOGO2 },
-    { src: LOGO3 },
-    { src: LOGO4, sizeClass: 'h-24 sm:h-28 md:h-32' },
-    { src: LOGO5, sizeClass: 'h-24 sm:h-28 md:h-32' },
-    { src: LOGO6 },
-    { src: LOGO7 },
-    { src: LOGO8, sizeClass: 'h-7 sm:h-9 md:h-11' },    // Pequeño (LogosParaWeb-09)
-    { src: LOGO9 },
-    { src: LOGO10, sizeClass: 'h-24 sm:h-28 md:h-32' },  // Super grande (CSLOGOROSA)
-    { src: LOGO11 },
-    { src: LOGO12 },
-    { src: LOGO13 },
-    { src: LOGO14 },
-    { src: LOGO15 },
-    { src: LOGO16 },
-    { src: LOGO17, sizeClass: 'h-20 sm:h-22 md:h-24' }, // Super grande (LogosParaWeb-21)
-    { src: LOGO18 },
-    { src: LOGO19, sizeClass: 'h-20 sm:h-22 md:h-24' }, // Super grande (LogosParaWeb-23)
-    { src: LOGO20, sizeClass: 'h-20 sm:h-22 md:h-24' }, // Super grande (LogosParaWeb-24)
-    { src: LOGO21, sizeClass: 'h-24 sm:h-28 md:h-32' }, // Super grande (LOGOTIPOCOMBAZUL)
-    { src: LOGO22 },
-    { src: LOGO23, sizeClass: 'h-40 sm:h-48 md:h-56' }, // Super grande (Mesa de trabajo 1 (3))
-    { src: LOGO24 },
-    { src: LOGO25, sizeClass: 'h-24 sm:h-28 md:h-32' }, // Super grande (Mesa de trabajo 2@2x (1))
-    { src: LOGO26, sizeClass: 'h-20 sm:h-22 md:h-24' }, // Super grande (Mesa de trabajo 4)
-    { src: LOGO27, sizeClass: 'h-7 sm:h-9 md:h-11' },    // Pequeño (Mesa de trabajo 5 (1))
-    { src: LOGO28, sizeClass: 'h-7 sm:h-9 md:h-11' },    // Pequeño (Mesa de trabajo 12)
-  ];
-
-
-  const allBrands = [...brands, ...brands];
-
   return (
-    <section className="relative w-full pt-10 sm:pt-12 pb-14 sm:pb-4 overflow-hidden bg-transparent group">
+    <section
+      className="relative w-full py-14 sm:py-16 overflow-hidden"
+      style={{
+        background: 'linear-gradient(180deg, #000 0%, rgba(0,0,0,0.7) 40%, transparent 100%)',
+      }}
+    >
+      {/* Edge fades */}
+      <div className="absolute top-0 left-0 w-16 sm:w-32 md:w-56 h-full z-20 pointer-events-none bg-gradient-to-r from-black to-transparent" />
+      <div className="absolute top-0 right-0 w-16 sm:w-32 md:w-56 h-full z-20 pointer-events-none bg-gradient-to-l from-black to-transparent" />
 
-      <div className="absolute top-0 left-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-r from-black to-transparent opacity-90" />
-      <div className="absolute top-0 right-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-l from-black to-transparent opacity-90" />
-
-      <div className="relative w-full max-w-[1519px] mx-auto px-4 sm:px-8 z-10">
-
-        
-        <div className="relative flex items-center">
-          <button className="prev-btn absolute left-0 z-30 p-2 text-white/50 hover:text-white transition-opacity opacity-0 group-hover:opacity-100 hidden md:block">
-            <ChevronLeft size={40} strokeWidth={1} />
-          </button>
-          <button className="next-btn absolute right-0 z-30 p-2 text-white/50 hover:text-white transition-opacity opacity-0 group-hover:opacity-100 hidden md:block">
-            <ChevronRight size={40} strokeWidth={1} />
-          </button>
-
-          <Swiper
-            modules={[Autoplay, Navigation]}
-            spaceBetween={30}
-            slidesPerView={2}
-            loop={true}
-            speed={4000}
-            autoplay={{ delay: 0, disableOnInteraction: false }}
-            navigation={{ prevEl: '.prev-btn', nextEl: '.next-btn' }}
-            breakpoints={{
-              480: { slidesPerView: 3, spaceBetween: 40 },
-              640: { slidesPerView: 3, spaceBetween: 50 },
-              1024: { slidesPerView: 5, spaceBetween: 50 },
-            }}
-            className="flex items-center"
-          >
-            {allBrands.map((brand, index) => (
-              <SwiperSlide key={index} className="flex items-center justify-center py-4">
-                <div className="flex items-center justify-center h-24 sm:h-28 w-full px-4 py-4 rounded-2xl bg-white border border-white/20 shadow-lg transition-all duration-500 hover:scale-105 hover:shadow-xl hover:shadow-white/10">
-                  {brand.isText ? (
-                    <span className={`${brand.className} text-black whitespace-nowrap`}>
-                      
-                    </span>
-
-                  ) : (
-                    <img
-                      src={brand.src}
-                      alt="Brand Logo"
-                      className={`w-auto object-contain transition-all ${
-                        brand.sizeClass ? brand.sizeClass : 'h-14 sm:h-16 md:h-18'
-                      }`}
-                    />
-                    
-                  )}
-                  
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+      <div className="relative z-10 max-w-[1519px] mx-auto px-4 sm:px-8">
+        {/* Título */}
+        <div className="flex items-center justify-center gap-4 mb-10 sm:mb-12">
+          <div className="h-[1px] w-12 bg-white/20" />
+          <h3 className="font-aston text-white/70 text-lg sm:text-xl md:text-2xl tracking-wide text-center">
+            Algunas marcas que hemos desarrollado
+          </h3>
+          <div className="h-[1px] w-12 bg-white/20" />
         </div>
-        
+
+        <Swiper
+          modules={[Autoplay, FreeMode]}
+          spaceBetween={48}
+          slidesPerView={2}
+          loop={true}
+          speed={5000}
+          grabCursor={true}
+          freeMode={{ enabled: true, momentum: true }}
+          autoplay={{ delay: 0, disableOnInteraction: false }}
+          breakpoints={{
+            480: { slidesPerView: 3, spaceBetween: 56 },
+            640: { slidesPerView: 4, spaceBetween: 64 },
+            1024: { slidesPerView: 6, spaceBetween: 72 },
+          }}
+          className="flex items-center"
+        >
+          {allLogos.map((src, index) => (
+            <SwiperSlide key={index} className="flex items-center justify-center py-2">
+              {/* Caja fija — el logo escala para tocar alguno de los lados */}
+              <div className="flex items-center justify-center mx-auto" style={{ width: '160px', height: '120px' }}>
+                <img
+                  src={src}
+                  alt="Brand Logo"
+                  style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </section>
   );
