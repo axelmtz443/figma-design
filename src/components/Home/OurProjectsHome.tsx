@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { getOurProjects, OurProject } from "../../lib/sanityQueries";
+import { urlFor } from "../../lib/sanityImage";
 
 import fondoMercedes from "../../images/fondos_casos-de-exito/fondo_mercedes.png";
 import fondoHuizache from "../../images/fondos_casos-de-exito/fondo_tequilahuizache.png";
@@ -18,7 +20,7 @@ import logoFortia from "../../images/Logos_Clientes/Fortia.png";
 import logoLiz from "../../images/Logos_Clientes/Liz_muebles.png";
 
 interface Case {
-  id: number;
+  id: string;
   client: string;
   tag: string;
   description: string;
@@ -27,88 +29,43 @@ interface Case {
   accent: string;
 }
 
-const cases: Case[] = [
-  {
-    id: 1,
-    client: "Mercedes-Benz EQ",
-    tag: "Lanzamiento de Marca",
-    description: "Desarrollo de campaña de comunicación y posicionamiento para el lanzamiento de la línea eléctrica EQ en México.",
-    image: fondoMercedes,
-    logo: logoMercedes,
-    accent: "89,157,223", // #599ddf
-  },
-  {
-    id: 2,
-    client: "Tequila Huizache",
-    tag: "Branding Internacional",
-    description: "Desarrollo de imagen de marca y estrategia de posicionamiento con exitosa entrada al mercado de exportación.",
-    image: fondoHuizache,
-    logo: logoHuizache,
-    accent: "128,182,125", // #80b67d
-  },
-  {
-    id: 3,
-    client: "Sello Rojo",
-    tag: "Marketing Promocional",
-    description: "Estrategia de posicionamiento para nuevas líneas de productos mediante campañas promocionales a nivel nacional.",
-    image: fondoSelloRojo,
-    logo: logoSelloRojo,
-    accent: "197,54,46", // #c5362e
-  },
-  {
-    id: 4,
-    client: "KIA",
-    tag: "Trade Marketing",
-    description: "Creación de Campaña Promocional y de Posicionamiento de Marca a Nivel Nacional para más de 13 concesionarios.",
-    image: fondoKia,
-    logo: logoKia,
-    accent: "128,182,125", // #80b67d
-  },
-  {
-    id: 5,
-    client: "Coca-Cola",
-    tag: "Marketing Comercial",
-    description: "Estrategia de marketing comercial para América Latina, rompiendo récord histórico de ventas.",
-    image: fondoCoca,
-    logo: logoCoca,
-    accent: "197,54,46", // #c5362e
-  },
-  {
-    id: 6,
-    client: "Vitromex",
-    tag: "Marketing Estratégico",
-    description: "Creación y Desarrollo de Plan Comercial y de Marketing a Nivel Nacional, convirtiendo a la marca en líder en el mercado.",
-    image: fondoVitromex,
-    logo: logoVitromex,
-    accent: "230,175,65", // #e6af41
-  },
-  {
-    id: 7,
-    client: "Fortia Technologies",
-    tag: "Marketing Digital",
-    description: "Estrategia de marketing, comunicación y publicidad digital a nivel nacional e internacional.",
-    image: fondoFortia,
-    logo: logoFortia,
-    accent: "89,157,223", // #599ddf
-  },
-  {
-    id: 8,
-    client: "Liz Muebles",
-    tag: "Marketing Integral",
-    description: "Desarrollo y Ejecución de Plan de Marketing Nacional y de Expansión en Centro y Sudamérica.",
-    image: fondoLizmuebles,
-    logo: logoLiz,
-    accent: "230,175,65", // #e6af41
-  },
+const FALLBACK_CASES: Case[] = [
+  { id: '1', client: "Mercedes-Benz EQ", tag: "Lanzamiento de Marca", description: "Desarrollo de campaña de comunicación y posicionamiento para el lanzamiento de la línea eléctrica EQ en México.", image: fondoMercedes, logo: logoMercedes, accent: "89,157,223" },
+  { id: '2', client: "Tequila Huizache", tag: "Branding Internacional", description: "Desarrollo de imagen de marca y estrategia de posicionamiento con exitosa entrada al mercado de exportación.", image: fondoHuizache, logo: logoHuizache, accent: "128,182,125" },
+  { id: '3', client: "Sello Rojo", tag: "Marketing Promocional", description: "Estrategia de posicionamiento para nuevas líneas de productos mediante campañas promocionales a nivel nacional.", image: fondoSelloRojo, logo: logoSelloRojo, accent: "197,54,46" },
+  { id: '4', client: "KIA", tag: "Trade Marketing", description: "Creación de Campaña Promocional y de Posicionamiento de Marca a Nivel Nacional para más de 13 concesionarios.", image: fondoKia, logo: logoKia, accent: "128,182,125" },
+  { id: '5', client: "Coca-Cola", tag: "Marketing Comercial", description: "Estrategia de marketing comercial para América Latina, rompiendo récord histórico de ventas.", image: fondoCoca, logo: logoCoca, accent: "197,54,46" },
+  { id: '6', client: "Vitromex", tag: "Marketing Estratégico", description: "Creación y Desarrollo de Plan Comercial y de Marketing a Nivel Nacional, convirtiendo a la marca en líder en el mercado.", image: fondoVitromex, logo: logoVitromex, accent: "230,175,65" },
+  { id: '7', client: "Fortia Technologies", tag: "Marketing Digital", description: "Estrategia de marketing, comunicación y publicidad digital a nivel nacional e internacional.", image: fondoFortia, logo: logoFortia, accent: "89,157,223" },
+  { id: '8', client: "Liz Muebles", tag: "Marketing Integral", description: "Desarrollo y Ejecución de Plan de Marketing Nacional y de Expansión en Centro y Sudamérica.", image: fondoLizmuebles, logo: logoLiz, accent: "230,175,65" },
 ];
+
+function sanityToCase(p: OurProject): Case {
+  return {
+    id: p._id,
+    client: p.client,
+    tag: p.tag,
+    description: p.description,
+    image: urlFor(p.image),
+    logo: urlFor(p.logo),
+    accent: p.accent,
+  };
+}
 
 const VISIBLE = 3;
 
 export default function OurProjectsHome() {
+  const [cases, setCases] = useState<Case[]>(FALLBACK_CASES);
   const [current, setCurrent] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  useEffect(() => {
+    getOurProjects().then(data => {
+      if (data && data.length > 0) setCases(data.map(sanityToCase));
+    }).catch(() => {});
+  }, []);
 
   const total = cases.length;
 

@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ArrowUpRight, X, Image as ImageIcon, Sparkles } from 'lucide-react';
+import { getSuccessStories, SuccessStory } from '../../../lib/sanityQueries';
+import { urlFor } from '../../../lib/sanityImage';
 
 const customStyles = `
   @import url('https://fonts.cdnfonts.com/css/astonpoliz');
@@ -44,7 +46,23 @@ interface SafeLogoProps {
 
 type ImageErrors = Record<string, boolean>;
 
-const portfolioItems: PortfolioItem[] = [
+function sanityToPortfolio(s: SuccessStory, idx: number): PortfolioItem {
+  return {
+    id: idx + 1,
+    client: s.client,
+    service: s.service,
+    description: s.description,
+    logo: urlFor(s.logo),
+    coverImage: urlFor(s.coverImage),
+    expandedImage1: urlFor(s.expandedImage1),
+    expandedImage2: urlFor(s.expandedImage2),
+    color: s.color,
+    size: s.gridSize || 'md:col-span-1 md:row-span-1',
+    fallbackImages: { cover: '', expanded1: '', expanded2: '' },
+  };
+}
+
+const FALLBACK_PORTFOLIO: PortfolioItem[] = [
   {
     id: 1,
     client: "Mercedes-Benz EQ",
@@ -171,8 +189,15 @@ function SafeLogo({ src, client, color, className = 'h-12' }: SafeLogoProps) {
 }
 
 export default function SuccessStories() {
+  const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>(FALLBACK_PORTFOLIO);
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const [imageErrors, setImageErrors] = useState<ImageErrors>({});
+
+  useEffect(() => {
+    getSuccessStories().then(data => {
+      if (data && data.length > 0) setPortfolioItems(data.map(sanityToPortfolio));
+    }).catch(() => {});
+  }, []);
 
   const handleImageError = (itemId: number, type: string) => {
     setImageErrors((prev) => ({

@@ -3,6 +3,8 @@
 
 // sanity-studio/schemaTypes/index.ts
 
+import { ourProject } from './ourProject'
+import { successStory } from './successStory'
 import { defineType, defineField } from 'sanity'
 
 export const post = defineType({
@@ -130,4 +132,4 @@ export const post = defineType({
   }
 })
 
-export const schemaTypes = [post]
+export const schemaTypes = [post, ourProject, successStory]
