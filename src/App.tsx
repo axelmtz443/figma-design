@@ -23,6 +23,9 @@ import MainMktDigital from './pages/servicesPages/mkt-digital/mainMktDigital';
 import MarketResearch from './pages/servicesPages/market-research/mainMR';
 
 import BlogPostPageWrapper from './pages/BlogPostPageWrapper';
+import AvisoDePrivacidad from './pages/AvisoDePrivacidad';
+import AclaratoriaLegal from './pages/AclaratoriaLegal';
+import CookieBanner from './components/General/CookieBanner';
 
 function App() {
   const [showLoader, setShowLoader] = useState(true);
@@ -66,7 +69,10 @@ function App() {
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPostPageWrapper />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/aviso-de-privacidad" element={<AvisoDePrivacidad />} />
+        <Route path="/aclaratoria-legal" element={<AclaratoriaLegal />} />
       </Routes>
+      <CookieBanner />
     </>
   );
 }

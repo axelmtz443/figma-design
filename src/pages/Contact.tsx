@@ -5,23 +5,40 @@ import Footer from '../components/General/Footer';
 import ScrollReveal from '../components/General/ScrollReveal';
 import WorldMap from '../components/General/WorldMap';
 
-import RocketIconNewProjects from '../images/Contact/RocketIcon.jpg';
-import PersonIconClients from '../images/Contact/PersonIcon.jpg';
-import MessageIconGeneral from '../images/Contact/MessageIcon.jpg';
-
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type ContactOption = { title: string; description: string; link: string };
+type ContactOption = { title: string; description: string; link: string; icon: React.ReactNode; color: string };
 type OfficeCard    = { label: string; value: string };
+
+// ─── Contact icons ─────────────────────────────────────────────────────────────
+
+const IconRocket = () => (
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#e6af41" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2l2.5-2.5-5-5-2.5 2.5z"/>
+    <path d="M19 3s-3 0-6 3l-5 5 5 5 5-5c3-3 3-6 3-6z"/>
+    <circle cx="14" cy="10" r="1" fill="#e6af41" stroke="none"/>
+  </svg>
+);
+
+const IconUser = () => (
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#80b67d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+    <circle cx="12" cy="7" r="4"/>
+  </svg>
+);
+
+const IconMessage = () => (
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#599ddf" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+  </svg>
+);
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const FULL_GRADIENT = 'linear-gradient(90deg, #973a32, #558aac, #72987f, #d39b44)';
-
 const contactOptions: ContactOption[] = [
-  { title: 'Nuevos Proyectos',  description: '¿Buscas escalar tus resultados?',           link: 'ventas@weprom.mx'   },
-  { title: 'Clientes',          description: 'Seguimiento de tus estrategias actuales.',   link: 'proyectos@weprom.mx' },
-  { title: 'General',           description: 'Alianzas, dudas generales, otros.',          link: 'hola@weprom.mx'     },
+  { title: 'Nuevos Proyectos',  description: '¿Buscas escalar tus resultados?',           link: 'ventas@weprommarketing.mx',    icon: <IconRocket />, color: '#e6af41' },
+  { title: 'Clientes',          description: 'Seguimiento de tus estrategias actuales.',   link: 'proyectos@weprommarketing.mx', icon: <IconUser />,   color: '#80b67d' },
+  { title: 'General',           description: 'Alianzas, dudas generales, otros.',          link: 'hola@weprommarketing.mx',      icon: <IconMessage />, color: '#599ddf' },
 ];
 
 const officeCards: OfficeCard[] = [
@@ -29,8 +46,6 @@ const officeCards: OfficeCard[] = [
   { label: 'Horario de oficina', value: '9:00 AM - 3:00 PM' },
   { label: 'Días de atención',   value: 'Lunes a Viernes' },
 ];
-
-const contactIcons = [RocketIconNewProjects, PersonIconClients, MessageIconGeneral];
 
 // ─── Icon helpers ──────────────────────────────────────────────────────────────
 
@@ -52,23 +67,6 @@ const IconCalendar = () => (
 );
 const officeIcons = [IconPin, IconClock, IconCalendar];
 
-const GradientText = ({ children, className = '' }: { children: React.ReactNode; className?: string }) => (
-  <span className={className} style={{ background: FULL_GRADIENT, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', display: 'inline' }}>
-    {children}
-  </span>
-);
-
-const GradientArrow = () => (
-  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-    <defs>
-      <linearGradient id="g-arr" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stopColor="#ef4444" /><stop offset="33%" stopColor="#3b82f6" />
-        <stop offset="66%" stopColor="#22c55e" /><stop offset="100%" stopColor="#facc15" />
-      </linearGradient>
-    </defs>
-    <path d="M7 17L17 7M7 7h10v10" stroke="url(#g-arr)" />
-  </svg>
-);
 
 // ─── Page ──────────────────────────────────────────────────────────────────────
 
@@ -118,22 +116,22 @@ function Contact() {
                       viewport={{ once: true }} transition={{ delay: i * 0.15, duration: 0.6 }}
                       className="flex items-start gap-5"
                     >
-                      <img
-                        src={contactIcons[i]} alt={item.title}
-                        className="mt-0.5 flex-shrink-0 w-15 h-15 object-contain"
-                        style={{ filter: 'saturate(1.8) brightness(1.5)' }}
-                      />
+                      <div className="mt-0.5 flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: `${item.color}18`, border: `1px solid ${item.color}30` }}>
+                        {item.icon}
+                      </div>
                       <div>
                         <p className="font-bold text-white text-[17px] mb-0.5">{item.title}</p>
                         <p className="text-white/70 text-[15px] leading-relaxed mb-1">{item.description}</p>
                         <a
                           href={`mailto:${item.link}`}
-                          className="font-bold text-[15px] hover:opacity-80 transition-opacity inline-flex items-center gap-1.5 cursor-pointer"
-                          style={{ filter: 'saturate(1.8) brightness(1.2)' }}
-                          onClick={(e) => { e.preventDefault(); window.location.href = `mailto:${item.link}`; }}
+                          className="font-bold text-[15px] hover:opacity-80 transition-opacity inline-flex items-center gap-1.5"
+                          style={{ color: item.color }}
                         >
-                          <GradientText>{item.link}</GradientText>
-                          <GradientArrow />
+                          {item.link}
+                          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M7 17L17 7M7 7h10v10"/>
+                          </svg>
                         </a>
                       </div>
                     </motion.div>
