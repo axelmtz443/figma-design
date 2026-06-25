@@ -38,25 +38,65 @@ export async function getSuccessStories(): Promise<SuccessStory[]> {
   );
 }
 
+export interface MktDigitalProject {
+  _id: string;
+  order: number;
+  name: string;
+  subname: string;
+  logo: any;
+  cardImg: any;
+  traffic: string;
+  accounts: string;
+  conversations: string;
+  interactions: string;
+  color: string;
+}
+
+export interface MarketResearchProject {
+  _id: string;
+  order: number;
+  client: string;
+  objetivos: string;
+  resultados: string[];
+  image: any;
+  logo: any;
+}
+
+export async function getMktDigitalProjects(): Promise<MktDigitalProject[]> {
+  return sanityClient.fetch(
+    `*[_type == "mktDigitalProject"] | order(order asc) { _id, order, name, subname, logo, cardImg, traffic, accounts, conversations, interactions, color }`
+  );
+}
+
+export async function getMarketResearchProjects(): Promise<MarketResearchProject[]> {
+  return sanityClient.fetch(
+    `*[_type == "marketResearchProject"] | order(order asc) { _id, order, client, objetivos, resultados, image, logo }`
+  );
+}
+
 export interface BlogPost {
   _id: string;
   title: string;
   slug: string;
   date: string;
   category: string;
+  subcategory?: string;
   author: string;
   readTime: string;
   image: string;
+  seoTitle?: string;
+  seoDescription?: string;
   content?: any;
 }
 
 export async function getAllPosts(): Promise<BlogPost[]> {
-  const query = `*[_type == "post"] | order(date desc) {
+  const query = `*[_type == "post" && defined(slug.current) && slug.current != "sin-slug"] | order(date desc) {
     _id,
     title,
     "slug": slug.current,
     date,
     category,
+    subcategory,
     author,
     readTime,
     image,
@@ -71,9 +111,12 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     "slug": slug.current,
     date,
     category,
+    subcategory,
     author,
     readTime,
     image,
+    seoTitle,
+    seoDescription,
     content[] {
       ...,
       _type == "image" => {

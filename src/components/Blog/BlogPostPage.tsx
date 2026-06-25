@@ -164,6 +164,23 @@ export default function BlogPostPage({
         </p>
       ),
     },
+
+    
+    marks: {
+      link: ({ children, value }: any) => (
+        <a
+          href={value?.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline underline-offset-2 text-blue-400 hover:text-blue-300 transition-colors"
+        >
+          {children}
+        </a>
+      ),
+      strong: ({ children }: any) => <strong className="font-bold text-white">{children}</strong>,
+      em: ({ children }: any) => <em className="italic">{children}</em>,
+    },
+
     list: {
       bullet: ({ children }: any) => (
         <ul className="mb-4 list-disc pl-5 sm:pl-6 text-white/60 text-[13px] sm:text-[14px] flex flex-col gap-1">

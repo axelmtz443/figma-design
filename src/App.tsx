@@ -1,4 +1,5 @@
 import React from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import Home from './pages/Home';
 import About from './pages/About';
 import Services from './pages/Services';
@@ -26,6 +27,8 @@ import BlogPostPageWrapper from './pages/BlogPostPageWrapper';
 import AvisoDePrivacidad from './pages/AvisoDePrivacidad';
 import AclaratoriaLegal from './pages/AclaratoriaLegal';
 import CookieBanner from './components/General/CookieBanner';
+import ContactPopup from './components/General/ContactPopup';
+import { ContactPopupProvider } from './context/ContactPopupContext';
 
 function App() {
   const [showLoader, setShowLoader] = useState(true);
@@ -49,7 +52,8 @@ function App() {
   }, []);
 
   return (
-    <>
+    <HelmetProvider>
+    <ContactPopupProvider>
       {showLoader && <Loader />}
       <InteractiveBackground />
       <ScrollToTop />
@@ -73,7 +77,9 @@ function App() {
         <Route path="/aclaratoria-legal" element={<AclaratoriaLegal />} />
       </Routes>
       <CookieBanner />
-    </>
+      <ContactPopup />
+    </ContactPopupProvider>
+    </HelmetProvider>
   );
 }
 

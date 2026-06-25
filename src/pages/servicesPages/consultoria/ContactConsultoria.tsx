@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { MessageCircle, Phone, Mail, Send } from 'lucide-react';
+import { Phone, Mail, Send } from 'lucide-react';
 
 const ContactConsultoria = () => {
   const [formData, setFormData] = useState({
@@ -26,13 +26,6 @@ const ContactConsultoria = () => {
   };
 
   const contactInfo = [
-    {
-      icon: <MessageCircle size={20} />,
-      label: 'Whatsapp',
-      value: '+52 1 33 1385 7143',
-      href: 'https://wa.me/5213313857143?text=Hola,%20quiero%20más%20información%20acerca%20de%20los%20servicios%20de%20consultoría%20en%20marketing.',
-      color: '#25D366',
-    },
     {
       icon: <Mail size={20} />,
       label: 'Correo',

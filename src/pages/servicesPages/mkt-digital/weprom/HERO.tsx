@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import { TrendingUp, PieChart, LineChart, Target, Trophy, ArrowRight, Calendar } from 'lucide-react';
+import { useContactPopup } from '../../../../context/ContactPopupContext';
 
 const FONTS = {
   heading: "'Astonpoliz', sans-serif",
@@ -173,6 +174,7 @@ const OrbitalSystem = () => {
 };
 
 export default function HeroWeprom() {
+  const { openPopup } = useContactPopup();
   return (
     <div
       className="min-h-screen text-white select-none relative overflow-hidden flex flex-col justify-between w-full bg-transparent"
@@ -199,20 +201,20 @@ export default function HeroWeprom() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
-            <a
-              href="#contacto"
+            <button
+              onClick={() => openPopup('Marketing Digital')}
               className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#009fe3] to-[#599ddf] text-white font-bold text-sm shadow-xl shadow-blue-500/10 hover:shadow-blue-500/20 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2"
             >
               <span>Contactar</span>
               <ArrowRight className="w-4 h-4" />
-            </a>
-            <a
-              href="#contacto"
+            </button>
+            <button
+              onClick={() => openPopup('Marketing Digital')}
               className="px-7 py-3.5 rounded-xl bg-zinc-950/40 border border-zinc-800/80 hover:bg-zinc-900/60 text-zinc-300 hover:text-white font-semibold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
             >
               <Calendar className="w-4 h-4 text-[#599ddf]" />
               <span>Solicitar Reunión de diagnóstico</span>
-            </a>
+            </button>
           </div>
         </div>
 

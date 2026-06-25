@@ -7,21 +7,78 @@ const FULL_GRADIENT = 'linear-gradient(90deg, #DA3731, #1096D6, #F7B033)';
 const POSTS_PER_PAGE = 9;
 const VIEWS_KEY = 'blog_post_views';
 
+// ─── Taxonomy ────────────────────────────────────────────────────────────────
+
+const CATEGORY_CONFIG: Record<string, { label: string; subcategories: { label: string; value: string }[] }> = {
+  'branding': {
+    label: 'Branding',
+    subcategories: [
+      { label: 'Identidad Visual',      value: 'identidad-visual' },
+      { label: 'Rebranding',            value: 'rebranding' },
+      { label: 'Historias de Marcas',   value: 'historias-de-marcas' },
+      { label: 'Packaging',             value: 'packaging' },
+    ],
+  },
+  'publicidad-creativa': {
+    label: 'Publicidad Creativa',
+    subcategories: [
+      { label: 'Campañas Famosas',      value: 'campanas-famosas' },
+      { label: 'Campañas de Temporada', value: 'campanas-de-temporada' },
+      { label: 'Tipos de Creatividad',  value: 'tipos-de-creatividad' },
+      { label: 'Proceso Creativo',      value: 'proceso-creativo' },
+    ],
+  },
+  'marketing-digital': {
+    label: 'Marketing Digital',
+    subcategories: [
+      { label: 'Publicidad Digital',    value: 'publicidad-digital' },
+      { label: 'Contenido',             value: 'contenido' },
+      { label: 'Redes Sociales',        value: 'redes-sociales' },
+      { label: 'Tecnología & IA',       value: 'tecnologia-ia' },
+    ],
+  },
+  'investigacion-de-mercados': {
+    label: 'Investigación de Mercados',
+    subcategories: [
+      { label: 'Metodología',           value: 'metodologia' },
+      { label: 'Herramientas & Modelos', value: 'herramientas-modelos' },
+      { label: 'Estrategia de Marca',   value: 'estrategia-de-marca' },
+    ],
+  },
+  'produccion-audiovisual': {
+    label: 'Producción Audiovisual',
+    subcategories: [
+      { label: 'Video Marketing',              value: 'video-marketing' },
+      { label: 'Storytelling',                 value: 'storytelling' },
+      { label: 'Marketing & Entretenimiento',  value: 'marketing-entretenimiento' },
+    ],
+  },
+  'casos-de-exito': {
+    label: 'Casos de Éxito WeProm',
+    subcategories: [
+      { label: 'Campañas Digitales',          value: 'caso-campanas-digitales' },
+      { label: 'Branding',                    value: 'caso-branding' },
+      { label: 'Investigación de Mercados',   value: 'caso-investigacion' },
+      { label: 'Producción Audiovisual',      value: 'caso-audiovisual' },
+    ],
+  },
+};
+
+function getCategoryLabel(value: string): string {
+  return CATEGORY_CONFIG[value]?.label ?? value;
+}
+
+function getSubcategoryLabel(catValue: string, subValue: string): string {
+  const subs = CATEGORY_CONFIG[catValue]?.subcategories ?? [];
+  return subs.find(s => s.value === subValue)?.label ?? subValue;
+}
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
 function getViewCounts(): Record<string, number> {
   try { return JSON.parse(localStorage.getItem(VIEWS_KEY) || '{}'); }
   catch { return {}; }
 }
-
-const ALL_CATEGORIES = ['Todos', 'Marketing', 'Tools', 'UX', 'Web3', 'DeFi', 'Security', 'DAOs', 'Smart Contracts', 'dApps', 'Multi-Chain'];
-
-const SORT_OPTIONS = [
-  { value: 'newest', label: 'Más recientes' },
-  { value: 'oldest', label: 'Más antiguos' },
-  { value: 'az',     label: 'A → Z' },
-  { value: 'views',  label: 'Más vistos' },
-];
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
 
 function formatDate(iso: string) {
   if (!iso) return '';
@@ -34,11 +91,7 @@ function isGradient(s: string) {
   return s?.startsWith('linear-gradient') || s?.startsWith('radial-gradient');
 }
 
-// ─── Sub-components ───────────────────────────────────────────────────────────
-
-const GradientLine = () => (
-  <div className="w-16 h-[2px] mb-6" style={{ background: FULL_GRADIENT }} />
-);
+// ─── Filter components ────────────────────────────────────────────────────────
 
 function SearchBar({ value, onChange }: { value: string; onChange: (v: string) => void }) {
   return (
@@ -62,29 +115,90 @@ function SearchBar({ value, onChange }: { value: string; onChange: (v: string) =
   );
 }
 
-function CategoryPills({ active, onChange, available }: { active: string; onChange: (c: string) => void; available: Set<string> }) {
-  const cats = ALL_CATEGORIES.filter(c => c === 'Todos' || available.has(c));
+function CategoryPills({
+  activeCategory,
+  activeSubcategory,
+  onCategory,
+  onSubcategory,
+  availableCategories,
+}: {
+  activeCategory: string;
+  activeSubcategory: string;
+  onCategory: (c: string) => void;
+  onSubcategory: (s: string) => void;
+  availableCategories: Set<string>;
+}) {
+  const categoryKeys = Object.keys(CATEGORY_CONFIG).filter(k => availableCategories.has(k));
+  const subcategories = activeCategory !== 'Todos' ? (CATEGORY_CONFIG[activeCategory]?.subcategories ?? []) : [];
+
   return (
-    <div className="flex flex-wrap gap-2">
-      {cats.map(cat => (
-        <button
-          key={cat}
-          onClick={() => onChange(cat)}
-          className={`font-montserrat text-[11px] font-semibold uppercase tracking-wider px-3 py-1.5 rounded-full border transition-all duration-200 ${
-            active === cat
-              ? 'border-transparent text-white'
-              : 'border-white/10 text-white/40 hover:border-white/20 hover:text-white/70 bg-white/[0.02]'
-          }`}
-          style={active === cat ? { background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.25)' } : {}}
-        >
-          {cat}
-        </button>
-      ))}
+    <div className="flex flex-col gap-3">
+      {/* Main category pills */}
+      <div className="flex flex-wrap gap-2">
+        <Pill label="Todos" active={activeCategory === 'Todos'} onClick={() => onCategory('Todos')} />
+        {categoryKeys.map(key => (
+          <Pill
+            key={key}
+            label={CATEGORY_CONFIG[key].label}
+            active={activeCategory === key}
+            onClick={() => onCategory(key)}
+          />
+        ))}
+      </div>
+
+      {/* Sub-category pills — animated slide-in */}
+      <AnimatePresence>
+        {subcategories.length > 0 && (
+          <motion.div
+            key={activeCategory}
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.2 }}
+            className="flex flex-wrap gap-2 pl-1 border-l-2 border-white/10 ml-1"
+          >
+            <Pill label="Todas" active={activeSubcategory === 'Todas'} onClick={() => onSubcategory('Todas')} small />
+            {subcategories.map(sub => (
+              <Pill
+                key={sub.value}
+                label={sub.label}
+                active={activeSubcategory === sub.value}
+                onClick={() => onSubcategory(sub.value)}
+                small
+              />
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
+function Pill({ label, active, onClick, small = false }: { label: string; active: boolean; onClick: () => void; small?: boolean }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`font-montserrat font-semibold uppercase tracking-wider rounded-full border transition-all duration-200 ${
+        small ? 'text-[10px] px-2.5 py-1' : 'text-[11px] px-3.5 py-1.5'
+      } ${
+        active
+          ? 'border-white/30 text-white bg-white/12'
+          : 'border-white/10 text-white/40 hover:border-white/20 hover:text-white/70 bg-white/[0.02]'
+      }`}
+      style={active ? { background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.25)' } : {}}
+    >
+      {label}
+    </button>
+  );
+}
+
 function SortSelect({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  const SORT_OPTIONS = [
+    { value: 'newest', label: 'Más recientes' },
+    { value: 'oldest', label: 'Más antiguos' },
+    { value: 'az',     label: 'A → Z' },
+    { value: 'views',  label: 'Más vistos' },
+  ];
   return (
     <select
       value={value}
@@ -98,54 +212,57 @@ function SortSelect({ value, onChange }: { value: string; onChange: (v: string) 
   );
 }
 
+// Smart pagination
 function Pagination({ current, total, onChange }: { current: number; total: number; onChange: (n: number) => void }) {
   if (total <= 1) return null;
-
   const pages: (number | '…')[] = [];
-  const window = 1;
+  const win = 1;
   for (let i = 1; i <= total; i++) {
-    if (i === 1 || i === total || (i >= current - window && i <= current + window)) {
-      pages.push(i);
-    } else if (pages[pages.length - 1] !== '…') {
-      pages.push('…');
-    }
+    if (i === 1 || i === total || (i >= current - win && i <= current + win)) pages.push(i);
+    else if (pages[pages.length - 1] !== '…') pages.push('…');
   }
-
   return (
-    <div className="flex items-center justify-center gap-1.5 mt-10 sm:mt-12 flex-wrap">
-      <button
-        onClick={() => onChange(current - 1)}
-        disabled={current === 1}
-        className="font-montserrat text-[11px] text-white/50 px-3 sm:px-3.5 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] transition disabled:opacity-25"
-      >
+    <div className="flex items-center justify-center gap-1.5 mt-12 flex-wrap">
+      <button onClick={() => onChange(current - 1)} disabled={current === 1}
+        className="font-montserrat text-[11px] text-white/50 px-3.5 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] transition disabled:opacity-25">
         ← Anterior
       </button>
-
       {pages.map((p, i) =>
         p === '…' ? (
           <span key={`e${i}`} className="font-montserrat text-white/20 text-[12px] px-1">…</span>
         ) : (
-          <button
-            key={p}
-            onClick={() => onChange(p as number)}
+          <button key={p} onClick={() => onChange(p as number)}
             className={`w-8 h-8 rounded-lg font-montserrat text-[12px] border transition ${
-              p === current
-                ? 'border-white/30 text-white bg-white/10'
-                : 'border-white/10 text-white/35 bg-white/[0.02] hover:bg-white/[0.07]'
-            }`}
-          >
+              p === current ? 'border-white/30 text-white bg-white/10' : 'border-white/10 text-white/35 bg-white/[0.02] hover:bg-white/[0.07]'
+            }`}>
             {p}
           </button>
         )
       )}
-
-      <button
-        onClick={() => onChange(current + 1)}
-        disabled={current === total}
-        className="font-montserrat text-[11px] text-white/50 px-3 sm:px-3.5 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] transition disabled:opacity-25"
-      >
+      <button onClick={() => onChange(current + 1)} disabled={current === total}
+        className="font-montserrat text-[11px] text-white/50 px-3.5 py-2 rounded-xl border border-white/10 bg-white/[0.03] hover:bg-white/[0.07] transition disabled:opacity-25">
         Siguiente →
       </button>
+    </div>
+  );
+}
+
+// ─── Category badge for cards ─────────────────────────────────────────────────
+
+function CategoryBadge({ post, position = 'top-left' }: { post: BlogPost; position?: string }) {
+  const label = getCategoryLabel(post.category);
+  return (
+    <div className={`absolute ${position === 'top-left' ? 'top-4 left-4' : 'top-3 left-3'} flex flex-col gap-1 z-10`}>
+      <span className="font-montserrat text-[10px] font-bold uppercase tracking-widest text-white px-3 py-1 rounded-full"
+        style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)' }}>
+        {label}
+      </span>
+      {post.subcategory && (
+        <span className="font-montserrat text-[9px] font-semibold uppercase tracking-widest text-white/80 px-2.5 py-0.5 rounded-full"
+          style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)' }}>
+          {getSubcategoryLabel(post.category, post.subcategory)}
+        </span>
+      )}
     </div>
   );
 }
@@ -155,35 +272,23 @@ function Pagination({ current, total, onChange }: { current: number; total: numb
 function FeaturedCard({ post, onClick }: { post: BlogPost; onClick: () => void }) {
   return (
     <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-      whileHover={{ y: -3 }}
-      onClick={onClick}
-      className="group grid grid-cols-1 sm:grid-cols-2 rounded-3xl overflow-hidden border border-white/10 bg-white/[0.02] cursor-pointer hover:border-white/25 hover:bg-white/[0.04] transition-all mb-5 sm:mb-6"
+      initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}
+      whileHover={{ y: -3 }} onClick={onClick}
+      className="group grid grid-cols-1 sm:grid-cols-2 rounded-3xl overflow-hidden border border-white/10 bg-white/[0.02] cursor-pointer hover:border-white/25 hover:bg-white/[0.04] transition-all mb-6"
     >
-      <div className="relative w-full aspect-[16/9] sm:aspect-auto sm:h-full min-h-[200px] sm:min-h-[260px] overflow-hidden">
-        {isGradient(post.image) ? (
-          <div className="w-full h-full" style={{ background: post.image }} />
-        ) : (
-          <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-        )}
+      <div className="relative w-full aspect-[4/3] sm:aspect-auto sm:h-full min-h-[220px] overflow-hidden">
+        {isGradient(post.image)
+          ? <div className="w-full h-full" style={{ background: post.image }} />
+          : <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        }
         <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-        <span
-          className="absolute top-3 left-3 sm:top-4 sm:left-4 font-montserrat text-[10px] font-bold uppercase tracking-widest text-white px-2.5 sm:px-3 py-1 rounded-full"
-          style={{ background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.15)' }}
-        >
-          {post.category}
-        </span>
-        <span
-          className="absolute top-3 right-3 sm:top-4 sm:right-4 font-montserrat text-[9px] font-semibold uppercase tracking-widest text-white px-2.5 py-1 rounded-full"
-          style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)' }}
-        >
+        <CategoryBadge post={post} position="top-left" />
+        <span className="absolute top-4 right-4 font-montserrat text-[9px] font-semibold uppercase tracking-widest text-white px-2.5 py-1 rounded-full"
+          style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.2)' }}>
           Destacado
         </span>
       </div>
-
-      <div className="p-5 sm:p-7 md:p-10 flex flex-col justify-center gap-3 sm:gap-4">
+      <div className="p-7 sm:p-10 flex flex-col justify-center gap-4">
         <p className="font-montserrat text-white/35 text-[11px] uppercase tracking-widest">{formatDate(post.date)}</p>
         <h2 className="font-montserrat font-bold text-white text-[18px] sm:text-[22px] md:text-[26px] leading-snug group-hover:text-white/90 transition-colors line-clamp-3">
           {post.title}
@@ -204,29 +309,20 @@ function FeaturedCard({ post, onClick }: { post: BlogPost; onClick: () => void }
   );
 }
 
-function BlogCard({ post, index, onClick, views }: { post: BlogPost; index: number; onClick: () => void; views: number }) {
+function BlogCard({ post, index, onClick }: { post: BlogPost; index: number; onClick: () => void }) {
   return (
     <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.05, duration: 0.45 }}
-      whileHover={{ y: -4 }}
-      onClick={onClick}
+      initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }} transition={{ delay: index * 0.05, duration: 0.45 }}
+      whileHover={{ y: -4 }} onClick={onClick}
       className="group flex flex-col rounded-2xl overflow-hidden border border-white/10 bg-white/[0.02] cursor-pointer transition-all hover:border-white/20 hover:bg-white/[0.04]"
     >
       <div className="relative w-full aspect-[4/3] overflow-hidden">
-        {isGradient(post.image) ? (
-          <div className="w-full h-full transition-transform duration-500 group-hover:scale-105" style={{ background: post.image }} />
-        ) : (
-          <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-        )}
-        <span
-          className="absolute top-3 left-3 font-montserrat text-[10px] font-semibold uppercase tracking-widest text-white px-2.5 py-1 rounded-full z-10"
-          style={{ background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.12)' }}
-        >
-          {post.category}
-        </span>
+        {isGradient(post.image)
+          ? <div className="w-full h-full transition-transform duration-500 group-hover:scale-105" style={{ background: post.image }} />
+          : <img src={post.image} alt={post.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+        }
+        <CategoryBadge post={post} position="top-left-small" />
       </div>
       <div className="p-4 flex flex-col flex-1 gap-2">
         <h3 className="font-montserrat font-semibold text-white text-[13px] leading-snug group-hover:text-white/90 transition-colors line-clamp-2">
@@ -242,25 +338,21 @@ function BlogCard({ post, index, onClick, views }: { post: BlogPost; index: numb
   );
 }
 
-function TrendingCard({ post, rank, onClick, views }: { post: BlogPost; rank: number; onClick: () => void; views: number }) {
+function TrendingCard({ post, rank, onClick }: { post: BlogPost; rank: number; onClick: () => void }) {
   return (
-    <motion.div
-      whileHover={{ y: -2 }}
-      onClick={onClick}
-      className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl border border-white/[0.08] bg-white/[0.02] cursor-pointer hover:border-white/15 hover:bg-white/[0.04] transition-all"
-    >
-      <span className="font-aston text-[28px] sm:text-[32px] leading-none text-white/[0.08] flex-shrink-0 w-7 sm:w-8 text-center select-none">
-        {rank}
-      </span>
-      <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl overflow-hidden flex-shrink-0">
-        {isGradient(post.image) ? (
-          <div className="w-full h-full" style={{ background: post.image }} />
-        ) : (
-          <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
-        )}
+    <motion.div whileHover={{ y: -2 }} onClick={onClick}
+      className="group flex items-center gap-4 p-4 rounded-2xl border border-white/8 bg-white/[0.02] cursor-pointer hover:border-white/15 hover:bg-white/[0.04] transition-all">
+      <span className="font-aston text-[32px] leading-none text-white/8 flex-shrink-0 w-8 text-center select-none">{rank}</span>
+      <div className="w-14 h-14 rounded-xl overflow-hidden flex-shrink-0">
+        {isGradient(post.image)
+          ? <div className="w-full h-full" style={{ background: post.image }} />
+          : <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+        }
       </div>
       <div className="flex flex-col gap-1 min-w-0 flex-1">
-        <span className="font-montserrat text-[10px] font-semibold uppercase tracking-wider text-white/30">{post.category}</span>
+        <span className="font-montserrat text-[10px] font-semibold uppercase tracking-wider text-white/30">
+          {getCategoryLabel(post.category)}
+        </span>
         <h4 className="font-montserrat font-semibold text-white/80 text-[12px] leading-snug line-clamp-2 group-hover:text-white transition-colors">{post.title}</h4>
         <span className="font-montserrat text-[10px] text-white/25">{formatDate(post.date)}</span>
       </div>
@@ -274,11 +366,9 @@ function NewsletterStrip() {
   const [email, setEmail] = useState('');
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.7 }}
-      className="w-full border-t border-white/10 pt-10 sm:pt-16 mt-14 sm:mt-20 flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-8"
+      initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }} transition={{ duration: 0.7 }}
+      className="w-full border-t border-white/10 pt-16 mt-20 flex flex-col sm:flex-row items-center justify-between gap-8"
     >
       <div className="w-full sm:max-w-xs text-center sm:text-left">
         <h3 className="font-aston text-[30px] sm:text-[36px] md:text-[44px] text-white leading-tight tracking-tight mb-2 sm:mb-3">
@@ -321,13 +411,14 @@ function NewsletterStrip() {
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 export default function BlogSection() {
-  const [posts, setPosts]           = useState<BlogPost[]>([]);
-  const [loading, setLoading]       = useState(true);
-  const [search, setSearch]         = useState('');
-  const [category, setCategory]     = useState('Todos');
-  const [sort, setSort]             = useState('newest');
-  const [page, setPage]             = useState(1);
-  const [viewCounts, setViewCounts] = useState<Record<string, number>>({});
+  const [posts, setPosts]               = useState<BlogPost[]>([]);
+  const [loading, setLoading]           = useState(true);
+  const [search, setSearch]             = useState('');
+  const [activeCategory, setActiveCategory]       = useState('Todos');
+  const [activeSubcategory, setActiveSubcategory] = useState('Todas');
+  const [sort, setSort]                 = useState('newest');
+  const [page, setPage]                 = useState(1);
+  const [viewCounts, setViewCounts]     = useState<Record<string, number>>({});
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -335,15 +426,34 @@ export default function BlogSection() {
     getAllPosts().then(data => { setPosts(data); setLoading(false); });
   }, []);
 
-  const availableCategories = useMemo(() => new Set(posts.map(p => p.category)), [posts]);
+  // Categories that actually have posts in the new taxonomy
+  const availableCategories = useMemo(
+    () => new Set(posts.map(p => p.category).filter(c => c in CATEGORY_CONFIG)),
+    [posts]
+  );
+
+  // Reset subcategory when category changes
+  const handleCategory = (c: string) => { setActiveCategory(c); setActiveSubcategory('Todas'); setPage(1); };
+  const handleSubcategory = (s: string) => { setActiveSubcategory(s); setPage(1); };
+  const handleSearch = (v: string) => { setSearch(v); setPage(1); };
+  const handleSort = (s: string) => { setSort(s); setPage(1); };
 
   const filtered = useMemo(() => {
     let result = [...posts];
     if (search.trim()) {
       const q = search.toLowerCase();
-      result = result.filter(p => p.title?.toLowerCase().includes(q) || p.category?.toLowerCase().includes(q));
+      result = result.filter(p =>
+        p.title?.toLowerCase().includes(q) ||
+        getCategoryLabel(p.category).toLowerCase().includes(q)
+      );
     }
-    if (category !== 'Todos') result = result.filter(p => p.category === category);
+    if (activeCategory !== 'Todos') {
+      result = result.filter(p => p.category === activeCategory);
+      if (activeSubcategory !== 'Todas') {
+        result = result.filter(p => p.subcategory === activeSubcategory);
+      }
+    }
+
     switch (sort) {
       case 'oldest': result.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); break;
       case 'az':     result.sort((a, b) => (a.title || '').localeCompare(b.title || '', 'es')); break;
@@ -351,27 +461,24 @@ export default function BlogSection() {
       default:       result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); break;
     }
     return result;
-  }, [posts, search, category, sort, viewCounts]);
+  }, [posts, search, activeCategory, activeSubcategory, sort, viewCounts]);
 
   const trendingPosts = useMemo(() => {
     const hasViews = Object.keys(viewCounts).length > 0;
-    if (!hasViews || search || category !== 'Todos') return [];
+    if (!hasViews || search || activeCategory !== 'Todos') return [];
     return [...posts]
       .filter(p => (viewCounts[p.slug] || 0) > 0)
       .sort((a, b) => (viewCounts[b.slug] || 0) - (viewCounts[a.slug] || 0))
       .slice(0, 4);
-  }, [posts, viewCounts, search, category]);
+  }, [posts, viewCounts, search, activeCategory]);
 
   const totalPages   = Math.ceil(filtered.length / POSTS_PER_PAGE);
-  const isFiltering  = search || category !== 'Todos';
+  const isFiltering  = search || activeCategory !== 'Todos';
   const featuredPost = !isFiltering && filtered.length > 0 ? filtered[0] : null;
   const gridPosts    = !isFiltering && filtered.length > 0 ? filtered.slice(1) : filtered;
   const visibleGrid  = gridPosts.slice((page - 1) * POSTS_PER_PAGE, page * POSTS_PER_PAGE);
 
-  const handlePage     = (n: number) => { setPage(n); window.scrollTo({ top: 0, behavior: 'smooth' }); };
-  const handleSearch   = (v: string) => { setSearch(v); setPage(1); };
-  const handleCategory = (c: string) => { setCategory(c); setPage(1); };
-  const handleSort     = (s: string) => { setSort(s); setPage(1); };
+  const handlePage = (n: number) => { setPage(n); window.scrollTo({ top: 0, behavior: 'smooth' }); };
   const handleNavigate = (post: BlogPost) => navigate(`/blog/${post.slug}`);
 
   if (loading) {
@@ -395,10 +502,8 @@ export default function BlogSection() {
           viewport={{ once: true }} transition={{ duration: 0.7 }}
           className="flex flex-col items-center text-center mb-8 sm:mb-12 md:mb-14"
         >
-          <GradientLine />
-          <h1 className="font-aston text-[32px] sm:text-[44px] md:text-[52px] lg:text-[60px] text-white leading-tight tracking-tight mb-3">
-            Blog
-          </h1>
+          <div className="w-16 h-[2px] mb-6" style={{ background: FULL_GRADIENT }} />
+          <h1 className="font-aston text-[36px] sm:text-[52px] lg:text-[60px] text-white leading-tight tracking-tight mb-3">Blog</h1>
           <p className="font-montserrat text-white/40 text-[13px] sm:text-[14px] max-w-md leading-relaxed">
             Explora insights, tendencias y mejores prácticas de marketing y publicidad.
           </p>
@@ -414,32 +519,39 @@ export default function BlogSection() {
           <SortSelect value={sort} onChange={handleSort} />
         </motion.div>
 
-        {/* Category pills */}
+        {/* Category + subcategory pills */}
         <motion.div
           initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
           viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.15 }}
           className="mb-6 sm:mb-8"
         >
-          <CategoryPills active={category} onChange={handleCategory} available={availableCategories} />
+          <CategoryPills
+            activeCategory={activeCategory}
+            activeSubcategory={activeSubcategory}
+            onCategory={handleCategory}
+            onSubcategory={handleSubcategory}
+            availableCategories={availableCategories}
+          />
         </motion.div>
 
         {/* Result count */}
         <AnimatePresence mode="wait">
           {isFiltering && (
-            <motion.p
-              key="count"
-              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-              className="font-montserrat text-white/30 text-[12px] mb-5 sm:mb-6"
-            >
+            <motion.p key="count" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              className="font-montserrat text-white/30 text-[12px] mb-6">
               {filtered.length === 0
                 ? 'Sin resultados'
-                : `${filtered.length} artículo${filtered.length !== 1 ? 's' : ''}${category !== 'Todos' ? ` en ${category}` : ''}${search ? ` con "${search}"` : ''}`
+                : `${filtered.length} artículo${filtered.length !== 1 ? 's' : ''}${
+                    activeCategory !== 'Todos' ? ` en ${getCategoryLabel(activeCategory)}` : ''
+                  }${
+                    activeSubcategory !== 'Todas' ? ` · ${getSubcategoryLabel(activeCategory, activeSubcategory)}` : ''
+                  }${search ? ` con "${search}"` : ''}`
               }
             </motion.p>
           )}
         </AnimatePresence>
 
-        {/* Trending */}
+        {/* Trending strip */}
         <AnimatePresence>
           {trendingPosts.length > 0 && (
             <motion.div
@@ -454,13 +566,7 @@ export default function BlogSection() {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {trendingPosts.map((post, i) => (
-                  <TrendingCard
-                    key={post._id}
-                    post={post}
-                    rank={i + 1}
-                    views={viewCounts[post.slug] || 0}
-                    onClick={() => handleNavigate(post)}
-                  />
+                  <TrendingCard key={post._id} post={post} rank={i + 1} onClick={() => handleNavigate(post)} />
                 ))}
               </div>
               <div className="border-b border-white/[0.08] mt-6 sm:mt-8 mb-8 sm:mb-10" />
@@ -469,34 +575,24 @@ export default function BlogSection() {
         </AnimatePresence>
 
         {/* Featured */}
-        {featuredPost && (
-          <FeaturedCard post={featuredPost} onClick={() => handleNavigate(featuredPost)} />
-        )}
+        {featuredPost && <FeaturedCard post={featuredPost} onClick={() => handleNavigate(featuredPost)} />}
 
         {/* Grid */}
         {visibleGrid.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {visibleGrid.map((post, i) => (
-              <BlogCard
-                key={post._id}
-                post={post}
-                index={i}
-                views={viewCounts[post.slug] || 0}
-                onClick={() => handleNavigate(post)}
-              />
+              <BlogCard key={post._id} post={post} index={i} onClick={() => handleNavigate(post)} />
             ))}
           </div>
         ) : (
           !featuredPost && (
-            <div className="flex flex-col items-center py-16 sm:py-20 gap-3 text-center">
+            <div className="flex flex-col items-center py-20 gap-3 text-center">
               <svg className="w-10 h-10 text-white/15" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
               </svg>
               <p className="font-montserrat text-white/30 text-[14px]">No se encontraron artículos</p>
-              <button
-                onClick={() => { handleSearch(''); handleCategory('Todos'); }}
-                className="font-montserrat text-[12px] text-white/50 hover:text-white transition-colors underline underline-offset-2"
-              >
+              <button onClick={() => { handleSearch(''); handleCategory('Todos'); }}
+                className="font-montserrat text-[12px] text-white/50 hover:text-white transition-colors underline underline-offset-2">
                 Limpiar filtros
               </button>
             </div>
