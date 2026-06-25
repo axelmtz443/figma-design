@@ -5,6 +5,8 @@
 
 import { ourProject } from './ourProject'
 import { successStory } from './successStory'
+import { mktDigitalProject } from './mktDigitalProject'
+import { marketResearchProject } from './marketResearchProject'
 import { defineType, defineField } from 'sanity'
 
 export const post = defineType({
@@ -38,20 +40,56 @@ export const post = defineType({
     }),
     defineField({
       name: 'category',
-      title: 'Category',
+      title: 'Categoría',
       type: 'string',
       options: {
         list: [
-          { title: 'DeFi', value: 'DeFi' },
-          { title: 'DAOs', value: 'DAOs' },
-          { title: 'Smart Contracts', value: 'Smart Contracts' },
-          { title: 'dApps', value: 'dApps' },
-          { title: 'UX', value: 'UX' },
-          { title: 'Security', value: 'Security' },
-          { title: 'Web3', value: 'Web3' },
-          { title: 'Tools', value: 'Tools' },
-          { title: 'Multi-Chain', value: 'Multi-Chain' },
-          { title: 'Marketing', value: 'Marketing' }
+          { title: 'Branding',                   value: 'branding' },
+          { title: 'Publicidad Creativa',         value: 'publicidad-creativa' },
+          { title: 'Marketing Digital',           value: 'marketing-digital' },
+          { title: 'Investigación de Mercados',   value: 'investigacion-de-mercados' },
+          { title: 'Producción Audiovisual',      value: 'produccion-audiovisual' },
+          { title: 'Casos de Éxito WeProm',       value: 'casos-de-exito' },
+        ]
+      },
+      validation: Rule => Rule.required()
+    }),
+    defineField({
+      name: 'subcategory',
+      title: 'Sub-etiqueta',
+      type: 'string',
+      description: 'Elige la sub-etiqueta que corresponda a la categoría seleccionada arriba.',
+      hidden: ({ document }) => !document?.category,
+      options: {
+        list: [
+          // ── Branding ──────────────────────────────────────
+          { title: '🎨 Branding · Identidad Visual',          value: 'identidad-visual' },
+          { title: '🔄 Branding · Rebranding',                value: 'rebranding' },
+          { title: '🏢 Branding · Historias de Marcas',       value: 'historias-de-marcas' },
+          { title: '📦 Branding · Packaging',                 value: 'packaging' },
+          // ── Publicidad Creativa ───────────────────────────
+          { title: '🏆 Publicidad · Campañas Famosas',        value: 'campanas-famosas' },
+          { title: '🎄 Publicidad · Campañas de Temporada',   value: 'campanas-de-temporada' },
+          { title: '💡 Publicidad · Tipos de Creatividad',    value: 'tipos-de-creatividad' },
+          { title: '⚙️ Publicidad · Proceso Creativo',        value: 'proceso-creativo' },
+          // ── Marketing Digital ─────────────────────────────
+          { title: '📱 Mkt Digital · Publicidad Digital',     value: 'publicidad-digital' },
+          { title: '📝 Mkt Digital · Contenido',              value: 'contenido' },
+          { title: '💬 Mkt Digital · Redes Sociales',         value: 'redes-sociales' },
+          { title: '🤖 Mkt Digital · Tecnología & IA',        value: 'tecnologia-ia' },
+          // ── Investigación de Mercados ─────────────────────
+          { title: '📊 Investigación · Metodología',          value: 'metodologia' },
+          { title: '🛠️ Investigación · Herramientas & Modelos', value: 'herramientas-modelos' },
+          { title: '👥 Investigación · Estrategia de Marca',  value: 'estrategia-de-marca' },
+          // ── Producción Audiovisual ────────────────────────
+          { title: '🎬 Audiovisual · Video Marketing',        value: 'video-marketing' },
+          { title: '📖 Audiovisual · Storytelling',           value: 'storytelling' },
+          { title: '🎭 Audiovisual · Marketing & Entretenimiento', value: 'marketing-entretenimiento' },
+          // ── Casos de Éxito WeProm ─────────────────────────
+          { title: '✅ Casos WeProm · Campañas Digitales',    value: 'caso-campanas-digitales' },
+          { title: '✅ Casos WeProm · Branding',              value: 'caso-branding' },
+          { title: '✅ Casos WeProm · Investigación de Mercados', value: 'caso-investigacion' },
+          { title: '✅ Casos WeProm · Producción Audiovisual', value: 'caso-audiovisual' },
         ]
       },
       validation: Rule => Rule.required()
@@ -132,4 +170,4 @@ export const post = defineType({
   }
 })
 
-export const schemaTypes = [post, ourProject, successStory]
+export const schemaTypes = [post, ourProject, successStory, mktDigitalProject, marketResearchProject]

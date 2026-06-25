@@ -36,6 +36,7 @@ export async function getAllPosts() {
     "slug": slug.current,
     date,
     category,
+    subcategory,
     author,
     readTime,
     image
