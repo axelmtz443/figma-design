@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import { getMarketResearchProjects, MarketResearchProject } from '../../../lib/sanityQueries';
+import { urlFor } from '../../../lib/sanityImage';
 
 // Fondos de casos de éxito
 import fondoCoca from '../../../images/fondos_casos-de-exito/fondo_coca.png';
@@ -70,7 +72,13 @@ const customStyles = `
   }
 `;
 
-const cases = [
+type Case = { id: number; client: string; objetivos: string; resultados: string[]; image: string; logo: string; };
+
+function sanityToCase(p: MarketResearchProject, i: number): Case {
+  return { id: i + 1, client: p.client, objetivos: p.objetivos, resultados: p.resultados, image: urlFor(p.image), logo: urlFor(p.logo) };
+}
+
+const FALLBACK_CASES = [
   {
     id: 1,
     client: "COCA COLA",
@@ -194,7 +202,14 @@ const cases = [
 ];
 
 export default function OurProjects() {
+  const [cases, setCases] = useState<Case[]>(FALLBACK_CASES);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    getMarketResearchProjects().then(data => {
+      if (data && data.length > 0) setCases(data.map(sanityToCase));
+    }).catch(() => {});
+  }, []);
   const [isHovered, setIsHovered] = useState(false);
   const [touchStart, setTouchStart] = useState(null);
   const [touchEnd, setTouchEnd] = useState(null);

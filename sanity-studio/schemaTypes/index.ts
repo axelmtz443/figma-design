@@ -7,6 +7,7 @@ import { ourProject } from './ourProject'
 import { successStory } from './successStory'
 import { mktDigitalProject } from './mktDigitalProject'
 import { marketResearchProject } from './marketResearchProject'
+import { portfolioCase } from './portfolioCase'
 import { defineType, defineField } from 'sanity'
 
 export const post = defineType({
@@ -185,4 +186,4 @@ export const post = defineType({
   }
 })
 
-export const schemaTypes = [post, ourProject, successStory, mktDigitalProject, marketResearchProject]
+export const schemaTypes = [post, ourProject, successStory, mktDigitalProject, marketResearchProject, portfolioCase]

@@ -128,6 +128,35 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   return await sanityClient.fetch(query, { slug });
 }
 
+// ─── Portfolio ────────────────────────────────────────────────────────────────
+
+export interface PortfolioCase {
+  _id: string;
+  uen: 'investigacion-de-mercado' | 'marketing-digital' | 'branding';
+  industry: string;
+  order: number;
+  client: string;
+  projectTitle: string;
+  description: string;
+  objectives: string;
+  results: string[];
+  coverImage: any;
+  logo?: any;
+  color: string;
+  featured: boolean;
+}
+
+export async function getPortfolioCases(uen?: string): Promise<PortfolioCase[]> {
+  const filter = uen
+    ? `*[_type == "portfolioCase" && uen == $uen]`
+    : `*[_type == "portfolioCase"]`;
+  const query = `${filter} | order(featured desc, order asc) {
+    _id, uen, industry, order, client, projectTitle, description,
+    objectives, results, coverImage, logo, color, featured
+  }`;
+  return sanityClient.fetch(query, uen ? { uen } : {});
+}
+
 export async function getAllSlugs(): Promise<string[]> {
   const query = `*[_type == "post"] { "slug": slug.current }`;
   const posts = await sanityClient.fetch(query);

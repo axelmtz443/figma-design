@@ -26,6 +26,8 @@ import MarketResearch from './pages/servicesPages/market-research/mainMR';
 import BlogPostPageWrapper from './pages/BlogPostPageWrapper';
 import AvisoDePrivacidad from './pages/AvisoDePrivacidad';
 import AclaratoriaLegal from './pages/AclaratoriaLegal';
+import Portafolio from './pages/Portafolio';
+import PortafolioUen from './pages/PortafolioUen';
 import CookieBanner from './components/General/CookieBanner';
 import ContactPopup from './components/General/ContactPopup';
 import { ContactPopupProvider } from './context/ContactPopupContext';
@@ -69,6 +71,9 @@ function App() {
         <Route path="/servicios/consultoriademarketing" element={<ConsultoriaDeMarketing />} />
         <Route path="/servicios/marketing-digital" element={<MainMktDigital />} />
         <Route path="/servicios/investigacion-de-mercados" element={<MarketResearch />} />
+
+        <Route path="/portafolio" element={<Portafolio />} />
+        <Route path="/portafolio/:uen" element={<PortafolioUen />} />
 
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:slug" element={<BlogPostPageWrapper />} />

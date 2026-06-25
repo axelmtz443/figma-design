@@ -29,6 +29,10 @@ async function prerender() {
     '/servicios/consultoriademarketing',
     '/servicios/marketing-digital',
     '/servicios/investigacion-de-mercados',
+    '/portafolio',
+    '/portafolio/investigacion-de-mercado',
+    '/portafolio/marketing-digital',
+    '/portafolio/branding',
     '/blog',
     '/contact',
     ...dynamicRoutes

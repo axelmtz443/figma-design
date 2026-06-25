@@ -1,6 +1,16 @@
 {
   "buildCommand": "echo 'Static files already built'",
   "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/servicios/agencia-investigacion-de-mercados", "destination": "/servicios/investigacion-de-mercados", "statusCode": 301 },
+    { "source": "/servicios/agencia-investigacion-de-mercados/", "destination": "/servicios/investigacion-de-mercados", "statusCode": 301 },
+    { "source": "/:slug((?!nosotros|servicios|blog|contact|aviso-de-privacidad|aclaratoria-legal|portfolio)[^/]+)/", "destination": "/blog/:slug", "statusCode": 301 },
+    { "source": "/:slug((?!nosotros|servicios|blog|contact|aviso-de-privacidad|aclaratoria-legal|portfolio)[^/]+)", "destination": "/blog/:slug", "statusCode": 301 },
+    { "source": "/quienes-somos", "destination": "/nosotros", "statusCode": 301 },
+    { "source": "/quienes-somos/", "destination": "/nosotros", "statusCode": 301 },
+    { "source": "/contactanos", "destination": "/contact", "statusCode": 301 },
+    { "source": "/contactanos/", "destination": "/contact", "statusCode": 301 }
+  ],
   "rewrites": [
     { "source": "/servicios/(.*)", "destination": "/servicios/$1.html" },
     { "source": "/(.*)", "destination": "/$1.html" },
