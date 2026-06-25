@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Lightbulb, ClipboardList, Video, MonitorPlay } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useContactPopup } from '../../../context/ContactPopupContext';
 
 const NuestroProceso = () => {
-  const navigate = useNavigate();
+  const { openPopup } = useContactPopup();
   const [activeStep, setActiveStep] = useState(-1);
   const stepRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -147,7 +147,7 @@ const NuestroProceso = () => {
           {/* CTA final */}
           <div className="relative z-10 flex items-center justify-center mt-12 sm:mt-16 w-full pb-8">
             <button
-              onClick={() => navigate('/contact')}
+              onClick={() => openPopup('Producción Audiovisual')}
               className="px-8 sm:px-10 py-3 sm:py-4 font-montserrat font-semibold text-xs sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase rounded-full border border-white/15 text-white hover:border-white/40 hover:scale-105 transition-all duration-300"
             >
               Cotizar Producción

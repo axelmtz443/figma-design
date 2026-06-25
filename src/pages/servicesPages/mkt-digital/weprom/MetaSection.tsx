@@ -709,7 +709,7 @@ export default function MetaSection() {
 
       <div className="w-full flex justify-center mt-12 mb-4 relative z-10">
         <button onClick={() => openPopup('Publicidad en Meta (Facebook & Instagram)')} className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white bg-gradient-to-r from-[#0866ff] to-[#00c6ff] rounded-full shadow-[0_0_20px_rgba(8,102,255,0.3)] hover:shadow-[0_0_30px_rgba(8,102,255,0.5)] hover:scale-105 transition-all duration-300">
-          Cotizar campaña
+          Cotizar Campaña
         </button>
       </div>
     </section>

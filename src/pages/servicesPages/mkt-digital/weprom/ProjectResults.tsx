@@ -1,6 +1,9 @@
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
 import { TrendingUp } from 'lucide-react';
+import { getMktDigitalProjects, MktDigitalProject } from '../../../../lib/sanityQueries';
+import { urlFor } from '../../../../lib/sanityImage';
 
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
@@ -30,7 +33,29 @@ import cardVagual from '../../../../images/mktdigital_meta/datacards/mktcard_Vag
 import cardMercedes from '../../../../images/mktdigital_meta/datacards/mktcard_Mercedes.png';
 import cardAndreaAragon from '../../../../images/mktdigital_meta/datacards/mktcard_AA.png';
 
-const PROJECTS = [
+type Project = {
+  id: number; name: string; subname: string; logo: string; cardImg: string;
+  traffic: string; accounts: string; conversations: string; interactions: string;
+  color: string; glow: string;
+};
+
+function sanityToProject(p: MktDigitalProject, i: number): Project {
+  return {
+    id: i + 1,
+    name: p.name,
+    subname: p.subname || '',
+    logo: urlFor(p.logo),
+    cardImg: urlFor(p.cardImg),
+    traffic: p.traffic,
+    accounts: p.accounts,
+    conversations: p.conversations,
+    interactions: p.interactions,
+    color: p.color,
+    glow: `${p.color}33`,
+  };
+}
+
+const FALLBACK_PROJECTS = [
   {
     id: 1,
     name: "Mercedes-Benz",
@@ -174,6 +199,14 @@ const StatBox = ({ label, value }: { label: string, value: string }) => (
 );
 
 function ProjectResults() {
+  const [projects, setProjects] = useState<Project[]>(FALLBACK_PROJECTS);
+
+  useEffect(() => {
+    getMktDigitalProjects().then(data => {
+      if (data && data.length > 0) setProjects(data.map(sanityToProject));
+    }).catch(() => {});
+  }, []);
+
   return (
     <section className="w-full max-w-[1400px] mx-auto px-4 py-14 sm:py-20 relative overflow-hidden">
 
@@ -212,7 +245,7 @@ function ProjectResults() {
         modules={[Autoplay, EffectCoverflow, Pagination, Navigation]}
         className="projects-swiper !pb-16 pt-[1.6rem]"
       >
-        {PROJECTS.map((project) => (
+        {projects.map((project) => (
           <SwiperSlide key={project.id} className="max-w-[850px] w-[90%] opacity-30 transition-opacity duration-500 [&.swiper-slide-active]:opacity-100">
             <div
               className="glass-card group relative flex flex-row overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/[0.03] backdrop-blur-3xl transition-all duration-500 h-[400px]"

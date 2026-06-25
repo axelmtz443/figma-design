@@ -27,7 +27,7 @@ const PROJECTS: Project[] = [
   },
   {
     id: 2,
-    title: "Videos corporativos",
+    title: "Videos Promocionales",
     client: "Cantina Xalisco",
     thumbnail: thumbCantina,
     videoUrl: "https://res.cloudinary.com/dexcrnwcu/video/upload/v1776655940/socialmedia1_cnkqxl.mp4",
@@ -156,7 +156,7 @@ export default function AudiovisualSection() {
       <div className="w-full flex justify-center mt-12 mb-4 relative z-10">
         <button onClick={() => openPopup('Producción Audiovisual')} className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white rounded-full hover:scale-105 transition-all duration-300"
           style={{ backgroundColor: COLORS.audiovisual, boxShadow: `0 0 20px rgba(89,157,223,0.3)` }}>
-          Cotizar producción
+          Cotizar Producción
         </button>
       </div>
     </section>

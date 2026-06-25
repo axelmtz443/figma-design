@@ -119,7 +119,8 @@ export default function ContactPopup() {
                           name="phone"
                           value={form.phone}
                           onChange={handleChange}
-                          placeholder="Teléfono"
+                          required
+                          placeholder="Teléfono *"
                           className={inputClass}
                         />
                       </div>
@@ -136,9 +137,10 @@ export default function ContactPopup() {
                         name="service"
                         value={form.service}
                         onChange={handleChange}
+                        required
                         className={`${inputClass} ${!form.service ? 'text-white/30' : 'text-white'}`}
                       >
-                        <option value="" className="bg-zinc-900 text-white/50">Servicio de interés</option>
+                        <option value="" disabled className="bg-zinc-900 text-white/50">Servicio de interés *</option>
                         {SERVICES.map(s => (
                           <option key={s} value={s} className="bg-zinc-900 text-white">{s}</option>
                         ))}
@@ -147,8 +149,9 @@ export default function ContactPopup() {
                         name="message"
                         value={form.message}
                         onChange={handleChange}
+                        required
                         rows={3}
-                        placeholder="Cuéntanos más sobre tu proyecto..."
+                        placeholder="Cuéntanos más sobre tu proyecto *"
                         className={`${inputClass} resize-none`}
                       />
 

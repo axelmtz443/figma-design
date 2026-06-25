@@ -1,16 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from '../components/General/Navbar';
 import Hero from '../components/Home/Hero';
 import BackedBy from '../components/Home/BackedBy';
 import Services from '../components/Home/Services';
-import ProjectResults from './servicesPages/mkt-digital/weprom/ProjectResults';
 import Footer from '../components/General/Footer';
 import BlogSection from '../components/Home/BlogSection';
 import Testimonials from '../components/Home/Testimonial';
 import WhoWeAre from '../components/Home/WhoWeAre';
 import AboutIntro from '../components/Home/AboutIntro';
-import { useNavigate } from 'react-router-dom';
+import { useContactPopup } from '../context/ContactPopupContext';
 import OurProjectsHome from '../components/Home/OurProjectsHome';
+import WePromMethodology from './servicesPages/mkt-digital/weprom/WePromMethodology';
+import NewsletterPopup from '../components/General/NewsletterPopup';
 
 // Importa el nuevo wrapper
 import ScrollReveal from '../components/General/ScrollReveal';
@@ -20,9 +21,10 @@ interface HomeProps {
   isLoading: boolean;
 }
 
-function Home({ isLoading }: HomeProps) {  
+function Home({ isLoading }: HomeProps) {
 
-  const navigate = useNavigate();
+  const { openPopup } = useContactPopup();
+  const [newsletterOpen, setNewsletterOpen] = useState(false);
 
   return (
     <div className="min-h-screen bg-transparent text-white">
@@ -58,14 +60,26 @@ function Home({ isLoading }: HomeProps) {
       </ScrollReveal>
 
       <ScrollReveal>
+        <WePromMethodology />
+      </ScrollReveal>
+
+      <ScrollReveal>
         <BlogSection />
       </ScrollReveal>
 
-      <section className="w-full bg-transparent py-14 px-4 border-t border-white/5 py-28">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="w-full bg-transparent px-4 border-t border-white/5 py-28">
+        <div className="max-w-4xl mx-auto flex flex-col items-center gap-6 text-center">
+          <ScrollReveal direction="down" delay={0.2}>
+            <button
+              onClick={() => setNewsletterOpen(true)}
+              className="font-montserrat font-semibold text-sm tracking-[0.15em] uppercase text-white/60 hover:text-white border border-white/15 hover:border-white/30 px-8 py-3 rounded-full transition-all duration-300"
+            >
+              Suscribirme al Newsletter
+            </button>
+          </ScrollReveal>
           <ScrollReveal direction="down" delay={0.3}>
-            <button 
-              onClick={() => navigate('/contact')} 
+            <button
+              onClick={() => openPopup()}
               className="group relative px-12 py-5 bg-transparent text-white font-montserrat font-bold rounded-full overflow-hidden transition-all duration-500 hover:scale-105 active:scale-95 border border-white/10 shadow-2xl"
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-[linear-gradient(45deg,#ff4d4d,#4d79ff,#4dff88,#fffa4d)] bg-[length:200%_200%] animate-[gradient_3s_linear_infinite]" />
@@ -77,6 +91,8 @@ function Home({ isLoading }: HomeProps) {
           </ScrollReveal>
         </div>
       </section>
+
+      <NewsletterPopup isOpen={newsletterOpen} onClose={() => setNewsletterOpen(false)} />
       
       <Footer />
     </div>

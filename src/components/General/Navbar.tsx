@@ -9,7 +9,7 @@ function Navbar() {
 
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
-  const [isServicesOpen, setIsServicesOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
 
@@ -17,8 +17,8 @@ function Navbar() {
   const navLinks = [
     { label: "Inicio", path: "/" },
     { label: "Nosotros", path: "/nosotros" },
-    { 
-      label: "Servicios", 
+    {
+      label: "Servicios",
       path: "/servicios",
       isDropdown: true,
       subServices: [
@@ -29,6 +29,7 @@ function Navbar() {
         { label: "Investigación de Mercados", path: "/servicios/investigacion-de-mercados" },
       ]
     },
+    { label: "Portafolio", path: "/portafolio" },
     { label: "Blog", path: "/blog" },
   ];
 
@@ -104,8 +105,8 @@ function Navbar() {
                 <div 
                   key={link.label} 
                   className="relative group"
-                  onMouseEnter={() => link.isDropdown && setIsServicesOpen(true)}
-                  onMouseLeave={() => link.isDropdown && setIsServicesOpen(false)}
+                  onMouseEnter={() => link.isDropdown && setOpenDropdown(link.label)}
+                  onMouseLeave={() => link.isDropdown && setOpenDropdown(null)}
                 >
                   <Link
                     to={link.path}
@@ -120,7 +121,7 @@ function Navbar() {
                     {link.isDropdown && (
                       <ChevronDown 
                         size={14} 
-                        className={`transition-transform duration-200 ${isServicesOpen ? 'rotate-180' : ''}`} 
+                        className={`transition-transform duration-200 ${openDropdown === link.label ? 'rotate-180' : ''}`}
                       />
                     )}
                   </Link>
@@ -128,7 +129,7 @@ function Navbar() {
                   {/* Menú Desplegable Desktop */}
                   {link.isDropdown && (
                     <div className={`absolute left-0 pt-4 transition-all duration-200 ${
-                      isServicesOpen ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
+                      openDropdown === link.label ? 'opacity-100 visible translate-y-0' : 'opacity-0 invisible -translate-y-2'
                     }`}>
                       <div className="w-64 bg-[#0d0d0d]/95 border border-white/10 backdrop-blur-2xl rounded-xl py-2 shadow-2xl">
                         {link.subServices?.map((sub) => (

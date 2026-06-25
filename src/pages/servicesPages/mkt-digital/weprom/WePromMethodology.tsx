@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Target, ClipboardList, Magnet, TrendingUp } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { useContactPopup } from '../../../../context/ContactPopupContext';
 
 const THEME = {
   colors: {
@@ -47,7 +47,7 @@ const ConnectingLine = () => (
 );
 
 export default function WePromMethodology() {
-  const navigate = useNavigate();
+  const { openPopup } = useContactPopup();
   const [isLoaded, setIsLoaded] = useState(false);
   const [hoveredNode, setHoveredNode] = useState<number | null>(null);
 
@@ -151,7 +151,7 @@ export default function WePromMethodology() {
       {/* CTA */}
       <div className="flex justify-center pb-4">
         <button
-          onClick={() => navigate('/contact')}
+          onClick={() => openPopup('Marketing Digital')}
           className="px-10 py-4 font-montserrat font-semibold text-sm tracking-[0.2em] uppercase rounded-full border border-white/15 text-white hover:border-white/40 hover:scale-105 transition-all duration-300"
         >
           Iniciar Proceso

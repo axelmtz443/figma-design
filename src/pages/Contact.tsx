@@ -159,8 +159,8 @@ function Contact() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label className="text-white/60 text-[12px] uppercase tracking-widest">Teléfono</label>
-                  <input name="phone" value={formData.phone} onChange={handleChange} placeholder="+## ### ### ####" type="tel"
+                  <label className="text-white/60 text-[12px] uppercase tracking-widest">Teléfono *</label>
+                  <input name="phone" value={formData.phone} onChange={handleChange} placeholder="+## ### ### ####" type="tel" required
                     className="bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-[14px] placeholder:text-white/20 focus:outline-none focus:border-white/30 transition-colors" />
                 </div>
 
