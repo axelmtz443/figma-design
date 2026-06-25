@@ -223,62 +223,77 @@ function ServiceCard({ service, idx, fullWidth }: { service: typeof SERVICES[0];
           style={{ background: `radial-gradient(circle at var(--mx) var(--my), ${service.glow} 0%, transparent 55%)` }}
         />
 
-        {/* Decorative SVG watermark */}
+        {/* Decorative SVG watermark - Responsive positioning */}
         <div
           className="absolute pointer-events-none z-0 opacity-[0.055] group-hover:opacity-[0.085] transition-opacity duration-500"
           style={isHoriz
-            ? { right: '-2%', top: '50%', transform: 'translateY(-50%)', width: '42%', maxWidth: '320px' }
-            : { right: '-4%', bottom: '-4%', width: '80%', maxWidth: '240px' }
+            ? { 
+                right: '-4%', 
+                top: '50%', 
+                transform: 'translateY(-50%)', 
+                width: 'clamp(120px, 35%, 320px)',
+                maxWidth: '320px'
+              }
+            : { 
+                right: '-6%', 
+                bottom: '-4%', 
+                width: 'clamp(100px, 70%, 240px)',
+                maxWidth: '240px'
+              }
           }
         >
           <Deco />
         </div>
 
-        {/* Content */}
-        <div className={`relative z-10 p-6 lg:p-7 h-full flex ${isHoriz ? 'flex-row items-center gap-8' : 'flex-col'}`}>
+        {/* Content - Responsive padding */}
+        <div className={`relative z-10 p-4 sm:p-5 lg:p-7 h-full flex ${isHoriz ? 'flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6 lg:gap-8' : 'flex-col'}`}>
 
           {/* Left / top content */}
-          <div className={isHoriz ? 'flex-1 min-w-0' : 'flex flex-col flex-1'}>
+          <div className={isHoriz ? 'flex-1 min-w-0 w-full' : 'flex flex-col flex-1 w-full'}>
             {/* Number + Icon row */}
-            <div className="flex items-center justify-between mb-3">
+            <div className="flex items-center justify-between mb-2 sm:mb-3">
               <span
-                className="text-[11px] font-mono font-bold tracking-widest"
+                className="text-[10px] sm:text-[11px] font-mono font-bold tracking-widest"
                 style={{ color: service.color }}
               >
                 {service.id}
               </span>
               <div
-                className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                className="w-7 h-7 sm:w-8 sm:h-8 lg:w-9 lg:h-9 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 flex-shrink-0"
                 style={{ backgroundColor: `${service.color}18`, color: service.color }}
               >
-                <Icon size={18} />
+                <Icon size={isHoriz ? 16 : 18} className="sm:w-[18px] sm:h-[18px] lg:w-[18px] lg:h-[18px]" />
               </div>
             </div>
 
-            {/* Title */}
+            {/* Title - Responsive font size */}
             <h2
-              className="font-aston text-white whitespace-pre-line leading-tight mb-2"
-              style={{ fontSize: isHoriz ? 'clamp(1.5rem, 2.5vw, 2.2rem)' : 'clamp(1.6rem, 2.8vw, 2.4rem)' }}
+              className="font-aston text-white whitespace-pre-line leading-tight mb-1.5 sm:mb-2"
+              style={{ 
+                fontSize: isHoriz 
+                  ? 'clamp(1.2rem, 2.2vw, 2.2rem)' 
+                  : 'clamp(1.3rem, 2.5vw, 2.4rem)' 
+              }}
             >
               {service.name}
             </h2>
 
             {/* Tagline */}
-            <p className="text-sm font-montserrat font-medium mb-3" style={{ color: service.color }}>
+            <p className="text-xs sm:text-sm font-montserrat font-medium mb-2 sm:mb-3" style={{ color: service.color }}>
               {service.tagline}
             </p>
 
-            {/* Description */}
-            <p className="text-zinc-400 text-[13px] font-montserrat leading-relaxed mb-4">
+            {/* Description - Hide on smallest screens if needed, keep on larger */}
+            <p className={`text-zinc-400 text-[11px] sm:text-[12px] lg:text-[13px] font-montserrat leading-relaxed mb-3 sm:mb-4 ${isHoriz ? 'hidden xs:block' : ''}`}>
               {service.description}
             </p>
 
-            {/* Features */}
-            <div className={`flex flex-wrap gap-2 ${isHoriz ? 'mb-0' : 'mb-6'}`}>
+            {/* Features - Responsive wrap */}
+            <div className={`flex flex-wrap gap-1.5 sm:gap-2 ${isHoriz ? 'mb-2 sm:mb-0' : 'mb-3 sm:mb-6'}`}>
               {service.features.map(f => (
                 <span
                   key={f}
-                  className="px-2.5 py-1 rounded-full text-[11px] font-montserrat border"
+                  className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] lg:text-[11px] font-montserrat border"
                   style={{
                     borderColor: `${service.color}35`,
                     color: service.color,
@@ -291,11 +306,11 @@ function ServiceCard({ service, idx, fullWidth }: { service: typeof SERVICES[0];
             </div>
           </div>
 
-          {/* CTA — fixed at bottom for vertical cards, right column for horizontal */}
+          {/* CTA - Responsive positioning */}
           {isHoriz ? (
-            <div className="flex-shrink-0">
+            <div className="flex-shrink-0 w-full sm:w-auto">
               <div
-                className="flex items-center gap-2 text-[13px] font-montserrat font-semibold px-5 py-2.5 rounded-full border transition-all duration-300 group-hover:text-white whitespace-nowrap"
+                className="flex items-center justify-center sm:justify-start gap-2 text-[11px] sm:text-[12px] lg:text-[13px] font-montserrat font-semibold px-4 sm:px-5 py-2 sm:py-2.5 rounded-full border transition-all duration-300 group-hover:text-white whitespace-nowrap"
                 style={{
                   borderColor: `${service.color}50`,
                   color: service.color,
@@ -303,13 +318,13 @@ function ServiceCard({ service, idx, fullWidth }: { service: typeof SERVICES[0];
                 }}
               >
                 Explorar servicio
-                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform duration-300" />
+                <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-300 sm:w-[14px] sm:h-[14px]" />
               </div>
             </div>
           ) : (
-            <div className="mt-auto flex items-center gap-2 text-[13px] font-montserrat font-medium text-white/50 group-hover:text-white/80 transition-colors duration-300">
+            <div className="mt-auto flex items-center gap-2 text-[11px] sm:text-[13px] font-montserrat font-medium text-white/50 group-hover:text-white/80 transition-colors duration-300">
               <span>Explorar servicio</span>
-              <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform duration-300" />
+              <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform duration-300 sm:w-[13px] sm:h-[13px]" />
             </div>
           )}
         </div>
@@ -324,7 +339,7 @@ function ServiceCard({ service, idx, fullWidth }: { service: typeof SERVICES[0];
   );
 }
 
-// ─── WepromIsotipo SVG (decorative background) ────────────────────────────────
+// ─── WepromIsotipo SVG ────────────────────────────────────────────────────────
 
 function IsotipoSVG({ className }: { className?: string }) {
   return (
@@ -390,15 +405,15 @@ function StatCard({ value, label }: { value: string; label: string }) {
   }, []);
 
   return (
-    <div ref={ref} className="flex flex-col items-center gap-1">
+    <div ref={ref} className="flex flex-col items-center gap-0.5 sm:gap-1">
       <span
-        className="font-aston text-3xl md:text-4xl text-white transition-all duration-700"
+        className="font-aston text-2xl sm:text-3xl md:text-4xl text-white transition-all duration-700"
         style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(12px)' }}
       >
         {value}
       </span>
       <span
-        className="font-montserrat text-xs md:text-sm text-zinc-500 transition-all duration-700 delay-100"
+        className="font-montserrat text-[10px] sm:text-xs md:text-sm text-zinc-500 transition-all duration-700 delay-100"
         style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(8px)' }}
       >
         {label}
@@ -425,21 +440,21 @@ export default function Services() {
       {/* ── HERO ── */}
       <section
         ref={heroRef}
-        className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-24 pb-16 px-4"
+        className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-20 sm:pt-24 pb-12 sm:pb-16 px-4 sm:px-6"
       >
-        {/* Background glows */}
+        {/* Background glows - Responsive sizing */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <div className="absolute top-[-10%] right-[-5%] w-[50vw] h-[50vw] max-w-[700px] max-h-[700px] rounded-full"
+          <div className="absolute top-[-10%] right-[-10%] w-[60vw] sm:w-[50vw] h-[60vw] sm:h-[50vw] max-w-[700px] max-h-[700px] rounded-full"
             style={{ background: 'radial-gradient(circle, rgba(0,159,227,0.06) 0%, transparent 70%)', filter: 'blur(60px)' }} />
-          <div className="absolute bottom-[-5%] left-[-5%] w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] rounded-full"
+          <div className="absolute bottom-[-5%] left-[-10%] w-[50vw] sm:w-[40vw] h-[50vw] sm:h-[40vw] max-w-[500px] max-h-[500px] rounded-full"
             style={{ background: 'radial-gradient(circle, rgba(197,54,46,0.05) 0%, transparent 70%)', filter: 'blur(60px)' }} />
-          <div className="absolute top-[30%] left-[30%] w-[30vw] h-[30vw] max-w-[400px] max-h-[400px] rounded-full"
+          <div className="absolute top-[30%] left-[25%] w-[40vw] sm:w-[30vw] h-[40vw] sm:h-[30vw] max-w-[400px] max-h-[400px] rounded-full"
             style={{ background: 'radial-gradient(circle, rgba(128,182,125,0.04) 0%, transparent 70%)', filter: 'blur(80px)' }} />
         </div>
 
-        {/* Large isotipo watermark */}
+        {/* Large isotipo watermark - Hidden on mobile */}
         <div
-          className="absolute right-[-8%] top-[50%] pointer-events-none z-0 hidden lg:block"
+          className="absolute right-[-10%] top-[50%] pointer-events-none z-0 hidden lg:block"
           style={{ transform: 'translateY(-50%)', width: 'min(55vw, 700px)', opacity: 0.045, animation: 'slowSpin 80s linear infinite' }}
         >
           <IsotipoSVG className="w-full h-full" />
@@ -449,43 +464,43 @@ export default function Services() {
         <style>{`@keyframes slowSpin { to { transform: translateY(-50%) rotate(360deg); } }`}</style>
 
         {/* Hero content */}
-        <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center gap-6">
+        <div className="relative z-10 max-w-5xl mx-auto text-center flex flex-col items-center gap-4 sm:gap-6">
 
           {/* Badge */}
-          <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-xs font-montserrat text-zinc-400">
+          <div className="flex items-center gap-2 px-3 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/10 bg-white/[0.04] text-[10px] sm:text-xs font-montserrat text-zinc-400">
             <span className="w-1.5 h-1.5 rounded-full bg-[#009fe3] animate-pulse" />
             5 servicios especializados
           </div>
 
-          {/* Main title */}
-          <h1 className="font-aston text-[clamp(3rem,8vw,7rem)] leading-[0.95] text-white tracking-tight">
+          {/* Main title - Responsive typography */}
+          <h1 className="font-aston text-[clamp(2.5rem,7vw,7rem)] leading-[0.95] text-white tracking-tight">
             Todo lo que tu marca
-            <br />
+            <br className="hidden sm:block" />
             <span className="relative inline-block">
               necesita para crecer.
               <span
-                className="absolute bottom-0 left-0 right-0 h-[3px] rounded-full"
+                className="absolute bottom-0 left-0 right-0 h-[2px] sm:h-[3px] rounded-full"
                 style={{ background: 'linear-gradient(90deg, #c5362e, #009fe3, #80b67d, #e6af41, #599ddf)' }}
               />
             </span>
           </h1>
 
-          {/* Subtitle */}
-          <p className="font-montserrat text-zinc-400 text-base md:text-lg max-w-2xl leading-relaxed">
+          {/* Subtitle - Responsive */}
+          <p className="font-montserrat text-zinc-400 text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed px-2 sm:px-0">
             Somos tu aliado estratégico en marketing. Combinamos creatividad, datos y tecnología para llevar tu marca al siguiente nivel en cada punto de contacto con tu audiencia.
           </p>
 
-          {/* CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-4 mt-2">
+          {/* CTAs - Stack on mobile */}
+          <div className="flex flex-col sm:flex-row flex-wrap items-center justify-center gap-3 sm:gap-4 mt-1 sm:mt-2 w-full sm:w-auto">
             <button
               onClick={() => navigate('/contact')}
-              className="px-7 py-3 rounded-full bg-white text-black font-montserrat font-bold text-sm hover:bg-zinc-100 active:scale-95 transition-all duration-200 shadow-[0_0_30px_rgba(255,255,255,0.15)]"
+              className="w-full sm:w-auto px-6 sm:px-7 py-2.5 sm:py-3 rounded-full bg-white text-black font-montserrat font-bold text-xs sm:text-sm hover:bg-zinc-100 active:scale-95 transition-all duration-200 shadow-[0_0_30px_rgba(255,255,255,0.15)]"
             >
               Solicitar consulta gratuita
             </button>
             <button
               onClick={scrollToGrid}
-              className="flex items-center gap-2 px-6 py-3 rounded-full border border-white/15 text-white/70 hover:text-white hover:border-white/30 font-montserrat text-sm transition-all duration-200"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 rounded-full border border-white/15 text-white/70 hover:text-white hover:border-white/30 font-montserrat text-xs sm:text-sm transition-all duration-200"
             >
               Explorar servicios
               <ChevronDown size={14} className="animate-bounce" />
@@ -493,58 +508,63 @@ export default function Services() {
           </div>
         </div>
 
-        {/* Stats strip inside hero */}
-        <div className="relative z-10 mt-16 md:mt-20 w-full max-w-3xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-8 md:gap-16 px-4 py-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
+        {/* Stats strip - Responsive */}
+        <div className="relative z-10 mt-12 sm:mt-16 md:mt-20 w-full max-w-3xl mx-auto px-3 sm:px-0">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-16 px-4 sm:px-6 py-4 sm:py-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
             {STATS.map(s => <StatCard key={s.label} value={s.value} label={s.label} />)}
           </div>
         </div>
       </section>
 
-      {/* ── SERVICES BENTO GRID ── */}
-      <section id="servicios-grid" className="px-4 md:px-6 lg:px-8 pb-20 max-w-7xl mx-auto">
-
-        <div className="mb-10">
-          <p className="font-montserrat text-xs text-zinc-600 uppercase tracking-widest mb-3">Nuestras especialidades</p>
-          <h2 className="font-aston text-3xl md:text-4xl text-white">Elige tu próximo paso.</h2>
+      {/* ─── SERVICES BENTO GRID ─── */}
+      <section id="servicios-grid" className="px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 max-w-7xl mx-auto">
+        
+        {/* Encabezado - Mejor espaciado en móvil */}
+        <div className="mb-8 sm:mb-10 md:mb-12">
+          <p className="font-montserrat text-[10px] sm:text-xs text-zinc-600 uppercase tracking-[0.15em] sm:tracking-widest mb-2 sm:mb-3">
+            Nuestras especialidades
+          </p>
+          <h2 className="font-aston text-2xl sm:text-3xl md:text-4xl text-white leading-tight">
+            Elige tu próximo paso.
+          </h2>
         </div>
 
-        {/* Bento grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-5">
-
-          {/* 01 Marketing Digital — tall (spans 2 rows) */}
-          <div className="md:row-span-2 min-h-[340px] md:min-h-0">
+        {/* ─── BENTO GRID RESPONSIVE ─── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 lg:gap-5 auto-rows-auto">
+          
+          {/* 01 Marketing Digital — En móvil ocupa 1 columna, en tablet+ ocupa 2 filas */}
+          <div className="sm:col-span-2 lg:col-span-1 lg:row-span-2 min-h-[280px] sm:min-h-[300px] lg:min-h-[340px]">
             <ServiceCard service={SERVICES[0]} idx={0} />
           </div>
 
-          {/* 02 Branding */}
-          <div className="min-h-[280px]">
+          {/* 02 Branding — Ocupa 1 columna siempre */}
+          <div className="min-h-[260px] sm:min-h-[280px]">
             <ServiceCard service={SERVICES[1]} idx={1} />
           </div>
 
-          {/* 03 Consultoría */}
-          <div className="min-h-[280px]">
+          {/* 03 Consultoría — Ocupa 1 columna siempre */}
+          <div className="min-h-[260px] sm:min-h-[280px]">
             <ServiceCard service={SERVICES[2]} idx={2} />
           </div>
 
-          {/* 04 Audiovisual — wide (spans 2 cols) */}
-          <div className="md:col-span-2 min-h-[240px]">
+          {/* 04 Audiovisual — En móvil ocupa 1 columna, en tablet+ ocupa 2 columnas */}
+          <div className="sm:col-span-2 min-h-[220px] sm:min-h-[240px]">
             <ServiceCard service={SERVICES[3]} idx={3} fullWidth />
           </div>
 
-          {/* 05 Investigación — full width */}
-          <div className="md:col-span-3 min-h-[180px]">
+          {/* 05 Investigación — Ocupa todas las columnas */}
+          <div className="sm:col-span-2 lg:col-span-3 min-h-[200px] sm:min-h-[220px]">
             <ServiceCard service={SERVICES[4]} idx={4} fullWidth />
           </div>
         </div>
       </section>
 
       {/* ── BOTTOM CTA ── */}
-      <section className="px-4 md:px-6 lg:px-8 pb-24 max-w-7xl mx-auto">
-        <div className="relative overflow-hidden rounded-3xl border border-white/[0.07] bg-[#070707] px-8 md:px-16 py-16 md:py-20 flex flex-col md:flex-row items-center justify-between gap-10">
+      <section className="px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-24 max-w-7xl mx-auto">
+        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl border border-white/[0.07] bg-[#070707] px-6 sm:px-8 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10">
 
-          {/* Background isotipo */}
-          <div className="absolute right-[-5%] top-[-20%] pointer-events-none opacity-[0.04] w-[45%] max-w-[420px]">
+          {/* Background isotipo - Hidden on mobile */}
+          <div className="absolute right-[-5%] top-[-20%] pointer-events-none opacity-[0.04] w-[45%] max-w-[420px] hidden sm:block">
             <IsotipoSVG className="w-full h-full" />
           </div>
 
@@ -553,21 +573,23 @@ export default function Services() {
             style={{ background: 'linear-gradient(90deg, transparent, #c5362e 20%, #009fe3 50%, #80b67d 80%, transparent)' }} />
 
           {/* Text */}
-          <div className="relative z-10 max-w-xl">
-            <p className="font-montserrat text-xs text-zinc-500 uppercase tracking-widest mb-3">¿Por dónde empezamos?</p>
-            <h2 className="font-aston text-3xl md:text-5xl text-white leading-tight mb-4">
-              Hablemos sobre<br />tu marca.
+          <div className="relative z-10 max-w-xl text-center md:text-left">
+            <p className="font-montserrat text-[10px] sm:text-xs text-zinc-500 uppercase tracking-[0.15em] sm:tracking-widest mb-2 sm:mb-3">
+              ¿Por dónde empezamos?
+            </p>
+            <h2 className="font-aston text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white leading-tight mb-3 sm:mb-4">
+              Hablemos sobre<br className="hidden sm:block" />tu marca.
             </h2>
-            <p className="font-montserrat text-zinc-400 text-sm leading-relaxed">
+            <p className="font-montserrat text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-lg mx-auto md:mx-0">
               Agenda una sesión de diagnóstico gratuita. Analizamos tu situación actual y te decimos exactamente qué servicio se adapta mejor a tus objetivos.
             </p>
           </div>
 
-          {/* Buttons */}
+          {/* Buttons - Stack on mobile */}
           <div className="relative z-10 flex flex-col gap-3 w-full md:w-auto md:flex-shrink-0">
             <button
               onClick={() => navigate('/contact')}
-              className="px-8 py-3.5 rounded-full bg-white text-black font-montserrat font-bold text-sm hover:bg-zinc-100 active:scale-95 transition-all duration-200 text-center shadow-[0_0_40px_rgba(255,255,255,0.12)]"
+              className="w-full md:w-auto px-6 sm:px-8 py-3 sm:py-3.5 rounded-full bg-white text-black font-montserrat font-bold text-xs sm:text-sm hover:bg-zinc-100 active:scale-95 transition-all duration-200 text-center shadow-[0_0_40px_rgba(255,255,255,0.12)]"
             >
               Contáctanos
             </button>
@@ -575,9 +597,9 @@ export default function Services() {
               href="https://wa.me/523334590989"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3.5 rounded-full border border-white/15 text-white/70 hover:text-white hover:border-white/30 font-montserrat text-sm transition-all duration-200 text-center flex items-center justify-center gap-2"
+              className="w-full md:w-auto flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-3.5 rounded-full border border-white/15 text-white/70 hover:text-white hover:border-white/30 font-montserrat text-xs sm:text-sm transition-all duration-200"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="flex-shrink-0">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
               </svg>
               WhatsApp directo

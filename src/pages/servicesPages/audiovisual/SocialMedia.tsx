@@ -30,7 +30,7 @@ const VideoCard = ({ src, poster }: { src: string; poster: string }) => {
 
   return (
     <div
-      className="relative overflow-hidden rounded-2xl cursor-pointer group bg-neutral-900 w-full"
+      className="relative overflow-hidden rounded-xl sm:rounded-2xl cursor-pointer group bg-neutral-900 w-full"
       style={{ aspectRatio: '9/16' }}
       onClick={togglePlay}
     >
@@ -43,19 +43,17 @@ const VideoCard = ({ src, poster }: { src: string; poster: string }) => {
         playsInline
       />
 
-      {/* Overlay */}
       <div className="absolute inset-0 bg-black/20 group-hover:bg-black/30 transition-opacity duration-300" />
 
-      {/* Botón play */}
       <div className={`absolute inset-0 flex items-center justify-center transition-opacity duration-300 ${playing ? 'opacity-0 hover:opacity-100' : 'opacity-100'}`}>
-        <div className="w-14 h-14 rounded-full border border-white/40 bg-black/40 backdrop-blur-sm flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+        <div className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-white/40 bg-black/40 backdrop-blur-sm flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
           {playing ? (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+            <svg width="14" height="14" className="sm:w-4 sm:h-4 md:w-[18px] md:h-[18px]" viewBox="0 0 24 24" fill="white">
               <rect x="5" y="3" width="4" height="18" rx="1" />
               <rect x="15" y="3" width="4" height="18" rx="1" />
             </svg>
           ) : (
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="white" style={{ marginLeft: 3 }}>
+            <svg width="14" height="14" className="sm:w-4 sm:h-4 md:w-[18px] md:h-[18px]" viewBox="0 0 24 24" fill="white" style={{ marginLeft: 2 }}>
               <polygon points="5,3 19,12 5,21" />
             </svg>
           )}
@@ -67,14 +65,14 @@ const VideoCard = ({ src, poster }: { src: string; poster: string }) => {
 
 const SocialMedia = () => {
   return (
-    <section className="w-full bg-transparent py-16 px-4 sm:px-6 lg:px-8 flex flex-col items-center text-white">
+    <section className="w-full bg-transparent py-12 sm:py-16 px-4 sm:px-6 lg:px-8 flex flex-col items-center text-white">
 
       {/* Encabezado */}
-      <div className="text-center mb-12 max-w-2xl">
-        <h2 className="text-3xl md:text-5xl font-aston tracking-tight mb-4">
+      <div className="text-center mb-10 sm:mb-12 max-w-2xl px-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-aston tracking-tight mb-3 sm:mb-4">
           Contenido para{' '}
           <span style={{
-            background: ' #FF3B30',
+            background: '#FF3B30',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -82,29 +80,29 @@ const SocialMedia = () => {
             Social Media
           </span>
         </h2>
-        <p className="text-white font-aston font-normal text-base md:text-lg leading-relaxed">
+        <p className="text-white/90 text-sm sm:text-base md:text-lg leading-relaxed">
           Reels Publicitarios, Testimoniales y contenido UGC diseñados específicamente para el algoritmo, capturando la atención en los primeros segundos.
         </p>
       </div>
 
-      {/* Grid de videos verticales */}
-      <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-6">
+      {/* Grid de videos verticales - Responsive */}
+      <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
         {videos.map((video, index) => (
           <VideoCard key={index} src={video.src} poster={video.poster} />
         ))}
       </div>
 
       {/* Botón CTA */}
-      <div className="mt-12">
+      <div className="mt-10 sm:mt-12">
         <button
-          className="px-8 py-4 font-montserrat font-bold text-base rounded-full text-white flex items-center gap-2 group transition-all duration-300"
+          className="px-6 sm:px-8 py-3 sm:py-4 font-montserrat font-bold text-sm sm:text-base rounded-full text-white flex items-center gap-2 group transition-all duration-300"
           style={{
             background: 'linear-gradient(#000, #000) padding-box, linear-gradient(90deg, #FF3B30, #FF9500, #34C759, #007AFF) border-box',
             border: '2px solid transparent',
           }}
         >
           Cotizar Proyecto
-          <svg className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 sm:w-5 sm:h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
         </button>

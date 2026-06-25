@@ -132,10 +132,9 @@ const GlassCard = ({ title, description, Icon, color, progress, endStyle, LogoCo
 
 
         <div 
-          className="mb-4 md:mb-6 inline-flex w-fit rounded-2xl p-3 md:p-4 ring-1 shadow-lg"
+          className="mb-4 md:mb-6 inline-flex w-fit rounded-2xl p-3 md:p-4 shadow-lg"
           style={{ 
             backgroundColor: `rgba(${rgb}, 0.1)`,
-            ringColor: `rgba(${rgb}, 0.2)`,
             boxShadow: `0 0 20px rgba(${rgb}, 0.15)`
           }}
         >
