@@ -74,7 +74,9 @@ async function prerender() {
     }
   });
 
+  const IGNORED_ERRORS = ['initMap', '_xdc_', 'maps.googleapis'];
   page.on('pageerror', error => {
+    if (IGNORED_ERRORS.some(s => error.message.includes(s))) return;
     console.error(`💥 ERROR DE JS EN LA PÁGINA:`, error.message);
   });
 

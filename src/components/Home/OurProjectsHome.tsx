@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { getOurProjects, OurProject } from "../../lib/sanityQueries";
 import { urlFor } from "../../lib/sanityImage";
 
@@ -128,57 +129,64 @@ export default function OurProjectsHome() {
 
         {/* Cards */}
         <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
-          {visibleIndices.map((idx, pos) => {
-            const item = cases[idx];
-            return (
-              <div
-                key={`${idx}-${pos}`}
-                className="relative rounded-2xl overflow-hidden aspect-[3/4] sm:aspect-auto sm:h-[420px] md:h-[460px] bg-zinc-950 cursor-pointer group"
-                onClick={() => pos === 0 ? prev() : pos === 2 ? next() : undefined}
-              >
-                {/* Background image — grayscale */}
-                <img
-                  src={item.image}
-                  alt={item.client}
-                  className="absolute inset-0 w-full h-full object-cover grayscale brightness-50 transition-all duration-700 group-hover:scale-105 group-hover:brightness-40 pointer-events-none select-none"
-                  draggable={false}
-                />
-
-                {/* Bottom gradient with brand accent */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-                <div
-                  className="absolute inset-x-0 bottom-0 h-1/3"
-                  style={{ background: `linear-gradient(to top, rgba(${item.accent},0.15) 0%, transparent 100%)` }}
-                />
-
-                {/* Logo — top left */}
-                <div className="absolute top-6 left-6 z-10">
+          <AnimatePresence mode="popLayout" initial={false}>
+            {visibleIndices.map((idx, pos) => {
+              const item = cases[idx];
+              return (
+                <motion.div
+                  key={idx}
+                  layout
+                  initial={{ opacity: 0, y: 16, scale: 0.97 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -10, scale: 0.97 }}
+                  transition={{ duration: 0.42, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  className="relative rounded-2xl overflow-hidden aspect-[3/4] sm:aspect-auto sm:h-[420px] md:h-[460px] bg-zinc-950 cursor-pointer group"
+                  onClick={() => pos === 0 ? prev() : pos === 2 ? next() : undefined}
+                >
+                  {/* Background image — grayscale */}
                   <img
-                    src={item.logo}
-                    alt={`Logo ${item.client}`}
-                    className="h-12 sm:h-16 max-w-[160px] sm:max-w-[200px] object-contain object-left brightness-0 invert pointer-events-none select-none"
+                    src={item.image}
+                    alt={item.client}
+                    className="absolute inset-0 w-full h-full object-cover grayscale brightness-50 transition-all duration-700 group-hover:scale-105 group-hover:brightness-40 pointer-events-none select-none"
                     draggable={false}
                   />
-                </div>
 
-                {/* Text — bottom */}
-                <div className="absolute bottom-0 left-0 right-0 z-10 p-5 sm:p-6">
-                  <p
-                    className="text-white font-bold text-base sm:text-lg uppercase tracking-wide mb-2"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    {item.client}
-                  </p>
-                  <p
-                    className="text-zinc-300 text-sm leading-relaxed font-light"
-                    style={{ fontFamily: "'Montserrat', sans-serif" }}
-                  >
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-            );
-          })}
+                  {/* Bottom gradient with brand accent */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                  <div
+                    className="absolute inset-x-0 bottom-0 h-1/3"
+                    style={{ background: `linear-gradient(to top, rgba(${item.accent},0.15) 0%, transparent 100%)` }}
+                  />
+
+                  {/* Logo — top left */}
+                  <div className="absolute top-6 left-6 z-10">
+                    <img
+                      src={item.logo}
+                      alt={`Logo ${item.client}`}
+                      className="h-12 sm:h-16 max-w-[160px] sm:max-w-[200px] object-contain object-left brightness-0 invert pointer-events-none select-none"
+                      draggable={false}
+                    />
+                  </div>
+
+                  {/* Text — bottom */}
+                  <div className="absolute bottom-0 left-0 right-0 z-10 p-5 sm:p-6">
+                    <p
+                      className="text-white font-bold text-base sm:text-lg uppercase tracking-wide mb-2"
+                      style={{ fontFamily: "'Montserrat', sans-serif" }}
+                    >
+                      {item.client}
+                    </p>
+                    <p
+                      className="text-zinc-300 text-sm leading-relaxed font-light"
+                      style={{ fontFamily: "'Montserrat', sans-serif" }}
+                    >
+                      {item.description}
+                    </p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
         </div>
 
         {/* Controls */}

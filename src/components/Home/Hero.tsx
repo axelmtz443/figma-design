@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { useContactPopup } from '../../context/ContactPopupContext';
 
 import LOGO1  from "../../images/Atomo/log1.png";
 import LOGO2  from "../../images/Atomo/log2.png";
@@ -124,10 +126,27 @@ const css = `
   .animate-rotate-slow {
     animation: rotate-grad 3s linear infinite;
   }
+
+  @keyframes shimmer-loop {
+    0%   { transform: translateX(-180%) rotate(25deg); }
+    100% { transform: translateX(380%) rotate(25deg); }
+  }
+
+  .btn-cta-primary::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 42%;
+    height: 100%;
+    background: linear-gradient(to right, transparent 0%, rgba(255,255,255,0.42) 50%, transparent 100%);
+    animation: shimmer-loop 2.8s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
 `;
 
 export default function Hero({ isLoading} : {isLoading: boolean}) {
-  
+  const { openPopup } = useContactPopup();
   const contenedorRef = useRef<HTMLDivElement>(null);
   const marcasRefs    = useRef<HTMLDivElement[]>([]);
   const mouseRef      = useRef<MouseState>({ x: -1000, y: -1000, activo: false });
@@ -267,18 +286,29 @@ export default function Hero({ isLoading} : {isLoading: boolean}) {
           </p>
 
           <div className="flex flex-wrap gap-3 sm:gap-4 justify-center md:justify-start">
-            <button className="btn-shimmer bg-white text-black hover:bg-gray-100 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-montserrat font-bold text-[14px] sm:text-[16px] transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_20px_rgba(255,255,255,0.15)] active:scale-95">
-              Contáctanos
+            {/* Contáctanos — shimmer continuo */}
+            <button
+              onClick={() => openPopup()}
+              className="btn-cta-primary relative overflow-hidden rounded-full bg-white text-black px-7 sm:px-9 py-2.5 sm:py-3 font-montserrat font-bold text-[14px] sm:text-[16px] transition-all duration-300 hover:scale-[1.06] hover:shadow-[0_0_36px_rgba(255,255,255,0.28)] active:scale-95"
+            >
+              <span className="relative z-10">Contáctanos</span>
             </button>
-            
-            <button className="relative p-[1.5px] inline-flex items-center justify-center overflow-hidden rounded-full group active:scale-95 transition-all duration-300 hover:scale-105">
-              <span className="absolute inset-0 bg-border-grad opacity-90 group-hover:opacity-100 group-hover:animate-rotate-slow transition-opacity"></span>
-              <span className="relative px-6 sm:px-8 py-2.5 sm:py-3 transition-all duration-300 bg-black rounded-full group-hover:bg-[#0a0a0a]">
-                <span className="relative text-white font-montserrat font-medium text-[14px] sm:text-[16px] group-hover:text-white group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">
-                  Nosotros
+
+            {/* Servicios — outline con micro-animación */}
+            <Link to="/servicios">
+              <button className="group relative overflow-hidden rounded-full border border-white/25 text-white/80 px-7 sm:px-9 py-2.5 sm:py-3 font-montserrat font-medium text-[14px] sm:text-[16px] transition-all duration-300 hover:border-white/60 hover:text-white hover:scale-[1.06] active:scale-95">
+                <span className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/[0.06] transition-all duration-500" />
+                <span className="relative z-10 flex items-center gap-2">
+                  Servicios
+                  <svg
+                    className="w-[14px] h-[14px] transition-transform duration-300 group-hover:translate-x-1 opacity-60 group-hover:opacity-100"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                  >
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                  </svg>
                 </span>
-              </span>
-            </button>
+              </button>
+            </Link>
           </div>
         </div>
 
