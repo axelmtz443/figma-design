@@ -8,6 +8,7 @@
     "build": "vite build",
     "postbuild": "node prerender.js",
     "build:seo": "npm run build && npm run postbuild",
+    "prerender:smart": "node prerender-smart.mjs",
     "preview": "vite preview",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit -p tsconfig.app.json"
