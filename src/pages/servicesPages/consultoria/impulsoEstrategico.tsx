@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useContactPopup } from '../../../context/ContactPopupContext';
 import { 
   Store, 
   MousePointerClick, 
@@ -124,10 +125,10 @@ const ejesData = [
 ];
 
 const ServiciosSection = () => {
+  const { openPopup } = useContactPopup();
   const [activeTab, setActiveTab] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const activeData = ejesData[activeTab];
-  const phoneNumber = "523313857143";
 
   // Rotación automática cada 5 segundos
   useEffect(() => {
@@ -143,11 +144,6 @@ const ServiciosSection = () => {
   const handleManualTabClick = (index) => {
     setIsAutoPlaying(false);
     setActiveTab(index);
-  };
-
-  const handleWhatsApp = (message) => {
-    const url = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank');
   };
 
   return (
@@ -255,8 +251,8 @@ const ServiciosSection = () => {
 
               {/* Botón CTA a WhatsApp */}
               <div className="mt-auto">
-                <button 
-                  onClick={() => handleWhatsApp(activeData.waMsg)}
+                <button
+                  onClick={() => openPopup('Consultoría Estratégica')}
                   className={`group flex items-center gap-3 px-8 py-4 rounded-full font-bold transition-all duration-300 transform hover:scale-105 active:scale-95 ${
                     activeTab === 4 
                       ? 'bg-white text-black hover:bg-zinc-200' 

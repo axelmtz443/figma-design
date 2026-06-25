@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { ImageWithFallback, ExpandableText, SocialActions, FONTS } from './utils';
+import { useContactPopup } from '../../../../context/ContactPopupContext';
 
 // Logos de páginas (reemplaza Facebook CDN expirados)
 import logoAndreaAragon from '../../../../images/mktdigital_meta/logo_Andrea Aragón.jpg';
@@ -686,6 +687,7 @@ const CARD_WIDTH = 420;
 const CARD_HEIGHT = 810;
 
 export default function MetaSection() {
+  const { openPopup } = useContactPopup();
   return (
     <section id="redes-sociales" className="relative min-h-screen bg-transparent flex flex-col justify-between py-12 md:py-20 overflow-x-hidden border-t border-zinc-900/40">
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-start gap-4 mb-10 md:mb-16">
@@ -706,9 +708,9 @@ export default function MetaSection() {
       />
 
       <div className="w-full flex justify-center mt-12 mb-4 relative z-10">
-        <a href="#contacto" className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white bg-gradient-to-r from-[#0866ff] to-[#00c6ff] rounded-full shadow-[0_0_20px_rgba(8,102,255,0.3)] hover:shadow-[0_0_30px_rgba(8,102,255,0.5)] hover:scale-105 transition-all duration-300">
+        <button onClick={() => openPopup('Publicidad en Meta (Facebook & Instagram)')} className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white bg-gradient-to-r from-[#0866ff] to-[#00c6ff] rounded-full shadow-[0_0_20px_rgba(8,102,255,0.3)] hover:shadow-[0_0_30px_rgba(8,102,255,0.5)] hover:scale-105 transition-all duration-300">
           Cotizar campaña
-        </a>
+        </button>
       </div>
     </section>
   );

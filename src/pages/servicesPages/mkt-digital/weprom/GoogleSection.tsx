@@ -1,5 +1,6 @@
 import { ImageWithFallback, FONTS } from './utils';
 import { useState, useRef } from 'react';
+import { useContactPopup } from '../../../../context/ContactPopupContext';
 
 type GoogleAdType = 'search' | 'display' | 'shopping' | 'video';
 
@@ -510,6 +511,7 @@ const CARD_WIDTH = 500;
 const CARD_HEIGHT = 580;
 
 export default function GoogleSection() {
+  const { openPopup } = useContactPopup();
   return (
     <section id="google-ads" className="relative min-h-screen flex flex-col justify-between py-12 md:py-20 overflow-x-hidden border-t border-zinc-900/40">
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-start gap-4 mb-10 md:mb-16">
@@ -530,9 +532,9 @@ export default function GoogleSection() {
       />
 
       <div className="w-full flex justify-center mt-12 mb-4 relative z-10">
-        <a href="#contacto" className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white bg-[#1a73e8] rounded-full shadow-[0_0_20px_rgba(26,115,232,0.3)] hover:shadow-[0_0_30px_rgba(26,115,232,0.5)] hover:scale-105 transition-all duration-300">
+        <button onClick={() => openPopup('Google Ads')} className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white bg-[#1a73e8] rounded-full shadow-[0_0_20px_rgba(26,115,232,0.3)] hover:shadow-[0_0_30px_rgba(26,115,232,0.5)] hover:scale-105 transition-all duration-300">
           Cotizar campaña
-        </a>
+        </button>
       </div>
     </section>
   );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useContactPopup } from '../../../context/ContactPopupContext';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
 import { motion } from 'framer-motion';
@@ -24,6 +25,7 @@ const SUCCESS_STORIES = [
 ];
 
 const SuccessStories = () => {
+  const { openPopup } = useContactPopup();
   return (
     <section className="w-full py-20 bg-transparent relative overflow-hidden">
       {/* Decoración de fondo */}
@@ -112,6 +114,7 @@ const SuccessStories = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => openPopup('Consultoría Estratégica')}
             className="px-10 py-4 bg-white text-black font-bold rounded-full text-lg hover:bg-zinc-200 transition-colors shadow-xl shadow-white/5"
           >
             Contactar

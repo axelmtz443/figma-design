@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { COLORS, FONTS } from './utils';
+import { useContactPopup } from '../../../../context/ContactPopupContext';
 
 import thumbEQC from '../../../../images/portadaVideosPubl/video3.png';
 import thumbCantina from '../../../../images/portadaVideosVerticales/video1.png';
@@ -51,6 +52,7 @@ const PROJECTS: Project[] = [
 ];
 
 export default function AudiovisualSection() {
+  const { openPopup } = useContactPopup();
   const [activeProject, setActiveProject] = useState<number>(0);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -152,10 +154,10 @@ export default function AudiovisualSection() {
       </div>
 
       <div className="w-full flex justify-center mt-12 mb-4 relative z-10">
-        <a href="#contacto" className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white rounded-full hover:scale-105 transition-all duration-300"
+        <button onClick={() => openPopup('Producción Audiovisual')} className="inline-flex items-center justify-center px-10 py-4 text-lg font-bold text-white rounded-full hover:scale-105 transition-all duration-300"
           style={{ backgroundColor: COLORS.audiovisual, boxShadow: `0 0 20px rgba(89,157,223,0.3)` }}>
           Cotizar producción
-        </a>
+        </button>
       </div>
     </section>
   );

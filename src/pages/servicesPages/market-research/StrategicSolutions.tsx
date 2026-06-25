@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useContactPopup } from '../../../context/ContactPopupContext';
 import { 
   MapPin, 
   Search, 
@@ -74,6 +75,7 @@ const servicesData = [
 ];
 
 export default function StrategicSolutions() {
+  const { openPopup } = useContactPopup();
   const [activeId, setActiveId] = useState(servicesData[0].id);
   const activeService = servicesData.find(s => s.id === activeId) || servicesData[0];
 
@@ -209,17 +211,15 @@ export default function StrategicSolutions() {
                 
                 {/* Botón de Acción Call-To-Action */}
                 <div className="w-full sm:self-start mt-auto">
-                  <a 
-                    href={activeService.ctaLink} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 px-6 py-4 rounded-xl font-semibold text-sm justify-center text-white shadow-lg transition-all duration-300 hover:brightness-110 active:scale-[0.99] w-full relative overflow-hidden group/btn" 
+                  <button
+                    onClick={() => openPopup('Investigación de Mercados')}
+                    className="flex items-center gap-3 px-6 py-4 rounded-xl font-semibold text-sm justify-center text-white shadow-lg transition-all duration-300 hover:brightness-110 active:scale-[0.99] w-full relative overflow-hidden group/btn"
                     style={{ backgroundColor: activeService.color }}
                   >
-                    <MessageSquare size={18} /> 
-                    <span className="tracking-wider font-montserrat">{activeService.ctaText}</span> 
+                    <MessageSquare size={18} />
+                    <span className="tracking-wider font-montserrat">{activeService.ctaText}</span>
                     <ChevronRight size={18} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
-                  </a>
+                  </button>
                 </div>
               </motion.div>
             </AnimatePresence>

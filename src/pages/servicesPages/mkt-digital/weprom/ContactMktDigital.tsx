@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageCircle, Phone, Mail, Send } from 'lucide-react';
+import { Phone, Mail, Send } from 'lucide-react';
 
 const ContactMktDigital = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +23,6 @@ const ContactMktDigital = () => {
   };
 
   const contactInfo = [
-    { icon: <MessageCircle size={20} />, label: 'Whatsapp', value: '+52 1 33 1385 7143', href: 'https://wa.me/5213313857143?text=Hola,%20quiero%20más%20información%20sobre%20marketing%20digital.', color: '#25D366' },
     { icon: <Mail size={20} />, label: 'Correo', value: 'hola@weprom.mx', href: 'mailto:hola@weprom.mx', color: '#599ddf' },
     { icon: <Phone size={20} />, label: 'Llamadas', value: '+52 1 33 1067 4199', href: 'tel:+5213310674199', color: '#80b67d' },
   ];

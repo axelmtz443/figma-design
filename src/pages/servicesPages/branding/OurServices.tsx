@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PenTool, Fingerprint, Type, RefreshCcw, Target, ArrowUpRight, ChevronDown } from 'lucide-react';
+import { useContactPopup } from '../../../context/ContactPopupContext';
 
 const customStyles = `
   @import url('https://fonts.cdnfonts.com/css/astonpoliz');
@@ -27,9 +28,6 @@ const brandColors = {
   green: '#80b67d',
   yellow: '#e6af41'
 };
-
-// Reemplaza con el número real de WhatsApp de Weprom (incluye código de país, sin el signo +)
-const WHATSAPP_NUMBER = "5213313857143";
 
 const services = [
   {
@@ -80,6 +78,7 @@ const services = [
 ];
 
 export default function OurServices() {
+  const { openPopup } = useContactPopup();
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
@@ -178,15 +177,13 @@ export default function OurServices() {
                         {service.description}
                       </p>
                       
-                      <a 
-                        href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(service.whatsappMessage)}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
+                      <button
+                        onClick={() => openPopup('Branding')}
                         className="mt-4 inline-flex items-center gap-2 text-xs sm:text-sm tracking-wider uppercase font-semibold hover:opacity-80 transition-opacity"
                         style={{ color: service.color }}
                       >
                         {service.ctaText} <ArrowUpRight size={14} />
-                      </a>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -201,14 +198,12 @@ export default function OurServices() {
           <p className="text-zinc-400 font-light text-sm mb-4 text-center">
             ¿No estás seguro de lo que necesitas? Hablemos de tu proyecto.
           </p>
-          <a 
-            href={`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Hola, me gustaría agendar una asesoría para mi marca y conocer más sobre sus servicios.")}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <button
+            onClick={() => openPopup('Branding')}
             className="px-8 py-3 bg-transparent border-2 border-[#e6af41] text-[#e6af41] font-semibold tracking-wider uppercase text-sm rounded-full hover:bg-[#e6af41] hover:text-black transition-all duration-300 inline-flex items-center gap-2"
           >
             Contactar a un experto
-          </a>
+          </button>
         </div>
 
       </div>
