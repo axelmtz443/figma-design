@@ -30,7 +30,7 @@ export async function getPostBySlug(slug) {
 }
 
 export async function getAllPosts() {
-  const query = `*[_type == "post"] | order(date desc) {
+  const query = `*[_type == "post" && defined(slug.current) && slug.current != "sin-slug"] | order(date desc) {
     _id,
     title,
     "slug": slug.current,

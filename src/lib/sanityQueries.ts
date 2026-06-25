@@ -84,11 +84,13 @@ export interface BlogPost {
   author: string;
   readTime: string;
   image: string;
+  seoTitle?: string;
+  seoDescription?: string;
   content?: any;
 }
 
 export async function getAllPosts(): Promise<BlogPost[]> {
-  const query = `*[_type == "post"] | order(date desc) {
+  const query = `*[_type == "post" && defined(slug.current) && slug.current != "sin-slug"] | order(date desc) {
     _id,
     title,
     "slug": slug.current,
@@ -109,9 +111,12 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     "slug": slug.current,
     date,
     category,
+    subcategory,
     author,
     readTime,
     image,
+    seoTitle,
+    seoDescription,
     content[] {
       ...,
       _type == "image" => {

@@ -115,6 +115,21 @@ export const post = defineType({
       validation: Rule => Rule.required()
     }),
     defineField({
+      name: 'seoTitle',
+      title: 'SEO Title',
+      type: 'string',
+      description: 'Título que aparece en Google y en la pestaña del navegador. Si se deja vacío se usa el título del post. Máx. 60 caracteres.',
+      validation: Rule => Rule.max(60)
+    }),
+    defineField({
+      name: 'seoDescription',
+      title: 'Meta Description',
+      type: 'text',
+      rows: 3,
+      description: 'Descripción que aparece en los resultados de Google (snippet). Máx. 160 caracteres. Incluye la palabra clave principal.',
+      validation: Rule => Rule.max(160)
+    }),
+    defineField({
       name: 'content',
       title: 'Content',
       type: 'array',
