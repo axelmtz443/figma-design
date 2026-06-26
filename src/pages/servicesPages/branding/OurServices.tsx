@@ -71,7 +71,7 @@ const services = [
     title: "Estrategia de Marca",
     description: "Definimos cómo queremos que te recuerden, perfilamos a tus clientes y desarrollamos la comunicación que tu marca necesita.",
     icon: Target,
-    color: brandColors.red, 
+    color: brandColors.red,
     ctaText: "Definir Estrategia",
     whatsappMessage: "Hola, quiero información sobre el servicio de Estrategia de Marca."
   }
@@ -82,39 +82,39 @@ export default function OurServices() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="min-h-screen bg-transparent text-white font-montserrat flex flex-col items-center justify-center p-4 sm:p-8 relative overflow-hidden">
+    <div className="min-h-screen bg-transparent text-white font-montserrat flex flex-col items-center justify-center p-4 sm:p-6 lg:p-8 relative overflow-hidden">
       <style dangerouslySetInnerHTML={{ __html: customStyles }} />
-      
+
       <div className="absolute inset-0 bg-noise z-0"></div>
 
       {/* Círculo decorativo sutil */}
-      <div 
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full blur-[120px] opacity-10 z-0 transition-colors duration-1000"
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] h-[280px] sm:w-[360px] sm:h-[360px] md:w-[400px] md:h-[400px] rounded-full blur-[80px] sm:blur-[100px] md:blur-[120px] opacity-10 z-0 transition-colors duration-1000"
         style={{ backgroundColor: services[activeIndex]?.color || 'transparent' }}
       ></div>
 
-      {/* Contenedor principal limitado en ancho (max-w-3xl) */}
-      <div className="w-full max-w-3xl mx-auto z-10">
-        
+      {/* Contenedor principal */}
+      <div className="w-full max-w-xs sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto z-10">
+
         {/* Encabezado */}
-        <div className="mb-10 text-center flex flex-col items-center">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-6 h-[2px] bg-zinc-500"></div>
-            <span className="text-zinc-400 font-semibold tracking-wider text-xs uppercase">
+        <div className="mb-8 sm:mb-10 text-center flex flex-col items-center">
+          <div className="flex items-center gap-2 sm:gap-3 mb-3">
+            <div className="w-5 sm:w-6 h-[2px] bg-zinc-500"></div>
+            <span className="text-zinc-400 font-semibold tracking-wider text-[10px] sm:text-xs uppercase">
               Professional Branding
             </span>
-            <div className="w-6 h-[2px] bg-zinc-500"></div>
+            <div className="w-5 sm:w-6 h-[2px] bg-zinc-500"></div>
           </div>
-          <h1 className="font-astonpoliz text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
+          <h1 className="font-astonpoliz text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 sm:mb-4">
             Nuestros Servicios
           </h1>
-          <p className="text-zinc-400 font-light text-sm sm:text-base max-w-lg">
+          <p className="text-zinc-400 font-light text-xs sm:text-sm md:text-base max-w-xs sm:max-w-md lg:max-w-lg">
             Construimos marcas con propósito, diseñadas para destacar, conectar y perdurar en la mente de tus consumidores.
           </p>
         </div>
 
         {/* Acordeón Vertical */}
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2 sm:gap-3">
           {services.map((service, index) => {
             const isActive = activeIndex === index;
             const Icon = service.icon;
@@ -124,65 +124,65 @@ export default function OurServices() {
                 key={service.id}
                 onClick={() => setActiveIndex(isActive ? -1 : index)}
                 className={`group relative overflow-hidden rounded-xl cursor-pointer transition-all duration-300 border ${
-                  isActive 
-                    ? 'bg-zinc-900/80 shadow-lg' 
+                  isActive
+                    ? 'bg-zinc-900/80 shadow-lg'
                     : 'border-zinc-800/50 bg-zinc-950/30 hover:bg-zinc-900/50'
                 }`}
-                style={isActive ? { 
+                style={isActive ? {
                   borderColor: `${service.color}40`,
                 } : {}}
               >
-                
+
                 {/* Cabecera del Acordeón */}
-                <div className="p-5 sm:p-6 flex items-center justify-between">
-                  <div className="flex items-center gap-4 sm:gap-6">
-                    <span 
-                      className={`font-astonpoliz text-xl sm:text-2xl transition-colors duration-300 ${isActive ? '' : 'text-zinc-600 group-hover:text-zinc-400'}`}
+                <div className="p-4 sm:p-5 md:p-6 flex items-center justify-between">
+                  <div className="flex items-center gap-3 sm:gap-4 md:gap-6 min-w-0">
+                    <span
+                      className={`font-astonpoliz text-lg sm:text-xl md:text-2xl transition-colors duration-300 flex-shrink-0 ${isActive ? '' : 'text-zinc-600 group-hover:text-zinc-400'}`}
                       style={isActive ? { color: service.color } : {}}
                     >
                       {service.id}
                     </span>
-                    
-                    <div className="flex items-center gap-3 sm:gap-4">
-                      <div 
-                        className={`transition-colors duration-300 ${isActive ? '' : 'text-zinc-500 group-hover:text-zinc-300'}`}
+
+                    <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0">
+                      <div
+                        className={`transition-colors duration-300 flex-shrink-0 ${isActive ? '' : 'text-zinc-500 group-hover:text-zinc-300'}`}
                         style={isActive ? { color: service.color } : {}}
                       >
-                        <Icon size={20} strokeWidth={1.5} />
+                        <Icon size={18} strokeWidth={1.5} />
                       </div>
-                      <h3 className={`font-astonpoliz uppercase tracking-wide text-sm sm:text-base transition-colors duration-300 ${isActive ? 'text-white' : 'text-zinc-300'}`}>
+                      <h3 className={`font-astonpoliz uppercase tracking-wide text-xs sm:text-sm md:text-base transition-colors duration-300 truncate ${isActive ? 'text-white' : 'text-zinc-300'}`}>
                         {service.title}
                       </h3>
                     </div>
                   </div>
 
                   {/* Icono de expansión */}
-                  <div 
-                    className={`transition-transform duration-300 ${isActive ? 'rotate-180' : 'rotate-0 text-zinc-600 group-hover:text-zinc-400'}`}
+                  <div
+                    className={`transition-transform duration-300 flex-shrink-0 ml-2 ${isActive ? 'rotate-180' : 'rotate-0 text-zinc-600 group-hover:text-zinc-400'}`}
                     style={isActive ? { color: service.color } : {}}
                   >
-                    <ChevronDown size={20} />
+                    <ChevronDown size={18} />
                   </div>
                 </div>
 
-                {/* Contenido expandible usando Grid para animación suave */}
-                <div 
+                {/* Contenido expandible */}
+                <div
                   className={`grid transition-all duration-300 ease-in-out ${
                     isActive ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="px-5 sm:px-6 pb-6 pt-0 ml-12 sm:ml-[72px]">
-                      <p className="text-zinc-300 font-light text-sm sm:text-base leading-relaxed pr-4">
+                    <div className="px-4 sm:px-5 md:px-6 pb-5 sm:pb-6 pt-0 ml-10 sm:ml-12 md:ml-[72px]">
+                      <p className="text-zinc-300 font-light text-xs sm:text-sm md:text-base leading-relaxed pr-2 sm:pr-4">
                         {service.description}
                       </p>
-                      
+
                       <button
                         onClick={() => openPopup('Branding')}
-                        className="mt-4 inline-flex items-center gap-2 text-xs sm:text-sm tracking-wider uppercase font-semibold hover:opacity-80 transition-opacity"
+                        className="mt-3 sm:mt-4 inline-flex items-center gap-2 text-[10px] sm:text-xs md:text-sm tracking-wider uppercase font-semibold hover:opacity-80 transition-opacity"
                         style={{ color: service.color }}
                       >
-                        {service.ctaText} <ArrowUpRight size={14} />
+                        {service.ctaText} <ArrowUpRight size={13} />
                       </button>
                     </div>
                   </div>
@@ -194,13 +194,13 @@ export default function OurServices() {
         </div>
 
         {/* CTA General al final */}
-        <div className="mt-10 flex flex-col items-center justify-center">
-          <p className="text-zinc-400 font-light text-sm mb-4 text-center">
+        <div className="mt-8 sm:mt-10 flex flex-col items-center justify-center">
+          <p className="text-zinc-400 font-light text-xs sm:text-sm mb-3 sm:mb-4 text-center">
             ¿No estás seguro de lo que necesitas? Hablemos de tu proyecto.
           </p>
           <button
             onClick={() => openPopup('Branding')}
-            className="px-8 py-3 bg-transparent border-2 border-[#e6af41] text-[#e6af41] font-semibold tracking-wider uppercase text-sm rounded-full hover:bg-[#e6af41] hover:text-black transition-all duration-300 inline-flex items-center gap-2"
+            className="px-6 sm:px-8 py-3 bg-transparent border-2 border-[#e6af41] text-[#e6af41] font-semibold tracking-wider uppercase text-xs sm:text-sm rounded-full hover:bg-[#e6af41] hover:text-black transition-all duration-300 inline-flex items-center gap-2 w-full sm:w-auto justify-center"
           >
             Contactar a un experto
           </button>

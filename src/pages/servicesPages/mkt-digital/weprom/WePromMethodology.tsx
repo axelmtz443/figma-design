@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Target, ClipboardList, Magnet, TrendingUp } from 'lucide-react';
 import { useContactPopup } from '../../../../context/ContactPopupContext';
 
@@ -70,31 +70,29 @@ export default function WePromMethodology() {
   }, []);
 
   return (
-    <div className="text-white py-16 px-6 md:px-12 lg:px-20 flex flex-col font-montserrat">
+    <div className="text-white py-12 sm:py-16 lg:py-20 px-4 sm:px-6 md:px-10 lg:px-16 xl:px-20 flex flex-col font-montserrat">
 
-      <header className="max-w-7xl w-full mx-auto mb-12 z-20">
-        <h1 className="font-aston text-4xl md:text-5xl lg:text-6xl leading-tight text-white text-center">
+      <header className="max-w-7xl w-full mx-auto mb-8 sm:mb-10 lg:mb-12 z-20">
+        <h1 className="font-aston text-3xl sm:text-4xl md:text-5xl lg:text-6xl leading-tight text-white text-center">
           Proyectos a la medida<br />de tus objetivos
         </h1>
       </header>
 
-      <main className="w-full max-w-6xl mx-auto relative min-h-[280px] mb-10">
+      <main className="w-full max-w-6xl mx-auto relative min-h-[240px] sm:min-h-[260px] lg:min-h-[280px] mb-8 sm:mb-10">
 
         <ConnectingLine />
 
-        {/* Línea vertical móvil */}
-        <div className="absolute left-[39px] top-0 w-[2px] h-full bg-gradient-to-b from-[#e6af41] via-[#599ddf] to-[#80b67d] opacity-30 md:hidden z-0 overflow-hidden">
-          <div className="w-full h-32 absolute left-0 meth-mobile-flow bg-gradient-to-b from-transparent via-white to-transparent opacity-80" style={{ boxShadow: '0 0 15px 2px rgba(255,255,255,0.8)' }} />
+        <div className="absolute left-[35px] sm:left-[39px] top-0 w-[2px] h-full bg-gradient-to-b from-[#e6af41] via-[#599ddf] to-[#80b67d] opacity-30 md:hidden z-0 overflow-hidden">
+          <div className="w-full h-24 sm:h-28 lg:h-32 absolute left-0 meth-mobile-flow bg-gradient-to-b from-transparent via-white to-transparent opacity-80" style={{ boxShadow: '0 0 15px 2px rgba(255,255,255,0.8)' }} />
         </div>
 
-        {/* Desktop grid */}
         <div className="hidden md:block">
           {STEPS.map((step, index) => (
             <div
               key={step.id}
-              className="absolute flex flex-col items-center w-56 group cursor-pointer z-10"
+              className="absolute flex flex-col items-center w-44 sm:w-48 lg:w-56 group cursor-pointer z-10"
               style={{
-                top: `calc(${step.y}% - 32px)`,
+                top: `calc(${step.y}% - 28px)`,
                 left: `${step.x}%`,
                 opacity: isLoaded ? 1 : 0,
                 transform: `translateX(-50%) ${isLoaded ? 'translateY(0)' : 'translateY(20px)'}`,
@@ -104,18 +102,22 @@ export default function WePromMethodology() {
               onMouseLeave={() => setHoveredNode(null)}
             >
               <div
-                className="w-16 h-16 rounded-full flex items-center justify-center mb-4 transition-all duration-300 bg-[#111]"
+                className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center mb-3 sm:mb-4 transition-all duration-300 bg-[#111]"
                 style={{
                   border: `2px solid ${hoveredNode === step.id ? step.color : 'transparent'}`,
                   boxShadow: hoveredNode === step.id ? `0 0 25px ${step.color}90` : '0 10px 15px -3px rgba(0,0,0,0.6)',
                   transform: hoveredNode === step.id ? 'scale(1.2)' : 'scale(1)',
                 }}
               >
-                <step.icon size={28} color={hoveredNode === step.id ? '#ffffff' : step.color} style={{ transition: 'color 0.3s ease' }} />
+                <step.icon 
+                  className="w-[22px] h-[22px] sm:w-[24px] sm:h-[24px] lg:w-[28px] lg:h-[28px]" 
+                  color={hoveredNode === step.id ? '#ffffff' : step.color} 
+                  style={{ transition: 'color 0.3s ease' }} 
+                />
               </div>
-              <div className="text-center transition-transform duration-300" style={{ transform: hoveredNode === step.id ? 'translateY(8px)' : 'translateY(0)' }}>
-                <h3 className="font-aston text-xl mb-2 text-white">{step.title}</h3>
-                <p className="text-sm font-light leading-snug transition-colors duration-300" style={{ color: hoveredNode === step.id ? step.color : '#9ca3af' }}>
+              <div className="text-center transition-transform duration-300" style={{ transform: hoveredNode === step.id ? 'translateY(6px) sm:translateY(8px)' : 'translateY(0)' }}>
+                <h3 className="font-aston text-base sm:text-lg lg:text-xl mb-1.5 sm:mb-2 text-white">{step.title}</h3>
+                <p className="text-xs sm:text-sm font-light leading-snug transition-colors duration-300" style={{ color: hoveredNode === step.id ? step.color : '#9ca3af' }}>
                   {step.desc}
                 </p>
               </div>
@@ -123,24 +125,26 @@ export default function WePromMethodology() {
           ))}
         </div>
 
-        {/* Mobile list */}
-        <div className="md:hidden flex flex-col gap-14 py-8 relative z-10 w-full px-4">
+        <div className="md:hidden flex flex-col gap-10 sm:gap-12 lg:gap-14 py-6 sm:py-8 relative z-10 w-full px-3 sm:px-4">
           {STEPS.map((step, index) => (
             <div
               key={step.id}
-              className="flex items-center gap-6"
+              className="flex items-center gap-4 sm:gap-5 lg:gap-6"
               style={{
                 opacity: isLoaded ? 1 : 0,
                 transform: isLoaded ? 'translateX(0)' : 'translateX(-20px)',
                 transition: `all 0.5s ease-out ${index * 0.1}s`,
               }}
             >
-              <div className="w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0 bg-[#111] z-10 shadow-lg" style={{ border: `2px solid ${step.color}` }}>
-                <step.icon size={24} color={step.color} />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 lg:w-16 lg:h-16 rounded-full flex items-center justify-center flex-shrink-0 bg-[#111] z-10 shadow-lg" style={{ border: `2px solid ${step.color}` }}>
+                <step.icon 
+                  className="w-[20px] h-[20px] sm:w-[22px] sm:h-[22px] lg:w-[24px] lg:h-[24px]" 
+                  color={step.color} 
+                />
               </div>
               <div>
-                <h3 className="font-aston text-lg mb-1 text-white">{step.title}</h3>
-                <p className="text-xs font-light text-gray-400">{step.desc}</p>
+                <h3 className="font-aston text-base sm:text-lg mb-0.5 sm:mb-1 text-white">{step.title}</h3>
+                <p className="text-[11px] sm:text-xs font-light text-gray-400">{step.desc}</p>
               </div>
             </div>
           ))}
@@ -148,11 +152,10 @@ export default function WePromMethodology() {
 
       </main>
 
-      {/* CTA */}
       <div className="flex justify-center pb-4">
         <button
           onClick={() => openPopup('Marketing Digital')}
-          className="px-10 py-4 font-montserrat font-semibold text-sm tracking-[0.2em] uppercase rounded-full border border-white/15 text-white hover:border-white/40 hover:scale-105 transition-all duration-300"
+          className="px-6 sm:px-8 lg:px-10 py-3 sm:py-4 font-montserrat font-semibold text-xs sm:text-sm tracking-[0.15em] sm:tracking-[0.2em] uppercase rounded-full border border-white/15 text-white hover:border-white/40 hover:scale-105 transition-all duration-300"
         >
           Iniciar Proceso
         </button>

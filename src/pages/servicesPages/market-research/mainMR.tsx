@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Navbar from '../../../components/General/Navbar';
 import Footer from '../../../components/General/Footer';
 import HeroMR from './Hero';
 import TwoSectionBrands from './TwoSectionBrands';
 import WhyMR from './whyMR';
-
 import ContactoMR from './contactMR';
 import TestimonialMR from './TestimonialMR';
 import ElPoderDeLaInformacion from './QuestionsMR';
-
 import StrategicSolutions from './StrategicSolutions';
 import OurEdge from './OurEdge';
 import ResearchTools from './ResearchTools';
@@ -16,7 +14,6 @@ import CompanySection from '../../../components/Home/CompanySection';
 import BlogResearch from './BlogResearch';
 import ProjectsCarousel from './OurProjects';
 import OurProcess from './OurProcess';
-
 
 function ScrollReveal({ children }: { children: React.ReactNode }) {
     const ref = useRef<HTMLDivElement>(null);

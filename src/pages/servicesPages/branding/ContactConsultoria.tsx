@@ -27,14 +27,14 @@ const ContactConsultoria = () => {
 
   const contactInfo = [
     {
-      icon: <Mail size={20} />,
+      icon: <Mail size={18} />,
       label: 'Correo',
       value: 'hola@weprom.mx',
       href: 'mailto:hola@weprom.mx',
       color: '#599ddf',
     },
     {
-      icon: <Phone size={20} />,
+      icon: <Phone size={18} />,
       label: 'Llamadas',
       value: '+52 1 33 1067 4199',
       href: 'tel:+5213310674199',
@@ -54,35 +54,35 @@ const ContactConsultoria = () => {
   ];
 
   return (
-    <section className="w-full bg-transparent py-16 px-4 sm:px-6 lg:px-8 font-montserrat text-white">
-      <div className="max-w-5xl mx-auto">
+    <section className="w-full bg-transparent py-12 sm:py-16 px-4 sm:px-6 lg:px-8 font-montserrat text-white">
+      <div className="max-w-xs sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto">
 
         {/* Layout principal */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-start">
+        <div className="flex flex-col lg:flex-row gap-8 sm:gap-10 lg:gap-20 items-start">
 
           {/* Columna izquierda */}
-          <div className="w-full lg:w-2/5 flex flex-col gap-8">
+          <div className="w-full lg:w-2/5 flex flex-col gap-6 sm:gap-8">
             <div>
-              <h2 className="text-xl md:text-3xl font-aston tracking-tight mb-4 leading-tight">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-aston tracking-tight mb-3 sm:mb-4 leading-tight">
                 Será un gusto saber de ti.
               </h2>
-              <p className="text-white/100 font-normal text-base leading-relaxed">
-                ¿Te gustaría saber más? <br/> No dudes en escribirnos o llamarnos.
+              <p className="text-white/100 font-normal text-sm sm:text-base leading-relaxed">
+                ¿Te gustaría saber más? <br /> No dudes en escribirnos o llamarnos.
               </p>
             </div>
 
             {/* Datos de contacto */}
-            <div className="flex flex-col gap-5">
+            <div className="flex flex-row sm:flex-col gap-4 sm:gap-5">
               {contactInfo.map((item, index) => (
                 <a
                   key={index}
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 group"
+                  className="flex items-center gap-3 sm:gap-4 group flex-1 sm:flex-none"
                 >
                   <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 border transition-all duration-300 group-hover:scale-110"
+                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 border transition-all duration-300 group-hover:scale-110"
                     style={{
                       borderColor: item.color,
                       color: item.color,
@@ -91,11 +91,9 @@ const ContactConsultoria = () => {
                   >
                     {item.icon}
                   </div>
-                  <div>
-                    <p className="text-white/100 text-xs font-light mb-0.5">{item.label}</p>
-                    <p
-                      className="font-semibold text-sm transition-colors duration-300"
-                    >
+                  <div className="min-w-0">
+                    <p className="text-white/100 text-[10px] sm:text-xs font-light mb-0.5">{item.label}</p>
+                    <p className="font-semibold text-xs sm:text-sm transition-colors duration-300 truncate">
                       {item.value}
                     </p>
                   </div>
@@ -103,8 +101,8 @@ const ContactConsultoria = () => {
               ))}
             </div>
 
-            {/* Mapa */}
-            <div className="rounded-2xl overflow-hidden border border-neutral-800" style={{ aspectRatio: '4/3' }}>
+            {/* Mapa — oculto en móvil pequeño, visible desde sm */}
+            <div className="hidden sm:block rounded-2xl overflow-hidden border border-neutral-800" style={{ aspectRatio: '4/3' }}>
               <iframe
                 title="Ubicación"
                 src="https://maps.google.com/maps?q=C.+Corrientes+3071,+Colomos+Providencia,+Guadalajara&output=embed&z=15"
@@ -118,32 +116,32 @@ const ContactConsultoria = () => {
           </div>
 
           {/* Columna derecha — Formulario */}
-          <div className="w-full bg-neutral-950 border p-5 border-neutral-800 rounded-2xl lg:w-3/5">
+          <div className="w-full bg-neutral-950 border p-4 sm:p-5 border-neutral-800 rounded-2xl lg:w-3/5">
             {sent ? (
-              <div className="flex flex-col items-center justify-center h-full gap-6 py-20 text-center">
+              <div className="flex flex-col items-center justify-center h-full gap-5 sm:gap-6 py-14 sm:py-20 text-center">
                 <div
-                  className="w-20 h-20 rounded-full flex items-center justify-center border-2"
+                  className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2"
                   style={{ borderColor: '#80b67d', color: '#80b67d', backgroundColor: '#80b67d20' }}
                 >
-                  <Send size={32} />
+                  <Send size={28} />
                 </div>
-                <h3 className="text-2xl font-aston">¡Mensaje enviado!</h3>
-                <p className="text-white/50 text-sm max-w-xs">
+                <h3 className="text-xl sm:text-2xl font-aston">¡Mensaje enviado!</h3>
+                <p className="text-white/50 text-xs sm:text-sm max-w-xs">
                   Nos pondremos en contacto contigo muy pronto. ¡Gracias por escribirnos!
                 </p>
                 <button
                   onClick={() => { setSent(false); setFormData({ nombre: '', email: '', telefono: '', asunto: '¿En qué podemos ayudarte?', mensaje: '' }); }}
-                  className="mt-2 text-sm text-white/40 hover:text-white transition-colors duration-300 underline underline-offset-4"
+                  className="mt-2 text-xs sm:text-sm text-white/40 hover:text-white transition-colors duration-300 underline underline-offset-4"
                 >
                   Enviar otro mensaje
                 </button>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-5">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4 sm:gap-5">
 
                 {/* Nombre */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-white/40 text-xs font-medium uppercase tracking-widest">
+                  <label className="text-white/40 text-[10px] sm:text-xs font-medium uppercase tracking-widest">
                     Nombre <span className="text-[#c5362e]">*</span>
                   </label>
                   <input
@@ -153,44 +151,47 @@ const ContactConsultoria = () => {
                     placeholder="Nombre completo"
                     value={formData.nombre}
                     onChange={handleChange}
-                    className="bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 outline-none transition-all duration-300 focus:border-neutral-600"
+                    className="bg-neutral-900 border border-neutral-800 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm placeholder-white/20 outline-none transition-all duration-300 focus:border-neutral-600"
                   />
                 </div>
 
-                {/* Email */}
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-white/40 text-xs font-medium uppercase tracking-widest">
-                    Email <span className="text-[#c5362e]">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    placeholder="Correo electrónico"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 outline-none transition-all duration-300 focus:border-neutral-600"
-                  />
-                </div>
+                {/* Email + Teléfono en fila en pantallas medianas */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-4">
+                  {/* Email */}
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-white/40 text-[10px] sm:text-xs font-medium uppercase tracking-widest">
+                      Email <span className="text-[#c5362e]">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="Correo electrónico"
+                      value={formData.email}
+                      onChange={handleChange}
+                      className="bg-neutral-900 border border-neutral-800 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm placeholder-white/20 outline-none transition-all duration-300 focus:border-neutral-600"
+                    />
+                  </div>
 
-                {/* Teléfono */}
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-white/40 text-xs font-medium uppercase tracking-widest">
-                    Teléfono
-                  </label>
-                  <input
-                    type="tel"
-                    name="telefono"
-                    placeholder="+00 000 000 0000"
-                    value={formData.telefono}
-                    onChange={handleChange}
-                    className="bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 outline-none transition-all duration-300 focus:border-neutral-600"
-                  />
+                  {/* Teléfono */}
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-white/40 text-[10px] sm:text-xs font-medium uppercase tracking-widest">
+                      Teléfono
+                    </label>
+                    <input
+                      type="tel"
+                      name="telefono"
+                      placeholder="+00 000 000 0000"
+                      value={formData.telefono}
+                      onChange={handleChange}
+                      className="bg-neutral-900 border border-neutral-800 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm placeholder-white/20 outline-none transition-all duration-300 focus:border-neutral-600"
+                    />
+                  </div>
                 </div>
 
                 {/* Asunto */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-white/40 text-xs font-medium uppercase tracking-widest">
+                  <label className="text-white/40 text-[10px] sm:text-xs font-medium uppercase tracking-widest">
                     Asunto <span className="text-[#c5362e]">*</span>
                   </label>
                   <select
@@ -198,7 +199,7 @@ const ContactConsultoria = () => {
                     required
                     value={formData.asunto}
                     onChange={handleChange}
-                    className="bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 text-white text-sm outline-none transition-all duration-300 focus:border-neutral-600 appearance-none cursor-pointer"
+                    className="bg-neutral-900 border border-neutral-800 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm outline-none transition-all duration-300 focus:border-neutral-600 appearance-none cursor-pointer"
                     style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23ffffff40' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 1rem center' }}
                   >
                     {asuntos.map((a, i) => (
@@ -209,7 +210,7 @@ const ContactConsultoria = () => {
 
                 {/* Mensaje */}
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-white/40 text-xs font-medium uppercase tracking-widest">
+                  <label className="text-white/40 text-[10px] sm:text-xs font-medium uppercase tracking-widest">
                     Mensaje <span className="text-[#c5362e]">*</span>
                   </label>
                   <textarea
@@ -219,7 +220,7 @@ const ContactConsultoria = () => {
                     value={formData.mensaje}
                     onChange={handleChange}
                     rows={4}
-                    className="bg-neutral-900 border border-neutral-800 rounded-xl px-4 py-3 text-white text-sm placeholder-white/20 outline-none transition-all duration-300 focus:border-neutral-600 resize-none"
+                    className="bg-neutral-900 border border-neutral-800 rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-white text-sm placeholder-white/20 outline-none transition-all duration-300 focus:border-neutral-600 resize-none"
                   />
                 </div>
 
@@ -227,10 +228,10 @@ const ContactConsultoria = () => {
                 <button
                   type="submit"
                   disabled={sending}
-                  className="mt-2 w-full relative text-white font-montserrat font-semibold text-sm px-6 py-4 rounded-xl transition-all duration-300 hover:opacity-90 flex items-center justify-center gap-2 disabled:opacity-60"
+                  className="mt-1 sm:mt-2 w-full relative text-white font-montserrat font-semibold text-sm px-6 py-3 sm:py-4 rounded-xl transition-all duration-300 hover:opacity-90 flex items-center justify-center gap-2 disabled:opacity-60"
                   style={{
-                    border: '2px solid transparent',background: 'linear-gradient(#111, #111) padding-box,  border-box',
-                    
+                    border: '2px solid transparent',
+                    background: 'linear-gradient(#111, #111) padding-box, border-box',
                   }}
                 >
                   {sending ? (
@@ -243,7 +244,7 @@ const ContactConsultoria = () => {
                   ) : (
                     <>
                       Enviar mensaje
-                      <Send size={16} />
+                      <Send size={15} />
                     </>
                   )}
                 </button>
@@ -253,6 +254,20 @@ const ContactConsultoria = () => {
           </div>
 
         </div>
+
+        {/* Mapa visible solo en móvil pequeño, al fondo del form */}
+        <div className="block sm:hidden mt-8 rounded-2xl overflow-hidden border border-neutral-800" style={{ aspectRatio: '16/9' }}>
+          <iframe
+            title="Ubicación móvil"
+            src="https://maps.google.com/maps?q=C.+Corrientes+3071,+Colomos+Providencia,+Guadalajara&output=embed&z=15"
+            width="100%"
+            height="100%"
+            style={{ border: 0, filter: 'grayscale(0.8) invert(0.9) contrast(0.85)' }}
+            allowFullScreen
+            loading="lazy"
+          />
+        </div>
+
       </div>
     </section>
   );

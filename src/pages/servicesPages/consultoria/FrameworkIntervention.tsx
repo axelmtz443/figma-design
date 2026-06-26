@@ -54,21 +54,19 @@ export default function FrameworkIntervention() {
   }, [activeStep]);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-white/5 bg-transparent">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20 lg:py-24 border-t border-white/5 bg-transparent">
 
       {/* ── Cabecera de la sección ── */}
-      <div className="mb-16 text-center lg:text-left flex flex-col justify-center">
-        <h2 className="font-aston text-4xl sm:text-5xl text-white mb-6 tracking-tight text-center">
+      <div className="mb-12 sm:mb-16 text-center lg:text-left flex flex-col justify-center">
+        <h2 className="font-aston text-3xl sm:text-4xl md:text-5xl text-white mb-4 sm:mb-6 tracking-tight text-center">
           Framework de Intervención
         </h2>
-        <p className="text-zinc-200 text-lg sm:text-xl leading-relaxed text-center">
+        <p className="text-zinc-200 text-base sm:text-lg md:text-xl leading-relaxed text-center max-w-3xl mx-auto px-4">
           Nuestra metodología está diseñada para escuchar, acompañar y llevar a tu empresa al siguiente nivel.
         </p>
       </div>
 
-      <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-
-
+      <div className="flex flex-col lg:flex-row items-center gap-10 sm:gap-12 lg:gap-16 xl:gap-20">
 
         {/* ── Logo SVG interactivo ── */}
         <div className="w-full lg:w-1/2 flex justify-center relative">
@@ -76,7 +74,7 @@ export default function FrameworkIntervention() {
 
           <svg
             viewBox="0 0 4100 4100"
-            className="w-full max-w-[400px] lg:max-w-[500px] relative z-10 overflow-visible"
+            className="w-[280px] sm:w-[340px] md:w-[400px] lg:w-[440px] xl:w-[500px] max-w-full relative z-10 overflow-visible"
           >
             <defs>
               <linearGradient
@@ -188,11 +186,11 @@ export default function FrameworkIntervention() {
         </div>
 
         {/* ── Pasos textuales ── */}
-        <div className="w-full lg:w-1/2 relative pl-4 sm:pl-8">
+        <div className="w-full lg:w-1/2 relative pl-6 sm:pl-8 md:pl-10 lg:pl-12">
           {/* Línea vertical */}
-          <div className="absolute left-0 top-4 bottom-4 w-[2px] bg-white/10 rounded-full" />
+          <div className="absolute left-2 sm:left-3 md:left-4 top-4 bottom-4 w-[2px] bg-white/10 rounded-full" />
 
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-6 sm:gap-8">
             {stepsData.map((step, index) => {
               const isActive = activeStep === index;
               return (
@@ -202,12 +200,12 @@ export default function FrameworkIntervention() {
                   className={`relative transition-all duration-500 cursor-pointer group ${
                     isActive
                       ? 'opacity-100 translate-x-0'
-                      : 'opacity-30 translate-x-4 hover:opacity-70'
+                      : 'opacity-30 translate-x-2 sm:translate-x-4 hover:opacity-70'
                   }`}
                 >
                   {/* Dot */}
                   <div
-                    className={`absolute -left-[17px] top-1.5 sm:-left-[33px] w-4 h-4 rounded-full transition-all duration-500 ${
+                    className={`absolute -left-[17px] sm:-left-[23px] md:-left-[29px] lg:-left-[33px] top-1.5 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full transition-all duration-500 ${
                       isActive
                         ? step.activeDot
                         : `bg-[#222] border border-white/20 ${step.hoverDot}`
@@ -216,7 +214,7 @@ export default function FrameworkIntervention() {
 
                   {/* Título */}
                   <h3
-                    className={`font-aston text-2xl sm:text-3xl mb-2 transition-colors ${
+                    className={`font-aston text-xl sm:text-2xl md:text-3xl mb-1.5 sm:mb-2 transition-colors ${
                       isActive
                         ? step.activeTitle
                         : `text-white/50 ${step.hoverTitle}`
@@ -240,14 +238,12 @@ export default function FrameworkIntervention() {
         </div>
       </div>
 
-
       {/* ── Botón CTA ── */}
-      <div className="mt-16 flex justify-center">
-        <button className="bg-white text-black px-8 py-4 rounded-full font-semibold text-lg transition-all hover:bg-zinc-200 hover:scale-105 active:scale-95 shadow-lg">
+      <div className="mt-12 sm:mt-16 flex justify-center">
+        <button className="bg-white text-black px-6 sm:px-8 lg:px-10 py-3 sm:py-4 rounded-full font-semibold text-base sm:text-lg transition-all hover:bg-zinc-200 hover:scale-105 active:scale-95 shadow-lg">
           Programar sesión informativa
         </button>
       </div>
-
 
     </section>
   );

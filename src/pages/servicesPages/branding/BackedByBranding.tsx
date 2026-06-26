@@ -48,28 +48,28 @@ const allLogos = [...logos, ...logos];
 function BackedByBranding() {
   return (
     <section
-      className="relative w-full py-14 sm:py-16 overflow-hidden"
+      className="relative w-full py-10 sm:py-14 md:py-16 overflow-hidden"
       style={{
         background: 'linear-gradient(180deg, #000 0%, rgba(0,0,0,0.7) 40%, transparent 100%)',
       }}
     >
       {/* Edge fades */}
-      <div className="absolute top-0 left-0 w-16 sm:w-32 md:w-56 h-full z-20 pointer-events-none bg-gradient-to-r from-black to-transparent" />
-      <div className="absolute top-0 right-0 w-16 sm:w-32 md:w-56 h-full z-20 pointer-events-none bg-gradient-to-l from-black to-transparent" />
+      <div className="absolute top-0 left-0 w-10 sm:w-24 md:w-40 lg:w-56 h-full z-20 pointer-events-none bg-gradient-to-r from-black to-transparent" />
+      <div className="absolute top-0 right-0 w-10 sm:w-24 md:w-40 lg:w-56 h-full z-20 pointer-events-none bg-gradient-to-l from-black to-transparent" />
 
-      <div className="relative z-10 max-w-[1519px] mx-auto px-4 sm:px-8">
+      <div className="relative z-10 max-w-[1519px] mx-auto px-4 sm:px-6 md:px-8">
         {/* Título */}
-        <div className="flex items-center justify-center gap-4 mb-10 sm:mb-12">
-          <div className="h-[1px] w-12 bg-white/20" />
-          <h3 className="font-aston text-white/70 text-lg sm:text-xl md:text-2xl tracking-wide text-center">
+        <div className="flex items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-10 md:mb-12">
+          <div className="h-[1px] w-8 sm:w-12 bg-white/20" />
+          <h3 className="font-aston text-white/70 text-sm sm:text-lg md:text-xl lg:text-2xl tracking-wide text-center leading-snug px-2">
             Algunas marcas que hemos desarrollado
           </h3>
-          <div className="h-[1px] w-12 bg-white/20" />
+          <div className="h-[1px] w-8 sm:w-12 bg-white/20" />
         </div>
 
         <Swiper
           modules={[Autoplay, FreeMode]}
-          spaceBetween={48}
+          spaceBetween={28}
           slidesPerView={2}
           loop={true}
           speed={5000}
@@ -77,16 +77,22 @@ function BackedByBranding() {
           freeMode={{ enabled: true, momentum: true }}
           autoplay={{ delay: 0, disableOnInteraction: false }}
           breakpoints={{
-            480: { slidesPerView: 3, spaceBetween: 56 },
-            640: { slidesPerView: 4, spaceBetween: 64 },
-            1024: { slidesPerView: 6, spaceBetween: 72 },
+            360:  { slidesPerView: 2,  spaceBetween: 28 },
+            480:  { slidesPerView: 3,  spaceBetween: 40 },
+            640:  { slidesPerView: 4,  spaceBetween: 48 },
+            768:  { slidesPerView: 5,  spaceBetween: 56 },
+            1024: { slidesPerView: 6,  spaceBetween: 64 },
+            1280: { slidesPerView: 7,  spaceBetween: 72 },
           }}
           className="flex items-center"
         >
           {allLogos.map((src, index) => (
             <SwiperSlide key={index} className="flex items-center justify-center py-2">
-              {/* Caja fija — el logo escala para tocar alguno de los lados */}
-              <div className="flex items-center justify-center mx-auto" style={{ width: '160px', height: '120px' }}>
+              {/* Logo box — scales to fill container while keeping aspect ratio */}
+              <div
+                className="flex items-center justify-center mx-auto"
+                style={{ width: 'clamp(80px, 12vw, 160px)', height: 'clamp(60px, 9vw, 120px)' }}
+              >
                 <img
                   src={src}
                   alt="Brand Logo"

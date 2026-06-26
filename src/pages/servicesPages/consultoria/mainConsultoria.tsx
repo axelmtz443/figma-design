@@ -9,18 +9,17 @@ import PublicoObjetivo from './PublicoObjetivo';
 import ContactConsultoria from './ContactConsultoria';
 import FrameworkIntervention from './FrameworkIntervention';
 
-
 const ConsultoriaDeMarketing = () => {
   return (
     <div className="min-h-screen bg-transparent overflow-x-hidden">
       <Navbar />
-        <ConsultoriaHero />
-        <ServiciosSection />
-        <WhyUs />
-        <OurProjectsHome />
-        <PublicoObjetivo />
-        <FrameworkIntervention/>
-        <ContactConsultoria />
+      <ConsultoriaHero />
+      <ServiciosSection />
+      <WhyUs />
+      <OurProjectsHome />
+      <PublicoObjetivo />
+      <FrameworkIntervention />
+      <ContactConsultoria />
       <Footer />
     </div>
   );

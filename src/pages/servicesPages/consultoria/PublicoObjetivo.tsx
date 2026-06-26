@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Check, AlertTriangle } from 'lucide-react';
 
@@ -47,41 +46,42 @@ const SYMPTOMS = [
 
 const PublicoObjetivo = () => {
   return (
-    <section className="w-full py-24 bg-transparent text-white font-montserrat">
-      <div className="container mx-auto px-4 max-w-6xl">
+    <section className="w-full py-16 sm:py-20 lg:py-24 bg-transparent text-white font-montserrat">
+      <div className="container mx-auto px-4 sm:px-6 max-w-6xl">
         
         {/* Título Superior */}
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-3xl md:text-5xl font-aston text-center mb-16 tracking-tight"
+          className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-aston text-center mb-12 sm:mb-16 tracking-tight"
         >
           ¿A quién dirigimos nuestros servicios?
         </motion.h2>
 
         {/* Grid de Tarjetas */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-16 sm:mb-20">
           {TARGET_AUDIENCE.map((item, idx) => (
-            // Dentro del map de TARGET_AUDIENCE:
             <motion.div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ y: -8, scale: 1.02 }} // Efecto de elevación premium
+              whileHover={{ 
+                y: -6, 
+                scale: 1.02,
+                boxShadow: "0 20px 40px -12px rgba(0,0,0,0.5)"
+              }}
               transition={{ delay: idx * 0.1, duration: 0.4 }}
               viewport={{ once: true }}
-              className={`py-6 px-4 rounded-3xl border ${item.border} bg-zinc-900/40 backdrop-blur-sm ${item.shadow} shadow-2xl transition-all duration-500 ease-out`}
+              className={`py-5 sm:py-6 px-4 sm:px-5 rounded-3xl border ${item.border} bg-zinc-900/40 backdrop-blur-sm ${item.shadow} shadow-2xl transition-all duration-500 ease-out`}
             >
-            
-              <h3 className="text-xl font-extrabold mb-6 text-center">{item.title}</h3>
-              <ul className="space-y-4">
+              <h3 className="text-lg sm:text-xl font-extrabold mb-4 sm:mb-6 text-center">{item.title}</h3>
+              <ul className="space-y-3 sm:space-y-4">
                 {item.points.map((point, pIdx) => (
-                  <li key={pIdx} className="flex items-start gap-3 text-zinc-300 text-base leading-relaxed group/item">
-                    {/* Contenedor del check con borde dinámico */}
-                    <span className={`mt-1 p-0.5 rounded-full border ${item.iconColor.replace('text-', 'border-')}/40`}>
+                  <li key={pIdx} className="flex items-start gap-2 sm:gap-3 text-zinc-300 text-sm sm:text-base leading-relaxed group/item">
+                    <span className={`mt-0.5 p-0.5 rounded-full border ${item.iconColor.replace('text-', 'border-')}/40`}>
                       <Check 
-                        size={12} 
+                        size={10} 
                         className={`${item.iconColor} filter drop-shadow-[0_0_3px_rgba(0,0,0,0.5)]`} 
                         strokeWidth={3} 
                       />
@@ -90,7 +90,6 @@ const PublicoObjetivo = () => {
                   </li>
                 ))}
               </ul>
-
             </motion.div>
           ))}
         </div>
@@ -99,28 +98,30 @@ const PublicoObjetivo = () => {
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
-          whileHover={{ shadow: "0 0 60px -12px rgba(239,68,68,0.3)" }}
+          whileHover={{ 
+            boxShadow: "0 0 60px -12px rgba(239,68,68,0.3)"
+          }}
           viewport={{ once: true }}
-          className="relative rounded-[2.5rem] p-10 md:p-14 border border-red-500/70 hover:border-red-400/90 bg-zinc-900/60 overflow-hidden group shadow-[0_0_50px_-12px_rgba(239,68,68,0.2)] hover:shadow-[inset_0_0_30px_rgba(239,68,68,0.15)] transition-all duration-700"
+          className="relative rounded-[2rem] sm:rounded-[2.5rem] p-8 sm:p-10 md:p-14 border border-red-500/70 hover:border-red-400/90 bg-zinc-900/60 overflow-hidden group shadow-[0_0_50px_-12px_rgba(239,68,68,0.2)] hover:shadow-[inset_0_0_30px_rgba(239,68,68,0.15)] transition-all duration-700"
         >
           {/* Icono de fondo decorativo */}
-          <AlertTriangle className="absolute right-[-20px] bottom-[-20px] text-white/5 rotate-12" size={300} />
+          <AlertTriangle className="absolute right-[-20px] bottom-[-20px] text-white/5 rotate-12" size={250} />
 
-          <h3 className="text-3xl md:text-4xl font-normal font-aston text-center mb-12 relative z-10">
+          <h3 className="text-2xl sm:text-3xl md:text-4xl font-normal font-aston text-center mb-8 sm:mb-12 relative z-10">
             Sintomatología que erradicamos:
           </h3>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8 relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 sm:gap-x-12 gap-y-6 sm:gap-y-8 relative z-10">
             {SYMPTOMS.map((symptom, sIdx) => (
               <motion.div 
                 key={sIdx}
                 initial={{ opacity: 0, x: -10 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 + (sIdx * 0.1) }}
-                className="flex items-start gap-4"
+                className="flex items-start gap-3 sm:gap-4"
               >
-                <div className="w-2.5 h-2.5 rounded-full bg-red-500 mt-2 shadow-[0_0_10px_#ef4444]" />
-                <p className="text-zinc-400 text-base md:text-lg leading-snug">
+                <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 rounded-full bg-red-500 mt-1.5 sm:mt-2 shadow-[0_0_10px_#ef4444]" />
+                <p className="text-zinc-400 text-sm sm:text-base md:text-lg leading-snug">
                   {symptom}
                 </p>
               </motion.div>

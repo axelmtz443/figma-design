@@ -1,4 +1,3 @@
-import React from 'react';
 import Navbar from '../../../components/General/Navbar';
 import Footer from '../../../components/General/Footer';
 import ScrollReveal from '../../../components/General/ScrollReveal';

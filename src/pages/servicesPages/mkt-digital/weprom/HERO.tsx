@@ -14,7 +14,7 @@ const WepromLogo = () => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     viewBox="0 0 780.55 712.65"
-    className="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 drop-shadow-[0_0_50px_rgba(89,157,223,0.3)] transition-all duration-500"
+    className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 drop-shadow-[0_0_50px_rgba(89,157,223,0.3)] transition-all duration-500"
   >
     <defs>
       <style>{`
@@ -131,10 +131,10 @@ const OrbitalSystem = () => {
   const tiltY = 15;
 
   return (
-    <div className="relative w-full h-[400px] sm:h-[500px] lg:h-[600px] flex items-center justify-center perspective-1000">
+    <div className="relative w-full h-[300px] sm:h-[380px] md:h-[450px] lg:h-[550px] xl:h-[600px] flex items-center justify-center perspective-1000">
       <div className="absolute z-10">
         <WepromLogo />
-        <div className="absolute inset-0 bg-[#599ddf] blur-[120px] opacity-15 -z-10 rounded-full" />
+        <div className="absolute inset-0 bg-[#599ddf] blur-[100px] sm:blur-[120px] opacity-15 -z-10 rounded-full" />
       </div>
 
       {differentiators.map((diff, index) => {
@@ -158,12 +158,12 @@ const OrbitalSystem = () => {
               filter: `blur(${Math.max(0, (radiusZ - z) * 0.006 - 0.5)}px)`
             }}
           >
-            <div className="bg-[#0c0d0e]/80 backdrop-blur-md border border-zinc-800/80 p-2.5 lg:p-3 rounded-xl shadow-2xl flex items-center gap-2.5 transition-all duration-300 group w-44 md:w-48 hover:bg-neutral-900/90 hover:border-zinc-700/80">
-              <div className="shrink-0 w-8 h-8 bg-zinc-800/50 rounded-lg flex items-center justify-center border border-zinc-700/20">
-                <Icon className="w-4 h-4 text-[#599ddf] drop-shadow-md" />
+            <div className="bg-[#0c0d0e]/80 backdrop-blur-md border border-zinc-800/80 p-2 sm:p-2.5 lg:p-3 rounded-xl shadow-2xl flex items-center gap-2 sm:gap-2.5 transition-all duration-300 group w-36 sm:w-40 md:w-44 lg:w-48 hover:bg-neutral-900/90 hover:border-zinc-700/80">
+              <div className="shrink-0 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-zinc-800/50 rounded-lg flex items-center justify-center border border-zinc-700/20">
+                <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#599ddf] drop-shadow-md" />
               </div>
               <div className="flex flex-col justify-center text-left">
-                <span className="font-bold text-neutral-100 text-[11px] md:text-xs leading-snug">{diff.title}</span>
+                <span className="font-bold text-neutral-100 text-[10px] sm:text-[10px] md:text-[11px] lg:text-xs leading-snug">{diff.title}</span>
               </div>
             </div>
           </div>
@@ -180,11 +180,11 @@ export default function HeroWeprom() {
       className="min-h-screen text-white select-none relative overflow-hidden flex flex-col justify-between w-full bg-transparent"
       style={{ fontFamily: FONTS.body }}
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full grid grid-cols-1 lg:grid-cols-12 gap-12 items-center flex-1 pt-12 lg:pt-20 pb-8 relative z-10">
-        <div className="lg:col-span-5 flex flex-col items-start text-left space-y-6 lg:space-y-8 z-20">
-          <div className="space-y-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center flex-1 pt-10 sm:pt-12 lg:pt-16 xl:pt-20 pb-6 sm:pb-8 relative z-10">
+        <div className="lg:col-span-5 flex flex-col items-start text-left space-y-4 sm:space-y-5 lg:space-y-6 xl:space-y-8 z-20">
+          <div className="space-y-3 sm:space-y-4">
             <h1
-              className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-br from-white via-neutral-100 to-neutral-400"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-br from-white via-neutral-100 to-neutral-400"
               style={{ fontFamily: FONTS.heading }}
             >
               Los expertos en <br/>
@@ -193,24 +193,24 @@ export default function HeroWeprom() {
               </span>
             </h1>
             <h2
-              className="text-base sm:text-lg lg:text-xl text-neutral-400 font-light leading-relaxed max-w-xl"
+              className="text-sm sm:text-base md:text-lg lg:text-xl text-neutral-400 font-light leading-relaxed max-w-xl"
               style={{ fontFamily: FONTS.body }}
             >
               Apoyamos a empresas líderes a superar sus objetivos de marketing, logrando resultados reales y escalables.
             </h2>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
             <button
               onClick={() => openPopup('Marketing Digital')}
-              className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-[#009fe3] to-[#599ddf] text-white font-bold text-sm shadow-xl shadow-blue-500/10 hover:shadow-blue-500/20 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2"
+              className="px-5 sm:px-6 lg:px-7 py-3 sm:py-3.5 rounded-xl bg-gradient-to-r from-[#009fe3] to-[#599ddf] text-white font-bold text-xs sm:text-sm shadow-xl shadow-blue-500/10 hover:shadow-blue-500/20 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2"
             >
               <span>Contactar</span>
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
               onClick={() => openPopup('Marketing Digital')}
-              className="px-7 py-3.5 rounded-xl bg-zinc-950/40 border border-zinc-800/80 hover:bg-zinc-900/60 text-zinc-300 hover:text-white font-semibold text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
+              className="px-5 sm:px-6 lg:px-7 py-3 sm:py-3.5 rounded-xl bg-zinc-950/40 border border-zinc-800/80 hover:bg-zinc-900/60 text-zinc-300 hover:text-white font-semibold text-xs sm:text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
             >
               <Calendar className="w-4 h-4 text-[#599ddf]" />
               <span>Solicitar Reunión de diagnóstico</span>
@@ -224,15 +224,15 @@ export default function HeroWeprom() {
       </div>
 
       <div className="w-full relative z-10 border-t border-zinc-900/60 bg-gradient-to-b from-transparent">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20 text-center space-y-5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-16 lg:py-20 text-center space-y-3 sm:space-y-4 lg:space-y-5">
           <h1
-            className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-white"
             style={{ fontFamily: FONTS.heading }}
           >
             El Poder de las Grandes Marcas
           </h1>
           <p
-            className="text-sm sm:text-base lg:text-lg text-zinc-400 leading-relaxed max-w-5xl mx-auto font-light"
+            className="text-sm sm:text-base md:text-lg lg:text-xl text-zinc-400 leading-relaxed max-w-5xl mx-auto font-light px-4"
             style={{ fontFamily: FONTS.body }}
           >
             Más de 35 años trabajando con las grandes marcas nos han mostrado el camino al éxito.{' '}

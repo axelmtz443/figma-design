@@ -207,28 +207,33 @@ export default function SuccessStories() {
   };
 
   return (
-    <div className="min-h-screen bg-transparent text-white font-montserrat flex flex-col items-center p-4 sm:p-8 relative overflow-hidden py-12 md:py-20">
+    <div className="min-h-screen bg-transparent text-white font-montserrat flex flex-col items-center p-3 sm:p-5 md:p-8 relative overflow-hidden py-10 sm:py-14 md:py-20">
       <div className="w-full max-w-7xl mx-auto z-10 flex flex-col items-center">
 
         {/* Encabezado */}
-        <div className="mb-12 flex flex-col items-center text-center w-full">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-6 h-[2px] bg-[#e6af41]" />
-            <span className="text-[#e6af41] font-semibold tracking-wider text-xs sm:text-sm uppercase">
+        <div className="mb-8 sm:mb-10 md:mb-12 flex flex-col items-center text-center w-full px-2">
+          <div className="flex items-center gap-3 mb-3 sm:mb-4">
+            <div className="w-5 sm:w-6 h-[2px] bg-[#e6af41]" />
+            <span className="text-[#e6af41] font-semibold tracking-wider text-[10px] sm:text-xs md:text-sm uppercase">
               Casos de Éxito
             </span>
-            <div className="w-6 h-[2px] bg-[#e6af41]" />
+            <div className="w-5 sm:w-6 h-[2px] bg-[#e6af41]" />
           </div>
-          <h2 className="font-astonpoliz text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
+          <h2 className="font-astonpoliz text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">
             Marcas que dejan huella
           </h2>
-          <p className="text-zinc-400 font-light text-sm sm:text-base max-w-2xl">
+          <p className="text-zinc-400 font-light text-xs sm:text-sm md:text-base max-w-xs sm:max-w-lg md:max-w-2xl">
             Explora una selección de nuestros mejores proyectos de identidad y estrategia. Creemos que cada marca tiene una historia única que merece ser contada con un diseño excepcional.
           </p>
         </div>
 
-        {/* Grid Bento */}
-        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-[240px_240px_140px] gap-4 h-auto md:h-[650px] w-full relative">
+        {/*
+          Grid Bento:
+          - Mobile (< md): una columna, cards apiladas con altura fija
+          - Tablet (md): grid de 4 col con row heights fijas — igual que el original
+          - Los items con size "md:col-span-4" ocupan ancho completo en tablet+
+        */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 md:grid-rows-[240px_240px_140px] gap-3 sm:gap-4 h-auto md:h-[650px] w-full relative">
           {portfolioItems.map((item) => {
             const isExpanded = expandedId === item.id;
             const isHidden = expandedId !== null && !isExpanded;
@@ -247,8 +252,8 @@ export default function SuccessStories() {
                 onClick={() => !isExpanded && setExpandedId(item.id)}
                 className={`group relative rounded-2xl overflow-hidden bg-zinc-950 border border-white/5 transition-all duration-700 ease-in-out ${
                   isExpanded
-                    ? 'col-span-1 md:col-span-4 row-span-1 md:row-span-3 cursor-default z-20 h-full'
-                    : `${item.size} h-48 md:h-auto cursor-pointer z-10 hover:shadow-2xl`
+                    ? 'col-span-1 sm:col-span-2 md:col-span-4 row-span-1 md:row-span-3 cursor-default z-20 h-auto md:h-full'
+                    : `${item.size} h-44 sm:h-52 md:h-auto cursor-pointer z-10 hover:shadow-2xl`
                 }`}
               >
                 {/* Vista normal */}
@@ -267,11 +272,11 @@ export default function SuccessStories() {
                   )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
 
-                  <div className={`absolute inset-0 p-6 sm:p-8 flex flex-col justify-end ${item.id === 5 ? 'md:justify-center' : ''}`}>
+                  <div className={`absolute inset-0 p-4 sm:p-6 md:p-8 flex flex-col justify-end ${item.id === 5 ? 'md:justify-center' : ''}`}>
                     <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-500 w-full">
-                      <div className={`flex ${item.id === 5 ? 'md:flex-row md:items-center md:justify-between' : 'flex-col'} gap-4`}>
+                      <div className={`flex ${item.id === 5 ? 'md:flex-row md:items-center md:justify-between' : 'flex-col'} gap-3 sm:gap-4`}>
                         <div className="flex-1">
-                          <div className="mb-3 h-8 flex items-center justify-start opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75">
+                          <div className="mb-2 sm:mb-3 h-7 sm:h-8 flex items-center justify-start opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75">
                             <SafeLogo src={item.logo} client={item.client} color={item.color} className="h-full" />
                           </div>
                           <div
@@ -279,18 +284,18 @@ export default function SuccessStories() {
                             style={{ backgroundColor: item.color }}
                           />
                           <span
-                            className="text-xs font-semibold tracking-wider uppercase mb-1 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100"
+                            className="text-[10px] sm:text-xs font-semibold tracking-wider uppercase mb-1 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100"
                             style={{ color: item.color }}
                           >
                             {item.service}
                           </span>
-                          <h3 className="font-astonpoliz text-2xl sm:text-3xl text-white drop-shadow-lg">
+                          <h3 className="font-astonpoliz text-lg sm:text-2xl md:text-3xl text-white drop-shadow-lg">
                             {item.client}
                           </h3>
                         </div>
                         <div className="flex items-center justify-end">
-                          <div className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:rotate-45 hover:bg-white/20 flex-shrink-0">
-                            <ArrowUpRight size={20} className="text-white" />
+                          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:rotate-45 hover:bg-white/20 flex-shrink-0">
+                            <ArrowUpRight size={18} className="text-white" />
                           </div>
                         </div>
                       </div>
@@ -309,32 +314,32 @@ export default function SuccessStories() {
                       e.stopPropagation();
                       setExpandedId(null);
                     }}
-                    className="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 rounded-full bg-black/60 border border-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/10 hover:scale-105 transition-all duration-300 z-30"
+                    className="absolute top-3 right-3 sm:top-5 sm:right-5 md:top-8 md:right-8 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/60 border border-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/10 hover:scale-105 transition-all duration-300 z-30"
                   >
-                    <X size={24} />
+                    <X size={20} />
                   </button>
 
                   {/* Panel izquierdo */}
-                  <div className="w-full md:w-5/12 p-8 md:p-14 flex flex-col justify-center relative z-10 h-[50%] md:h-full overflow-y-auto border-b md:border-b-0 md:border-r border-white/5">
-                    <div className="h-16 md:h-20 flex items-center mb-8 flex-shrink-0">
+                  <div className="w-full md:w-5/12 p-6 sm:p-8 md:p-14 flex flex-col justify-center relative z-10 max-h-[55vw] sm:max-h-none md:max-h-none md:h-full overflow-y-auto border-b md:border-b-0 md:border-r border-white/5">
+                    <div className="h-12 sm:h-16 md:h-20 flex items-center mb-5 sm:mb-8 flex-shrink-0">
                       <SafeLogo src={item.logo} client={item.client} color={item.color} className="h-full" />
                     </div>
-                    <div className="flex items-center gap-3 mb-6">
-                      <div className="w-8 h-[2px]" style={{ backgroundColor: item.color }} />
-                      <span className="font-semibold tracking-wider text-xs sm:text-sm uppercase" style={{ color: item.color }}>
+                    <div className="flex items-center gap-3 mb-4 sm:mb-6">
+                      <div className="w-6 sm:w-8 h-[2px]" style={{ backgroundColor: item.color }} />
+                      <span className="font-semibold tracking-wider text-[10px] sm:text-xs md:text-sm uppercase" style={{ color: item.color }}>
                         {item.service}
                       </span>
                     </div>
-                    <h3 className="font-astonpoliz text-3xl sm:text-4xl md:text-5xl text-white mb-6">
+                    <h3 className="font-astonpoliz text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 sm:mb-6">
                       {item.client}
                     </h3>
-                    <p className="text-zinc-300 font-light text-sm sm:text-base md:text-lg leading-relaxed">
+                    <p className="text-zinc-300 font-light text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed">
                       {item.description}
                     </p>
                   </div>
 
                   {/* Panel derecho */}
-                  <div className="w-full md:w-7/12 p-4 md:p-6 flex flex-col sm:flex-row gap-4 h-[50%] md:h-full bg-zinc-950/40">
+                  <div className="w-full md:w-7/12 p-3 sm:p-4 md:p-6 flex flex-col sm:flex-row gap-3 sm:gap-4 flex-1 md:h-full bg-zinc-950/40">
                     {(() => {
                       const exp1ErrorKey = `${item.id}_exp1`;
                       const displayExp1 =
@@ -343,7 +348,7 @@ export default function SuccessStories() {
                           : resolveImagePath(item.expandedImage1);
 
                       return (
-                        <div className="w-full sm:w-1/2 h-full rounded-xl overflow-hidden relative border border-white/5 bg-zinc-900/60 flex items-center justify-center">
+                        <div className="w-full sm:w-1/2 min-h-[140px] sm:h-full rounded-xl overflow-hidden relative border border-white/5 bg-zinc-900/60 flex items-center justify-center">
                           {displayExp1 ? (
                             <img
                               src={displayExp1}
@@ -352,16 +357,16 @@ export default function SuccessStories() {
                               onError={() => handleImageError(item.id, 'exp1')}
                             />
                           ) : (
-                            <div className="flex flex-col items-center text-center p-6 gap-3">
+                            <div className="flex flex-col items-center text-center p-4 sm:p-6 gap-3">
                               <div
-                                className="w-12 h-12 rounded-full flex items-center justify-center border border-white/10"
+                                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border border-white/10"
                                 style={{ backgroundColor: `${item.color}10` }}
                               >
-                                <ImageIcon size={22} style={{ color: item.color }} />
+                                <ImageIcon size={20} style={{ color: item.color }} />
                               </div>
                               <div>
-                                <p className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Fotografía Principal</p>
-                                <p className="text-[10px] text-zinc-500 mt-1">Diseño de Identidad / Concepto</p>
+                                <p className="text-[10px] sm:text-xs font-semibold tracking-wider text-zinc-400 uppercase">Fotografía Principal</p>
+                                <p className="text-[9px] sm:text-[10px] text-zinc-500 mt-1">Diseño de Identidad / Concepto</p>
                               </div>
                             </div>
                           )}
@@ -377,7 +382,7 @@ export default function SuccessStories() {
                           : resolveImagePath(item.expandedImage2);
 
                       return (
-                        <div className="w-full sm:w-1/2 h-full rounded-xl overflow-hidden relative border border-white/5 bg-zinc-900/60 flex items-center justify-center">
+                        <div className="w-full sm:w-1/2 min-h-[140px] sm:h-full rounded-xl overflow-hidden relative border border-white/5 bg-zinc-900/60 flex items-center justify-center">
                           {displayExp2 ? (
                             <img
                               src={displayExp2}
@@ -386,16 +391,16 @@ export default function SuccessStories() {
                               onError={() => handleImageError(item.id, 'exp2')}
                             />
                           ) : (
-                            <div className="flex flex-col items-center text-center p-6 gap-3">
+                            <div className="flex flex-col items-center text-center p-4 sm:p-6 gap-3">
                               <div
-                                className="w-12 h-12 rounded-full flex items-center justify-center border border-white/10"
+                                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border border-white/10"
                                 style={{ backgroundColor: `${item.color}10` }}
                               >
-                                <Sparkles size={22} style={{ color: item.color }} />
+                                <Sparkles size={20} style={{ color: item.color }} />
                               </div>
                               <div>
-                                <p className="text-xs font-semibold tracking-wider text-zinc-400 uppercase">Aplicación de Marca</p>
-                                <p className="text-[10px] text-zinc-500 mt-1">Diseño de Packaging / Editorial</p>
+                                <p className="text-[10px] sm:text-xs font-semibold tracking-wider text-zinc-400 uppercase">Aplicación de Marca</p>
+                                <p className="text-[9px] sm:text-[10px] text-zinc-500 mt-1">Diseño de Packaging / Editorial</p>
                               </div>
                             </div>
                           )}
@@ -410,20 +415,19 @@ export default function SuccessStories() {
         </div>
 
         {/* CTA */}
-        <div className="mt-12 md:mt-16 flex justify-center z-10 w-full">
+        <div className="mt-10 sm:mt-12 md:mt-16 flex justify-center z-10 w-full px-4">
           <a
             href="https://xeryusinvest.com/portafolio"
             target="_blank"
             rel="noopener noreferrer"
-            className="group relative inline-flex items-center justify-center gap-3 px-10 py-4 bg-transparent border-2 border-[#e6af41] text-[#e6af41] font-semibold tracking-wider uppercase text-xs sm:text-sm rounded-full overflow-hidden transition-all duration-300 hover:bg-[#e6af41] hover:text-black hover:shadow-[0_0_30px_rgba(230,175,65,0.35)]"
+            className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-7 sm:px-10 py-3 sm:py-4 bg-transparent border-2 border-[#e6af41] text-[#e6af41] font-semibold tracking-wider uppercase text-[10px] sm:text-xs md:text-sm rounded-full overflow-hidden transition-all duration-300 hover:bg-[#e6af41] hover:text-black hover:shadow-[0_0_30px_rgba(230,175,65,0.35)] w-full sm:w-auto justify-center"
           >
             <span>Ver portafolio completo</span>
-            <ArrowUpRight size={18} className="transform transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
+            <ArrowUpRight size={16} className="transform transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
           </a>
         </div>
 
       </div>
     </div>
-    
   );
 }

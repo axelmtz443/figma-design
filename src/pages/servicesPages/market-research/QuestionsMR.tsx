@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 interface QuestionItem {
@@ -11,7 +11,6 @@ interface QuestionItem {
 export default function ElPoderDeLaInformacion() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
-  // Paleta de colores oficial WeProm
   const brand = {
     red: '#c5362e',
     blue: '#599ddf',
@@ -19,69 +18,39 @@ export default function ElPoderDeLaInformacion() {
     yellow: '#e6af41',
   };
 
-  // Set unificado y corregido de preguntas estratégicas
   const questions: QuestionItem[] = [
-    { 
-      id: 1, 
-      text: "¿Puede mi proyecto de negocio", 
-      boldPart: "SER EXITOSO?", 
-      color: brand.red,
-    },
-    { 
-      id: 2, 
-      text: "¿Qué hacen mis competidores para", 
-      boldPart: "GANAR CLIENTES?", 
-      color: brand.blue,
-    },
-    { 
-      id: 3, 
-      text: "¿Hacia dónde debería", 
-      boldPart: "EXPANDIR MI NEGOCIO?", 
-      color: brand.green,
-    },
-    { 
-      id: 4, 
-      text: "¿Qué puedo hacer para", 
-      boldPart: "INCREMENTAR MIS VENTAS?", 
-      color: brand.yellow,
-    },
-    { 
-      id: 5, 
-      text: "¿Qué debe tener mi proyecto para", 
-      boldPart: "GENERAR RESULTADOS?", 
-      color: brand.red, 
-    },
+    { id: 1, text: "¿Puede mi proyecto de negocio", boldPart: "SER EXITOSO?", color: brand.red },
+    { id: 2, text: "¿Qué hacen mis competidores para", boldPart: "GANAR CLIENTES?", color: brand.blue },
+    { id: 3, text: "¿Hacia dónde debería", boldPart: "EXPANDIR MI NEGOCIO?", color: brand.green },
+    { id: 4, text: "¿Qué puedo hacer para", boldPart: "INCREMENTAR MIS VENTAS?", color: brand.yellow },
+    { id: 5, text: "¿Qué debe tener mi proyecto para", boldPart: "GENERAR RESULTADOS?", color: brand.red },
   ];
 
   return (
-    <section className="w-full py-20 sm:py-28 bg-transparent font-montserrat text-white select-none overflow-hidden">
+    <section className="w-full py-16 sm:py-20 lg:py-28 bg-transparent font-montserrat text-white select-none overflow-hidden">
       
-      {/* Estilos locales seguros para fuentes y utilidades */}
       <style dangerouslySetInnerHTML={{__html: `
         .font-aston { font-family: 'ASTONPOLIZ', 'Anton', sans-serif; }
       `}} />
 
-      <div className="max-w-5xl mx-auto px-6 sm:px-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        {/* Encabezado Principal Premium */}
         <motion.div
-          className="text-center mb-16 sm:mb-20"
+          className="text-center mb-12 sm:mb-16 lg:mb-20"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          
-          <h2 className="font-aston text-3xl sm:text-4xl md:text-5xl tracking-wide mb-5 bg-gradient-to-b from-white to-white/80 bg-clip-text text-transparent">
+          <h2 className="font-aston text-2xl sm:text-3xl md:text-4xl lg:text-5xl tracking-wide mb-3 sm:mb-4 lg:mb-5 bg-gradient-to-b from-white to-white/80 bg-clip-text text-transparent">
             El Poder de la Información
           </h2>
-          <div className="w-16 h-[2px] bg-white/20 mx-auto mb-5" />
-          <p className="text-white/90 text-base sm:text-xl max-w-xl mx-auto font-medium leading-relaxed">
+          <div className="w-12 sm:w-16 h-[2px] bg-white/20 mx-auto mb-4 sm:mb-5" />
+          <p className="text-white/90 text-sm sm:text-base lg:text-xl max-w-xl mx-auto font-medium leading-relaxed">
             A través de la Investigación de Mercados podrás responder estas preguntas:
           </p>
         </motion.div>
 
-        {/* Contenedor de Franjas Interactivas */}
         <div className="flex flex-col rounded-2xl overflow-hidden border border-white/10 bg-[#070708]/40 backdrop-blur-md shadow-2xl">
           {questions.map((q, index) => (
             <motion.div
@@ -94,13 +63,11 @@ export default function ElPoderDeLaInformacion() {
               transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
               className="relative group overflow-hidden border-b border-white/[0.06] last:border-b-0 transition-all duration-500 ease-[0.25,1,0.5,1]"
               style={{
-                height: hoveredId === q.id ? '130px' : '90px',
+                height: hoveredId === q.id ? '110px sm:120px md:130px' : '70px sm:80px md:90px',
               }}
             >
-              {/* Fondo base oscuro profundo */}
               <div className="absolute inset-0 bg-[#08080a] transition-colors duration-500 group-hover:bg-[#0c0c10]" />
 
-              {/* Relleno Gradual de Color de Marca (Brillo/Glow interno) */}
               <div 
                 className="absolute inset-0 transition-all duration-700 ease-out pointer-events-none"
                 style={{
@@ -109,26 +76,22 @@ export default function ElPoderDeLaInformacion() {
                 }}
               />
 
-              {/* Contenido de la Franja */}
-              <div className="relative z-10 h-full flex items-center justify-between px-6 sm:px-12 md:px-16">
+              <div className="relative z-10 h-full flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16">
                 
-                {/* Estructura del Texto Adaptativa (Flex-row en desktop / Flex-col en mobile) */}
                 <div 
-                  className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3 md:gap-4 transition-transform duration-500 ease-out"
+                  className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2 md:gap-3 lg:gap-4 transition-transform duration-500 ease-out"
                   style={{
-                    transform: hoveredId === q.id ? 'translateX(12px)' : 'translateX(0px)'
+                    transform: hoveredId === q.id ? 'translateX(8px) sm:translateX(12px)' : 'translateX(0px)'
                   }}
                 >
-                  {/* Texto base de la pregunta */}
-                  <span className={`text-xs sm:text-base md:text-lg font-light tracking-wide transition-colors duration-300 ${hoveredId === q.id ? 'text-white/90' : 'text-white/50'}`}>
+                  <span className={`text-[11px] sm:text-xs md:text-sm lg:text-base font-light tracking-wide transition-colors duration-300 ${hoveredId === q.id ? 'text-white/90' : 'text-white/50'}`}>
                     {q.text}
                   </span>
                   
-                  {/* Texto destacado (Astonpoliz / Negrita) */}
                   <span 
-                    className="text-sm sm:text-lg md:text-2xl font-aston tracking-widest font-bold leading-none transition-all duration-500"
+                    className="text-sm sm:text-base md:text-lg lg:text-2xl font-aston tracking-widest font-bold leading-none transition-all duration-500"
                     style={{ 
-                      color: hoveredId === q.id ? '#white' : '#e2e8f0',
+                      color: hoveredId === q.id ? '#ffffff' : '#e2e8f0',
                       textShadow: hoveredId === q.id ? `0 0 20px ${q.color}40` : 'none'
                     }}
                   >
@@ -138,9 +101,8 @@ export default function ElPoderDeLaInformacion() {
 
               </div>
 
-              {/* Barra lateral izquierda de acento de marca */}
               <div 
-                className="absolute left-0 top-0 bottom-0 w-[4px] z-20 transition-all duration-500 ease-out"
+                className="absolute left-0 top-0 bottom-0 w-[3px] sm:w-[4px] z-20 transition-all duration-500 ease-out"
                 style={{ 
                   backgroundColor: q.color,
                   boxShadow: hoveredId === q.id ? `4px 0 30px ${q.color}` : 'none',
@@ -150,13 +112,6 @@ export default function ElPoderDeLaInformacion() {
             </motion.div>
           ))}
         </div>
-
-        {/* Branding Footer Sutil */}
-        {/* <div className="mt-14 flex items-center justify-center opacity-15 hover:opacity-30 transition-opacity duration-700">
-           <span className="text-[9px] sm:text-[10px] tracking-[0.6em] text-white uppercase font-medium">
-             WeProm &middot; Market Research Excellence
-           </span>
-        </div> */}
 
       </div>
     </section>

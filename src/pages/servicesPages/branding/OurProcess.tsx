@@ -71,7 +71,7 @@ const STEPS: Step[] = [
 function StepCard({ step, isHovered, align = 'left' }: StepCardProps) {
   return (
     <div
-      className="relative flex flex-col justify-between p-4 xl:p-5 rounded-2xl bg-[#0a0a0a] border transition-all duration-500 w-full overflow-hidden min-h-[160px] md:min-h-[180px] xl:min-h-[210px]"
+      className="relative flex flex-col justify-between p-4 xl:p-5 rounded-2xl bg-[#0a0a0a] border transition-all duration-500 w-full overflow-hidden min-h-[150px] md:min-h-[180px] xl:min-h-[210px]"
       style={{
         borderColor: isHovered ? `${step.color}50` : '#1f2937',
         boxShadow: isHovered ? `0 15px 35px -10px ${step.color}30` : '0 4px 20px -5px rgba(0,0,0,0.5)',
@@ -109,7 +109,7 @@ function StepCard({ step, isHovered, align = 'left' }: StepCardProps) {
 
       <div className="relative z-10 flex flex-col items-center h-full">
         <h3
-          className="font-title text-base xl:text-lg mb-2 transition-colors duration-300"
+          className="font-title text-sm md:text-base xl:text-lg mb-2 transition-colors duration-300"
           style={{ color: isHovered ? step.color : '#ffffff' }}
         >
           {step.title}
@@ -127,7 +127,7 @@ function MobileTimelineItem({ step, index, isVisible }: TimelineItemProps) {
 
   return (
     <div
-      className={`relative flex items-center w-full mb-12 transition-all duration-1000 ease-out ${
+      className={`relative flex items-center w-full mb-10 sm:mb-12 transition-all duration-1000 ease-out ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
       }`}
       style={{ transitionDelay: `${index * 150}ms` }}
@@ -135,15 +135,15 @@ function MobileTimelineItem({ step, index, isVisible }: TimelineItemProps) {
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Icon node */}
-      <div className="absolute left-[28px] md:left-[40px] flex flex-col items-center justify-center z-20">
+      <div className="absolute left-[22px] sm:left-[28px] md:left-[40px] flex flex-col items-center justify-center z-20">
         <div
-          className="absolute -top-6 font-title text-sm md:text-base font-bold transition-all duration-300"
+          className="absolute -top-6 font-title text-xs sm:text-sm md:text-base font-bold transition-all duration-300"
           style={{ color: isHovered ? step.color : '#4b5563' }}
         >
           {step.id}
         </div>
         <div
-          className="w-12 h-12 md:w-16 md:h-16 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center transition-all duration-500 relative overflow-hidden"
+          className="w-10 h-10 sm:w-12 sm:h-12 md:w-16 md:h-16 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center transition-all duration-500 relative overflow-hidden"
           style={{
             borderColor: isHovered ? step.color : '#374151',
             boxShadow: isHovered ? `0 0 20px ${step.color}60` : 'none',
@@ -153,7 +153,7 @@ function MobileTimelineItem({ step, index, isVisible }: TimelineItemProps) {
         >
           {step.icon}
         </div>
-        {/* Horizontal connector to card */}
+        {/* Horizontal connector */}
         <div
           className="absolute top-1/2 left-full h-[2px] transition-all duration-500 -z-10"
           style={{
@@ -165,7 +165,7 @@ function MobileTimelineItem({ step, index, isVisible }: TimelineItemProps) {
       </div>
 
       {/* Card */}
-      <div className="w-full pl-[80px] md:pl-[120px]">
+      <div className="w-full pl-[64px] sm:pl-[80px] md:pl-[120px]">
         <StepCard step={step} isHovered={isHovered} align="left" />
       </div>
     </div>
@@ -178,7 +178,7 @@ function DesktopGridItem({ step, index, isVisible }: TimelineItemProps) {
 
   return (
     <div
-      className={`relative w-full h-[450px] xl:h-[500px] flex flex-col items-center justify-center transition-all duration-1000 ease-out ${
+      className={`relative w-full h-[420px] xl:h-[500px] flex flex-col items-center justify-center transition-all duration-1000 ease-out ${
         isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16'
       }`}
       style={{ transitionDelay: `${index * 150}ms` }}
@@ -194,7 +194,7 @@ function DesktopGridItem({ step, index, isVisible }: TimelineItemProps) {
           {step.id}
         </div>
         <div
-          className="w-12 h-12 xl:w-14 xl:h-14 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center transition-all duration-500 overflow-hidden cursor-pointer"
+          className="w-11 h-11 xl:w-14 xl:h-14 rounded-full bg-[#0a0a0a] border-2 flex items-center justify-center transition-all duration-500 overflow-hidden cursor-pointer"
           style={{
             borderColor: isHovered ? step.color : '#374151',
             boxShadow: isHovered ? `0 0 25px ${step.color}80, inset 0 0 10px ${step.color}40` : 'none',
@@ -210,7 +210,7 @@ function DesktopGridItem({ step, index, isVisible }: TimelineItemProps) {
       {isTop && (
         <div className="absolute bottom-1/2 pb-10 xl:pb-12 flex flex-col items-center w-full z-10">
           <div
-            className="w-[170px] lg:w-[190px] xl:w-[210px] mb-4 transition-all duration-500 origin-bottom"
+            className="w-[150px] lg:w-[170px] xl:w-[210px] mb-4 transition-all duration-500 origin-bottom"
             style={{ transform: isHovered ? 'translateY(8px)' : 'translateY(0)' }}
           >
             <StepCard step={step} isHovered={isHovered} align="center" />
@@ -236,7 +236,7 @@ function DesktopGridItem({ step, index, isVisible }: TimelineItemProps) {
             }}
           />
           <div
-            className="w-[170px] lg:w-[190px] xl:w-[210px] mt-4 transition-all duration-500 origin-top"
+            className="w-[150px] lg:w-[170px] xl:w-[210px] mt-4 transition-all duration-500 origin-top"
             style={{ transform: isHovered ? 'translateY(-8px)' : 'translateY(0)' }}
           >
             <StepCard step={step} isHovered={isHovered} align="center" />
@@ -269,7 +269,7 @@ export default function OurProcess() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-transparent min-h-screen py-24 overflow-hidden flex flex-col justify-center"
+      className="relative w-full bg-transparent min-h-screen py-16 sm:py-20 md:py-24 overflow-hidden flex flex-col justify-center"
     >
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap');
@@ -316,21 +316,21 @@ export default function OurProcess() {
 
       {/* Header */}
       <div
-        className={`text-center max-w-3xl mx-auto mb-12 px-6 lg:mb-16 space-y-6 transition-all duration-1000 ease-out z-20 relative ${
+        className={`text-center max-w-xs sm:max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto mb-10 sm:mb-12 md:mb-16 px-4 sm:px-6 space-y-4 sm:space-y-6 transition-all duration-1000 ease-out z-20 relative ${
           isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
         }`}
       >
-        <h2 className="font-title text-4xl md:text-5xl lg:text-6xl text-white tracking-tight">
+        <h2 className="font-title text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-white tracking-tight">
           Nuestro Proceso <b>Creativo</b>
         </h2>
-        <p className="font-text text-gray-400 text-lg md:text-xl leading-relaxed">
+        <p className="font-text text-gray-400 text-base sm:text-lg md:text-xl leading-relaxed">
           Un proceso estructurado para transformar ideas en marcas que lideran. Sin pasos innecesarios, solo resultados.
         </p>
       </div>
 
       {/* Mobile timeline */}
-      <div className="block lg:hidden relative w-full max-w-2xl mx-auto px-6">
-        <div className="absolute left-[52px] md:left-[64px] top-0 bottom-0 w-[2px] bg-gray-800 -translate-x-1/2 overflow-hidden rounded-full">
+      <div className="block lg:hidden relative w-full max-w-sm sm:max-w-lg md:max-w-2xl mx-auto px-4 sm:px-6">
+        <div className="absolute left-[44px] sm:left-[52px] md:left-[64px] top-0 bottom-0 w-[2px] bg-gray-800 -translate-x-1/2 overflow-hidden rounded-full">
           <div className="traveling-line-y" />
         </div>
         <div className="relative z-10 pt-8 pb-8">
@@ -341,7 +341,7 @@ export default function OurProcess() {
       </div>
 
       {/* Desktop timeline */}
-      <div className="hidden lg:grid grid-cols-6 relative w-full max-w-[1100px] xl:max-w-[1300px] mx-auto px-6 lg:px-12 xl:px-16">
+      <div className="hidden lg:grid grid-cols-6 relative w-full max-w-[1000px] xl:max-w-[1300px] mx-auto px-6 lg:px-10 xl:px-16">
         {/* Horizontal center line */}
         <div className="absolute left-[8.33%] right-[8.33%] top-1/2 -translate-y-1/2 h-[2px] bg-gray-800 overflow-hidden rounded-full z-0">
           <div className="traveling-line-x" />

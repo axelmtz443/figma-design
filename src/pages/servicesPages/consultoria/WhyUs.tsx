@@ -7,19 +7,19 @@ const reasons = [
     title: "Autoridad Corporativa",
     description: "Más de 35 años acompañando empresas en su transformación. Experiencia que se traduce en decisiones más inteligentes y resultados más rápidos.",
     icon: Award,
-    color: "#ef4444", // Rojo
+    color: "#ef4444",
   },
   {
     title: "Visión Holística del Negocio",
     description: "Alineamos objetivos comerciales, procesos y métricas con el propósito real de la empresa bajo una dirección clara.",
     icon: Users,
-    color: "#22c55e", // Verde
+    color: "#22c55e",
   },
   {
     title: "Compromiso Directivo",
     description: "Nos involucramos en cada etapa del proyecto para asegurar que cada recurso invertido genere retorno.",
     icon: Target,
-    color: "#3b82f6", // Azul
+    color: "#3b82f6",
   }
 ];
 
@@ -54,7 +54,7 @@ const WhyUsCard = ({ reason }: { reason: typeof reasons[0] }) => {
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="relative group flex flex-col px-6 py-8 rounded-[32px] border border-white/40 bg-[#0A0A0A] overflow-hidden transition-all duration-500 ease-out"
+      className="relative group flex flex-col px-5 sm:px-6 py-6 sm:py-8 rounded-[28px] sm:rounded-[32px] border border-white/40 bg-[#0A0A0A] overflow-hidden transition-all duration-500 ease-out"
     >
       {/* Borde dinámico spotlight */}
       <div
@@ -71,21 +71,21 @@ const WhyUsCard = ({ reason }: { reason: typeof reasons[0] }) => {
       <div
         className="absolute inset-0 z-0 pointer-events-none opacity-60 group-hover:opacity-70 transition-opacity duration-300"
         style={{
-          background: `radial-gradient(circle 200px at var(--mouse-x) var(--mouse-y), ${reason.color}44 0%, transparent 70%)`
+          background: `radial-gradient(circle 150px at var(--mouse-x) var(--mouse-y), ${reason.color}44 0%, transparent 70%)`
         }}
       />
 
       <div className="relative z-10">
-        <div className="flex gap-4 items-center">
-          <div className="mb-6">
-            <reason.icon size={48} strokeWidth={1.2} style={{ color: reason.color }} />
+        <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4 mb-4">
+          <div className="mb-1 sm:mb-0">
+            <reason.icon size={36} className="sm:w-12 sm:h-12" strokeWidth={1.2} style={{ color: reason.color }} />
           </div>
-          <h3 className="text-white font-montserrat font-bold text-2xl mb-4">
+          <h3 className="text-white font-montserrat font-bold text-xl sm:text-2xl">
             {reason.title}
           </h3>
         </div>
 
-        <p className="text-gray-300 font-montserrat leading-relaxed text-[16px]">
+        <p className="text-gray-300 font-montserrat leading-relaxed text-sm sm:text-base">
           {reason.description}
         </p>
       </div>
@@ -95,25 +95,25 @@ const WhyUsCard = ({ reason }: { reason: typeof reasons[0] }) => {
 
 const WhyUs = () => {
   return (
-    <section className="w-full py-24 px-6 bg-transparent">
+    <section className="w-full py-16 sm:py-20 lg:py-24 px-4 sm:px-6 bg-transparent">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
         
         {/* Encabezado fiel al diseño */}
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          className="text-center mb-16 max-w-6xl"
+          className="text-center mb-12 sm:mb-16 max-w-6xl"
         >
-          <h2 className="text-white font-aston text-4xl lg:text-6xl font-normal mb-8 tracking-tight">
+          <h2 className="text-white font-aston text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-normal mb-4 sm:mb-8 tracking-tight">
             ¿Por qué nosotros?
           </h2>
-          <p className="text-white font-montserrat text-lg lg:text-xl leading-relaxed">
+          <p className="text-white font-montserrat text-base sm:text-lg md:text-xl leading-relaxed px-4">
             Nos integramos a tu operación como <span className="text-white font-bold">consultores estratégicos del más alto nivel</span>, aportando la experiencia y la visión ejecutiva que <span className="text-white font-bold">convierte los esfuerzos de la empresa en una máxima rentabilidad comercial.</span>
           </p>
         </motion.div>
 
         {/* Grid de Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 w-full mb-32">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 lg:gap-16 w-full mb-20 sm:mb-24 lg:mb-32">
           {reasons.map((reason, idx) => (
             <WhyUsCard key={idx} reason={reason} />
           ))}
@@ -123,7 +123,7 @@ const WhyUs = () => {
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="bg-white text-black px-10 py-4 rounded-full font-montserrat font-bold text-lg hover:bg-gray-200 transition-colors"
+          className="bg-white text-black px-8 sm:px-10 py-3 sm:py-4 rounded-full font-montserrat font-bold text-base sm:text-lg hover:bg-gray-200 transition-colors"
         >
           Habla con un experto
         </motion.button>
