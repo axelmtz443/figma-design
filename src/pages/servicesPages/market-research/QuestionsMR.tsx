@@ -61,9 +61,9 @@ export default function ElPoderDeLaInformacion() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, amount: 0.2 }}
               transition={{ duration: 0.6, delay: index * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="relative group overflow-hidden border-b border-white/[0.06] last:border-b-0 transition-all duration-500 ease-[0.25,1,0.5,1]"
+              className="relative group overflow-hidden border-b border-white/[0.06] last:border-b-0 transition-all duration-500 ease-[0.25,1,0.5,1] min-h-[64px] sm:min-h-[80px] md:min-h-[90px]"
               style={{
-                height: hoveredId === q.id ? '110px sm:120px md:130px' : '70px sm:80px md:90px',
+                height: hoveredId === q.id ? '110px' : undefined,
               }}
             >
               <div className="absolute inset-0 bg-[#08080a] transition-colors duration-500 group-hover:bg-[#0c0c10]" />
@@ -84,12 +84,12 @@ export default function ElPoderDeLaInformacion() {
                     transform: hoveredId === q.id ? 'translateX(8px) sm:translateX(12px)' : 'translateX(0px)'
                   }}
                 >
-                  <span className={`text-[11px] sm:text-xs md:text-sm lg:text-base font-light tracking-wide transition-colors duration-300 ${hoveredId === q.id ? 'text-white/90' : 'text-white/50'}`}>
+                  <span className={`text-[13px] sm:text-xs md:text-sm lg:text-base font-light tracking-wide transition-colors duration-300 ${hoveredId === q.id ? 'text-white/90' : 'text-white/50'}`}>
                     {q.text}
                   </span>
-                  
-                  <span 
-                    className="text-sm sm:text-base md:text-lg lg:text-2xl font-aston tracking-widest font-bold leading-none transition-all duration-500"
+
+                  <span
+                    className="text-base sm:text-base md:text-lg lg:text-2xl font-aston tracking-widest font-bold leading-none transition-all duration-500"
                     style={{ 
                       color: hoveredId === q.id ? '#ffffff' : '#e2e8f0',
                       textShadow: hoveredId === q.id ? `0 0 20px ${q.color}40` : 'none'

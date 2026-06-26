@@ -1,16 +1,7 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
-import worldMap from '../../images/world-map.svg';
-
-const locations = [
-  { id: 1, city: 'Austin', country: 'USA', top: '38%', left: '32%', color: 'bg-blue-500' },
-  { id: 2, city: 'Guadalajara', country: 'MX', top: '46%', left: '27%', color: 'bg-emerald-500' },
-  { id: 3, city: 'Paris', country: 'FR', top: '34%', left: '49%', color: 'bg-indigo-500' },
-];
+import { motion } from 'framer-motion';
+import WorldMap from '../General/WorldMap';
 
 const WorldPresence = () => {
-  const [hoveredLoc, setHoveredLoc] = useState<number | null>(null);
-
   return (
     <section className="w-full bg-transparent py-24 px-6 sm:px-12 border-t border-white/5 overflow-hidden">
       <div className="max-w-7xl mx-auto">
@@ -34,60 +25,9 @@ const WorldPresence = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           
           {/* Bloque del Mapa Interactivo */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-2 relative h-[500px] bg-[#0A0A0A] rounded-[40px] border border-white/10 overflow-hidden shadow-2xl group"
-          >
-            {/* Fondo de Grano/Textura */}
-            <div className="absolute inset-0 opacity-30 mix-blend-overlay pointer-events-none bg-[url('/textures/stardust.png')]" />
-            
-            {/* El Mapa Mundial (SVG de Alta Calidad) */}
-            <div className="absolute inset-0 p-12 flex items-center justify-center">
-              <img 
-                src={worldMap}
-                alt="World Map" 
-                className="w-full h-full object-contain opacity-20 grayscale invert brightness-200"
-              />
-            </div>
-
-            {/* Renderizado de Ubicaciones */}
-            {locations.map((loc) => (
-              <div 
-                key={loc.id}
-                className="absolute transform -translate-x-1/2 -translate-y-1/2 z-10"
-                style={{ top: loc.top, left: loc.left }}
-                onMouseEnter={() => setHoveredLoc(loc.id)}
-                onMouseLeave={() => setHoveredLoc(null)}
-              >
-                {/* Punto de Ubicación */}
-                <div className="relative flex items-center justify-center cursor-pointer">
-                  <span className={`animate-ping absolute inline-flex h-8 w-8 rounded-full ${loc.color} opacity-20`}></span>
-                  <span className={`relative inline-flex rounded-full h-3 w-3 ${loc.color} shadow-[0_0_20px_rgba(255,255,255,0.5)] border border-white/20`}></span>
-                  
-                  {/* Tooltip Dinámico */}
-                  <AnimatePresence>
-                    {hoveredLoc === loc.id && (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 10, scale: 0.9 }}
-                        animate={{ opacity: 1, y: -45, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.9 }}
-                        className="absolute whitespace-nowrap bg-white text-black px-4 py-2 rounded-full text-[11px] font-bold tracking-tighter shadow-xl z-20"
-                      >
-                        {loc.city.toUpperCase()}, {loc.country}
-                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white rotate-45" />
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </div>
-            ))}
-
-            <div className="absolute bottom-8 left-8">
-               <h3 className="font-aston text-white/5 text-[80px] select-none leading-none">WEPROM</h3>
-            </div>
-          </motion.div>
+          <div className="lg:col-span-2">
+            <WorldMap />
+          </div>
 
           {/* Columna Lateral de Información */}
           <div className="flex flex-col gap-6">

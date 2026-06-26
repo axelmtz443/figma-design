@@ -1,5 +1,5 @@
 import { ImageWithFallback, FONTS } from './utils';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useContactPopup } from '../../../../context/ContactPopupContext';
 
 type GoogleAdType = 'search' | 'display' | 'shopping' | 'video';
@@ -124,7 +124,22 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
   const dotIndex = index % len;
 
   return (
-    <div className="relative w-full select-none">
+    <div className="relative w-full select-none px-4 sm:px-0">
+      {/* Flechas arriba — solo móvil, contenedor más chico con margen */}
+      <div className="flex sm:hidden items-center justify-center gap-4 mb-4">
+        <button
+          onClick={() => go(-1)}
+          className="w-9 h-9 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+        </button>
+        <button
+          onClick={() => go(1)}
+          className="w-9 h-9 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+        </button>
+      </div>
       <div className="overflow-hidden" style={{ height: `${cardHeight}px` }}>
         <div
           ref={stripRef}
@@ -145,7 +160,7 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
 
       <button
         onClick={() => go(-1)}
-        className="absolute left-2 sm:left-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
+        className="hidden sm:flex absolute left-2 sm:left-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 items-center justify-center text-white transition-all"
         style={{ top: `${cardHeight / 2}px`, transform: 'translateY(-50%)' }}
       >
         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
@@ -153,7 +168,7 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
 
       <button
         onClick={() => go(1)}
-        className="absolute right-2 sm:right-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
+        className="hidden sm:flex absolute right-2 sm:right-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 items-center justify-center text-white transition-all"
         style={{ top: `${cardHeight / 2}px`, transform: 'translateY(-50%)' }}
       >
         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
@@ -489,9 +504,20 @@ function renderAdComponent(ad: GoogleAd) {
 
 const CARD_WIDTH = 500;
 const CARD_HEIGHT = 580;
+const CARD_WIDTH_MOBILE = 290;
+const CARD_HEIGHT_MOBILE = 380;
 
 export default function GoogleSection() {
   const { openPopup } = useContactPopup();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <section id="google-ads" className="relative min-h-screen flex flex-col justify-between py-10 sm:py-12 md:py-16 lg:py-20 overflow-x-hidden border-t border-zinc-900/40">
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-10 lg:px-12 flex flex-col items-start gap-3 sm:gap-4 mb-8 sm:mb-10 md:mb-12 lg:mb-16">
@@ -507,8 +533,8 @@ export default function GoogleSection() {
 
       <SectionCarousel
         items={ADS_DATABASE.map(ad => renderAdComponent(ad))}
-        cardWidth={CARD_WIDTH}
-        cardHeight={CARD_HEIGHT}
+        cardWidth={isMobile ? CARD_WIDTH_MOBILE : CARD_WIDTH}
+        cardHeight={isMobile ? CARD_HEIGHT_MOBILE : CARD_HEIGHT}
       />
 
       <div className="w-full flex justify-center mt-8 sm:mt-10 lg:mt-12 mb-4 relative z-10">

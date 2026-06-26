@@ -26,18 +26,18 @@ function GroupSection() {
 
                 {/* Sección de Marcas Estática */}
                 <div className="w-full mb-24 py-10 border-y border-white/5">
-                    <div className="flex flex-nowrap justify-center items-center gap-8 sm:gap-16">
-                        <div className="flex items-center justify-center w-[180px] sm:w-[220px]">
-                            <img src={XERYUS} alt="Xeryus" className="h-10 sm:h-12 w-auto object-contain" />
+                    <div className="grid grid-cols-2 sm:flex sm:flex-nowrap justify-center items-center gap-y-8 gap-x-4 sm:gap-16">
+                        <div className="flex items-center justify-center w-full sm:w-[220px]">
+                            <img src={XERYUS} alt="Xeryus" className="h-14 sm:h-12 w-auto object-contain" />
                         </div>
-                        <div className="flex items-center justify-center w-[180px] sm:w-[220px]">
-                            <img src={SmarKeting} alt="Smar+keting" className="h-10 sm:h-12 w-auto object-contain" />
+                        <div className="flex items-center justify-center w-full sm:w-[220px]">
+                            <img src={SmarKeting} alt="Smar+keting" className="h-14 sm:h-12 w-auto object-contain" />
                         </div>
-                        <div className="flex items-center justify-center w-[220px] sm:w-[260px]">
-                            <img src={WePromBlanco} alt="WeProm" className="h-10 sm:h-12 w-auto object-contain" />
+                        <div className="flex items-center justify-center w-full sm:w-[260px]">
+                            <img src={WePromBlanco} alt="WeProm" className="h-14 sm:h-12 w-auto object-contain" />
                         </div>
-                        <div className="flex items-center justify-center w-[180px] sm:w-[220px]">
-                            <img src={Cypron} alt="Cypron" className="h-10 sm:h-12 w-auto object-contain" />
+                        <div className="flex items-center justify-center w-full sm:w-[220px]">
+                            <img src={Cypron} alt="Cypron" className="h-14 sm:h-12 w-auto object-contain" />
                         </div>
                     </div>
                 </div>

@@ -1,7 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Phone, Mail, Send } from 'lucide-react';
 
 const ContactConsultoria = () => {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 1024);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const [formData, setFormData] = useState({
     nombre: '',
     email: '',
@@ -53,73 +62,69 @@ const ContactConsultoria = () => {
     'Otro',
   ];
 
-  return (
-    <section className="w-full bg-transparent py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 font-montserrat text-white">
-      <div className="max-w-5xl mx-auto">
+  const headingBlock = (
+    <div>
+      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.2rem] font-aston tracking-tight mb-3 sm:mb-4 leading-tight">
+        Será un gusto saber de ti.
+      </h2>
+      <p className="text-white/100 font-normal text-base sm:text-lg leading-relaxed">
+        ¿Te gustaría saber más? <br className="hidden sm:block" /> No dudes en escribirnos o llamarnos.
+      </p>
+    </div>
+  );
 
-        {/* Layout principal */}
-        <div className="flex flex-col lg:flex-row gap-8 md:gap-10 lg:gap-12 xl:gap-20 items-start">
-
-          {/* Columna izquierda */}
-          <div className="w-full lg:w-2/5 flex flex-col gap-6 sm:gap-8">
+  const infoAndMapBlock = (
+    <>
+      {/* Datos de contacto */}
+      <div className="flex flex-col gap-4 sm:gap-5">
+        {contactInfo.map((item, index) => (
+          <a
+            key={index}
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-3 sm:gap-4 group"
+          >
+            <div
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 border transition-all duration-300 group-hover:scale-110"
+              style={{
+                borderColor: item.color,
+                color: item.color,
+                backgroundColor: `${item.color}15`,
+              }}
+            >
+              {item.icon}
+            </div>
             <div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.2rem] font-aston tracking-tight mb-3 sm:mb-4 leading-tight">
-                Será un gusto saber de ti.
-              </h2>
-              <p className="text-white/100 font-normal text-base sm:text-lg leading-relaxed">
-                ¿Te gustaría saber más? <br className="hidden sm:block" /> No dudes en escribirnos o llamarnos.
+              <p className="text-white/100 text-[10px] sm:text-xs font-light mb-0.5">{item.label}</p>
+              <p
+                className="font-semibold text-xs sm:text-sm transition-colors duration-300"
+              >
+                {item.value}
               </p>
             </div>
+          </a>
+        ))}
+      </div>
 
-            {/* Datos de contacto */}
-            <div className="flex flex-col gap-4 sm:gap-5">
-              {contactInfo.map((item, index) => (
-                <a
-                  key={index}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 sm:gap-4 group"
-                >
-                  <div
-                    className="w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center flex-shrink-0 border transition-all duration-300 group-hover:scale-110"
-                    style={{
-                      borderColor: item.color,
-                      color: item.color,
-                      backgroundColor: `${item.color}15`,
-                    }}
-                  >
-                    {item.icon}
-                  </div>
-                  <div>
-                    <p className="text-white/100 text-[10px] sm:text-xs font-light mb-0.5">{item.label}</p>
-                    <p
-                      className="font-semibold text-xs sm:text-sm transition-colors duration-300"
-                    >
-                      {item.value}
-                    </p>
-                  </div>
-                </a>
-              ))}
-            </div>
+      {/* Mapa */}
+      <div className="rounded-2xl overflow-hidden border border-neutral-800 w-full" style={{ aspectRatio: '4/3' }}>
+        <iframe
+          title="Ubicación"
+          src="https://maps.google.com/maps?q=C.+Corrientes+3071,+Colomos+Providencia,+Guadalajara&output=embed&z=15"
+          width="100%"
+          height="100%"
+          style={{ border: 0, filter: 'grayscale(0.8) invert(0.9) contrast(0.85)' }}
+          allowFullScreen
+          loading="lazy"
+        />
+      </div>
+    </>
+  );
 
-            {/* Mapa */}
-            <div className="rounded-2xl overflow-hidden border border-neutral-800 w-full" style={{ aspectRatio: '4/3' }}>
-              <iframe
-                title="Ubicación"
-                src="https://maps.google.com/maps?q=C.+Corrientes+3071,+Colomos+Providencia,+Guadalajara&output=embed&z=15"
-                width="100%"
-                height="100%"
-                style={{ border: 0, filter: 'grayscale(0.8) invert(0.9) contrast(0.85)' }}
-                allowFullScreen
-                loading="lazy"
-              />
-            </div>
-          </div>
-
-          {/* Columna derecha — Formulario */}
-          <div className="w-full bg-neutral-950 border p-4 sm:p-5 md:p-6 border-neutral-800 rounded-2xl lg:w-3/5">
-            {sent ? (
+  const formBlock = (
+    <div className="w-full bg-neutral-950 border p-4 sm:p-5 md:p-6 border-neutral-800 rounded-2xl lg:w-3/5">
+      {sent ? (
               <div className="flex flex-col items-center justify-center h-full gap-6 py-12 sm:py-16 lg:py-20 text-center">
                 <div
                   className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2"
@@ -250,9 +255,29 @@ const ContactConsultoria = () => {
 
               </form>
             )}
-          </div>
+    </div>
+  );
 
-        </div>
+  return (
+    <section className="w-full bg-transparent py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 font-montserrat text-white">
+      <div className="max-w-5xl mx-auto">
+
+        {isMobile ? (
+          <div className="flex flex-col gap-6 sm:gap-8">
+            {headingBlock}
+            {formBlock}
+            <div className="flex flex-col gap-6 sm:gap-8">{infoAndMapBlock}</div>
+          </div>
+        ) : (
+          <div className="flex flex-row gap-8 md:gap-10 lg:gap-12 xl:gap-20 items-start">
+            <div className="w-full lg:w-2/5 flex flex-col gap-6 sm:gap-8">
+              {headingBlock}
+              {infoAndMapBlock}
+            </div>
+            {formBlock}
+          </div>
+        )}
+
       </div>
     </section>
   );

@@ -252,7 +252,7 @@ export default function SuccessStories() {
                 onClick={() => !isExpanded && setExpandedId(item.id)}
                 className={`group relative rounded-2xl overflow-hidden bg-zinc-950 border border-white/5 transition-all duration-700 ease-in-out ${
                   isExpanded
-                    ? 'col-span-1 sm:col-span-2 md:col-span-4 row-span-1 md:row-span-3 cursor-default z-20 h-auto md:h-full'
+                    ? 'col-span-1 sm:col-span-2 md:col-span-4 row-span-1 md:row-span-3 cursor-default z-20 min-h-[620px] sm:min-h-[680px] md:h-full md:min-h-0'
                     : `${item.size} h-44 sm:h-52 md:h-auto cursor-pointer z-10 hover:shadow-2xl`
                 }`}
               >

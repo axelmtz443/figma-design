@@ -2,7 +2,7 @@ import LogoIcon from "../../images/ISOTIPODEGRADADO.png";
 import React from "react";
 
 import { BarChart2, Target, Lightbulb, Handshake, ArrowUp, ArrowRight, ArrowDown, ArrowLeft } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const STEPS = [
   {
@@ -57,13 +57,21 @@ const STEPS = [
 
 function CompanySection() {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 items-center overflow-hidden py-10 sm:py-14 lg:py-16">
-      
+
       {/* Columna Izquierda: Textos */}
-      <div className="flex flex-col items-start lg:items-end order-last lg:order-first z-20">
-        <h2 className="font-aston text-[42px] sm:text-[60px] lg:text-[75px] font-normal mb-6 leading-[1.1] text-white text-left lg:text-right">
+      <div className="flex flex-col items-start lg:items-end z-20">
+        <h2 className="font-aston text-[32px] sm:text-[60px] lg:text-[75px] font-normal mb-6 leading-[1.1] text-white text-left lg:text-right">
           Somos una <span className="font-montserrat font-bold block">empresa</span>
           <span className="font-montserrat font-bold block">enfocada en</span>
           <span className="text-soft-gray block mt-2">Resultados</span>
@@ -73,10 +81,32 @@ function CompanySection() {
         </p>
       </div>
 
-      {/* Columna Derecha: El Diagrama Circular */}
-      <div className="relative flex items-center justify-center min-h-[350px] sm:min-h-[480px] md:min-h-[580px] lg:min-h-[650px]">
-        
-        <div className="relative w-full max-w-[550px] aspect-square">
+      {/* Columna Derecha: Mobile = lista simple, sin overlaps */}
+      {isMobile ? (
+        <div className="w-full flex flex-col gap-3">
+          {STEPS.map((step) => (
+            <div
+              key={step.id}
+              className="flex items-start gap-3 rounded-2xl p-4 backdrop-blur-md"
+              style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
+            >
+              <div
+                className="shrink-0 w-10 h-10 rounded-full flex items-center justify-center"
+                style={{ border: `1.5px solid ${step.color}`, color: step.color }}
+              >
+                {step.icon}
+              </div>
+              <div>
+                <h3 className="text-[14px] font-bold mb-1" style={{ color: step.color }}>{step.title}</h3>
+                <p className="text-[12px] text-zinc-400 leading-snug font-light">{step.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+      <div className="relative flex items-center justify-center min-h-[480px] md:min-h-[580px] lg:min-h-[650px]">
+
+        <div className="relative w-full max-w-[480px] md:max-w-[550px] aspect-square">
           
           {/* Orbes de fondo */}
           <div className="absolute inset-0 opacity-20 blur-[100px] -z-10 animate-pulse">
@@ -166,6 +196,7 @@ function CompanySection() {
 
         </div>
       </div>
+      )}
     </section>
   );
 }

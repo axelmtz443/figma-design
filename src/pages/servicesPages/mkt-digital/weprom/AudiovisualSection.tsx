@@ -87,7 +87,7 @@ export default function AudiovisualSection() {
         </div>
 
         <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-start">
-          <div className="relative w-full bg-zinc-900/90 backdrop-blur-sm rounded-2xl overflow-hidden border border-zinc-700/50 shadow-2xl flex items-center justify-center max-h-[65vh] sm:max-h-[70vh] lg:max-h-[75vh]">
+          <div className="order-2 lg:order-none relative w-full bg-zinc-900/90 backdrop-blur-sm rounded-2xl overflow-hidden border border-zinc-700/50 shadow-2xl flex items-center justify-center max-h-[65vh] sm:max-h-[70vh] lg:max-h-[75vh]">
             {currentProject.videoUrl ? (
               <video
                 ref={videoRef}
@@ -130,7 +130,7 @@ export default function AudiovisualSection() {
             )}
           </div>
 
-          <div className="space-y-3 sm:space-y-4 w-full">
+          <div className="order-1 lg:order-none space-y-3 sm:space-y-4 w-full">
             {PROJECTS.map((project, idx) => (
               <button key={project.id} onClick={() => setActiveProject(idx)}
                 className={`w-full text-left p-3 sm:p-4 rounded-xl border transition-all duration-300 ${

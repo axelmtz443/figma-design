@@ -38,7 +38,7 @@ function SectionOne() {
         initial={{ opacity: 0, y: 60, filter: "blur(10px)" }}
         animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-        className="absolute bottom-0 left-0 right-0 px-4 sm:px-8 text-center pb-12 sm:pb-20"
+        className="absolute inset-0 flex flex-col items-center justify-center sm:justify-end px-4 sm:px-8 text-center sm:pb-20"
       >
         <h1 className="font-aston text-[44px] sm:text-[68px] lg:text-[95px] text-white leading-[1.05] tracking-tight mb-4 sm:mb-6 max-w-6xl mx-auto">
           Construyendo el futuro de la <span className="text-transparent bg-clip-text bg-border-grad">innovación</span> digital, juntos.

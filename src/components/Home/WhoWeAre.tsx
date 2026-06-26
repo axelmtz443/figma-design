@@ -106,24 +106,26 @@ const GlassCard = ({ title, description, Icon, color, progress, endStyle, LogoCo
         <LogoComponent className="w-full h-full" />
       </div>
       
-      <div className="relative z-10 flex flex-col h-full p-4 sm:p-6 md:p-10" style={{ opacity: contentOpacity, pointerEvents: progress > 0.9 ? 'auto' : 'none' }}>
-        <div 
-          className="mb-3 sm:mb-4 md:mb-6 inline-flex w-fit rounded-2xl p-3 md:p-4 shadow-lg"
-          style={{ 
+      <div className={`relative z-10 flex h-full ${isMobile ? 'flex-row items-center gap-3 p-3' : 'flex-col p-4 sm:p-6 md:p-10'}`} style={{ opacity: contentOpacity, pointerEvents: progress > 0.9 ? 'auto' : 'none' }}>
+        <div
+          className={isMobile ? 'inline-flex w-fit flex-shrink-0 rounded-xl p-2 shadow-lg' : 'mb-3 sm:mb-4 md:mb-6 inline-flex w-fit rounded-2xl p-3 md:p-4 shadow-lg'}
+          style={{
             backgroundColor: `rgba(${rgb}, 0.1)`,
             boxShadow: `0 0 0 1px rgba(${rgb}, 0.2), 0 0 20px rgba(${rgb}, 0.15)`
           }}
         >
-          <Icon className="h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8" strokeWidth={1.5} style={{ color: color }} />
+          <Icon className={isMobile ? 'h-4 w-4' : 'h-5 w-5 sm:h-6 sm:w-6 md:h-8 md:w-8'} strokeWidth={1.5} style={{ color: color }} />
         </div>
-        
-        <h3 className="mb-2 md:mb-4 text-xl sm:text-2xl md:text-3xl font-bold tracking-wide font-montserrat text-white" style={{ color: color }}>
-          {title}
-        </h3>
-        
-        <p className="text-white/80 leading-relaxed text-[13px] sm:text-[14px] md:text-[15px] font-montserrat mt-auto">
-          {description}
-        </p>
+
+        <div className={isMobile ? 'flex-1 min-w-0' : 'contents'}>
+          <h3 className={isMobile ? 'text-[15px] font-bold tracking-wide font-montserrat text-white leading-tight' : 'mb-2 md:mb-4 text-xl sm:text-2xl md:text-3xl font-bold tracking-wide font-montserrat text-white'} style={{ color: color }}>
+            {title}
+          </h3>
+
+          <p className={isMobile ? 'text-white/80 leading-snug text-[10px] font-montserrat' : 'text-white/80 leading-relaxed text-[13px] sm:text-[14px] md:text-[15px] font-montserrat mt-auto'}>
+            {description}
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -164,10 +166,10 @@ const WhoWeAre = () => {
   };
 
   const endStylesMobile = {
-    expertos: { top: '-30%', left: '0%', width: '100%', height: '30%' },
-    especialistas: { top: '3%', left: '0%', width: '100%', height: '30%' },
-    analistas: { top: '36%', left: '0%', width: '100%', height: '30%' },
-    aliados: { top: '69%', left: '0%', width: '100%', height: '30%' }
+    expertos: { top: '0%', left: '0%', width: '100%', height: '22%' },
+    especialistas: { top: '26%', left: '0%', width: '100%', height: '22%' },
+    analistas: { top: '52%', left: '0%', width: '100%', height: '22%' },
+    aliados: { top: '78%', left: '0%', width: '100%', height: '22%' }
   };
 
   const currentStyles = isMobile ? endStylesMobile : endStylesDesktop;

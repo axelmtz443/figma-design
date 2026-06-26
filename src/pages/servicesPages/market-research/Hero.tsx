@@ -177,7 +177,7 @@ export default function HeroMR() {
         <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-10 lg:gap-12 xl:gap-16">
           
           {/* COLUMNA IZQUIERDA: Copywriting */}
-          <div className="w-full lg:w-1/2 flex flex-col items-start text-left">
+          <div className="w-full lg:w-1/2 flex flex-col items-start text-left order-2 lg:order-1">
             <motion.div 
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -235,7 +235,7 @@ export default function HeroMR() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-full lg:w-1/2 h-[280px] sm:h-[350px] md:h-[400px] lg:h-[450px] xl:h-[520px] relative perspective-1000 flex items-center justify-center"
+            className="w-full lg:w-1/2 h-[280px] sm:h-[350px] md:h-[400px] lg:h-[450px] xl:h-[520px] relative perspective-1000 flex items-center justify-center order-1 lg:order-2"
           >
             <div className="relative w-full max-w-[450px] sm:max-w-[500px] lg:max-w-[550px] h-full preserve-3d flex items-center justify-center scale-75 sm:scale-90 lg:scale-100">
               

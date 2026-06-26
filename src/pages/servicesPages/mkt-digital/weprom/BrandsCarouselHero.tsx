@@ -37,7 +37,7 @@ const allBrands = [...brands, ...brands];
 
 export default function BrandsCarouselHero() {
     return (
-        <section className="relative w-full pt-2 sm:pt-3 md:pt-4 pb-10 sm:pb-12 md:pb-16 flex flex-col items-center justify-center overflow-hidden bg-transparent group font-montserrat select-none">
+        <section className="relative w-full pt-2 sm:pt-3 md:pt-4 pb-20 sm:pb-12 md:pb-16 flex flex-col items-center justify-center overflow-hidden bg-transparent group font-montserrat select-none">
 
             <div className="relative w-full max-w-[1519px] mx-auto px-3 sm:px-4 md:px-6 lg:px-8 z-10">
                 <div className="absolute top-0 left-0 w-12 sm:w-20 md:w-32 lg:w-48 xl:w-64 h-full z-20 pointer-events-none bg-gradient-to-r from-black via-black/50 to-transparent opacity-80" />
@@ -70,7 +70,7 @@ export default function BrandsCarouselHero() {
                     >
                         {allBrands.map((brand, index) => (
                             <SwiperSlide key={index} className="flex items-center justify-center py-2 sm:py-3 lg:py-4">
-                                <div className="flex items-center justify-center h-14 sm:h-18 md:h-20 lg:h-24 w-full px-3 sm:px-4 py-3 sm:py-4 rounded-2xl bg-white border border-white/10 shadow-lg transition-transform duration-500 hover:scale-105">
+                                <div className="flex items-center justify-center h-24 sm:h-20 md:h-20 lg:h-24 w-full px-3 sm:px-4 py-3 sm:py-4 rounded-2xl bg-white border border-white/10 shadow-lg transition-transform duration-500 hover:scale-105">
                                     <img
                                         src={brand.src}
                                         alt={brand.alt}

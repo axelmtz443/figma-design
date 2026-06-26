@@ -53,20 +53,28 @@ function sanityToCase(p: OurProject): Case {
   };
 }
 
-const VISIBLE = 3;
-
 export default function OurProjectsHome() {
   const [cases, setCases] = useState<Case[]>(FALLBACK_CASES);
   const [current, setCurrent] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     getOurProjects().then(data => {
       if (data && data.length > 0) setCases(data.map(sanityToCase));
     }).catch(() => {});
   }, []);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  const VISIBLE = isMobile ? 1 : 3;
 
   const total = cases.length;
 
@@ -128,7 +136,7 @@ export default function OurProjectsHome() {
         </div>
 
         {/* Cards */}
-        <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5">
+        <div className={`w-full grid gap-4 sm:gap-5 ${isMobile ? 'grid-cols-1 max-w-sm mx-auto' : 'grid-cols-3'}`}>
           <AnimatePresence mode="popLayout" initial={false}>
             {visibleIndices.map((idx, pos) => {
               const item = cases[idx];

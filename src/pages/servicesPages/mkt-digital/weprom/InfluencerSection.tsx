@@ -288,9 +288,11 @@ export default function InfluencerSection() {
             Creamos contenido auténtico para TikTok, Instagram Reels y Facebook Reels que convierte audiencias en clientes reales.
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-10 lg:gap-14">
+        <div className="flex md:grid md:grid-cols-3 gap-8 sm:gap-10 lg:gap-14 overflow-x-auto md:overflow-visible snap-x snap-mandatory px-6 md:px-0 -mx-6 md:mx-0 no-scrollbar">
           {CAMPAIGNS.map((campaign) => (
-            <VideoCard key={campaign.id} campaign={campaign} />
+            <div key={campaign.id} className="flex-shrink-0 w-[78%] sm:w-[60%] md:w-auto snap-center">
+              <VideoCard campaign={campaign} />
+            </div>
           ))}
         </div>
       </div>

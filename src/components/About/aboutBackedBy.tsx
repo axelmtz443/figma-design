@@ -71,9 +71,6 @@ function AboutBackedBy() {
   return (
     <section className="relative w-full pt-10 sm:pt-12 pb-14 sm:pb-20 overflow-hidden bg-transparent group">
 
-      <div className="absolute top-0 left-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-r from-black to-transparent opacity-90" />
-      <div className="absolute top-0 right-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-l from-black to-transparent opacity-90" />
-
       <div className="relative w-full max-w-[1519px] mx-auto px-4 sm:px-8 z-10">
 
         <p className="font-aston text-[24px] sm:text-[30px] md:text-[42px] tracking-[-0.01em] text-white/100 text-center mb-10 sm:mb-16">

@@ -60,7 +60,7 @@ function Footer() {
         </div>
 
         {/* Main Footer Links */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 pb-10 sm:pb-12 border-b border-gray-800">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 pb-10 sm:pb-12 border-b border-gray-800">
           {/* Company */}
           <div>
             <h3 className="text-gray-400 text-xs sm:text-sm mb-4 sm:mb-6 uppercase tracking-wider">Compañía</h3>

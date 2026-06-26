@@ -158,7 +158,7 @@ export default function OurProcess() {
         {/* COLUMNA DERECHA */}
         <div className="lg:col-span-5 flex items-center justify-center lg:justify-end w-full">
           <div
-            className="w-full max-w-sm sm:max-w-md aspect-square bg-[#121214]/40 backdrop-blur-xl border rounded-3xl p-6 sm:p-8 lg:p-10 flex flex-col justify-between relative overflow-hidden transition-all duration-700 [box-shadow:none] group will-change-transform"
+            className="w-full max-w-xs sm:max-w-md aspect-auto sm:aspect-square bg-[#121214]/40 backdrop-blur-xl border rounded-3xl p-5 sm:p-8 lg:p-10 flex flex-col justify-between relative overflow-hidden transition-all duration-700 [box-shadow:none] group will-change-transform"
             style={{
               borderColor: `${activeData.color}25`,
               boxShadow: `0 30px 60px -25px ${activeData.color}20`,

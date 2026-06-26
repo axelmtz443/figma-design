@@ -125,7 +125,7 @@ function ProjectResults() {
                 '--brand-glow': project.glow
               }}
             >
-              <div className="w-full sm:w-3/5 p-4 sm:p-5 md:p-6 lg:p-8 xl:p-10 flex flex-col justify-between z-10">
+              <div className="order-2 sm:order-1 w-full sm:w-3/5 p-4 sm:p-5 md:p-6 lg:p-8 xl:p-10 flex flex-col justify-between z-10">
                 <div className="flex items-center justify-between mb-3 sm:mb-4">
                   <div className="h-8 sm:h-10 md:h-12 lg:h-16 xl:h-20 flex items-center">
                     <img
@@ -168,13 +168,14 @@ function ProjectResults() {
                   </div>
                 </div>
               </div>
-              <div className="hidden sm:block sm:w-2/5 relative overflow-hidden bg-zinc-900 border-l border-white/5 min-h-[280px] sm:min-h-[320px] md:min-h-[380px]">
+              <div className="order-1 sm:order-2 w-full h-40 sm:h-auto sm:w-2/5 relative overflow-hidden bg-zinc-900 border-b sm:border-b-0 sm:border-l border-white/5 sm:min-h-[280px] md:min-h-[380px]">
                 <img
                   src={project.cardImg}
                   alt={project.name}
                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent sm:block hidden"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent sm:hidden"></div>
               </div>
             </div>
           </SwiperSlide>

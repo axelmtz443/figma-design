@@ -76,10 +76,10 @@ const SERVICES = [
 ];
 
 const STATS = [
-  { value: '150+', label: 'Proyectos' },
-  { value: '80+', label: 'Clientes' },
-  { value: '5', label: 'Especialidades' },
-  { value: '8', label: 'Años de experiencia' },
+  { value: '+35', label: 'Años de experiencia' },
+  { value: '+10,000', label: 'Proyectos Realizados' },
+  { value: '+1,000', label: 'Clientes Globales' },
+  { value: '+3', label: 'Sedes Internacionales' },
 ];
 
 // ─── Card decoration SVGs ─────────────────────────────────────────────────────
@@ -511,7 +511,7 @@ export default function Services() {
 
         {/* Stats strip - Responsive */}
         <div className="relative z-10 mt-12 sm:mt-16 md:mt-20 w-full max-w-3xl mx-auto px-3 sm:px-0">
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 lg:gap-16 px-4 sm:px-6 py-4 sm:py-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8 lg:gap-16 px-4 sm:px-6 py-4 sm:py-6 rounded-2xl border border-white/[0.06] bg-white/[0.02] backdrop-blur-sm">
             {STATS.map(s => <StatCard key={s.label} value={s.value} label={s.label} />)}
           </div>
         </div>

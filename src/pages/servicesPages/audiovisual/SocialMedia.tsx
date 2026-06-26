@@ -85,10 +85,12 @@ const SocialMedia = () => {
         </p>
       </div>
 
-      {/* Grid de videos verticales - Responsive */}
-      <div className="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 md:gap-6">
+      {/* Videos: carrusel horizontal en móvil, grid en desktop */}
+      <div className="w-full max-w-4xl flex sm:grid sm:grid-cols-3 gap-4 sm:gap-5 md:gap-6 overflow-x-auto sm:overflow-visible snap-x snap-mandatory px-6 sm:px-0 -mx-6 sm:mx-0 no-scrollbar">
         {videos.map((video, index) => (
-          <VideoCard key={index} src={video.src} poster={video.poster} />
+          <div key={index} className="flex-shrink-0 w-[68%] sm:w-auto snap-center">
+            <VideoCard src={video.src} poster={video.poster} />
+          </div>
         ))}
       </div>
 

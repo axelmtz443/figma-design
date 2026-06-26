@@ -194,7 +194,7 @@ export default function OurProjects() {
           Conoce algunos de nuestros proyectos
         </h2>
 
-        <div className="relative w-full h-[420px] sm:h-[440px] md:h-[480px] lg:h-[500px] xl:h-[520px] flex items-center justify-center group">
+        <div className="relative w-full h-[520px] sm:h-[480px] md:h-[480px] lg:h-[500px] xl:h-[520px] flex items-center justify-center group">
           
           {cases.map((item, index) => {
             const isActive = index === currentIndex;

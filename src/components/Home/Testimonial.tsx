@@ -193,7 +193,7 @@ function TestimonialsSection() {
   };
 
   const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => (
-    <div className="flex-shrink-0 w-[280px] sm:w-[340px] lg:w-[380px] mx-2 sm:mx-3 group">
+    <div className="flex-shrink-0 w-[220px] sm:w-[340px] lg:w-[380px] mx-2 sm:mx-3 group">
       <div
         className="relative h-full rounded-[20px] sm:rounded-[28px] p-4 sm:p-5 transition-all duration-500 hover:scale-[1.02] cursor-pointer"
         style={{
@@ -320,12 +320,12 @@ function TestimonialsSection() {
               </div>
 
               {/* Texto Informativo */}
-              <div className="absolute bottom-10 left-8 right-8 z-20">
-                <div className="flex items-center gap-2 mb-3">
+              <div className="absolute bottom-4 sm:bottom-10 left-5 sm:left-8 right-5 sm:right-8 z-20">
+                <div className="flex items-center gap-2 mb-1.5 sm:mb-3">
                   <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                  <span className="text-white/70 text-[10px] uppercase tracking-[0.2em] font-montserrat">EN DIRECTO: TESTIMONIOS</span>
+                  <span className="text-white/70 text-[9px] sm:text-[10px] uppercase tracking-[0.2em] font-montserrat">EN DIRECTO: TESTIMONIOS</span>
                 </div>
-                <h3 className="text-white font-montserrat font-bold text-2xl leading-tight">
+                <h3 className="text-white font-montserrat font-bold text-base sm:text-2xl leading-tight">
                   Nuestros clientes <br/> <span className="text-soft-gray font-light italic">hablan por nosotros.</span>
                 </h3>
               </div>
@@ -345,7 +345,7 @@ function TestimonialsSection() {
               </div>
             </div>
             
-            <div className="relative overflow-hidden group/row py-2">
+            <div className="relative overflow-hidden group/row py-2 hidden sm:block">
               <div className="flex animate-scroll-left group-hover/row:pause">
                 {rows[1].map((testimonial, index) => (
                   <TestimonialCard key={`row2-${index}`} testimonial={testimonial} />
@@ -383,6 +383,10 @@ function TestimonialsSection() {
       <style>{`
         .animate-scroll-right { animation: scroll-right 40s linear infinite; }
         .animate-scroll-left { animation: scroll-left 40s linear infinite; }
+
+        @media (max-width: 639px) {
+          .animate-scroll-right { animation-duration: 18s; }
+        }
         
         .animate-progress-fill {
           animation: fill 5s linear forwards;

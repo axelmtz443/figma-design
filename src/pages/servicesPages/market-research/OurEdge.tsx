@@ -53,7 +53,7 @@ export default function OurEdge() {
             return (
               <div
                 key={index}
-                className="bg-[#0d0d0d]/80 backdrop-blur-md border border-gray-800/60 rounded-2xl p-6 sm:p-7 lg:p-8 flex flex-col items-start justify-between min-h-[320px] sm:min-h-[360px] lg:min-h-[400px] transition-all duration-300 hover:border-gray-700/80 hover:shadow-[0_10px_30px_-15px_rgba(0,0,0,0.7)] group will-change-transform"
+                className="bg-[#0d0d0d]/80 backdrop-blur-md border border-gray-800/60 rounded-2xl p-6 sm:p-7 lg:p-8 flex flex-col items-start justify-between min-h-[200px] sm:min-h-[360px] lg:min-h-[400px] transition-all duration-300 hover:border-gray-700/80 hover:shadow-[0_10px_30px_-15px_rgba(0,0,0,0.7)] group will-change-transform"
               >
                 <div className="w-full">
                   <div
@@ -66,14 +66,14 @@ export default function OurEdge() {
                     <IconComponent className="w-5 h-5 sm:w-6 sm:h-6" />
                   </div>
 
-                  <h3 
-                    className="text-lg sm:text-xl font-bold text-white mb-3 sm:mb-4 tracking-wide"
+                  <h3
+                    className="text-xl sm:text-xl font-bold text-white mb-3 sm:mb-4 tracking-wide"
                     style={{ fontFamily: "'Montserrat', sans-serif" }}
                   >
                     {item.title}
                   </h3>
 
-                  <p className="text-gray-400 text-sm sm:text-base leading-relaxed font-light">
+                  <p className="text-gray-400 text-base sm:text-base leading-relaxed font-light">
                     {item.desc}
                   </p>
                 </div>

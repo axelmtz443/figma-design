@@ -95,7 +95,7 @@ const VideosPublicitarios = () => {
       </div>
 
       {/* Carrusel - Responsive */}
-      <div className="relative w-full max-w-5xl flex items-center justify-center" style={{ height: 'clamp(200px, 40vw, 320px)' }}>
+      <div className="relative w-full max-w-5xl flex items-center justify-center" style={{ height: 'clamp(220px, 46vw, 340px)' }}>
 
         {/* Botón prev */}
         <button
@@ -124,7 +124,7 @@ const VideosPublicitarios = () => {
               onClick={() => togglePlay(index)}
               className="absolute cursor-pointer rounded-xl sm:rounded-2xl overflow-hidden transition-all duration-500"
               style={{
-                width: 'clamp(45%, 55%, 60%)',
+                width: 'clamp(58%, 66%, 70%)',
                 aspectRatio: '16/9',
                 transform: `translateX(${xPercent}%) scale(${scale})`,
                 opacity,

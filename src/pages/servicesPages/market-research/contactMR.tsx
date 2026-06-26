@@ -58,7 +58,7 @@ const ContactoMR = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 sm:gap-8 lg:gap-10 xl:gap-12 items-start w-full">
           
           {/* ── COLUMNA IZQUIERDA ── */}
-          <div className="lg:col-span-5 flex flex-col gap-4 sm:gap-5 lg:gap-6 w-full h-full justify-between">
+          <div className="lg:col-span-5 flex flex-col gap-4 sm:gap-5 lg:gap-6 w-full h-full justify-between order-2 lg:order-1">
             
             {/* Mapa Interactivo */}
             <WorldMap />
@@ -89,7 +89,7 @@ const ContactoMR = () => {
           </div>
 
           {/* ── COLUMNA DERECHA: FORMULARIO ── */}
-          <div className="lg:col-span-7 bg-[#070708] border border-zinc-900/90 rounded-3xl p-5 sm:p-8 lg:p-10 shadow-2xl w-full">
+          <div className="lg:col-span-7 bg-[#070708] border border-zinc-900/90 rounded-3xl p-5 sm:p-8 lg:p-10 shadow-2xl w-full order-1 lg:order-2">
             {sent ? (
               <motion.div 
                 initial={{ opacity: 0, y: 10 }}

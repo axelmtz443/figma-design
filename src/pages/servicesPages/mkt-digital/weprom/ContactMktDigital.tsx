@@ -51,7 +51,7 @@ const ContactMktDigital = () => {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-8 sm:gap-10 lg:gap-16 xl:gap-20 items-start">
-          <div className="w-full lg:w-2/5 flex flex-col gap-6 sm:gap-8">
+          <div className="w-full lg:w-2/5 flex flex-col gap-6 sm:gap-8 order-2 lg:order-1">
             <div>
               <h3 className="text-xl sm:text-2xl font-aston tracking-tight mb-3 sm:mb-4 leading-tight">
                 Será un gusto saber de ti.
@@ -89,7 +89,7 @@ const ContactMktDigital = () => {
             </div>
           </div>
 
-          <div className="w-full bg-neutral-950 border p-4 sm:p-5 md:p-6 border-neutral-800 rounded-2xl lg:w-3/5">
+          <div className="w-full bg-neutral-950 border p-4 sm:p-5 md:p-6 border-neutral-800 rounded-2xl lg:w-3/5 order-1 lg:order-2">
             {sent ? (
               <div className="flex flex-col items-center justify-center h-full gap-4 sm:gap-6 py-12 sm:py-16 lg:py-20 text-center">
                 <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center border-2"

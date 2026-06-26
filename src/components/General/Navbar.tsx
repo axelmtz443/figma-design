@@ -10,7 +10,9 @@ function Navbar() {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [hidden, setHidden] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const lastScrollY = useRef(0);
   const location = useLocation();
 
 
@@ -53,9 +55,33 @@ function Navbar() {
     return () => { document.body.style.overflow = ''; };
   }, [isOpen]);
 
+  // Ocultar la barra al hacer scroll hacia abajo, mostrarla al subir
+  useEffect(() => {
+    lastScrollY.current = window.scrollY;
+    function handleScroll() {
+      if (isOpen) return;
+      const currentY = window.scrollY;
+      const delta = currentY - lastScrollY.current;
+      if (currentY < 80) {
+        setHidden(false);
+      } else if (delta > 4) {
+        setHidden(true);
+      } else if (delta < -4) {
+        setHidden(false);
+      }
+      lastScrollY.current = currentY;
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isOpen]);
+
   return (
     <>
-      <header className="fixed top-0 left-0 w-full flex justify-center pt-6 px-4 sm:px-6 overflow-visible z-50">
+      <header
+        className={`fixed top-0 left-0 w-full flex justify-center pt-6 px-4 sm:px-6 overflow-visible z-50 transition-transform duration-300 ${
+          hidden ? '-translate-y-[150%]' : 'translate-y-0'
+        }`}
+      >
 
         
         {/* Efecto de luz Premium */}

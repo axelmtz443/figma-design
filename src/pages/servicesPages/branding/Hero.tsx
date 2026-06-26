@@ -1,433 +1,203 @@
-import { useState, useEffect } from 'react';
-import { ArrowUpRight, X, Image as ImageIcon, Sparkles } from 'lucide-react';
-import { getSuccessStories, SuccessStory } from '../../../lib/sanityQueries';
-import { urlFor } from '../../../lib/sanityImage';
+import React, { useState, useEffect } from 'react';
 
-const customStyles = `
-  @import url('https://fonts.cdnfonts.com/css/astonpoliz');
-  @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+const WepromLogo = ({ className = "", style = {} }) => (
+  <svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 780.55 712.65" className={className} style={style}>
+    <defs>
+      <style>{`
+        .cls-1 { fill: url(#Degradado_sin_nombre_6); }
+        .cls-2 { fill: url(#Degradado_sin_nombre_170); }
+        .cls-3 { fill: url(#Degradado_sin_nombre_201); }
+        .cls-4 { fill: url(#Degradado_sin_nombre_194); }
+        .cls-5 { fill: url(#Degradado_sin_nombre_3); }
+        .cls-6 { fill: url(#Degradado_sin_nombre_22); }
+        .cls-7 { fill: url(#Degradado_sin_nombre_194-2); }
+        .cls-8 { fill: url(#Degradado_sin_nombre_6-2); }
+      `}</style>
+      <linearGradient id="Degradado_sin_nombre_194" data-name="Degradado sin nombre 194" x1="689.73" y1="503.15" x2="689.73" y2="506.87" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stopColor="#f09428" /><stop offset=".21" stopColor="#f29d2b" /><stop offset=".64" stopColor="#f7ac31" /><stop offset="1" stopColor="#f9b233" />
+      </linearGradient>
+      <linearGradient id="Degradado_sin_nombre_194-2" x1="734.92" y1="96.62" x2="734.92" y2="554.63" xlinkHref="#Degradado_sin_nombre_194" />
+      <linearGradient id="Degradado_sin_nombre_6" data-name="Degradado sin nombre 6" x1="3.05" y1="515.94" x2="3.11" y2="515.84" gradientUnits="userSpaceOnUse">
+        <stop offset=".07" stopColor="#e6332a" /><stop offset=".11" stopColor="#d53a36" /><stop offset=".29" stopColor="#95586a" /><stop offset=".47" stopColor="#607195" /><stop offset=".64" stopColor="#3685b7" /><stop offset=".78" stopColor="#1893cf" /><stop offset=".91" stopColor="#069bdd" /><stop offset="1" stopColor="#009fe3" />
+      </linearGradient>
+      <linearGradient id="Degradado_sin_nombre_6-2" x1="81.77" y1="583.27" x2="374.34" y2="76.54" xlinkHref="#Degradado_sin_nombre_6" />
+      <linearGradient id="Degradado_sin_nombre_22" data-name="Degradado sin nombre 22" x1="42.84" y1="505.91" x2="42.84" y2="271.32" gradientUnits="userSpaceOnUse">
+        <stop offset=".01" stopColor="#a3332a" /><stop offset="1" stopColor="#e6332a" />
+      </linearGradient>
+      <linearGradient id="Degradado_sin_nombre_3" data-name="Degradado sin nombre 3" x1="728.43" y1="52.76" x2="460.78" y2="516.35" gradientUnits="userSpaceOnUse">
+        <stop offset=".05" stopColor="#f9b233" /><stop offset=".09" stopColor="#d6b343" /><stop offset=".17" stopColor="#7db66c" /><stop offset=".2" stopColor="#60b87b" /><stop offset="1" stopColor="#579966" />
+      </linearGradient>
+      <linearGradient id="Degradado_sin_nombre_201" data-name="Degradado sin nombre 201" x1="72.81" y1="406.73" x2="706.31" y2="406.73" gradientUnits="userSpaceOnUse">
+        <stop offset=".08" stopColor="#e6332a" /><stop offset=".09" stopColor="#d73935" /><stop offset=".14" stopColor="#a5515d" /><stop offset=".2" stopColor="#796681" /><stop offset=".25" stopColor="#53779f" /><stop offset=".3" stopColor="#3585b8" /><stop offset=".36" stopColor="#1d91cb" /><stop offset=".42" stopColor="#0d98d8" /><stop offset=".49" stopColor="#039de0" /><stop offset=".58" stopColor="#009fe3" /><stop offset=".79" stopColor="#60b87b" /><stop offset=".8" stopColor="#79b76f" /><stop offset=".83" stopColor="#a0b55c" /><stop offset=".86" stopColor="#c0b44d" /><stop offset=".89" stopColor="#d9b341" /><stop offset=".93" stopColor="#ebb239" /><stop offset=".96" stopColor="#f5b234" /><stop offset="1" stopColor="#f9b233" />
+      </linearGradient>
+      <linearGradient id="Degradado_sin_nombre_170" data-name="Degradado sin nombre 170" x1="476.57" y1="292.44" x2="476.57" y2="683.68" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stopColor="#0072bc" /><stop offset=".76" stopColor="#0099de" /><stop offset=".82" stopColor="#18a1c4" /><stop offset=".94" stopColor="#4cb18f" /><stop offset="1" stopColor="#60b87b" />
+      </linearGradient>
+    </defs>
+    <g id="Capa_1-2" data-name="Capa 1">
+      <g>
+        <g>
+          <path className="cls-4 logo-path" d="M689.65,503.45c-.02,1.21.04,2.41.15,3.6,0-.34,0-.67,0-1.02-.1-1.02-.14-2.04-.14-3.08,0,.16,0,.34,0,.49Z" />
+          <path className="cls-7 logo-path" d="M689.63,73.54c-.5,31.91.61,381.87.05,428.04.07,1.52.11,3,.12,4.46,3.9,41.46,85.93,70.25,85.93,70.25-.02.33-.04.66-.07.98.04.02.07.02.07.02,1.05-62.18,4.22-381.27,4.61-419.89-22.48-67.07-71.63-81.03-90.71-83.86Z" />
+        </g>
+        <g>
+          <path className="cls-1 logo-path" d="M3.1,515.98s0-.02,0-.03c-.02-.19-.05-.17,0,.03h0Z" />
+          <path className="cls-8 logo-path" d="M431.96,221.95c-.13-54.69-44.85-157.97-137.14-157.99-63.84-.01-107.65,44.61-115.62,78.86-2.17,9.34-5.02,32.33-4.68,42.53.91,27.13.68,261.45-.33,275.79-.44,6.34,9,77.5-43.57,110.47-13.3,8.34-29.17,12.53-44.57,9.54-56.62-10.99-82.24-66.42-82.58-66.96,0,0,2.89,18.21,6.04,25.9,42.24,103.24,120.38,95.8,129.9,95.81,41.25.06,111.55-13.84,117.71-110.67.18-2.83-2.19-305.52-.44-309.75,8.56-63.57,46.31-76.16,61.68-77.55,79.89-12.58,113.6,84.02,113.6,84.02Z" />
+        </g>
+        <path className="cls-6 logo-path" d="M85.03,580.94c-1.33-34.92,0-214.45.64-266.37l-16.69-147.31c-45.39,9.82-59.23,54.27-64.18,71.89-9.06,32.24-2.78,235.33-1.41,274.66.02.48,4.33,8.89,11.93,19.6,12.55,17.11,35.35,40.49,69.7,47.53Z" />
+        <path className="cls-5 logo-path" d="M644.41,0c-93.28,0-119.15,63.97-123.25,91.33-2.17,14.48-1.84,49.14-1.91,53.97-.26,17.39,0,34.8,0,52.19,0,35.8-.58,294.56-.54,311.14.23,121.3,1.06,148.46-.19,153.58,36.49-.13,73.68-22.95,87.88-71.01.16-4.11.24-10.35.21-14.74-.21-38.72-.44-357.05-.4-364.78.27-54.87-6.83-138.05,75.64-138.83-.02-.14,70.61.32,98.71,85.14C778.08,38.21,693.73,0,644.41,0Z" />
+        <path className="cls-3 logo-path" d="M689.65,502.45c0-.34.01-.71.02-1.1,2.31,49.53-24.6,68.58-63.68,44.95-7.02-4.24-453.47-351.17-462.71-357.04-50.68-32.22-94.3-22-94.3-22,2.75,20.65,16.33,144.9,16.69,147.31-.64-81.57,64.92-75.98,95.29-51.61-8.3-6.66,431.17,335.9,460.54,353.92,12.4,7.6,24.78,15.6,37.68,22.34,12.61,6.6,27.45,9.42,42.05,8.26,17.39-1.38,31.93-12.96,40.25-27.49,7.3-12.75,11.86-25.71,13.93-40.34.12-.86.23-2.11.31-3.37,0,0-86.8-30.46-86.08-73.83Z" />
+        <path className="cls-2 logo-path" d="M431.83,578.79c-2.69-24.65,1.42-351.8.27-355.44-9.74-30.89-38.95-75.63-85.43-85.33,0,0,.71,393.75.54,405.37-1.54,102.5,60.48,163.96,132.95,168.81,133.65,8.95,126.23-121.02,126.23-121.02-30.09,101.91-163.57,88.4-174.56-12.4Z" />
+      </g>
+    </g>
+  </svg>
+);
 
-  .font-astonpoliz {
-    font-family: 'Astonpoliz', 'Playfair Display', 'Georgia', serif;
-    letter-spacing: 0.05em;
-  }
-
-  .font-montserrat {
-    font-family: 'Montserrat', sans-serif;
-  }
-`;
-
-interface FallbackImages {
-  cover: string;
-  expanded1: string;
-  expanded2: string;
-}
-
-interface PortfolioItem {
-  id: number;
-  client: string;
-  service: string;
-  logo: string;
-  coverImage: string;
-  expandedImage1: string;
-  expandedImage2: string;
-  size: string;
-  color: string;
-  description: string;
-  fallbackImages: FallbackImages;
-}
-
-interface SafeLogoProps {
-  src: string;
-  client: string;
-  color: string;
-  className?: string;
-}
-
-type ImageErrors = Record<string, boolean>;
-
-function sanityToPortfolio(s: SuccessStory, idx: number): PortfolioItem {
-  return {
-    id: idx + 1,
-    client: s.client,
-    service: s.service,
-    description: s.description,
-    logo: urlFor(s.logo),
-    coverImage: urlFor(s.coverImage),
-    expandedImage1: urlFor(s.expandedImage1),
-    expandedImage2: urlFor(s.expandedImage2),
-    color: s.color,
-    size: s.gridSize || 'md:col-span-1 md:row-span-1',
-    fallbackImages: { cover: '', expanded1: '', expanded2: '' },
-  };
-}
-
-const FALLBACK_PORTFOLIO: PortfolioItem[] = [
-  {
-    id: 1,
-    client: "Mercedes-Benz EQ",
-    service: "Campaña Creativa",
-    logo: "www.grupoweprom.com/portafolio_branding/LOGO_MERCEDES.png",
-    coverImage: "www.grupoweprom.com/portafolio_branding/Portada_Mercedes.png",
-    expandedImage1: "www.grupoweprom.com/portafolio_branding/1eurostern.png",
-    expandedImage2: "www.grupoweprom.com/portafolio_branding/2Mercedes.png",
-    size: "md:col-span-2 md:row-span-2",
-    color: "#80b67d",
-    description: "Desarrollo conceptual y ejecución de la campaña creativa 'La Máquina Del tiempo' para la división de movilidad eléctrica de lujo Mercedes-Benz EQ. Diseñamos los activos visuales y la estrategia de localización para adaptar los pilares globales de innovación y sustentabilidad al mercado local, generando una narrativa de alto impacto.",
-    fallbackImages: {
-      cover: "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&q=80&w=1000",
-      expanded1: "https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&q=80&w=1000",
-      expanded2: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=1000",
-    },
-  },
-  {
-    id: 2,
-    client: "Casa Sok",
-    service: "Branding & Estrategia",
-    logo: "www.grupoweprom.com/portafolio_branding/LOGO_CASASOK.png",
-    coverImage: "www.grupoweprom.com/portafolio_branding/portada_casasok.png",
-    expandedImage1: "www.grupoweprom.com/portafolio_branding/1casasok.png",
-    expandedImage2: "www.grupoweprom.com/portafolio_branding/2casasok.png",
-    size: "md:col-span-1 md:row-span-1",
-    color: "#c5362e",
-    description: "Estructuración de la estrategia de marca y branding integral para Casa Sok, una propuesta disruptiva en el sector de heladerías artesanales. Creamos una identidad visual sólida, sofisticada y memorable que conecta la tradición chiapaneca y sus ingredientes locales con una experiencia de consumo contemporánea y personalizada.",
-    fallbackImages: {
-      cover: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&q=80&w=1000",
-      expanded1: "https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&q=80&w=1000",
-      expanded2: "https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&q=80&w=1000",
-    },
-  },
-  {
-    id: 3,
-    client: "AltoCanto",
-    service: "Diseño de Espacio Comercial",
-    logo: "www.grupoweprom.com/portafolio_branding/LOGO_ALTOCANTO.png",
-    coverImage: "www.grupoweprom.com/portafolio_branding/PORTADA_ALTOCANTO.jpeg",
-    expandedImage1: "www.grupoweprom.com/portafolio_branding/PORTADA_ALTOCANTO.jpeg",
-    expandedImage2: "www.grupoweprom.com/portafolio_branding/2ALTOCANTO.webp",
-    size: "md:col-span-1 md:row-span-2",
-    color: "#8b5cf6",
-    description: "Diseño conceptual y arquitectura efímera para el stand de punto de contacto (PDC) premium de AltoCanto. Tradujimos la narrativa visual de esta firma de tequila artesanal en una experiencia física inmersiva que refleja el misticismo del terroir, la herencia familiar y la pureza del agave orgánico.",
-    fallbackImages: {
-      cover: "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&q=80&w=1000",
-      expanded1: "https://images.unsplash.com/photo-1608885898957-a599fb18ec3f?auto=format&fit=crop&q=80&w=1000",
-      expanded2: "https://images.unsplash.com/photo-1527661591475-527312dd65f5?auto=format&fit=crop&q=80&w=1000",
-    },
-  },
-  {
-    id: 4,
-    client: "Agua Caliente",
-    service: "Rebranding",
-    logo: "https://aguacaliente.com.mx/wp-content/uploads/2022/02/LOGOAGUACALIENTEBLANCO-1.png",
-    coverImage: "www.grupoweprom.com/portafolio_branding/PORTADA_AGUACALIENTE.png",
-    expandedImage1: "www.grupoweprom.com/portafolio_branding/2AguaCaliente.png",
-    expandedImage2: "www.grupoweprom.com/portafolio_branding/1AguaCaliente.png",
-    size: "md:col-span-1 md:row-span-1",
-    color: "#e6af41",
-    description: "Rebranding estratégico para Agua Caliente, un parque acuático y balneario termal de gran tradición en Villa Corona, Jalisco. Redefinimos por completo el concepto del logotipo y refrescamos el sistema de comunicación institucional, logrando modernizar su identidad visual para conectar de forma efectiva con las nuevas generaciones de turismo familiar.",
-    fallbackImages: {
-      cover: "https://images.unsplash.com/photo-1582650625119-3a31f8fa2699?auto=format&fit=crop&q=80&w=1000",
-      expanded1: "https://images.unsplash.com/photo-1500375592092-40eb2168fd21?auto=format&fit=crop&q=80&w=1000",
-      expanded2: "https://images.unsplash.com/photo-1519817650390-64a93db51149?auto=format&fit=crop&q=80&w=1000",
-    },
-  },
-  {
-    id: 5,
-    client: "Aldora",
-    service: "ADN de Marca & Branding",
-    logo: "www.grupoweprom.com/portafolio_branding/LOGO_ALDORA.png",
-    coverImage: "www.grupoweprom.com/portafolio_branding/PORTADA_ALDORA.jpg",
-    expandedImage1: "www.grupoweprom.com/portafolio_branding/1Aldora.png",
-    expandedImage2: "www.grupoweprom.com/portafolio_branding/2Aldora.jpeg",
-    size: "md:col-span-4 md:row-span-3",
-    color: "#599ddf",
-    description: "Estructuración integral del ADN de marca, propósito y estrategia de identidad visual para Aldora, firma especializada en refrigeración, climatización y cocción comercial. Desarrollamos una narrativa institucional basada en el compromiso postventa y el respaldo técnico humano, transformando un servicio operativo en una propuesta de valor enfocada en la continuidad y la confianza a largo plazo.",
-    fallbackImages: {
-      cover: "https://images.unsplash.com/photo-1536882240095-0379873feb4e?auto=format&fit=crop&q=80&w=1200",
-      expanded1: "https://images.unsplash.com/photo-1603909223429-69bb7101f420?auto=format&fit=crop&q=80&w=1000",
-      expanded2: "https://images.unsplash.com/photo-1501162561295-3343360b0942?auto=format&fit=crop&q=80&w=1000",
-    },
-  },
-];
-
-const resolveImagePath = (url: string): string | null => {
-  if (!url) return null;
-  if (url.startsWith('www.')) return `https://${url}`;
-  return url;
-};
-
-function SafeLogo({ src, client, color, className = 'h-12' }: SafeLogoProps) {
-  const [hasError, setHasError] = useState(false);
-  const cleanSrc = resolveImagePath(src);
-
-  if (hasError || !cleanSrc) {
-    return (
-      <div className={`flex items-center gap-2 select-none ${className}`}>
-        <div
-          className="w-8 h-8 rounded-lg flex items-center justify-center border border-white/20"
-          style={{ backgroundColor: `${color}15` }}
-        >
-          <Sparkles size={16} style={{ color }} />
-        </div>
-        <span className="font-astonpoliz text-lg font-bold tracking-wider text-white">
-          {client}
-        </span>
-      </div>
-    );
-  }
-
-  return (
-    <div className={`flex items-center justify-start ${className}`}>
-      <img
-        src={cleanSrc}
-        alt={`Logo ${client}`}
-        className="max-h-full max-w-[240px] w-auto h-auto object-contain object-left filter drop-shadow-md"
-        onError={() => setHasError(true)}
-      />
-    </div>
-  );
-}
-
-export default function SuccessStories() {
-  const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>(FALLBACK_PORTFOLIO);
-  const [expandedId, setExpandedId] = useState<number | null>(null);
-  const [imageErrors, setImageErrors] = useState<ImageErrors>({});
+export default function Hero() {
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    getSuccessStories().then(data => {
-      if (data && data.length > 0) setPortfolioItems(data.map(sanityToPortfolio));
-    }).catch(() => {});
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleImageError = (itemId: number, type: string) => {
-    setImageErrors((prev) => ({
-      ...prev,
-      [`${itemId}_${type}`]: true,
-    }));
+  const scrollToServices = () => {
+    const element = document.getElementById('nuestros-servicios');
+    if (element) {
+      const offsetTop = element.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: offsetTop - 80, behavior: 'smooth' });
+    }
   };
 
   return (
-    <div className="min-h-screen bg-transparent text-white font-montserrat flex flex-col items-center p-3 sm:p-5 md:p-8 relative overflow-hidden py-10 sm:py-14 md:py-20">
-      <div className="w-full max-w-7xl mx-auto z-10 flex flex-col items-center">
+    <section
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#000',
+        overflow: 'hidden',
+        padding: '0 24px',
+      }}
+    >
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;800&display=swap');
+        .font-title { font-family: 'Montserrat', sans-serif; font-weight: 800; }
+        .font-text  { font-family: 'Montserrat', sans-serif; }
 
-        {/* Encabezado */}
-        <div className="mb-8 sm:mb-10 md:mb-12 flex flex-col items-center text-center w-full px-2">
-          <div className="flex items-center gap-3 mb-3 sm:mb-4">
-            <div className="w-5 sm:w-6 h-[2px] bg-[#e6af41]" />
-            <span className="text-[#e6af41] font-semibold tracking-wider text-[10px] sm:text-xs md:text-sm uppercase">
-              Casos de Éxito
-            </span>
-            <div className="w-5 sm:w-6 h-[2px] bg-[#e6af41]" />
-          </div>
-          <h2 className="font-astonpoliz text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6">
-            Marcas que dejan huella
-          </h2>
-          <p className="text-zinc-400 font-light text-xs sm:text-sm md:text-base max-w-xs sm:max-w-lg md:max-w-2xl">
-            Explora una selección de nuestros mejores proyectos de identidad y estrategia. Creemos que cada marca tiene una historia única que merece ser contada con un diseño excepcional.
-          </p>
-        </div>
+        .logo-path {
+          stroke: #ffffff;
+          stroke-width: 1.5;
+          stroke-dasharray: 2500;
+          stroke-dashoffset: 2500;
+          animation: logoCycle 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+        @keyframes logoCycle {
+          0% { stroke-dashoffset: 2500; fill-opacity: 0; opacity: 0; }
+          10% { stroke-dashoffset: 2500; fill-opacity: 0; opacity: 1; }
+          40% { stroke-dashoffset: 0; fill-opacity: 0; stroke: #ffffff; }
+          55%, 90% { stroke-dashoffset: 0; fill-opacity: 1; stroke: rgba(255,255,255,0.2); opacity: 1; }
+          98%, 100% { stroke-dashoffset: 0; fill-opacity: 1; opacity: 0; }
+        }
 
-        {/*
-          Grid Bento:
-          - Mobile (< md): una columna, cards apiladas con altura fija
-          - Tablet (md): grid de 4 col con row heights fijas — igual que el original
-          - Los items con size "md:col-span-4" ocupan ancho completo en tablet+
-        */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 md:grid-rows-[240px_240px_140px] gap-3 sm:gap-4 h-auto md:h-[650px] w-full relative">
-          {portfolioItems.map((item) => {
-            const isExpanded = expandedId === item.id;
-            const isHidden = expandedId !== null && !isExpanded;
+        .generic-logo { animation: fadeReject 10s infinite; }
+        @keyframes fadeReject {
+          0%, 5%   { opacity: 0; transform: scale(0.8) translateY(0);   filter: grayscale(100%); }
+          15%      { opacity: 0.3; transform: scale(1) translateY(-10px); }
+          25%      { opacity: 0.3; transform: scale(1) translateY(-10px); }
+          35%, 100%{ opacity: 0; transform: scale(0.5) translateY(50px) rotate(20deg); }
+        }
+        .glow-text { text-shadow: 0 0 20px rgba(89,157,223,0.4); }
+        .btn-gradient {
+          background: linear-gradient(90deg, #c5362e, #e6af41, #80b67d, #599ddf);
+          background-size: 300% 100%;
+          animation: gradientShift 6s ease infinite;
+        }
+        @keyframes gradientShift {
+          0%   { background-position: 0%   50%; }
+          50%  { background-position: 100% 50%; }
+          100% { background-position: 0%   50%; }
+        }
+      `}</style>
 
-            if (isHidden) return null;
+      {/* Fondo cuadriculado */}
+      <div
+        style={{
+          position: 'absolute', inset: 0, zIndex: 0, opacity: 0.2, pointerEvents: 'none',
+          backgroundImage: 'linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg, #333 1px, transparent 1px)',
+          backgroundSize: '40px 40px',
+        }}
+      />
 
-            const coverErrorKey = `${item.id}_cover`;
-            const displayCover =
-              imageErrors[coverErrorKey] || !item.coverImage
-                ? item.fallbackImages.cover
-                : resolveImagePath(item.coverImage);
+      {/* Contenido principal */}
+      <div style={{ position: 'relative', zIndex: 10, width: '100%', maxWidth: '1050px', margin: '0 auto', display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', alignItems: 'center', gap: isMobile ? '24px' : '40px' }}>
 
-            return (
-              <div
-                key={item.id}
-                onClick={() => !isExpanded && setExpandedId(item.id)}
-                className={`group relative rounded-2xl overflow-hidden bg-zinc-950 border border-white/5 transition-all duration-700 ease-in-out ${
-                  isExpanded
-                    ? 'col-span-1 sm:col-span-2 md:col-span-4 row-span-1 md:row-span-3 cursor-default z-20 h-auto md:h-full'
-                    : `${item.size} h-44 sm:h-52 md:h-auto cursor-pointer z-10 hover:shadow-2xl`
-                }`}
-              >
-                {/* Vista normal */}
-                <div
-                  className={`absolute inset-0 transition-opacity duration-500 ${
-                    isExpanded ? 'opacity-0 pointer-events-none' : 'opacity-100'
-                  }`}
-                >
-                  {displayCover && (
-                    <img
-                      src={displayCover}
-                      alt={item.client}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 opacity-70 group-hover:opacity-90"
-                      onError={() => handleImageError(item.id, 'cover')}
-                    />
-                  )}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent opacity-80 group-hover:opacity-95 transition-opacity duration-500" />
-
-                  <div className={`absolute inset-0 p-4 sm:p-6 md:p-8 flex flex-col justify-end ${item.id === 5 ? 'md:justify-center' : ''}`}>
-                    <div className="transform translate-y-3 group-hover:translate-y-0 transition-transform duration-500 w-full">
-                      <div className={`flex ${item.id === 5 ? 'md:flex-row md:items-center md:justify-between' : 'flex-col'} gap-3 sm:gap-4`}>
-                        <div className="flex-1">
-                          <div className="mb-2 sm:mb-3 h-7 sm:h-8 flex items-center justify-start opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-75">
-                            <SafeLogo src={item.logo} client={item.client} color={item.color} className="h-full" />
-                          </div>
-                          <div
-                            className="w-8 h-[2px] mb-2 transition-all duration-500 w-0 group-hover:w-8"
-                            style={{ backgroundColor: item.color }}
-                          />
-                          <span
-                            className="text-[10px] sm:text-xs font-semibold tracking-wider uppercase mb-1 block opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100"
-                            style={{ color: item.color }}
-                          >
-                            {item.service}
-                          </span>
-                          <h3 className="font-astonpoliz text-lg sm:text-2xl md:text-3xl text-white drop-shadow-lg">
-                            {item.client}
-                          </h3>
-                        </div>
-                        <div className="flex items-center justify-end">
-                          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/10 backdrop-blur-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:rotate-45 hover:bg-white/20 flex-shrink-0">
-                            <ArrowUpRight size={18} className="text-white" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Vista expandida */}
-                <div
-                  className={`absolute inset-0 transition-opacity duration-700 flex flex-col md:flex-row bg-[#0c0c0c] ${
-                    isExpanded ? 'opacity-100 delay-150' : 'opacity-0 pointer-events-none'
-                  }`}
-                >
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setExpandedId(null);
-                    }}
-                    className="absolute top-3 right-3 sm:top-5 sm:right-5 md:top-8 md:right-8 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/60 border border-white/10 backdrop-blur-md flex items-center justify-center text-white hover:bg-white/10 hover:scale-105 transition-all duration-300 z-30"
-                  >
-                    <X size={20} />
-                  </button>
-
-                  {/* Panel izquierdo */}
-                  <div className="w-full md:w-5/12 p-6 sm:p-8 md:p-14 flex flex-col justify-center relative z-10 max-h-[55vw] sm:max-h-none md:max-h-none md:h-full overflow-y-auto border-b md:border-b-0 md:border-r border-white/5">
-                    <div className="h-12 sm:h-16 md:h-20 flex items-center mb-5 sm:mb-8 flex-shrink-0">
-                      <SafeLogo src={item.logo} client={item.client} color={item.color} className="h-full" />
-                    </div>
-                    <div className="flex items-center gap-3 mb-4 sm:mb-6">
-                      <div className="w-6 sm:w-8 h-[2px]" style={{ backgroundColor: item.color }} />
-                      <span className="font-semibold tracking-wider text-[10px] sm:text-xs md:text-sm uppercase" style={{ color: item.color }}>
-                        {item.service}
-                      </span>
-                    </div>
-                    <h3 className="font-astonpoliz text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white mb-4 sm:mb-6">
-                      {item.client}
-                    </h3>
-                    <p className="text-zinc-300 font-light text-xs sm:text-sm md:text-base lg:text-lg leading-relaxed">
-                      {item.description}
-                    </p>
-                  </div>
-
-                  {/* Panel derecho */}
-                  <div className="w-full md:w-7/12 p-3 sm:p-4 md:p-6 flex flex-col sm:flex-row gap-3 sm:gap-4 flex-1 md:h-full bg-zinc-950/40">
-                    {(() => {
-                      const exp1ErrorKey = `${item.id}_exp1`;
-                      const displayExp1 =
-                        imageErrors[exp1ErrorKey] || !item.expandedImage1
-                          ? item.fallbackImages.expanded1
-                          : resolveImagePath(item.expandedImage1);
-
-                      return (
-                        <div className="w-full sm:w-1/2 min-h-[140px] sm:h-full rounded-xl overflow-hidden relative border border-white/5 bg-zinc-900/60 flex items-center justify-center">
-                          {displayExp1 ? (
-                            <img
-                              src={displayExp1}
-                              alt={`${item.client} - Identidad Visual`}
-                              className="absolute inset-0 w-full h-full object-cover"
-                              onError={() => handleImageError(item.id, 'exp1')}
-                            />
-                          ) : (
-                            <div className="flex flex-col items-center text-center p-4 sm:p-6 gap-3">
-                              <div
-                                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border border-white/10"
-                                style={{ backgroundColor: `${item.color}10` }}
-                              >
-                                <ImageIcon size={20} style={{ color: item.color }} />
-                              </div>
-                              <div>
-                                <p className="text-[10px] sm:text-xs font-semibold tracking-wider text-zinc-400 uppercase">Fotografía Principal</p>
-                                <p className="text-[9px] sm:text-[10px] text-zinc-500 mt-1">Diseño de Identidad / Concepto</p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })()}
-
-                    {(() => {
-                      const exp2ErrorKey = `${item.id}_exp2`;
-                      const displayExp2 =
-                        imageErrors[exp2ErrorKey] || !item.expandedImage2
-                          ? item.fallbackImages.expanded2
-                          : resolveImagePath(item.expandedImage2);
-
-                      return (
-                        <div className="w-full sm:w-1/2 min-h-[140px] sm:h-full rounded-xl overflow-hidden relative border border-white/5 bg-zinc-900/60 flex items-center justify-center">
-                          {displayExp2 ? (
-                            <img
-                              src={displayExp2}
-                              alt={`${item.client} - Aplicación`}
-                              className="absolute inset-0 w-full h-full object-cover"
-                              onError={() => handleImageError(item.id, 'exp2')}
-                            />
-                          ) : (
-                            <div className="flex flex-col items-center text-center p-4 sm:p-6 gap-3">
-                              <div
-                                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border border-white/10"
-                                style={{ backgroundColor: `${item.color}10` }}
-                              >
-                                <Sparkles size={20} style={{ color: item.color }} />
-                              </div>
-                              <div>
-                                <p className="text-[10px] sm:text-xs font-semibold tracking-wider text-zinc-400 uppercase">Aplicación de Marca</p>
-                                <p className="text-[9px] sm:text-[10px] text-zinc-500 mt-1">Diseño de Packaging / Editorial</p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })()}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* CTA */}
-        <div className="mt-10 sm:mt-12 md:mt-16 flex justify-center z-10 w-full px-4">
-          <a
-            href="https://xeryusinvest.com/portafolio"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-7 sm:px-10 py-3 sm:py-4 bg-transparent border-2 border-[#e6af41] text-[#e6af41] font-semibold tracking-wider uppercase text-[10px] sm:text-xs md:text-sm rounded-full overflow-hidden transition-all duration-300 hover:bg-[#e6af41] hover:text-black hover:shadow-[0_0_30px_rgba(230,175,65,0.35)] w-full sm:w-auto justify-center"
+        {/* Columna izquierda — textos */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', order: isMobile ? 2 : 1, alignItems: isMobile ? 'center' : 'flex-start', textAlign: isMobile ? 'center' : 'left' }}>
+          <h1 className="font-title glow-text"
+            style={{ fontSize: 'clamp(2.2rem, 4vw, 3.5rem)', lineHeight: 1.15, fontWeight: 800,
+              background: 'linear-gradient(90deg, #fff, #e2e8f0, #599ddf)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}
           >
-            <span>Ver portafolio completo</span>
-            <ArrowUpRight size={16} className="transform transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </a>
+            Professional <br />
+            <span style={{ background: 'linear-gradient(90deg, #c5362e, #e6af41, #80b67d)',
+              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+              Branding
+            </span>
+          </h1>
+
+          <p className="font-text"
+            style={{ color: '#d1d5db', fontSize: 'clamp(1rem, 1.4vw, 1.2rem)', lineHeight: 1.7, margin: 0, maxWidth: '480px' }}>
+            Hacemos marcas memorables, creativas y de alto impacto para que te vean, te recuerden y se queden contigo.
+          </p>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center', justifyContent: isMobile ? 'center' : 'flex-start' }}>
+            <button className="btn-gradient font-text"
+              style={{ fontWeight: 700, color: '#fff', padding: '14px 32px', borderRadius: '9999px',
+                fontSize: '1rem', border: 'none', cursor: 'pointer',
+                boxShadow: '0 0 20px rgba(197,54,46,0.5)', transition: 'all 0.3s' }}>
+              Cotizar Proyecto
+            </button>
+            <button className="font-text" onClick={scrollToServices}
+              style={{ fontWeight: 700, color: '#fff', padding: '14px 32px', borderRadius: '9999px',
+                fontSize: '1rem', background: 'transparent', border: '1px solid #4b5563',
+                cursor: 'pointer', transition: 'all 0.3s', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              Servicios <span>→</span>
+            </button>
+          </div>
         </div>
 
+        {/* Columna derecha — logo */}
+        <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'center', height: isMobile ? '260px' : '460px', order: isMobile ? 1 : 2 }}>
+          <div style={{ position: 'absolute', width: '256px', height: '256px', background: '#599ddf',
+            borderRadius: '50%', filter: 'blur(120px)', opacity: 0.2 }} />
+
+          <div className="generic-logo" style={{ position: 'absolute', top: '40px', left: '40px', animationDelay: '0.2s' }}>
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+          </div>
+          <div className="generic-logo" style={{ position: 'absolute', bottom: '80px', right: '40px', animationDelay: '0.6s' }}>
+            <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2"><circle cx="12" cy="12" r="10"/></svg>
+          </div>
+          <div className="generic-logo" style={{ position: 'absolute', top: '80px', right: '80px', animationDelay: '0.4s' }}>
+            <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="#666" strokeWidth="2"><polygon points="12 2 22 22 2 22"/></svg>
+          </div>
+
+          <div style={{ position: 'relative', zIndex: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <WepromLogo style={{ width: '100%', height: '100%', maxWidth: isMobile ? '220px' : '360px', maxHeight: isMobile ? '220px' : '360px' }} />
+          </div>
+
+          <svg style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', zIndex: 10, pointerEvents: 'none', opacity: 0.4 }} viewBox="0 0 500 500">
+            <circle cx="250" cy="250" r="180" stroke="#80b67d" strokeWidth="1" strokeDasharray="10 10" fill="none" />
+            <line x1="50" y1="250" x2="450" y2="250" stroke="#599ddf" strokeWidth="1" strokeDasharray="5 5" />
+            <line x1="250" y1="50" x2="250" y2="450" stroke="#599ddf" strokeWidth="1" strokeDasharray="5 5" />
+          </svg>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

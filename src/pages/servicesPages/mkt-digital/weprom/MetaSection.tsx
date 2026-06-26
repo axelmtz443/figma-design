@@ -151,7 +151,22 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
   const dotIndex = index % len;
 
   return (
-    <div className="relative w-full select-none">
+    <div className="relative w-full select-none px-4 sm:px-0">
+      {/* Flechas arriba — solo móvil, contenedor más chico con margen */}
+      <div className="flex sm:hidden items-center justify-center gap-4 mb-4">
+        <button
+          onClick={() => go(-1)}
+          className="w-9 h-9 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+        </button>
+        <button
+          onClick={() => go(1)}
+          className="w-9 h-9 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
+        >
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
+        </button>
+      </div>
       <div className="overflow-hidden" style={{ height: `${cardHeight}px` }}>
         <div
           ref={stripRef}
@@ -172,7 +187,7 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
 
       <button
         onClick={() => go(-1)}
-        className="absolute left-2 sm:left-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
+        className="hidden sm:flex absolute left-2 sm:left-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 items-center justify-center text-white transition-all"
         style={{ top: `${cardHeight / 2}px`, transform: 'translateY(-50%)' }}
       >
         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
@@ -180,7 +195,7 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
 
       <button
         onClick={() => go(1)}
-        className="absolute right-2 sm:right-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 flex items-center justify-center text-white transition-all"
+        className="hidden sm:flex absolute right-2 sm:right-4 z-20 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 bg-black/40 backdrop-blur-sm hover:bg-white/20 hover:border-white/40 items-center justify-center text-white transition-all"
         style={{ top: `${cardHeight / 2}px`, transform: 'translateY(-50%)' }}
       >
         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
@@ -409,7 +424,14 @@ function InstagramCarouselAd({ ad }: { ad: MetaAd }) {
   const cards = ad.carouselCards || [];
   const [currentIndex, setCurrentIndex] = useState(0);
   const [expanded, setExpanded] = useState(true);
+  const touchStartX = useRef(0);
   const goTo = (idx: number) => setCurrentIndex(Math.max(0, Math.min(idx, cards.length - 1)));
+  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    if (delta > 40) goTo(currentIndex - 1);
+    else if (delta < -40) goTo(currentIndex + 1);
+  };
   const LIMIT = 120;
   const isLong = ad.mainText.length > LIMIT;
   const displayCaption = expanded || !isLong ? ad.mainText : ad.mainText.substring(0, LIMIT).trim() + '…';
@@ -437,11 +459,15 @@ function InstagramCarouselAd({ ad }: { ad: MetaAd }) {
           <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
         </button>
       </div>
-      <div className="relative w-full bg-zinc-900 overflow-hidden flex-1 min-h-0">
+      <div
+        className="relative w-full bg-zinc-900 overflow-hidden flex-1 min-h-0"
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <div className="flex h-full transition-transform duration-300 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {cards.map((card, idx) => (
             <div key={idx} className="w-full h-full flex-shrink-0">
-              <ImageWithFallback src={card.image} fallback={card.fallbackImage} alt={card.title} className="w-full h-full object-cover" />
+              <ImageWithFallback src={card.image} fallback={card.fallbackImage} alt={card.title} className="w-full h-full object-contain" />
             </div>
           ))}
         </div>
@@ -628,7 +654,7 @@ function LinkedInAd({ ad }: { ad: MetaAd }) {
         {isLong && !expanded && <button onClick={() => setExpanded(true)} className="text-[#0a66c2] font-medium ml-1">…ver más</button>}
       </div>
       <div className="flex-1 min-h-0 bg-zinc-900 overflow-hidden">
-        <ImageWithFallback src={ad.imageUrl || ''} fallback={ad.imageFallback || ''} alt={ad.ctaTitle} className="w-full h-full object-cover block" />
+        <ImageWithFallback src={ad.imageUrl || ''} fallback={ad.imageFallback || ''} alt={ad.ctaTitle} className="w-full h-full object-contain block" />
       </div>
       <div className="mx-2 sm:mx-3 mt-2 sm:mt-3 rounded border border-[#38434f] bg-[#283039] p-2.5 sm:p-3 flex items-center justify-between gap-2 sm:gap-3">
         <div className="min-w-0">
@@ -682,9 +708,20 @@ function renderMetaAd(ad: MetaAd): React.ReactNode {
 
 const CARD_WIDTH = 420;
 const CARD_HEIGHT = 810;
+const CARD_WIDTH_MOBILE = 300;
+const CARD_HEIGHT_MOBILE = 600;
 
 export default function MetaSection() {
   const { openPopup } = useContactPopup();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <section id="redes-sociales" className="relative min-h-screen bg-transparent flex flex-col justify-between py-10 sm:py-12 md:py-16 lg:py-20 overflow-x-hidden border-t border-zinc-900/40">
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-10 lg:px-12 flex flex-col items-start gap-3 sm:gap-4 mb-8 sm:mb-10 md:mb-12 lg:mb-16">
@@ -700,8 +737,8 @@ export default function MetaSection() {
 
       <SectionCarousel
         items={ADS_DATABASE.map(ad => renderMetaAd(ad))}
-        cardWidth={CARD_WIDTH}
-        cardHeight={CARD_HEIGHT}
+        cardWidth={isMobile ? CARD_WIDTH_MOBILE : CARD_WIDTH}
+        cardHeight={isMobile ? CARD_HEIGHT_MOBILE : CARD_HEIGHT}
       />
 
       <div className="w-full flex justify-center mt-8 sm:mt-10 lg:mt-12 mb-4 relative z-10">

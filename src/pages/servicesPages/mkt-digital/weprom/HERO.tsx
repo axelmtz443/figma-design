@@ -181,7 +181,7 @@ export default function HeroWeprom() {
       style={{ fontFamily: FONTS.body }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center flex-1 pt-10 sm:pt-12 lg:pt-16 xl:pt-20 pb-6 sm:pb-8 relative z-10">
-        <div className="lg:col-span-5 flex flex-col items-start text-left space-y-4 sm:space-y-5 lg:space-y-6 xl:space-y-8 z-20">
+        <div className="lg:col-span-5 order-last lg:order-none flex flex-col items-start text-left space-y-4 sm:space-y-5 lg:space-y-6 xl:space-y-8 z-20">
           <div className="space-y-3 sm:space-y-4">
             <h1
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-br from-white via-neutral-100 to-neutral-400"
@@ -223,7 +223,7 @@ export default function HeroWeprom() {
         </div>
       </div>
 
-      <div className="w-full relative z-10 border-t border-zinc-900/60 bg-gradient-to-b from-transparent">
+      <div className="w-full relative z-10 border-t border-zinc-900/60 bg-gradient-to-b from-transparent mb-8 sm:mb-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 py-12 sm:py-16 lg:py-20 text-center space-y-3 sm:space-y-4 lg:space-y-5">
           <h1
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight text-white"

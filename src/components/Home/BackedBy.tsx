@@ -87,9 +87,6 @@ function BackedBy() {
   return (
     <section className="relative w-full pt-8 sm:pt-10 md:pt-12 pb-10 sm:pb-14 md:pb-4 overflow-hidden bg-transparent group">
 
-      <div className="absolute top-0 left-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-r from-black to-transparent opacity-90" />
-      <div className="absolute top-0 right-0 w-16 sm:w-32 md:w-64 h-full z-20 pointer-events-none bg-gradient-to-l from-black to-transparent opacity-90" />
-
       <div className="relative w-full max-w-[1519px] mx-auto px-4 sm:px-8 z-10">
 
         <p className="font-montserrat font-light text-[18px] sm:text-[24px] md:text-[36px] tracking-[-0.02em] text-white/60 text-center mb-10 sm:mb-16 uppercase">
