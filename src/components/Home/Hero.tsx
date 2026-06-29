@@ -287,11 +287,11 @@ export default function Hero({ isLoading} : {isLoading: boolean}) {
 
           <div className="flex flex-wrap gap-3 sm:gap-4 justify-center md:justify-start">
             {/* Contáctanos — shimmer continuo */}
-            <button
-              onClick={() => openPopup()}
-              className="btn-cta-primary relative overflow-hidden rounded-full bg-white text-black px-7 sm:px-9 py-2.5 sm:py-3 font-montserrat font-bold text-[14px] sm:text-[16px] transition-all duration-300 hover:scale-[1.06] hover:shadow-[0_0_36px_rgba(255,255,255,0.28)] active:scale-95"
-            >
-              <span className="relative z-10">Contáctanos</span>
+            <button className="btn-gradient font-text"
+              style={{ fontWeight: 700, color: '#fff', padding: '14px 32px', borderRadius: '9999px',
+                fontSize: '1rem', border: 'none', cursor: 'pointer',
+                boxShadow: '0 0 20px rgba(197,54,46,0.5)', transition: 'all 0.3s' }}>
+              Cotizar Proyecto
             </button>
 
             {/* Servicios — outline con micro-animación */}

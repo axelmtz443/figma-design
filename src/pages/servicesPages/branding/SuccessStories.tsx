@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { ArrowUpRight, X, Image as ImageIcon, Sparkles } from 'lucide-react';
 import { getSuccessStories, SuccessStory } from '../../../lib/sanityQueries';
 import { urlFor } from '../../../lib/sanityImage';
@@ -416,15 +417,13 @@ export default function SuccessStories() {
 
         {/* CTA */}
         <div className="mt-10 sm:mt-12 md:mt-16 flex justify-center z-10 w-full px-4">
-          <a
-            href="https://xeryusinvest.com/portafolio"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/portafolio"
             className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-7 sm:px-10 py-3 sm:py-4 bg-transparent border-2 border-[#e6af41] text-[#e6af41] font-semibold tracking-wider uppercase text-[10px] sm:text-xs md:text-sm rounded-full overflow-hidden transition-all duration-300 hover:bg-[#e6af41] hover:text-black hover:shadow-[0_0_30px_rgba(230,175,65,0.35)] w-full sm:w-auto justify-center"
           >
             <span>Ver portafolio completo</span>
             <ArrowUpRight size={16} className="transform transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
-          </a>
+          </Link>
         </div>
 
       </div>

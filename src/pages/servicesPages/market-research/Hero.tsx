@@ -220,13 +220,18 @@ export default function HeroMR() {
                 </span>
               </button>
               
-              <button className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-white/80 text-white rounded-xl font-bold text-[11px] sm:text-[13px] uppercase tracking-widest overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:border-white">
+              <a
+                href="https://calendar.app.google/9z2zxVcSLAVmWtHJ7"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-white/80 text-white rounded-xl font-bold text-[11px] sm:text-[13px] uppercase tracking-widest overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:border-white"
+              >
                 <div className="absolute inset-0 bg-white translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-in-out" />
                 <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3 group-hover:text-black transition-colors duration-300">
                   <Calendar className="transition-colors duration-300" />
                   Agendar Videollamada
                 </span>
-              </button>
+              </a>
             </motion.div>
           </div>
 

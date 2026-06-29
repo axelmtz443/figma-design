@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 // Imports de imágenes (Fila 1: 6 imágenes)
 import b1_1 from '../../../images/branding/banner1_1.png';
@@ -81,9 +82,11 @@ const FirstImpressionCounts = () => {
       </div>
 
       <div className="flex mt-8 sm:mt-12 justify-center w-full px-4">
-        <button className="px-8 sm:px-10 py-3 sm:py-4 bg-white hover:bg-gray-400 text-black font-montserrat font-bold rounded-full transition-all duration-300 text-sm sm:text-base w-full max-w-[260px] sm:max-w-none sm:w-auto">
-          Ver Portafolio
-        </button>
+        <Link to="/portafolio" className="w-full max-w-[260px] sm:max-w-none sm:w-auto">
+          <button className="px-8 sm:px-10 py-3 sm:py-4 bg-white hover:bg-gray-400 text-black font-montserrat font-bold rounded-full transition-all duration-300 text-sm sm:text-base w-full">
+            Ver Portafolio
+          </button>
+        </Link>
       </div>
 
       {/* Degradados laterales */}

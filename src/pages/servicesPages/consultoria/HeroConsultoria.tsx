@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Calendar } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useContactPopup } from '../../../context/ContactPopupContext';
+import LogoBuilder from './LogoBuilder';
 
 // @ts-ignore
 import 'swiper/css';
@@ -20,8 +22,6 @@ import Nissan from '../../../images/Brands/Nissan.png';
 import Pepsico from '../../../images/Brands/PEPSICO-min.png';
 import Televisa from '../../../images/Brands/TELEVISA-min.png';
 import Volkswagen from '../../../images/Brands/Volkswagen_logopng.png';
-
-import bgVideo from '../../../images/videobackground.mp4';
 
 const brands = [
     { name: 'Cinepolis', src: Cinepolis, alt: 'Cinepolis Logo' },
@@ -100,54 +100,81 @@ const AnimatedWord = () => {
 const allBrands = [...brands, ...brands];
 
 const ConsultoriaHero = () => {
+    const { openPopup } = useContactPopup();
     return (
         <>
             {/* ── HERO ── */}
-            <section className="relative w-full h-screen min-h-[500px] sm:min-h-[600px] flex items-center overflow-hidden">
-                <video
-                    className="absolute inset-0 w-full h-full object-cover"
-                    src={bgVideo}
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    style={{ opacity: 0.35 }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/50 to-black/20" />
+            <section className="relative w-full min-h-screen md:min-h-[750px] flex items-center overflow-hidden py-20 sm:py-24 md:py-0">
+                <style>{`
+                    .consultoria-btn-gradient {
+                        background: linear-gradient(90deg, #c5362e, #e6af41, #80b67d, #599ddf);
+                        background-size: 300% 100%;
+                        animation: consultoriaGradientShift 6s ease infinite;
+                    }
+                    @keyframes consultoriaGradientShift {
+                        0%   { background-position: 0%   50%; }
+                        50%  { background-position: 100% 50%; }
+                        100% { background-position: 0%   50%; }
+                    }
+                `}</style>
 
-                <div className="relative z-10 px-5 sm:px-8 md:px-12 lg:px-16 xl:px-20 max-w-4xl">
-                    <motion.h1
-                        initial={{ y: 40, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.7 }}
-                        className="font-aston text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl py-2 font-medium tracking-normal leading-snug text-white"
-                    >
-                        Consultoría Estratégica para 
-                        <AnimatedWord />
-                        <br />
-                        tus Resultados Comerciales
-                    </motion.h1>
+                <div className="relative z-10 w-full max-w-7xl mx-auto px-5 sm:px-8 md:px-12 lg:px-20 flex flex-col md:grid md:grid-cols-2 gap-10 md:gap-16 lg:gap-24 items-center">
 
-                    <motion.p
-                        initial={{ y: 40, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.7, delay: 0.15 }}
-                        className="mt-3 sm:mt-4 text-white font-montserrat font-normal text-base sm:text-xl md:text-2xl max-w-xl leading-relaxed"
+                    {/* ── Logo construyéndose (móvil: arriba, desktop: derecha) ── */}
+                    <motion.div
+                        initial={{ opacity: 0, scale: 0.92 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.8, delay: 0.15 }}
+                        className="flex items-center justify-center order-first md:order-last w-full max-w-[260px] sm:max-w-sm md:max-w-md lg:max-w-lg"
                     >
-                        Trabajamos con tu equipo directivo y comercial para convertir esfuerzos en crecimiento real y sostenido.
-                    </motion.p>
+                        <LogoBuilder />
+                    </motion.div>
 
-                    <motion.button
-                        initial={{ y: 40, opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                        transition={{ duration: 0.7, delay: 0.28 }}
-                        className="mt-6 sm:mt-8 relative text-white font-montserrat font-bold text-base sm:text-lg md:text-xl px-5 sm:px-6 py-2.5 sm:py-3 rounded-full hover:bg-white/10 transition-all duration-300"
-                        style={{
-                            border: '3px solid grey',
-                        }}
-                    >
-                        Agendar sesión de descubrimiento
-                    </motion.button>
+                    {/* ── Texto ── */}
+                    <div className="flex flex-col items-center text-center md:items-start md:text-left">
+                        <motion.h1
+                            initial={{ y: 40, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.7 }}
+                            className="font-aston text-3xl sm:text-4xl md:text-5xl lg:text-6xl py-2 font-medium tracking-normal leading-snug text-white"
+                        >
+                            Consultoría Estratégica para
+                            <AnimatedWord />
+                        </motion.h1>
+
+                        <motion.p
+                            initial={{ y: 40, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.7, delay: 0.15 }}
+                            className="mt-3 sm:mt-4 text-white font-montserrat font-normal text-base sm:text-lg md:text-xl max-w-xl leading-relaxed"
+                        >
+                            Desarrollamos estrategias de marketing online y offline para elevar tu marca, producto o servicio, ayudándote a destacar por encima de la competencia.
+                        </motion.p>
+
+                        <motion.div
+                            initial={{ y: 40, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ duration: 0.7, delay: 0.25 }}
+                            className="flex flex-row flex-nowrap gap-3 sm:gap-4 mt-8 sm:mt-10"
+                        >
+                            <button
+                                onClick={() => openPopup('Consultoría Estratégica')}
+                                className="consultoria-btn-gradient relative text-white font-montserrat font-bold text-xs sm:text-sm md:text-base px-5 sm:px-7 md:px-9 py-2.5 sm:py-3 rounded-full border-none cursor-pointer shadow-[0_0_20px_rgba(197,54,46,0.4)] transition-transform duration-300 hover:scale-[1.06] active:scale-95 whitespace-nowrap"
+                            >
+                                Solicitar diagnóstico
+                            </button>
+
+                            <a
+                                href="https://calendar.app.google/9z2zxVcSLAVmWtHJ7"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="group relative overflow-hidden rounded-full border border-white/25 text-white/80 px-5 sm:px-7 md:px-9 py-2.5 sm:py-3 font-montserrat font-medium text-xs sm:text-sm md:text-base transition-all duration-300 hover:border-white/60 hover:text-white hover:scale-[1.06] active:scale-95 flex items-center gap-2 whitespace-nowrap"
+                            >
+                                <Calendar size={16} />
+                                Agendar Reunión
+                            </a>
+                        </motion.div>
+                    </div>
                 </div>
             </section>
 
