@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { getMarketResearchProjects, MarketResearchProject } from '../../../lib/sanityQueries';
 import { urlFor } from '../../../lib/sanityImage';
 
@@ -344,10 +345,8 @@ export default function OurProjects() {
         </div>
 
         <div className="mt-10 sm:mt-12 lg:mt-14 flex justify-center z-40">
-          <a 
-            href="https://xeryusinvest.com/portafolio" 
-            target="_blank" 
-            rel="noopener noreferrer"
+          <Link
+            to="/portafolio/investigacion-de-mercado"
             className="group relative px-8 sm:px-10 py-3 sm:py-4 bg-transparent border-2 border-[#e6af41] text-[#e6af41] font-bold tracking-[0.15em] sm:tracking-[0.18em] uppercase text-[10px] sm:text-xs rounded-full overflow-hidden transition-all duration-300"
           >
             <span className="absolute inset-0 bg-[#e6af41] translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out rounded-full" />
@@ -357,7 +356,7 @@ export default function OurProjects() {
                 <ArrowUpRight className="w-3.5 h-3.5 sm:w-[15px] sm:h-[15px]" />
               </span>
             </span>
-          </a>
+          </Link>
         </div>
 
       </div>

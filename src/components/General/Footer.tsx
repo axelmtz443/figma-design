@@ -85,11 +85,11 @@ function Footer() {
             <h3 className="text-gray-400 text-xs sm:text-sm mb-4 sm:mb-6 uppercase tracking-wider">Servicios</h3>
             <ul className="space-y-3 sm:space-y-4">
               {[
-                { label: 'Investigación de Mercado', to: '/servicios#market-research' },
-                { label: 'Marketing Digital', to: '/servicios#digital-marketing' },
-                { label: 'Professional Branding', to: '/servicios#branding' },
-                { label: 'Producción Audiovisual', to: '/servicios#audiovisual' },
-                { label: 'Consultoría en Marketing.', to: '/servicios#audiovisual' },
+                { label: 'Investigación de Mercado', to: '/servicios/investigacion-de-mercados' },
+                { label: 'Marketing Digital', to: '/servicios/marketing-digital' },
+                { label: 'Branding Profesional', to: '/servicios/branding' },
+                { label: 'Producción Audiovisual', to: '/servicios/audiovisual' },
+                { label: 'Consultoría en Marketing', to: '/servicios/consultoriademarketing' },
 
               ].map(({ label, to }) => (
                 <li key={label}>
@@ -120,7 +120,7 @@ function Footer() {
 */}
           {/* Contact */}
           <div>
-            <h3 className="text-gray-400 text-xs sm:text-sm mb-4 sm:mb-6 uppercase tracking-wider">Contact Us</h3>
+            <h3 className="text-gray-400 text-xs sm:text-sm mb-4 sm:mb-6 uppercase tracking-wider">Contáctanos</h3>
             <ul className="space-y-3 sm:space-y-4">
               <li>
                 <a href="tel:+523334590989" className="flex items-center gap-2 text-white hover:text-gray-300 transition-colors text-sm">

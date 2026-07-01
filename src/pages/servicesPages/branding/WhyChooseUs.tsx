@@ -4,22 +4,22 @@ import { Star, GraduationCap, Globe } from 'lucide-react';
 
 const reasons = [
   {
-    title: "Experiencia integral en branding y posicionamiento",
-    desc: "Más de una década desarrollando marcas personales, corporativas e institucionales en distintos sectores. Hemos trabajado con líderes, emprendedores y organizaciones que necesitaban alinear su proyección visual con su verdadero nivel de expertise.",
+    title: "Expertos en Branding y Posicionamiento de Marca",
+    desc: "Más de tres décadas desarrollando marcas de alto impacto para casi todos los sectores e industrias, siendo los aliados estratégicos de cientos de empresas.",
     icon: <Star size={28} />,
     gradient: "radial-gradient(circle at top left, rgba(186, 63, 53, 0.15) 0%, rgba(95, 161, 207, 0.05) 100%)",
     accent: "#ba3f35"
   },
   {
-    title: "Metodología integral: WeProm Branding System®",
-    desc: "Nuestro proceso une diagnóstico, estrategia, diseño y comunicación en una secuencia estructurada que asegura coherencia y resultados tangibles. Generamos visibilidad, credibilidad y crecimiento profesional.",
+    title: "Metodologia integral - WeProm Branding System:",
+    desc: "Desde la investigación, hasta desarrollar el ADN de la marca, su estrategia de comunicación y su identidad visual, creamos marcas coherentes y que generan resultados.",
     icon: <GraduationCap size={28} />,
     gradient: "radial-gradient(circle at top left, rgba(95, 161, 207, 0.15) 0%, rgba(126, 179, 135, 0.05) 100%)",
     accent: "#5fa1cf"
   },
   {
-    title: "Visión internacional y enfoque humano",
-    desc: "Con presencia en México y Europa, combinamos una visión global con sensibilidad local. Creamos marcas auténticas que proyectan la esencia de cada profesional u organización, equilibrando estrategia y humanidad en cada detalle.",
+    title: "Visión internacional",
+    desc: "Con presencia en México, Francia y Estados Unidos, combinamos una visión global con sensibilidad local, creando marcas con potencial de expansion en un corto, mediano o largo plazo.",
     icon: <Globe size={28} />,
     gradient: "radial-gradient(circle at top left, rgba(126, 179, 135, 0.15) 0%, rgba(229, 173, 67, 0.05) 100%)",
     accent: "#7eb387"
@@ -47,8 +47,7 @@ const WhyChooseUs = () => {
             transition={{ delay: 0.2 }}
             className="max-w-xs sm:max-w-xl md:max-w-2xl lg:max-w-4xl mx-auto text-sm sm:text-base md:text-lg text-white/80 font-montserrat leading-relaxed"
           >
-            En WeProm, combinamos estrategia, diseño y comunicación para crear marcas con propósito.
-            No hacemos sólo marcas bonitas: construimos marcas relevantes, duraderas y emocionalmente poderosas.
+            En WeProm, combinamos estrategia, diseño creativo y comunicación para crear marcas con propósito. No hacemos sólo marcas bonitas, construimos marcas relevantes, duraderas y emocionalmente poderosas.
           </motion.p>
         </div>
 

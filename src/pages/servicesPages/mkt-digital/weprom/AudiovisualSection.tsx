@@ -19,7 +19,7 @@ interface Project {
 const PROJECTS: Project[] = [
   {
     id: 1,
-    title: "Campaña de Lanzamiento EQC",
+    title: "Video Publicitario",
     client: "Mercedes-Benz Eurostern",
     thumbnail: thumbEQC,
     videoUrl: "https://res.cloudinary.com/dexcrnwcu/video/upload/v1776655936/Mercedes_Benz_EQC_zzprl2.mp4",
@@ -27,7 +27,7 @@ const PROJECTS: Project[] = [
   },
   {
     id: 2,
-    title: "Videos Promocionales",
+    title: "Video Promocional",
     client: "Cantina Xalisco",
     thumbnail: thumbCantina,
     videoUrl: "https://res.cloudinary.com/dexcrnwcu/video/upload/v1776655940/socialmedia1_cnkqxl.mp4",

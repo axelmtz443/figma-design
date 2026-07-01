@@ -62,7 +62,7 @@ const FirstImpressionCounts = () => {
       <div className="relative z-20 text-center mb-10 sm:mb-14 md:mb-16 mx-auto max-w-xs sm:max-w-xl md:max-w-2xl lg:max-w-3xl px-4 sm:px-6">
 
         <h2 className="font-aston font-medium text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl leading-[1.15] mb-4 sm:mb-6 tracking-tight text-center">
-          "La primera impresión nunca se olvida"
+          La primera impresión nunca se olvida
         </h2>
 
         <motion.p
@@ -70,7 +70,7 @@ const FirstImpressionCounts = () => {
           animate={{ opacity: 1, y: 0 }}
           className="font-montserrat text-white text-sm sm:text-base leading-relaxed tracking-[0.05em] sm:tracking-[0.1em] mb-3"
         >
-          La identidad de tu marca será la manera en que tus clientes te percibirán y recordarán, por ello, es importante desarrollar un concepto creativo único que transmita los objetivos y diferenciadores de tu empresa, producto o servicio.
+          La identidad de tu marca será la manera en que tus clientes te perciban y recuerden, desarrollamos conceptos creativos únicos, memorables y alineados con tu mercado meta.
         </motion.p>
 
       </div>

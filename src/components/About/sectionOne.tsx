@@ -41,7 +41,7 @@ function SectionOne() {
         className="absolute inset-0 flex flex-col items-center justify-center sm:justify-end px-4 sm:px-8 text-center sm:pb-20"
       >
         <h1 className="font-aston text-[44px] sm:text-[68px] lg:text-[95px] text-white leading-[1.05] tracking-tight mb-4 sm:mb-6 max-w-6xl mx-auto">
-          Construyendo el futuro de la <span className="text-transparent bg-clip-text bg-border-grad">innovación</span> digital, juntos.
+          Construyendo el éxito de tu marca juntos.
         </h1>
         
         <motion.p 
@@ -50,7 +50,7 @@ function SectionOne() {
           transition={{ delay: 0.5, duration: 1 }}
           className="font-montserrat text-white/70 text-[16px] sm:text-[23px] lg:text-[25px] leading-relaxed max-w-3xl mx-auto"
         >
-          Tenemos la misión de hacer que el desarrollo de marketing sea más profesional, escalable y accesible para todos.
+          Tenemos el propósito de compartir contigo nuestra experiencia para que superes tus objetivos de negocio.
         </motion.p>
       </motion.div>
 

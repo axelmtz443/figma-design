@@ -157,6 +157,44 @@ export async function getPortfolioCases(uen?: string): Promise<PortfolioCase[]> 
   return sanityClient.fetch(query, uen ? { uen } : {});
 }
 
+// ─── Team ──────────────────────────────────────────────────────────────────
+
+export interface TeamMember {
+  _id: string;
+  order: number;
+  name: string;
+  role: string;
+  email?: string;
+  description?: string;
+  photo: any;
+  active: boolean;
+}
+
+export async function getTeamMembers(): Promise<TeamMember[]> {
+  return sanityClient.fetch(
+    `*[_type == "teamMember" && active == true] | order(order asc) { _id, order, name, role, email, description, photo, active }`
+  );
+}
+
+// ─── Reviews ──────────────────────────────────────────────────────────────
+
+export interface Review {
+  _id: string;
+  order: number;
+  name: string;
+  rating: number;
+  photo: any;
+  text?: string;
+  category: string;
+}
+
+export async function getReviews(category: string): Promise<Review[]> {
+  return sanityClient.fetch(
+    `*[_type == "review" && category == $category] | order(order asc) { _id, order, name, rating, photo, text, category }`,
+    { category }
+  );
+}
+
 export async function getAllSlugs(): Promise<string[]> {
   const query = `*[_type == "post"] { "slug": slug.current }`;
   const posts = await sanityClient.fetch(query);

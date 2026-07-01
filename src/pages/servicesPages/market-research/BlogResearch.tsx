@@ -16,7 +16,7 @@ function BlogResearch() {
 
   useEffect(() => {
     getAllPosts().then(data => {
-      const filtered = data.filter(p => p.image && p.category?.toUpperCase() === 'DEFI');
+      const filtered = data.filter(p => p.image && p.category === 'investigacion-de-mercados');
       setPosts(filtered.slice(0, 3));
     });
   }, []);
@@ -68,7 +68,7 @@ function BlogResearch() {
               image={post.image}
               title={post.title}
               date={formatDate(post.date)}
-              category={post.category}
+              category="Investigación de Mercados"
             />
           ))}
         </div>
