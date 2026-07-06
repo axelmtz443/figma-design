@@ -127,6 +127,18 @@ const css = `
     animation: rotate-grad 3s linear infinite;
   }
 
+  .btn-gradient {
+    background: linear-gradient(90deg, #c5362e, #e6af41, #80b67d, #599ddf);
+    background-size: 300% 100%;
+    animation: gradientShift 6s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0%   { background-position: 0%   50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0%   50%; }
+  }
+
   @keyframes shimmer-loop {
     0%   { transform: translateX(-180%) rotate(25deg); }
     100% { transform: translateX(380%) rotate(25deg); }

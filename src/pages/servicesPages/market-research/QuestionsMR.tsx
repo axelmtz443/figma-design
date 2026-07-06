@@ -76,7 +76,7 @@ export default function ElPoderDeLaInformacion() {
                 }}
               />
 
-              <div className="relative z-10 h-full flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16">
+              <div className="absolute inset-0 z-10 flex items-center justify-between px-4 sm:px-8 md:px-12 lg:px-16">
                 
                 <div 
                   className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2 md:gap-3 lg:gap-4 transition-transform duration-500 ease-out"

@@ -42,9 +42,9 @@ const fadeUp: Variants = {
 
 export default function WhyMR() {
     return (
-        <section className="w-full pt-16 sm:pt-20 lg:pt-28 pb-8 sm:pb-10 lg:pb-8 px-4 sm:px-6 lg:px-8 bg-transparent font-montserrat text-white">
+        <section className="w-full pt-8 sm:pt-20 lg:pt-28 pb-6 sm:pb-10 lg:pb-8 px-4 sm:px-6 lg:px-8 bg-transparent font-montserrat text-white">
             <div className="max-w-6xl mx-auto">
-                <div className="flex flex-col lg:flex-row gap-10 sm:gap-12 lg:gap-14 xl:gap-16 items-start">
+                <div className="flex flex-col lg:flex-row gap-5 sm:gap-12 lg:gap-14 xl:gap-16 items-start">
 
                     <motion.div
                         className="w-full lg:w-[42%]"
@@ -76,7 +76,7 @@ export default function WhyMR() {
                     </motion.div>
 
                     <motion.div
-                        className="w-full lg:w-[58%] flex flex-col gap-4 sm:gap-5 lg:gap-6"
+                        className="w-full lg:w-[58%] flex flex-col gap-2.5 sm:gap-5 lg:gap-6"
                         initial="hidden"
                         whileInView="visible"
                         viewport={{ once: true, amount: 0.2 }}
@@ -96,11 +96,11 @@ export default function WhyMR() {
                                             background: `linear-gradient(135deg, ${feature.color} 0%, transparent 40%, transparent 60%, ${feature.color}40 100%)`,
                                         }}
                                     >
-                                        <div className="rounded-2xl bg-neutral-950 px-5 sm:px-6 lg:px-8 py-4 sm:py-5 lg:py-7">
-                                            <h3 className="font-bold text-lg sm:text-xl lg:text-2xl mb-2 sm:mb-3 text-white">
+                                        <div className="rounded-2xl bg-neutral-950 px-5 sm:px-6 lg:px-8 py-3 sm:py-5 lg:py-7">
+                                            <h3 className="font-bold text-base sm:text-xl lg:text-2xl mb-0 sm:mb-3 text-white">
                                                 {feature.title}
                                             </h3>
-                                            <p className="text-white/70 text-xs sm:text-sm leading-relaxed">
+                                            <p className="hidden sm:block text-white/70 text-xs sm:text-sm leading-relaxed">
                                                 {feature.description}
                                             </p>
                                         </div>

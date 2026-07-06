@@ -13,6 +13,13 @@ export const mktDigitalProject = defineType({
     defineField({ name: 'traffic', title: 'Tráfico total', type: 'string', validation: Rule => Rule.required() }),
     defineField({ name: 'accounts', title: 'Alcance', type: 'string', validation: Rule => Rule.required() }),
     defineField({ name: 'conversations', title: 'Conversiones', type: 'string', validation: Rule => Rule.required() }),
+    defineField({
+      name: 'metricLabel',
+      title: 'Título del número principal',
+      type: 'string',
+      description: 'Etiqueta que aparece arriba del número grande de la tarjeta (muestra el valor de "Conversiones"). Ej: Citas Agendadas, Pruebas de Manejo, Compras en Línea.',
+      initialValue: 'Conversaciones',
+    }),
     defineField({ name: 'interactions', title: 'Interacciones', type: 'string', validation: Rule => Rule.required() }),
     defineField({
       name: 'color',

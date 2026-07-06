@@ -134,6 +134,19 @@ export default function OurProjects() {
   const [isHovered, setIsHovered] = useState(false);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [flipped, setFlipped] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    setFlipped(false);
+  }, [currentIndex]);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % cases.length);
@@ -195,7 +208,7 @@ export default function OurProjects() {
           Conoce algunos de nuestros proyectos
         </h2>
 
-        <div className="relative w-full h-[520px] sm:h-[480px] md:h-[480px] lg:h-[500px] xl:h-[520px] flex items-center justify-center group">
+        <div className="relative w-full h-[440px] sm:h-[480px] md:h-[480px] lg:h-[500px] xl:h-[520px] flex items-center justify-center group">
           
           {cases.map((item, index) => {
             const isActive = index === currentIndex;
@@ -213,81 +226,167 @@ export default function OurProjects() {
             }
 
             return (
-              <div 
+              <div
                 key={item.id}
                 className={`transition-all duration-700 ease-out w-full max-w-3xl sm:max-w-4xl h-full flex-shrink-0 rounded-2xl ${positionStyle}`}
                 onClick={() => {
                   if (isNext) nextSlide();
                   if (isPrev) prevSlide();
+                  if (isActive && isMobile) setFlipped((f) => !f);
                 }}
               >
-                <div className="w-full h-full relative rounded-2xl overflow-hidden border border-zinc-800/80 bg-zinc-950 shadow-[0_0_50px_rgba(0,0,0,0.85)]">
-                  
-                  <img 
-                    src={item.image} 
-                    alt={item.client}
-                    className={`w-full h-full object-cover transition-transform duration-1000 ease-out select-none pointer-events-none ${
-                      isActive ? 'scale-100 brightness-[0.35] blur-0' : 'scale-105 brightness-50 blur-[2px]'
-                    }`}
-                    draggable={false}
-                  />
-                  
-                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+                <div
+                  className="w-full h-full [perspective:1500px]"
+                  style={{ cursor: isActive && isMobile ? 'pointer' : undefined }}
+                >
+                  <div
+                    className="relative w-full h-full [transform-style:preserve-3d] transition-transform duration-700 ease-out"
+                    style={{ transform: isActive && isMobile && flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
+                  >
 
-                  {isActive && (
-                    <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4 md:p-6 lg:p-8 animate-fade-in">
-                      <div className="w-full bg-black/45 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-5 md:p-6 flex flex-col gap-4 sm:gap-5 shadow-2xl max-h-[85%] overflow-y-auto no-scrollbar">
-                        
-                        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-5 md:gap-8 items-center">
-                          
-                          <div className="md:col-span-4 flex flex-col justify-center items-start">
-                            <div className="h-10 sm:h-12 lg:h-14 w-full max-w-[120px] sm:max-w-[140px] lg:max-w-[160px] flex items-center mb-2 sm:mb-3">
-                              <img 
-                                src={item.logo} 
-                                alt={`Logo ${item.client}`} 
-                                className="max-h-full max-w-full object-contain object-left pointer-events-none select-none"
-                                draggable={false}
-                              />
-                            </div>
-                            <div className="flex items-center gap-2">
-                              <div className="w-4 sm:w-5 lg:w-6 h-[2px] bg-[#e6af41]"></div>
-                              <span className="text-[#e6af41] font-bold tracking-widest text-[8px] sm:text-[10px] lg:text-xs uppercase font-montserrat">
-                                {item.client}
+                    {/* Cara frontal: imagen */}
+                    <div className="absolute inset-0 rounded-2xl overflow-hidden border border-zinc-800/80 bg-zinc-950 shadow-[0_0_50px_rgba(0,0,0,0.85)] [backface-visibility:hidden]">
+                      <img
+                        src={item.image}
+                        alt={item.client}
+                        className={`w-full h-full object-cover transition-transform duration-1000 ease-out select-none pointer-events-none ${
+                          isActive ? 'scale-100 brightness-[0.35] blur-0' : 'scale-105 brightness-50 blur-[2px]'
+                        }`}
+                        draggable={false}
+                      />
+
+                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+
+                      {isActive && (
+                        <div className="absolute inset-0 flex flex-col justify-end p-3 sm:p-4 md:p-6 lg:p-8 animate-fade-in">
+                          <div className="w-full bg-black/45 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-5 md:p-6 flex flex-col gap-4 sm:gap-5 shadow-2xl max-h-[85%] overflow-y-auto no-scrollbar">
+
+                            <div className="flex items-center justify-between sm:hidden">
+                              <div className="flex flex-col justify-center items-start">
+                                <div className="h-10 w-full max-w-[130px] flex items-center mb-2">
+                                  <img
+                                    src={item.logo}
+                                    alt={`Logo ${item.client}`}
+                                    className="max-h-full max-w-full object-contain object-left pointer-events-none select-none"
+                                    draggable={false}
+                                  />
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-4 h-[2px] bg-[#e6af41]"></div>
+                                  <span className="text-[#e6af41] font-bold tracking-widest text-[9px] uppercase font-montserrat">
+                                    {item.client}
+                                  </span>
+                                </div>
+                              </div>
+                              <span className="text-white/50 text-[9px] font-montserrat uppercase tracking-widest border border-white/20 rounded-full px-2.5 py-1 shrink-0">
+                                Toca para ver más
                               </span>
                             </div>
-                          </div>
 
-                          <div className="md:col-span-8 md:border-l border-white/10 md:pl-4 lg:pl-6">
-                            <h4 className="text-[#e6af41] font-astonpoliz text-xs sm:text-sm mb-1 uppercase tracking-wider font-semibold">
-                              Objetivos
-                            </h4>
-                            <p className="text-zinc-300 font-light text-[11px] sm:text-xs lg:text-[13px] leading-relaxed font-montserrat">
-                              {item.objetivos}
-                            </p>
-                          </div>
+                            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-5 md:gap-8 items-center">
 
+                              <div className="hidden sm:flex md:col-span-4 flex-col justify-center items-start">
+                                <div className="h-10 sm:h-12 lg:h-14 w-full max-w-[120px] sm:max-w-[140px] lg:max-w-[160px] flex items-center mb-2 sm:mb-3">
+                                  <img
+                                    src={item.logo}
+                                    alt={`Logo ${item.client}`}
+                                    className="max-h-full max-w-full object-contain object-left pointer-events-none select-none"
+                                    draggable={false}
+                                  />
+                                </div>
+                                <div className="flex items-center gap-2">
+                                  <div className="w-4 sm:w-5 lg:w-6 h-[2px] bg-[#e6af41]"></div>
+                                  <span className="text-[#e6af41] font-bold tracking-widest text-[8px] sm:text-[10px] lg:text-xs uppercase font-montserrat">
+                                    {item.client}
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="hidden sm:block md:col-span-8 md:border-l border-white/10 md:pl-4 lg:pl-6">
+                                <h4 className="text-[#e6af41] font-astonpoliz text-xs sm:text-sm mb-1 uppercase tracking-wider font-semibold">
+                                  Objetivos
+                                </h4>
+                                <p className="text-zinc-300 font-light text-[11px] sm:text-xs lg:text-[13px] leading-relaxed font-montserrat">
+                                  {item.objetivos}
+                                </p>
+                              </div>
+
+                            </div>
+
+                            <div className="hidden sm:block w-full h-px bg-white/10"></div>
+
+                            <div className="hidden sm:block w-full">
+                              <h4 className="text-[#e6af41] font-astonpoliz text-xs sm:text-sm mb-2 uppercase tracking-wider font-semibold">
+                                Resultados Obtenidos
+                              </h4>
+
+                              <ul className="text-zinc-300 font-light text-[11px] sm:text-xs lg:text-[13px] leading-relaxed space-y-1.5 sm:space-y-2 font-montserrat pl-1">
+                                {item.resultados.map((res, i) => (
+                                  <li key={i} className="flex items-start gap-2 sm:gap-3">
+                                    <span className="text-[#e6af41] text-[10px] sm:text-xs mt-1 select-none">•</span>
+                                    <span className="flex-1 text-zinc-300">{res}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Cara trasera: info completa (solo móvil, aparece al voltear la tarjeta) */}
+                    {isActive && (
+                      <div
+                        className="absolute inset-0 rounded-2xl overflow-hidden border border-zinc-800/80 bg-zinc-950 shadow-[0_0_50px_rgba(0,0,0,0.85)] [backface-visibility:hidden] [transform:rotateY(180deg)] sm:hidden flex flex-col p-4"
+                      >
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="h-9 max-w-[120px] flex items-center">
+                            <img
+                              src={item.logo}
+                              alt={`Logo ${item.client}`}
+                              className="max-h-full max-w-full object-contain object-left pointer-events-none select-none"
+                              draggable={false}
+                            />
+                          </div>
+                          <span className="text-white/50 text-[9px] font-montserrat uppercase tracking-widest border border-white/20 rounded-full px-2.5 py-1 shrink-0">
+                            Toca para regresar
+                          </span>
                         </div>
 
-                        <div className="w-full h-px bg-white/10"></div>
+                        <div className="flex items-center gap-2 mb-3">
+                          <div className="w-4 h-[2px] bg-[#e6af41]"></div>
+                          <span className="text-[#e6af41] font-bold tracking-widest text-[9px] uppercase font-montserrat">
+                            {item.client}
+                          </span>
+                        </div>
 
-                        <div className="w-full">
-                          <h4 className="text-[#e6af41] font-astonpoliz text-xs sm:text-sm mb-2 uppercase tracking-wider font-semibold">
+                        <div className="flex-1 overflow-y-auto no-scrollbar">
+                          <h4 className="text-[#e6af41] font-astonpoliz text-xs mb-1 uppercase tracking-wider font-semibold">
+                            Objetivos
+                          </h4>
+                          <p className="text-zinc-300 font-light text-[11px] leading-relaxed font-montserrat mb-4">
+                            {item.objetivos}
+                          </p>
+
+                          <div className="w-full h-px bg-white/10 mb-4"></div>
+
+                          <h4 className="text-[#e6af41] font-astonpoliz text-xs mb-2 uppercase tracking-wider font-semibold">
                             Resultados Obtenidos
                           </h4>
-                          
-                          <ul className="text-zinc-300 font-light text-[11px] sm:text-xs lg:text-[13px] leading-relaxed space-y-1.5 sm:space-y-2 font-montserrat pl-1">
+                          <ul className="text-zinc-300 font-light text-[11px] leading-relaxed space-y-1.5 font-montserrat pl-1">
                             {item.resultados.map((res, i) => (
-                              <li key={i} className="flex items-start gap-2 sm:gap-3">
-                                <span className="text-[#e6af41] text-[10px] sm:text-xs mt-1 select-none">•</span>
+                              <li key={i} className="flex items-start gap-2">
+                                <span className="text-[#e6af41] text-[10px] mt-1 select-none">•</span>
                                 <span className="flex-1 text-zinc-300">{res}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
-
                       </div>
-                    </div>
-                  )}
+                    )}
+
+                  </div>
                 </div>
               </div>
             );
