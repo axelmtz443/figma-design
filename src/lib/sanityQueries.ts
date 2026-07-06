@@ -48,6 +48,7 @@ export interface MktDigitalProject {
   traffic: string;
   accounts: string;
   conversations: string;
+  metricLabel?: string;
   interactions: string;
   color: string;
 }
@@ -64,7 +65,7 @@ export interface MarketResearchProject {
 
 export async function getMktDigitalProjects(): Promise<MktDigitalProject[]> {
   return sanityClient.fetch(
-    `*[_type == "mktDigitalProject"] | order(order asc) { _id, order, name, subname, logo, cardImg, traffic, accounts, conversations, interactions, color }`
+    `*[_type == "mktDigitalProject"] | order(order asc) { _id, order, name, subname, logo, cardImg, traffic, accounts, conversations, metricLabel, interactions, color }`
   );
 }
 
@@ -192,6 +193,25 @@ export async function getReviews(category: string): Promise<Review[]> {
   return sanityClient.fetch(
     `*[_type == "review" && category == $category] | order(order asc) { _id, order, name, rating, photo, text, category }`,
     { category }
+  );
+}
+
+// ─── Testimonios (Investigación de Mercados) ───────────────────────────────
+
+export interface MarketResearchTestimonial {
+  _id: string;
+  order: number;
+  name: string;
+  location?: string;
+  date: string;
+  comment: string;
+  rating: number;
+  helpfulCount: number;
+}
+
+export async function getMarketResearchTestimonials(): Promise<MarketResearchTestimonial[]> {
+  return sanityClient.fetch(
+    `*[_type == "marketResearchTestimonial"] | order(order asc) { _id, order, name, location, date, comment, rating, helpfulCount }`
   );
 }
 

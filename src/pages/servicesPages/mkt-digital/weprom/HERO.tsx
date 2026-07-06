@@ -1,5 +1,7 @@
-import { useEffect, useState, useRef } from 'react';
-import { TrendingUp, PieChart, LineChart, Target, Trophy, ArrowRight, Calendar } from 'lucide-react';
+import { useEffect, useRef } from 'react';
+import { ArrowRight, Calendar } from 'lucide-react';
+import { SiMeta, SiFacebook, SiInstagram, SiWhatsapp, SiX, SiTiktok, SiGoogle, SiGoogleads, SiGoogletagmanager } from 'react-icons/si';
+import { FaLinkedin } from 'react-icons/fa';
 import { useContactPopup } from '../../../../context/ContactPopupContext';
 
 const FONTS = {
@@ -14,7 +16,7 @@ const WepromLogo = () => (
     xmlns="http://www.w3.org/2000/svg"
     xmlnsXlink="http://www.w3.org/1999/xlink"
     viewBox="0 0 780.55 712.65"
-    className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 drop-shadow-[0_0_50px_rgba(89,157,223,0.3)] transition-all duration-500"
+    className="w-32 h-32 sm:w-32 sm:h-32 md:w-32 md:h-32 lg:w-40 lg:h-40 xl:w-48 xl:h-48 drop-shadow-[0_0_50px_rgba(89,157,223,0.3)] transition-all duration-500"
   >
     <defs>
       <style>{`
@@ -103,72 +105,176 @@ const WepromLogo = () => (
   </svg>
 );
 
-const OrbitalSystem = () => {
-  const [angle, setAngle] = useState(0);
-  const requestRef = useRef<number | null>(null);
+// ── Parámetros de la animación (ajústalos aquí) ─────────────────────────────
+// PERIOD controla qué tan seguido late/nace una onda nueva. Todo lo demás abajo
+// está en SEGUNDOS REALES (no fracciones), así que cambiar PERIOD solo afecta
+// qué tan espaciados están los latidos, no qué tan rápido se ve cada evento.
+const PERIOD = 5.5;          // segundos entre latidos (más grande = onda más lenta / más espaciada)
+const TRAVEL_END_FRACTION = 0.82; // fracción de PERIOD en la que la onda llega al borde y se apaga
+const PULSE_DURATION_S = 0.4;     // cuánto dura el "golpe" del palpitar (fijo, no depende de PERIOD)
+const WAVE_EMERGE_S = 0.2;        // cuánto tarda la onda en hacerse visible al salir del logo
+const ICON_POPIN_S = 0.3;         // cuánto tarda un ícono en aparecer (fade+escala)
+const ICON_HOLD_S = 1.5;          // cuánto tiempo se queda visible antes de desvanecer
+const ICON_FADE_S = 0.7;          // cuánto tarda en desvanecerse
+const PULSE_AMPLITUDE = 0.1;      // qué tanto crece el isotipo al palpitar
+const BASE_RADIUS = 230;          // radio fijo del div de la onda (se escala por reloj, no por breakpoint)
 
-  const differentiators = [
-    { title: 'Más y Mejores Ventas', icon: TrendingUp },
-    { title: 'Optimización de Recursos', icon: PieChart },
-    { title: 'Crecimiento Sostenido', icon: LineChart },
-    { title: 'Planeación Estratégica', icon: Target },
-    { title: 'Mayor Competitividad', icon: Trophy },
-  ];
+// Ángulo y radiusRatio elegidos a propósito SIN correlación entre sí (no van
+// en orden creciente juntos) para que la distribución se vea dispersa/al azar
+// en vez de un remolino. El radiusRatio sigue controlando en qué momento del
+// recorrido de la onda aparece cada ícono.
+const BRAND_ICONS = [
+  { Icon: SiMeta, color: '#0866FF', angle: 0, radiusRatio: 0.55 },
+  { Icon: SiFacebook, color: '#1877F2', angle: 36, radiusRatio: 0.2 },
+  { Icon: SiInstagram, color: '#E4405F', angle: 72, radiusRatio: 0.65 },
+  { Icon: SiWhatsapp, color: '#25D366', angle: 108, radiusRatio: 0.05 },
+  { Icon: SiX, color: '#111111', angle: 144, radiusRatio: 0.75 },
+  { Icon: SiTiktok, color: '#111111', angle: 180, radiusRatio: 0.65 },
+  { Icon: SiGoogle, color: '#4285F4', angle: 216, radiusRatio: 0.15 },
+  { Icon: SiGoogleads, color: '#34A853', angle: 252, radiusRatio: 0.45 },
+  { Icon: SiGoogletagmanager, color: '#246FDB', angle: 288, radiusRatio: 0.55 },
+  { Icon: FaLinkedin, color: '#0A66C2', angle: 324, radiusRatio: 0.6 },
+];
+
+/**
+ * Sistema de sonar movido por un ÚNICO reloj (requestAnimationFrame).
+ * Todo —palpitar del logo, radio de la onda y aparición de cada ícono— se
+ * deriva del mismo valor `phase` (0→1 por ciclo), así es imposible que se
+ * desincronicen: los íconos aparecen exactamente cuando el frente de la onda
+ * (mismo `phase`, misma fórmula de radio) cruza su posición.
+ */
+const SonarPulseSystem = () => {
+  const waveRef = useRef<HTMLDivElement>(null);
+  const logoRef = useRef<HTMLDivElement>(null);
+  const iconRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
-    const animate = () => {
-      setAngle(prev => (prev + 0.0025) % (Math.PI * 2));
-      requestRef.current = requestAnimationFrame(animate);
+    let raf = 0;
+    const start = performance.now();
+
+    const dims = () => {
+      const w = window.innerWidth;
+      const maxRadius = w < 768 ? 150 : w < 1280 ? 190 : 230;
+      const logoRadius = w < 1024 ? 64 : w < 1280 ? 80 : 96;
+      // La onda nace un poco DENTRO del logo (oculta detrás de él) y "emerge"
+      // desde su cuerpo al crecer — se lee como que sale del isotipo.
+      const waveStart = logoRadius * 0.5;
+      const minIconRadius = logoRadius + 40; // los íconos nunca invaden el logo
+      return { maxRadius, logoRadius, waveStart, minIconRadius };
     };
-    requestRef.current = requestAnimationFrame(animate);
-    return () => {
-      if (requestRef.current !== null) cancelAnimationFrame(requestRef.current);
+
+    // Duraciones fijas (en fracción del ciclo) convertidas desde segundos reales,
+    // así que cambiar PERIOD solo espacia los latidos sin acelerar/frenar cada evento.
+    const pulseWindow = PULSE_DURATION_S / PERIOD;
+    const emergeWindow = WAVE_EMERGE_S / PERIOD;
+    const travelEnd = TRAVEL_END_FRACTION;
+    const popIn = ICON_POPIN_S / PERIOD;
+    const hold = ICON_HOLD_S / PERIOD;
+    const fadeDur = ICON_FADE_S / PERIOD;
+
+    const loop = (now: number) => {
+      const t = (now - start) / 1000;
+      const phase = (t % PERIOD) / PERIOD; // 0 → 1
+      const { maxRadius, waveStart, minIconRadius } = dims();
+
+      // 1) Palpitar del isotipo: arranca en phase 0 (igual que la onda) con un
+      //    golpe seco (sube rápido y regresa). sin(π·p) empieza y termina en 0.
+      let pulse = 1;
+      if (phase < pulseWindow) {
+        const p = phase / pulseWindow;
+        pulse = 1 + PULSE_AMPLITUDE * Math.sin(p * Math.PI);
+      }
+      if (logoRef.current) logoRef.current.style.transform = `scale(${pulse})`;
+
+      // 2) Onda: nace en phase 0 (junto al palpitar) y viaja de waveStart a maxRadius.
+      const wp = Math.min(phase / travelEnd, 1); // avance lineal del frente 0→1
+      const waveRadius = waveStart + (maxRadius - waveStart) * wp;
+      if (waveRef.current) {
+        const emerge = Math.min(phase / emergeWindow, 1); // aparece al emerger del logo
+        const vanish = Math.max(1 - wp, 0);                // se desvanece al llegar al borde
+        const gone = phase >= travelEnd ? 0 : 1;
+        // El div base mide BASE_RADIUS; escalamos su radio real hasta waveRadius.
+        waveRef.current.style.transform = `translate(-50%, -50%) scale(${waveRadius / BASE_RADIUS})`;
+        waveRef.current.style.opacity = String(0.9 * emerge * vanish * gone);
+      }
+
+      // 3) Íconos: cada uno aparece cuando el frente de la onda cruza su radio,
+      //    se queda visible un rato fijo (hold) y se desvanece — repite cada ciclo.
+      for (let i = 0; i < BRAND_ICONS.length; i++) {
+        const el = iconRefs.current[i];
+        if (!el) continue;
+        const { angle, radiusRatio } = BRAND_ICONS[i];
+        const R = minIconRadius + radiusRatio * (maxRadius - minIconRadius);
+        const rad = (angle * Math.PI) / 180;
+        const x = Math.cos(rad) * R;
+        const y = Math.sin(rad) * R;
+
+        // phaseHit: instante EXACTO en que waveRadius === R (misma fórmula que la onda).
+        const phaseHit = travelEnd * ((R - waveStart) / (maxRadius - waveStart));
+
+        // Tiempo transcurrido desde el último "impacto" de la onda en este ícono,
+        // sin importar si ocurrió en este ciclo o (por envolvente) en el anterior.
+        let sinceHit = phase - phaseHit;
+        if (sinceHit < 0) sinceHit += 1;
+
+        let opacity = 0;
+        let scale = 0.4;
+        if (sinceHit < popIn) {
+          const appear = sinceHit / popIn;
+          opacity = appear;
+          scale = 0.4 + 0.6 * appear;
+        } else if (sinceHit < popIn + hold) {
+          opacity = 1;
+          scale = 1;
+        } else if (sinceHit < popIn + hold + fadeDur) {
+          const f = (sinceHit - popIn - hold) / fadeDur;
+          opacity = 1 - f;
+          scale = 1;
+        }
+        el.style.opacity = String(opacity);
+        el.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
+      }
+
+      raf = requestAnimationFrame(loop);
     };
+
+    raf = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(raf);
   }, []);
 
-  const radiusX = typeof window !== 'undefined' && window.innerWidth < 768 ? 130 : window.innerWidth < 1280 ? 210 : 260;
-  const radiusZ = typeof window !== 'undefined' && window.innerWidth < 768 ? 80 : window.innerWidth < 1280 ? 120 : 160;
-  const tiltY = 15;
-
   return (
-    <div className="relative w-full h-[300px] sm:h-[380px] md:h-[450px] lg:h-[550px] xl:h-[600px] flex items-center justify-center perspective-1000">
-      <div className="absolute z-10">
+    <div className="relative w-full h-[340px] sm:h-[380px] md:h-[450px] lg:h-[550px] xl:h-[600px] flex items-center justify-center">
+      {/* Onda expansiva — posición y opacidad controladas por el reloj compartido */}
+      <div
+        ref={waveRef}
+        className="absolute top-1/2 left-1/2 rounded-full pointer-events-none"
+        style={{
+          width: BASE_RADIUS * 2,
+          height: BASE_RADIUS * 2,
+          border: '3px solid rgba(89,157,223,0.95)',
+          boxShadow: '0 0 22px 2px rgba(89,157,223,0.3)',
+          opacity: 0,
+          transform: 'translate(-50%, -50%) scale(0)',
+          willChange: 'transform, opacity',
+        }}
+      />
+
+      {/* Isotipo central palpitando */}
+      <div ref={logoRef} className="relative z-20" style={{ willChange: 'transform' }}>
         <WepromLogo />
-        <div className="absolute inset-0 bg-[#599ddf] blur-[100px] sm:blur-[120px] opacity-15 -z-10 rounded-full" />
       </div>
 
-      {differentiators.map((diff, index) => {
-        const itemAngle = angle + (index * (Math.PI * 2)) / differentiators.length;
-        const x = Math.cos(itemAngle) * radiusX;
-        const z = Math.sin(itemAngle) * radiusZ;
-        const y = Math.sin(itemAngle) * tiltY;
-        const scale = ((z + radiusZ) / (2 * radiusZ)) * 0.45 + 0.65;
-        const opacity = ((z + radiusZ) / (2 * radiusZ)) * 0.75 + 0.25;
-        const zIndex = Math.round(z);
-        const Icon = diff.icon;
-
-        return (
-          <div
-            key={diff.title}
-            className="absolute flex flex-col items-center justify-center cursor-default transition-all duration-75"
-            style={{
-              transform: `translate3d(${x}px, ${y}px, 0) scale(${scale})`,
-              zIndex: zIndex,
-              opacity: opacity,
-              filter: `blur(${Math.max(0, (radiusZ - z) * 0.006 - 0.5)}px)`
-            }}
-          >
-            <div className="bg-[#0c0d0e]/80 backdrop-blur-md border border-zinc-800/80 p-2 sm:p-2.5 lg:p-3 rounded-xl shadow-2xl flex items-center gap-2 sm:gap-2.5 transition-all duration-300 group w-36 sm:w-40 md:w-44 lg:w-48 hover:bg-neutral-900/90 hover:border-zinc-700/80">
-              <div className="shrink-0 w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 bg-zinc-800/50 rounded-lg flex items-center justify-center border border-zinc-700/20">
-                <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#599ddf] drop-shadow-md" />
-              </div>
-              <div className="flex flex-col justify-center text-left">
-                <span className="font-bold text-neutral-100 text-[10px] sm:text-[10px] md:text-[11px] lg:text-xs leading-snug">{diff.title}</span>
-              </div>
-            </div>
-          </div>
-        );
-      })}
+      {/* Logos de plataformas */}
+      {BRAND_ICONS.map(({ Icon, color }, index) => (
+        <div
+          key={index}
+          ref={(el) => { iconRefs.current[index] = el; }}
+          className="absolute top-1/2 left-1/2 z-10 rounded-full bg-white shadow-xl flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 pointer-events-none"
+          style={{ opacity: 0, transform: 'translate(-50%, -50%)', willChange: 'transform, opacity' }}
+        >
+          <Icon size={18} color={color} />
+        </div>
+      ))}
     </div>
   );
 };
@@ -181,7 +287,7 @@ export default function HeroWeprom() {
       style={{ fontFamily: FONTS.body }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center flex-1 pt-10 sm:pt-12 lg:pt-16 xl:pt-20 pb-6 sm:pb-8 relative z-10">
-        <div className="lg:col-span-5 order-last lg:order-none flex flex-col items-start text-left space-y-4 sm:space-y-5 lg:space-y-6 xl:space-y-8 z-20">
+        <div className="lg:col-span-5 order-last lg:order-none flex flex-col items-center text-center lg:items-start lg:text-left space-y-4 sm:space-y-5 lg:space-y-6 xl:space-y-8 z-20">
           <div className="space-y-3 sm:space-y-4">
             <h1
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-[1.1] text-transparent bg-clip-text bg-gradient-to-br from-white via-neutral-100 to-neutral-400"
@@ -203,14 +309,14 @@ export default function HeroWeprom() {
           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto">
             <button
               onClick={() => openPopup('Marketing Digital')}
-              className="px-5 sm:px-6 lg:px-7 py-3 sm:py-3.5 rounded-xl bg-gradient-to-r from-[#009fe3] to-[#599ddf] text-white font-bold text-xs sm:text-sm shadow-xl shadow-blue-500/10 hover:shadow-blue-500/20 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2"
+              className="px-4 sm:px-6 lg:px-7 py-2 sm:py-3.5 rounded-xl bg-gradient-to-r from-[#009fe3] to-[#599ddf] text-white font-bold text-[11px] sm:text-sm shadow-xl shadow-blue-500/10 hover:shadow-blue-500/20 hover:brightness-110 active:scale-95 transition-all flex items-center justify-center gap-2"
             >
               <span>Contactar</span>
               <ArrowRight className="w-4 h-4" />
             </button>
             <button
               onClick={() => openPopup('Marketing Digital')}
-              className="px-5 sm:px-6 lg:px-7 py-3 sm:py-3.5 rounded-xl bg-zinc-950/40 border border-zinc-800/80 hover:bg-zinc-900/60 text-zinc-300 hover:text-white font-semibold text-xs sm:text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
+              className="px-4 sm:px-6 lg:px-7 py-2 sm:py-3.5 rounded-xl bg-zinc-950/40 border border-zinc-800/80 hover:bg-zinc-900/60 text-zinc-300 hover:text-white font-semibold text-[11px] sm:text-sm active:scale-95 transition-all flex items-center justify-center gap-2"
             >
               <Calendar className="w-4 h-4 text-[#599ddf]" />
               <span>Solicitar Reunión de diagnóstico</span>
@@ -219,7 +325,7 @@ export default function HeroWeprom() {
         </div>
 
         <div className="lg:col-span-7 w-full flex items-center justify-center relative">
-          <OrbitalSystem />
+          <SonarPulseSystem />
         </div>
       </div>
 

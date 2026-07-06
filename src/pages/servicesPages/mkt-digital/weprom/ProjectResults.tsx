@@ -35,7 +35,7 @@ import cardAndreaAragon from '../../../../images/mktdigital_meta/datacards/mktca
 
 type Project = {
   id: number; name: string; subname: string; logo: string; cardImg: string;
-  traffic: string; accounts: string; conversations: string; interactions: string;
+  traffic: string; accounts: string; conversations: string; metricLabel: string; interactions: string;
   color: string; glow: string;
 };
 
@@ -49,6 +49,7 @@ function sanityToProject(p: MktDigitalProject, i: number): Project {
     traffic: p.traffic,
     accounts: p.accounts,
     conversations: p.conversations,
+    metricLabel: p.metricLabel || 'Conversaciones',
     interactions: p.interactions,
     color: p.color,
     glow: `${p.color}33`,
@@ -56,16 +57,16 @@ function sanityToProject(p: MktDigitalProject, i: number): Project {
 }
 
 const FALLBACK_PROJECTS = [
-  { id: 1, name: "Mercedes-Benz", subname: "Eurostern", logo: logoMercedes, cardImg: cardMercedes, traffic: "+2.45M", accounts: "+818%", conversations: "+315", interactions: "+2,900", color: "#3b82f6", glow: "rgba(59, 130, 246, 0.2)" },
-  { id: 2, name: "Andrea Aragón", subname: "Studio", logo: logoAndreaAragon, cardImg: cardAndreaAragon, traffic: "+250,000", accounts: "31.9%", conversations: "+375%", interactions: "+650%", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.2)" },
-  { id: 3, name: "Senties", subname: "", logo: logoSenties, cardImg: cardSenties, traffic: "+50,000", accounts: "+230%", conversations: "+240%", interactions: "+275%", color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
-  { id: 4, name: "Fortuna", subname: "", logo: logoFortuna, cardImg: cardFortuna, traffic: "+38,000", accounts: "+180%", conversations: "+200%", interactions: "+220%", color: "#e6af41", glow: "rgba(230, 175, 65, 0.2)" },
-  { id: 5, name: "CAB", subname: "", logo: logoCAB, cardImg: cardCAB, traffic: "+45,000", accounts: "+120%", conversations: "+205%", interactions: "+110%", color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" },
-  { id: 6, name: "Mayork", subname: "", logo: logoMayorkCard, cardImg: cardMayork, traffic: "+180,000", accounts: "+350%", conversations: "+270%", interactions: "+400%", color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" },
-  { id: 7, name: "Sistemik", subname: "", logo: logoSistemik, cardImg: cardSistemik, traffic: "+62,000", accounts: "+230%", conversations: "+240%", interactions: "+275%", color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
-  { id: 8, name: "Alteso", subname: "", logo: logoAlteso, cardImg: cardAlteso, traffic: "+70,000", accounts: "+380%", conversations: "+320%", interactions: "+740%", color: "#80b67d", glow: "rgba(128, 182, 125, 0.2)" },
-  { id: 9, name: "Deyun", subname: "", logo: logoDeyun, cardImg: cardDeyun, traffic: "+38,000", accounts: "+240%", conversations: "+100%", interactions: "+220%", color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
-  { id: 10, name: "Vagual", subname: "", logo: logoVagual, cardImg: cardVagual, traffic: "+62,000", accounts: "+315%", conversations: "+300%", interactions: "+360%", color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" }
+  { id: 1, name: "Mercedes-Benz", subname: "Eurostern", logo: logoMercedes, cardImg: cardMercedes, traffic: "+2.45M", accounts: "+818%", conversations: "+315", metricLabel: "Conversaciones", interactions: "+2,900", color: "#3b82f6", glow: "rgba(59, 130, 246, 0.2)" },
+  { id: 2, name: "Andrea Aragón", subname: "Studio", logo: logoAndreaAragon, cardImg: cardAndreaAragon, traffic: "+250,000", accounts: "31.9%", conversations: "+375%", metricLabel: "Conversaciones", interactions: "+650%", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.2)" },
+  { id: 3, name: "Senties", subname: "", logo: logoSenties, cardImg: cardSenties, traffic: "+50,000", accounts: "+230%", conversations: "+240%", metricLabel: "Conversaciones", interactions: "+275%", color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
+  { id: 4, name: "Fortuna", subname: "", logo: logoFortuna, cardImg: cardFortuna, traffic: "+38,000", accounts: "+180%", conversations: "+200%", metricLabel: "Conversaciones", interactions: "+220%", color: "#e6af41", glow: "rgba(230, 175, 65, 0.2)" },
+  { id: 5, name: "CAB", subname: "", logo: logoCAB, cardImg: cardCAB, traffic: "+45,000", accounts: "+120%", conversations: "+205%", metricLabel: "Conversaciones", interactions: "+110%", color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" },
+  { id: 6, name: "Mayork", subname: "", logo: logoMayorkCard, cardImg: cardMayork, traffic: "+180,000", accounts: "+350%", conversations: "+270%", metricLabel: "Conversaciones", interactions: "+400%", color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" },
+  { id: 7, name: "Sistemik", subname: "", logo: logoSistemik, cardImg: cardSistemik, traffic: "+62,000", accounts: "+230%", conversations: "+240%", metricLabel: "Conversaciones", interactions: "+275%", color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
+  { id: 8, name: "Alteso", subname: "", logo: logoAlteso, cardImg: cardAlteso, traffic: "+70,000", accounts: "+380%", conversations: "+320%", metricLabel: "Conversaciones", interactions: "+740%", color: "#80b67d", glow: "rgba(128, 182, 125, 0.2)" },
+  { id: 9, name: "Deyun", subname: "", logo: logoDeyun, cardImg: cardDeyun, traffic: "+38,000", accounts: "+240%", conversations: "+100%", metricLabel: "Conversaciones", interactions: "+220%", color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
+  { id: 10, name: "Vagual", subname: "", logo: logoVagual, cardImg: cardVagual, traffic: "+62,000", accounts: "+315%", conversations: "+300%", metricLabel: "Conversaciones", interactions: "+360%", color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" }
 ];
 
 function ProjectResults() {
@@ -118,7 +119,7 @@ function ProjectResults() {
         {projects.map((project) => (
           <SwiperSlide key={project.id} className="max-w-[700px] sm:max-w-[750px] md:max-w-[850px] w-[90%] opacity-30 transition-opacity duration-500 [&.swiper-slide-active]:opacity-100">
             <div
-              className="glass-card group relative flex flex-col sm:flex-row overflow-hidden rounded-2xl sm:rounded-[1.5rem] border border-white/10 bg-white/[0.03] backdrop-blur-3xl transition-all duration-500 h-auto min-h-[380px] sm:min-h-[400px]"
+              className="glass-card group relative flex flex-col sm:flex-row overflow-hidden rounded-2xl sm:rounded-[1.5rem] border border-white/10 bg-white/[0.03] backdrop-blur-3xl transition-all duration-500 h-[420px] sm:h-[400px]"
               style={{
                 //@ts-ignore
                 '--brand-color': project.color,
@@ -142,27 +143,27 @@ function ProjectResults() {
                 </div>
 
                 <div className="mb-3 sm:mb-4">
-                  <p className="text-[10px] sm:text-[11px] md:text-[12px] font-bold tracking-[0.25em] sm:tracking-[0.3em] uppercase mb-0.5 sm:mb-1 text-zinc-500">Tráfico Total</p>
-                  <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tighter" style={{ color: project.color }}>
-                    {project.traffic}
+                  <p className="text-[10px] sm:text-[11px] md:text-[12px] font-bold tracking-[0.25em] sm:tracking-[0.3em] uppercase mb-0.5 sm:mb-1 text-zinc-500 truncate">{project.metricLabel}</p>
+                  <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tighter truncate" style={{ color: project.color }}>
+                    {project.conversations}
                   </h3>
                 </div>
 
                 <div className="grid grid-cols-3 gap-1.5 sm:gap-2 md:gap-3 lg:gap-4">
                   <div className="bg-white/[0.02] border border-white/5 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 transition-all group-hover:bg-white/[0.05]">
-                    <p className="text-[8px] sm:text-[9px] md:text-[10px] tracking-widest text-zinc-500 font-bold uppercase mb-0.5 sm:mb-1">Alcance</p>
-                    <span className="text-sm sm:text-base md:text-lg lg:text-2xl font-bold text-white">{project.accounts}</span>
+                    <p className="text-[8px] sm:text-[9px] md:text-[10px] tracking-widest text-zinc-500 font-bold uppercase mb-0.5 sm:mb-1">Tráfico</p>
+                    <span className="text-sm sm:text-base md:text-lg lg:text-2xl font-bold text-white truncate block">{project.traffic}</span>
                   </div>
                   <div className="bg-white/[0.02] border border-white/5 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 transition-all group-hover:bg-white/[0.05]">
-                    <p className="text-[8px] sm:text-[9px] md:text-[10px] tracking-widest text-zinc-500 font-bold uppercase mb-0.5 sm:mb-1">Convers.</p>
-                    <span className="text-sm sm:text-base md:text-lg lg:text-2xl font-bold text-white">{project.conversations}</span>
+                    <p className="text-[8px] sm:text-[9px] md:text-[10px] tracking-widest text-zinc-500 font-bold uppercase mb-0.5 sm:mb-1">Alcance</p>
+                    <span className="text-sm sm:text-base md:text-lg lg:text-2xl font-bold text-white truncate block">{project.accounts}</span>
                   </div>
                   <div
                     className="bg-white/[0.02] border border-white/5 rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 transition-all group-hover:bg-white/[0.05]"
                     style={{ borderColor: `${project.color}44` }}
                   >
-                    <p className="text-[8px] sm:text-[9px] md:text-[10px] tracking-widest text-zinc-500 font-bold uppercase mb-0.5 sm:mb-1">Interacc.</p>
-                    <span className="text-sm sm:text-base md:text-lg lg:text-2xl font-bold" style={{ color: project.color }}>
+                    <p className="text-[8px] sm:text-[9px] md:text-[10px] tracking-widest text-zinc-500 font-bold uppercase mb-0.5 sm:mb-1">Interacciones</p>
+                    <span className="text-sm sm:text-base md:text-lg lg:text-2xl font-bold truncate block" style={{ color: project.color }}>
                       {project.interactions}
                     </span>
                   </div>

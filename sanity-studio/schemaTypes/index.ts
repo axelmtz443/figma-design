@@ -10,6 +10,7 @@ import { marketResearchProject } from './marketResearchProject'
 import { portfolioCase } from './portfolioCase'
 import { teamMember } from './teamMember'
 import { review } from './review'
+import { marketResearchTestimonial } from './marketResearchTestimonial'
 import { defineType, defineField } from 'sanity'
 
 export const post = defineType({
@@ -188,4 +189,4 @@ export const post = defineType({
   }
 })
 
-export const schemaTypes = [post, ourProject, successStory, mktDigitalProject, marketResearchProject, portfolioCase, teamMember, review]
+export const schemaTypes = [post, ourProject, successStory, mktDigitalProject, marketResearchProject, portfolioCase, teamMember, review, marketResearchTestimonial]

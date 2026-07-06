@@ -28,7 +28,7 @@ const Brain = ({ size = 20, className = "" }) => (
 
 // --- Logo Corporativo Weprom SVG ---
 const WepromLogo = ({ className = "" }) => (
-  <svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780.55 712.65" className={`w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64 drop-shadow-[0_0_50px_rgba(89,157,223,0.25)] transition-all duration-500 ${className}`}>
+  <svg id="Capa_2" data-name="Capa 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780.55 712.65" className={`w-48 h-48 sm:w-52 sm:h-52 md:w-48 md:h-48 lg:w-56 lg:h-56 xl:w-64 xl:h-64 drop-shadow-[0_0_50px_rgba(89,157,223,0.25)] transition-all duration-500 ${className}`}>
     {/* ... contenido SVG completo ... */}
     <defs>
       <linearGradient id="Degradado_sin_nombre_194" x1="689.73" y1="503.15" x2="689.73" y2="506.87" gradientUnits="userSpaceOnUse">
@@ -177,7 +177,7 @@ export default function HeroMR() {
         <div className="relative z-20 max-w-7xl mx-auto w-full px-4 sm:px-6 md:px-8 flex flex-col lg:flex-row items-center justify-between gap-8 sm:gap-10 lg:gap-12 xl:gap-16">
           
           {/* COLUMNA IZQUIERDA: Copywriting */}
-          <div className="w-full lg:w-1/2 flex flex-col items-start text-left order-2 lg:order-1">
+          <div className="w-full lg:w-1/2 flex flex-col items-center text-center lg:items-start lg:text-left order-2 lg:order-1">
             <motion.div 
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
@@ -212,7 +212,7 @@ export default function HeroMR() {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 w-full sm:w-auto"
             >
-              <button className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-[#c5362e] text-white rounded-xl font-bold text-[11px] sm:text-[13px] uppercase tracking-widest overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
+              <button className="group relative w-full sm:w-auto px-5 sm:px-8 py-2.5 sm:py-4 bg-[#c5362e] text-white rounded-xl font-bold text-[10px] sm:text-[13px] uppercase tracking-widest overflow-hidden transition-transform duration-300 hover:scale-[1.02]">
                 <div className="absolute inset-0 bg-white translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out" />
                 <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3 group-hover:text-[#c5362e] transition-colors duration-300">
                   Solicitar Cotización
@@ -224,7 +224,7 @@ export default function HeroMR() {
                 href="https://calendar.app.google/9z2zxVcSLAVmWtHJ7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-transparent border-2 border-white/80 text-white rounded-xl font-bold text-[11px] sm:text-[13px] uppercase tracking-widest overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:border-white"
+                className="group relative w-full sm:w-auto px-5 sm:px-8 py-2.5 sm:py-4 bg-transparent border-2 border-white/80 text-white rounded-xl font-bold text-[10px] sm:text-[13px] uppercase tracking-widest overflow-hidden transition-transform duration-300 hover:scale-[1.02] hover:border-white"
               >
                 <div className="absolute inset-0 bg-white translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-300 ease-in-out" />
                 <span className="relative z-10 flex items-center justify-center gap-2 sm:gap-3 group-hover:text-black transition-colors duration-300">
@@ -245,7 +245,7 @@ export default function HeroMR() {
             <div className="relative w-full max-w-[450px] sm:max-w-[500px] lg:max-w-[550px] h-full preserve-3d flex items-center justify-center scale-75 sm:scale-90 lg:scale-100">
               
               {/* Logo Corporativo Difuminado */}
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-20 sm:opacity-25 blur-[6px] animate-pulse" style={{ transform: 'translateZ(-140px) scale(1.4)' }}>
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-40 sm:opacity-25 blur-[3px] sm:blur-[6px] animate-pulse" style={{ transform: 'translateZ(-80px) scale(1.4)' }}>
                 <WepromLogo />
               </div>
 
