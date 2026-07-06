@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
-import { TrendingUp } from 'lucide-react';
 import { getMktDigitalProjects, MktDigitalProject } from '../../../../lib/sanityQueries';
 import { urlFor } from '../../../../lib/sanityImage';
 
