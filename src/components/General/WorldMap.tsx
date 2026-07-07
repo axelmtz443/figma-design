@@ -91,7 +91,7 @@ export default function WorldMap() {
       </ComposableMap>
 
       <div className="absolute bottom-5 left-6 select-none pointer-events-none">
-        <span className="text-white/[0.04] text-3xl font-bold tracking-widest font-serif">WEPROM</span>
+        <span className="text-white/[0.04] text-3xl font-bold tracking-widest font-aston">weprom</span>
       </div>
     </motion.div>
   );

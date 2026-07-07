@@ -1,14 +1,22 @@
 import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectCoverflow, Pagination, Navigation } from 'swiper/modules';
-import { getMktDigitalProjects, MktDigitalProject } from '../../../../lib/sanityQueries';
+import { SiMeta, SiGoogle, SiTiktok } from 'react-icons/si';
+import { FaLinkedin } from 'react-icons/fa';
+import { getMktDigitalProjects, MktDigitalProject, MktDigitalPlatform } from '../../../../lib/sanityQueries';
 import { urlFor } from '../../../../lib/sanityImage';
 
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
-import metaLogo from '../../../../images/Meta-Logo.png';
+
+const PLATFORM_ICONS: Record<MktDigitalPlatform, { Icon: typeof SiMeta; label: string }> = {
+  meta: { Icon: SiMeta, label: 'Meta' },
+  google: { Icon: SiGoogle, label: 'Google' },
+  tiktok: { Icon: SiTiktok, label: 'TikTok' },
+  linkedin: { Icon: FaLinkedin, label: 'LinkedIn' },
+};
 
 import logoSenties from '../../../../images/Logos_Clientes/Logo_Senties.png';
 import logoFortuna from '../../../../images/Logos_Clientes/Logo_Fortuna.png';
@@ -35,7 +43,7 @@ import cardAndreaAragon from '../../../../images/mktdigital_meta/datacards/mktca
 type Project = {
   id: number; name: string; subname: string; logo: string; cardImg: string;
   traffic: string; accounts: string; conversations: string; metricLabel: string; interactions: string;
-  color: string; glow: string;
+  platforms: MktDigitalPlatform[]; color: string; glow: string;
 };
 
 function sanityToProject(p: MktDigitalProject, i: number): Project {
@@ -50,22 +58,23 @@ function sanityToProject(p: MktDigitalProject, i: number): Project {
     conversations: p.conversations,
     metricLabel: p.metricLabel || 'Conversaciones',
     interactions: p.interactions,
+    platforms: p.platforms && p.platforms.length > 0 ? p.platforms : ['meta'],
     color: p.color,
     glow: `${p.color}33`,
   };
 }
 
 const FALLBACK_PROJECTS = [
-  { id: 1, name: "Mercedes-Benz", subname: "Eurostern", logo: logoMercedes, cardImg: cardMercedes, traffic: "+2.45M", accounts: "+818%", conversations: "+315", metricLabel: "Conversaciones", interactions: "+2,900", color: "#3b82f6", glow: "rgba(59, 130, 246, 0.2)" },
-  { id: 2, name: "Andrea Aragón", subname: "Studio", logo: logoAndreaAragon, cardImg: cardAndreaAragon, traffic: "+250,000", accounts: "31.9%", conversations: "+375%", metricLabel: "Conversaciones", interactions: "+650%", color: "#f59e0b", glow: "rgba(245, 158, 11, 0.2)" },
-  { id: 3, name: "Senties", subname: "", logo: logoSenties, cardImg: cardSenties, traffic: "+50,000", accounts: "+230%", conversations: "+240%", metricLabel: "Conversaciones", interactions: "+275%", color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
-  { id: 4, name: "Fortuna", subname: "", logo: logoFortuna, cardImg: cardFortuna, traffic: "+38,000", accounts: "+180%", conversations: "+200%", metricLabel: "Conversaciones", interactions: "+220%", color: "#e6af41", glow: "rgba(230, 175, 65, 0.2)" },
-  { id: 5, name: "CAB", subname: "", logo: logoCAB, cardImg: cardCAB, traffic: "+45,000", accounts: "+120%", conversations: "+205%", metricLabel: "Conversaciones", interactions: "+110%", color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" },
-  { id: 6, name: "Mayork", subname: "", logo: logoMayorkCard, cardImg: cardMayork, traffic: "+180,000", accounts: "+350%", conversations: "+270%", metricLabel: "Conversaciones", interactions: "+400%", color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" },
-  { id: 7, name: "Sistemik", subname: "", logo: logoSistemik, cardImg: cardSistemik, traffic: "+62,000", accounts: "+230%", conversations: "+240%", metricLabel: "Conversaciones", interactions: "+275%", color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
-  { id: 8, name: "Alteso", subname: "", logo: logoAlteso, cardImg: cardAlteso, traffic: "+70,000", accounts: "+380%", conversations: "+320%", metricLabel: "Conversaciones", interactions: "+740%", color: "#80b67d", glow: "rgba(128, 182, 125, 0.2)" },
-  { id: 9, name: "Deyun", subname: "", logo: logoDeyun, cardImg: cardDeyun, traffic: "+38,000", accounts: "+240%", conversations: "+100%", metricLabel: "Conversaciones", interactions: "+220%", color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
-  { id: 10, name: "Vagual", subname: "", logo: logoVagual, cardImg: cardVagual, traffic: "+62,000", accounts: "+315%", conversations: "+300%", metricLabel: "Conversaciones", interactions: "+360%", color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" }
+  { id: 1, name: "Mercedes-Benz", subname: "Eurostern", logo: logoMercedes, cardImg: cardMercedes, traffic: "+2.45M", accounts: "+818%", conversations: "+315", metricLabel: "Conversaciones", interactions: "+2,900", platforms: ["meta"] as MktDigitalPlatform[], color: "#3b82f6", glow: "rgba(59, 130, 246, 0.2)" },
+  { id: 2, name: "Andrea Aragón", subname: "Studio", logo: logoAndreaAragon, cardImg: cardAndreaAragon, traffic: "+250,000", accounts: "31.9%", conversations: "+375%", metricLabel: "Conversaciones", interactions: "+650%", platforms: ["meta"] as MktDigitalPlatform[], color: "#f59e0b", glow: "rgba(245, 158, 11, 0.2)" },
+  { id: 3, name: "Senties", subname: "", logo: logoSenties, cardImg: cardSenties, traffic: "+50,000", accounts: "+230%", conversations: "+240%", metricLabel: "Conversaciones", interactions: "+275%", platforms: ["meta"] as MktDigitalPlatform[], color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
+  { id: 4, name: "Fortuna", subname: "", logo: logoFortuna, cardImg: cardFortuna, traffic: "+38,000", accounts: "+180%", conversations: "+200%", metricLabel: "Conversaciones", interactions: "+220%", platforms: ["meta"] as MktDigitalPlatform[], color: "#e6af41", glow: "rgba(230, 175, 65, 0.2)" },
+  { id: 5, name: "CAB", subname: "", logo: logoCAB, cardImg: cardCAB, traffic: "+45,000", accounts: "+120%", conversations: "+205%", metricLabel: "Conversaciones", interactions: "+110%", platforms: ["meta"] as MktDigitalPlatform[], color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" },
+  { id: 6, name: "Mayork", subname: "", logo: logoMayorkCard, cardImg: cardMayork, traffic: "+180,000", accounts: "+350%", conversations: "+270%", metricLabel: "Conversaciones", interactions: "+400%", platforms: ["meta"] as MktDigitalPlatform[], color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" },
+  { id: 7, name: "Sistemik", subname: "", logo: logoSistemik, cardImg: cardSistemik, traffic: "+62,000", accounts: "+230%", conversations: "+240%", metricLabel: "Conversaciones", interactions: "+275%", platforms: ["meta"] as MktDigitalPlatform[], color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
+  { id: 8, name: "Alteso", subname: "", logo: logoAlteso, cardImg: cardAlteso, traffic: "+70,000", accounts: "+380%", conversations: "+320%", metricLabel: "Conversaciones", interactions: "+740%", platforms: ["meta"] as MktDigitalPlatform[], color: "#80b67d", glow: "rgba(128, 182, 125, 0.2)" },
+  { id: 9, name: "Deyun", subname: "", logo: logoDeyun, cardImg: cardDeyun, traffic: "+38,000", accounts: "+240%", conversations: "+100%", metricLabel: "Conversaciones", interactions: "+220%", platforms: ["meta"] as MktDigitalPlatform[], color: "#c5362e", glow: "rgba(197, 54, 46, 0.2)" },
+  { id: 10, name: "Vagual", subname: "", logo: logoVagual, cardImg: cardVagual, traffic: "+62,000", accounts: "+315%", conversations: "+300%", metricLabel: "Conversaciones", interactions: "+360%", platforms: ["meta"] as MktDigitalPlatform[], color: "#599ddf", glow: "rgba(89, 157, 223, 0.2)" }
 ];
 
 function ProjectResults() {
@@ -134,11 +143,18 @@ function ProjectResults() {
                       className="h-full w-auto object-contain brightness-0 invert max-w-[120px] sm:max-w-[160px] md:max-w-[200px]"
                     />
                   </div>
-                  <img
-                    src={metaLogo}
-                    alt="Meta Business"
-                    className="h-5 sm:h-6 md:h-8 opacity-40 grayscale group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                  />
+                  <div className="flex items-center gap-1.5 sm:gap-2">
+                    {project.platforms.map((platform) => {
+                      const { Icon, label } = PLATFORM_ICONS[platform];
+                      return (
+                        <Icon
+                          key={platform}
+                          title={label}
+                          className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-white opacity-40 group-hover:opacity-100 transition-all duration-300"
+                        />
+                      );
+                    })}
+                  </div>
                 </div>
 
                 <div className="mb-3 sm:mb-4">

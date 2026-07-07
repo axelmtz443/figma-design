@@ -22,6 +22,22 @@ export const mktDigitalProject = defineType({
     }),
     defineField({ name: 'interactions', title: 'Interacciones', type: 'string', validation: Rule => Rule.required() }),
     defineField({
+      name: 'platforms',
+      title: 'Plataformas de campaña',
+      description: 'Selecciona una o más plataformas usadas en esta campaña. Sus íconos se muestran en la tarjeta.',
+      type: 'array',
+      of: [{ type: 'string' }],
+      options: {
+        list: [
+          { title: 'Meta', value: 'meta' },
+          { title: 'Google', value: 'google' },
+          { title: 'TikTok', value: 'tiktok' },
+          { title: 'LinkedIn', value: 'linkedin' },
+        ],
+      },
+      validation: Rule => Rule.min(1).error('Selecciona al menos una plataforma'),
+    }),
+    defineField({
       name: 'color',
       title: 'Color de acento',
       type: 'string',

@@ -286,14 +286,14 @@ export default function Hero({ isLoading} : {isLoading: boolean}) {
     <>
       <style>{css}</style>
 
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[7rem] sm:pt-[8rem] lg:pt-[9rem] pb-6 sm:pb-10 lg:pb-24 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-4 items-center">
+      <section className="max-w-7xl mx-auto lg:mx-0 lg:ml-auto lg:mr-6 xl:mr-10 px-4 sm:px-6 lg:px-8 pt-[7rem] sm:pt-[8rem] lg:pt-[9rem] pb-6 sm:pb-10 lg:pb-24 grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 md:gap-10 lg:gap-14 xl:gap-16 items-center">
 
         {/* ── Texto ── */}
-        <div className="flex flex-col items-center justify-center text-center md:block md:text-left">
-          <h1 className="font-aston text-[36px] sm:text-[48px] md:text-[56px] lg:text-[70px] font-normal mb-2 leading-[1.1] tracking-tight-custom text-white">
+        <div className="flex flex-col items-center justify-center text-center md:block md:text-left md:pl-4 lg:pl-10 xl:pl-14">
+          <h1 className="font-aston text-[36px] sm:text-[44px] md:text-[46px] lg:text-[54px] font-normal mb-2 leading-[1.1] tracking-tight-custom text-white">
             El Poder de las Grandes Marcas
           </h1>
-          <p className="font-montserrat text-soft-gray text-[15px] sm:text-[18px] md:text-[20px] lg:text-[25px] font-medium mb-6 sm:mb-8 leading-[1.4] max-w-xl">
+          <p className="font-montserrat text-soft-gray text-[15px] sm:text-[17px] md:text-[17px] lg:text-[19px] font-medium mb-6 sm:mb-8 leading-[1.4] max-w-xl">
             Desarrollamos estrategias de marketing online y offline para elevar tu marca, producto o servicio, ayudándote a destacar por encima de la competencia.
           </p>
 
@@ -325,7 +325,7 @@ export default function Hero({ isLoading} : {isLoading: boolean}) {
         </div>
 
         {/* ── Átomo orbital ── */}
-        <div className="relative flex items-center justify-center order-first md:order-last">
+        <div className="relative flex items-center justify-center md:justify-start order-first md:order-last">
           <div style={{ position: "relative", width: "100%", maxWidth: "420px", aspectRatio: "1 / 1" }}>
 
             <div

@@ -241,7 +241,7 @@ function Contact() {
                 className="font-semibold text-[13px] text-white px-8 py-3 rounded-full tracking-wide"
                 style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
               >
-                Obtener dirección
+                Agendar cita
               </motion.a>
             </motion.div>
 
