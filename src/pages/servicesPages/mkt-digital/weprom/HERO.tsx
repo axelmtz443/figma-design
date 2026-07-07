@@ -286,7 +286,7 @@ export default function HeroWeprom() {
       className="min-h-screen text-white select-none relative overflow-hidden flex flex-col justify-between w-full bg-transparent"
       style={{ fontFamily: FONTS.body }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center flex-1 pt-10 sm:pt-12 lg:pt-16 xl:pt-20 pb-6 sm:pb-8 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 w-full grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-10 lg:gap-12 items-center flex-1 pt-28 sm:pt-24 md:pt-16 lg:pt-16 xl:pt-20 pb-6 sm:pb-8 relative z-10">
         <div className="lg:col-span-5 order-last lg:order-none flex flex-col items-center text-center lg:items-start lg:text-left space-y-4 sm:space-y-5 lg:space-y-6 xl:space-y-8 z-20">
           <div className="space-y-3 sm:space-y-4">
             <h1
@@ -341,7 +341,8 @@ export default function HeroWeprom() {
             className="text-sm sm:text-base md:text-lg lg:text-xl text-zinc-400 leading-relaxed max-w-5xl mx-auto font-light px-4"
             style={{ fontFamily: FONTS.body }}
           >
-            Más de 35 años trabajando con las grandes marcas nos han mostrado el camino al éxito.{' '}
+            Más de 35 años trabajando con las grandes marcas nos han mostrado el camino al éxito.
+            <br />
             <strong className="text-white font-semibold">
               Por eso sabemos como desarrollar a las pequeñas, consolidar a las medianas y expandir a las grandes.
             </strong>

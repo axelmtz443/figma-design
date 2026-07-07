@@ -82,8 +82,25 @@ async function prerender() {
 
   page.setDefaultNavigationTimeout(15000);
 
-  for (const route of routes) {
-    console.log(`📄 Prerenderizando ${route}`);
+  const total = routes.length;
+  const startTime = Date.now();
+  let errors = 0;
+
+  const renderProgress = (current, currentRoute) => {
+    const width = 30;
+    const pct = current / total;
+    const filled = Math.round(width * pct);
+    const bar = '█'.repeat(filled) + '░'.repeat(width - filled);
+    const elapsed = (Date.now() - startTime) / 1000;
+    const eta = current > 0 ? (elapsed / current) * (total - current) : 0;
+    const label = currentRoute.length > 38 ? currentRoute.slice(0, 35) + '...' : currentRoute;
+    const line = `\r🚧 [${bar}] ${current}/${total} (${Math.round(pct * 100)}%) │ ⏱ ${elapsed.toFixed(0)}s │ ETA ${eta.toFixed(0)}s │ ${label}`.padEnd(120);
+    process.stdout.write(line);
+  };
+
+  for (let i = 0; i < routes.length; i++) {
+    const route = routes[i];
+    renderProgress(i, route);
     const url = `http://localhost:4173${route}`;
 
     try {
@@ -105,8 +122,9 @@ async function prerender() {
         await fs.mkdir(dir, { recursive: true });
       }
       await fs.writeFile(filePath, html);
-      console.log(`✅ Guardado: ${filePath}`);
     } catch (err) {
+      errors++;
+      process.stdout.write('\n');
       console.error(`⚠️ Error en ${route}: ${err.message}`);
       // Intentar guardar lo que haya
       try {
@@ -119,11 +137,16 @@ async function prerender() {
         console.error(`❌ No se pudo guardar ${route}:`, innerErr.message);
       }
     }
+
+    renderProgress(i + 1, route);
   }
+
+  process.stdout.write('\n');
 
   await browser.close();
   preview.kill();
-  console.log('🎉 Prerenderizado completado exitosamente.');
+  const totalTime = ((Date.now() - startTime) / 1000).toFixed(0);
+  console.log(`🎉 Prerenderizado completado en ${totalTime}s (${total - errors}/${total} rutas ok${errors > 0 ? `, ${errors} con error` : ''}).`);
 }
 
 prerender().catch(console.error);

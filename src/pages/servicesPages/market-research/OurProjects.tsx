@@ -279,7 +279,7 @@ export default function OurProjects() {
                                 </div>
                               </div>
                               <span className="text-white/50 text-[9px] font-montserrat uppercase tracking-widest border border-white/20 rounded-full px-2.5 py-1 shrink-0">
-                                Toca para ver más
+                                Ver proyecto
                               </span>
                             </div>
 

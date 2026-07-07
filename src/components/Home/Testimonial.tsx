@@ -128,7 +128,7 @@ function TestimonialsSection() {
               <Reviews category="Home" title="" subtitle="" />
             </div>
             <div className="lg:hidden">
-              <Reviews category="Home" />
+              <Reviews category="Home" title="" subtitle="" />
             </div>
           </div>
 

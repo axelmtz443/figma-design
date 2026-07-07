@@ -235,7 +235,7 @@ function Contact() {
               </div>
 
               <motion.a
-                href="https://maps.app.goo.gl/vhyJfQ9n5bd518nJ8"
+                href="https://wa.me/5213313857143?text=Hola%20WeProm!%20Quiero%20agendar%20una%20cita."
                 target="_blank" rel="noopener noreferrer"
                 whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}
                 className="font-semibold text-[13px] text-white px-8 py-3 rounded-full tracking-wide"

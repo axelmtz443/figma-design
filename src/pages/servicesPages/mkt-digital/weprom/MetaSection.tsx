@@ -133,6 +133,14 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
     setIndex(i => i + dir);
   };
 
+  const touchStartX = useRef(0);
+  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const delta = e.changedTouches[0].clientX - touchStartX.current;
+    if (delta < -40) go(1);
+    else if (delta > 40) go(-1);
+  };
+
   const handleTransitionEnd = (e: React.TransitionEvent<HTMLDivElement>) => {
     if (e.target !== e.currentTarget) return;
     setTransitioning(false);
@@ -167,7 +175,12 @@ function SectionCarousel({ items, cardWidth, cardHeight }: SectionCarouselProps)
           <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg>
         </button>
       </div>
-      <div className="overflow-hidden" style={{ height: `${cardHeight}px` }}>
+      <div
+        className="overflow-hidden touch-pan-y"
+        style={{ height: `${cardHeight}px` }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
         <div
           ref={stripRef}
           className="flex transition-transform duration-500 ease-in-out"
@@ -426,8 +439,9 @@ function InstagramCarouselAd({ ad }: { ad: MetaAd }) {
   const [expanded, setExpanded] = useState(true);
   const touchStartX = useRef(0);
   const goTo = (idx: number) => setCurrentIndex(Math.max(0, Math.min(idx, cards.length - 1)));
-  const handleTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
+  const handleTouchStart = (e: React.TouchEvent) => { e.stopPropagation(); touchStartX.current = e.touches[0].clientX; };
   const handleTouchEnd = (e: React.TouchEvent) => {
+    e.stopPropagation();
     const delta = e.changedTouches[0].clientX - touchStartX.current;
     if (delta > 40) goTo(currentIndex - 1);
     else if (delta < -40) goTo(currentIndex + 1);
