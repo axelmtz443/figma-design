@@ -63,9 +63,9 @@ const ContactConsultoria = () => {
   ];
 
   const headingBlock = (
-    <div>
-      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[2.2rem] font-aston tracking-tight mb-3 sm:mb-4 leading-tight">
-        Será un gusto saber de ti.
+    <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-aston tracking-tight mb-3 sm:mb-4 leading-tight text-white">
+        Hablemos de tus objetivos. Contáctanos.
       </h2>
       <p className="text-white/100 font-normal text-base sm:text-lg leading-relaxed">
         ¿Te gustaría saber más? <br className="hidden sm:block" /> No dudes en escribirnos o llamarnos.
@@ -262,16 +262,16 @@ const ContactConsultoria = () => {
     <section className="w-full bg-transparent py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 font-montserrat text-white">
       <div className="max-w-5xl mx-auto">
 
+        {headingBlock}
+
         {isMobile ? (
           <div className="flex flex-col gap-6 sm:gap-8">
-            {headingBlock}
             {formBlock}
             <div className="flex flex-col gap-6 sm:gap-8">{infoAndMapBlock}</div>
           </div>
         ) : (
           <div className="flex flex-row gap-8 md:gap-10 lg:gap-12 xl:gap-20 items-start">
             <div className="w-full lg:w-2/5 flex flex-col gap-6 sm:gap-8">
-              {headingBlock}
               {infoAndMapBlock}
             </div>
             {formBlock}

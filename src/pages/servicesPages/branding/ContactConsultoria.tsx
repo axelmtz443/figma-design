@@ -57,20 +57,21 @@ const ContactConsultoria = () => {
     <section className="w-full bg-transparent py-12 sm:py-16 px-4 sm:px-6 lg:px-8 font-montserrat text-white">
       <div className="max-w-xs sm:max-w-xl md:max-w-3xl lg:max-w-5xl mx-auto">
 
+        {/* Encabezado centrado */}
+        <div className="text-center max-w-xl mx-auto mb-8 sm:mb-10">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-aston tracking-tight mb-3 sm:mb-4 leading-tight text-white">
+            Hablemos de tu proyecto. Contáctanos.
+          </h2>
+          <p className="text-white/100 font-normal text-sm sm:text-base leading-relaxed">
+            ¿Te gustaría saber más? <br /> No dudes en escribirnos o llamarnos.
+          </p>
+        </div>
+
         {/* Layout principal */}
         <div className="flex flex-col lg:flex-row gap-8 sm:gap-10 lg:gap-20 items-start">
 
           {/* Columna izquierda */}
           <div className="w-full lg:w-2/5 flex flex-col gap-6 sm:gap-8">
-            <div>
-              <h2 className="text-xl sm:text-2xl md:text-3xl font-aston tracking-tight mb-3 sm:mb-4 leading-tight">
-                Será un gusto saber de ti.
-              </h2>
-              <p className="text-white/100 font-normal text-sm sm:text-base leading-relaxed">
-                ¿Te gustaría saber más? <br /> No dudes en escribirnos o llamarnos.
-              </p>
-            </div>
-
             {/* Datos de contacto */}
             <div className="flex flex-row sm:flex-col gap-4 sm:gap-5">
               {contactInfo.map((item, index) => (

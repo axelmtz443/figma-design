@@ -38,6 +38,8 @@ export async function getSuccessStories(): Promise<SuccessStory[]> {
   );
 }
 
+export type MktDigitalPlatform = 'meta' | 'google' | 'tiktok' | 'linkedin';
+
 export interface MktDigitalProject {
   _id: string;
   order: number;
@@ -50,6 +52,7 @@ export interface MktDigitalProject {
   conversations: string;
   metricLabel?: string;
   interactions: string;
+  platforms: MktDigitalPlatform[];
   color: string;
 }
 
@@ -65,7 +68,7 @@ export interface MarketResearchProject {
 
 export async function getMktDigitalProjects(): Promise<MktDigitalProject[]> {
   return sanityClient.fetch(
-    `*[_type == "mktDigitalProject"] | order(order asc) { _id, order, name, subname, logo, cardImg, traffic, accounts, conversations, metricLabel, interactions, color }`
+    `*[_type == "mktDigitalProject"] | order(order asc) { _id, order, name, subname, logo, cardImg, traffic, accounts, conversations, metricLabel, interactions, platforms, color }`
   );
 }
 
