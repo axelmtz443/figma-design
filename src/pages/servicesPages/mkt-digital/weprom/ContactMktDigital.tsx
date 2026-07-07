@@ -23,7 +23,7 @@ const ContactMktDigital = () => {
   };
 
   const contactInfo = [
-    { icon: <Mail size={20} />, label: 'Correo', value: 'hola@weprom.mx', href: 'mailto:hola@weprom.mx', color: '#599ddf' },
+    { icon: <Mail size={20} />, label: 'Correo', value: 'hola@weprommarketing.mx', href: 'mailto:hola@weprommarketing.mx', color: '#599ddf' },
     { icon: <Phone size={20} />, label: 'Llamadas', value: '+52 1 33 1067 4199', href: 'tel:+5213310674199', color: '#80b67d' },
   ];
 

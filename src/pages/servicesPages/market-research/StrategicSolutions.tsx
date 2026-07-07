@@ -98,8 +98,109 @@ export default function StrategicSolutions() {
           </p>
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 items-start">
-          
+        {/* Móvil: acordeón — cada tarjeta se expande en su propio lugar al seleccionarla */}
+        <div className="lg:hidden flex flex-col gap-3 sm:gap-4">
+          {servicesData.map((s) => {
+            const isSelected = activeId === s.id;
+            const SideIcon = s.IconComponent;
+            return (
+              <div
+                key={s.id}
+                className="rounded-2xl border overflow-hidden bg-black/20 backdrop-blur-md transition-colors duration-300"
+                style={{ borderColor: isSelected ? `${s.color}a0` : '#1f2937' }}
+              >
+                <button
+                  onClick={() => setActiveId(s.id)}
+                  className="w-full text-left p-4 sm:p-5 relative transition-all duration-300 group overflow-hidden will-change-transform touch-manipulation"
+                >
+                  <div
+                    className={`absolute inset-0 transition-opacity duration-300 -z-10 ${isSelected ? 'opacity-100' : 'opacity-0'}`}
+                    style={{ backgroundColor: s.colorAlphaMuted }}
+                  />
+                  <div className="flex items-center gap-3 sm:gap-4 relative z-10">
+                    <div
+                      className="p-2.5 sm:p-3 rounded-xl transition-all duration-300 ease-out"
+                      style={{
+                        backgroundColor: isSelected ? s.colorAlpha : 'rgba(255,255,255,0.02)',
+                        color: s.color,
+                        transform: isSelected ? 'scale(1.05)' : 'scale(1)'
+                      }}
+                    >
+                      <SideIcon className="w-5 h-5 sm:w-6 sm:h-6" />
+                    </div>
+                    <span
+                      className={`flex-1 text-base sm:text-lg tracking-wide transition-colors duration-300 ${isSelected ? 'text-white font-semibold' : 'text-gray-400 font-medium'}`}
+                      style={{ fontFamily: "'Montserrat', sans-serif" }}
+                    >
+                      {s.title}
+                    </span>
+                    <ChevronRight
+                      className="w-4 h-4 sm:w-5 sm:h-5 text-gray-500 transition-transform duration-300"
+                      style={{ transform: isSelected ? 'rotate(90deg)' : 'rotate(0deg)' }}
+                    />
+                  </div>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isSelected && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3, ease: 'easeOut' }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 sm:px-5 pb-5 sm:pb-6 pt-1">
+                        <p className="text-gray-400 mb-4 sm:mb-5 text-sm sm:text-base leading-relaxed font-light">
+                          {s.focus}
+                        </p>
+
+                        <div className="flex flex-col gap-3 mb-5 sm:mb-6">
+                          {s.features.map((f, i) => {
+                            const FeatureIcon = f.IconComponent;
+                            return (
+                              <div
+                                key={i}
+                                className="flex items-start gap-3 p-3 bg-[#121212]/30 rounded-xl border border-gray-800/40"
+                              >
+                                <div className="p-1 rounded-lg mt-0.5" style={{ color: s.color }}>
+                                  <FeatureIcon className="w-4 h-4 sm:w-5 sm:h-5" />
+                                </div>
+                                <div>
+                                  <h4
+                                    className="font-semibold text-white tracking-wide text-xs sm:text-sm"
+                                    style={{ fontFamily: "'Montserrat', sans-serif" }}
+                                  >
+                                    {f.title}
+                                  </h4>
+                                  <p className="text-[11px] sm:text-xs text-gray-400 mt-0.5 font-light leading-normal">{f.desc}</p>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+
+                        <button
+                          onClick={() => openPopup('Investigación de Mercados')}
+                          className="flex items-center gap-2 sm:gap-3 px-5 sm:px-6 py-3 sm:py-4 rounded-xl font-semibold text-xs sm:text-sm justify-center text-white shadow-lg transition-all duration-300 active:scale-[0.99] w-full"
+                          style={{ backgroundColor: s.color }}
+                        >
+                          <MessageSquare className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />
+                          <span className="tracking-wider font-montserrat">{s.ctaText}</span>
+                          <ChevronRight className="w-4 h-4 sm:w-[18px] sm:h-[18px]" />
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Desktop: lista + panel de detalle lado a lado */}
+        <div className="hidden lg:flex flex-row gap-6 sm:gap-8 items-start">
+
           <div className="w-full lg:w-1/3 flex flex-col gap-3 sm:gap-4 relative z-20">
             {servicesData.map((s) => {
               const isSelected = activeId === s.id;

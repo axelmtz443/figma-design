@@ -37,7 +37,7 @@ function BlogResearch() {
               className="font-montserrat max-w-3xl text-base sm:text-[20px] md:text-[22px] lg:text-[23px] text-soft-gray"
               style={{ lineHeight: '1.4', letterSpacing: '0.01em' }}
             >
-              Insights, tendencias y mejores prácticas del mundo del marketing.
+              Insights, tendencias y mejores prácticas del mundo de investigación de mercados.
             </p>
           </div>
 

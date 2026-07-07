@@ -29,8 +29,8 @@ const ContactConsultoria = () => {
     {
       icon: <Mail size={18} />,
       label: 'Correo',
-      value: 'hola@weprom.mx',
-      href: 'mailto:hola@weprom.mx',
+      value: 'hola@weprommarketing.mx',
+      href: 'mailto:hola@weprommarketing.mx',
       color: '#599ddf',
     },
     {
