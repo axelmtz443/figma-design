@@ -59,7 +59,48 @@ export default function ResearchTools() {
         </p>
       </header>
 
-      <main className="flex-1 flex flex-col md:flex-row relative z-10 w-full max-w-7xl mx-auto border-x border-white/5">
+      {/* Móvil: tarjetas apiladas que se van revelando al hacer scroll (position: sticky) */}
+      <div className="md:hidden relative z-10 w-full px-4 sm:px-6 pt-6 pb-10 flex flex-col gap-6">
+        {toolsData.map((tool, i) => (
+          <div
+            key={tool.id}
+            className="rounded-2xl border border-white/10 bg-[#0a0a0a] p-6 shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+            style={{ position: 'sticky', top: `${5 + i * 1.5}rem` }}
+          >
+            <div
+              className="text-5xl font-bold leading-none mb-4 font-aston"
+              style={{ color: tool.color, fontFamily: "'Astonpoliz', sans-serif" }}
+            >
+              {tool.number}
+            </div>
+            <h3
+              className="text-2xl uppercase mb-2 tracking-wider text-white"
+              style={{ fontFamily: "'Astonpoliz', sans-serif" }}
+            >
+              {tool.title}
+            </h3>
+            <p className="text-base font-medium text-gray-200 mb-2">{tool.subtitle}</p>
+            <p className="text-sm text-gray-400 font-light leading-relaxed mb-5">{tool.desc}</p>
+            <div className="grid grid-cols-1 gap-y-2">
+              {tool.items.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-2.5 border-b border-white/5 pb-1.5">
+                  <span
+                    className="w-1.5 h-1.5 rotate-45 flex-shrink-0"
+                    style={{ backgroundColor: tool.color }}
+                  />
+                  <span className="text-sm font-light text-gray-300">{item}</span>
+                </div>
+              ))}
+            </div>
+            <div
+              className="absolute bottom-0 left-0 w-full h-[3px] rounded-b-2xl"
+              style={{ backgroundColor: tool.color }}
+            />
+          </div>
+        ))}
+      </div>
+
+      <main className="hidden md:flex flex-1 flex-col md:flex-row relative z-10 w-full max-w-7xl mx-auto border-x border-white/5">
         {toolsData.map((tool) => {
           const isActive = activeTab === tool.id;
           const isAnyHovered = activeTab !== null;

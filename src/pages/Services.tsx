@@ -579,7 +579,7 @@ export default function Services() {
               ¿Por dónde empezamos?
             </p>
             <h2 className="font-aston text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-white leading-tight mb-3 sm:mb-4">
-              Hablemos sobre<br className="hidden sm:block" />tu marca.
+              Hablemos sobre <br className="hidden sm:block" />tu marca.
             </h2>
             <p className="font-montserrat text-zinc-400 text-xs sm:text-sm leading-relaxed max-w-lg mx-auto md:mx-0">
               Agenda una sesión de diagnóstico gratuita. Analizamos tu situación actual y te decimos exactamente qué servicio se adapta mejor a tus objetivos.
