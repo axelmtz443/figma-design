@@ -313,7 +313,7 @@ const ConsultoriaHero = () => {
                             transition={{ duration: 0.7, delay: 0.15 }}
                             className="mt-3 sm:mt-4 text-white font-montserrat font-normal text-base sm:text-lg md:text-xl max-w-xl leading-relaxed"
                         >
-                            Desarrollamos estrategias de marketing online y offline para elevar tu marca, producto o servicio, ayudándote a destacar por encima de la competencia.
+Te ayudamos a comprender y optimizar las diferentes áreas de tu negocio a través de soluciones efectivas y personalizadas.
                         </motion.p>
 
                         <motion.div

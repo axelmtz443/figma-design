@@ -61,75 +61,71 @@ async function prerender() {
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu']
   });
-  const page = await browser.newPage();
-
-  // Desactivar recursos externos para acelerar
-  await page.setRequestInterception(true);
-  page.on('request', (req) => {
-    const resourceType = req.resourceType();
-    if (['image', 'media', 'font'].includes(resourceType) && !req.url().includes('localhost')) {
-      req.abort();
-    } else {
-      req.continue();
-    }
-  });
 
   const IGNORED_ERRORS = ['initMap', '_xdc_', 'maps.googleapis'];
-  page.on('pageerror', error => {
-    if (IGNORED_ERRORS.some(s => error.message.includes(s))) return;
-    console.error(`💥 ERROR DE JS EN LA PÁGINA:`, error.message);
-  });
 
-  page.setDefaultNavigationTimeout(15000);
+  // Varias pestañas trabajando en paralelo en vez de una sola secuencial.
+  const CONCURRENCY = 6;
+
+  const setupPage = async () => {
+    const page = await browser.newPage();
+    await page.setRequestInterception(true);
+    page.on('request', (req) => {
+      const resourceType = req.resourceType();
+      if (['image', 'media', 'font'].includes(resourceType) && !req.url().includes('localhost')) {
+        req.abort();
+      } else {
+        req.continue();
+      }
+    });
+    page.on('pageerror', error => {
+      if (IGNORED_ERRORS.some(s => error.message.includes(s))) return;
+      console.error(`💥 ERROR DE JS EN LA PÁGINA:`, error.message);
+    });
+    page.setDefaultNavigationTimeout(15000);
+    return page;
+  };
+
+  const pages = await Promise.all(Array.from({ length: CONCURRENCY }, setupPage));
 
   const total = routes.length;
   const startTime = Date.now();
   let errors = 0;
+  let completed = 0;
 
-  const renderProgress = (current, currentRoute) => {
+  const renderProgress = (currentRoute) => {
     const width = 30;
-    const pct = current / total;
+    const pct = completed / total;
     const filled = Math.round(width * pct);
     const bar = '█'.repeat(filled) + '░'.repeat(width - filled);
     const elapsed = (Date.now() - startTime) / 1000;
-    const eta = current > 0 ? (elapsed / current) * (total - current) : 0;
+    const eta = completed > 0 ? (elapsed / completed) * (total - completed) : 0;
     const label = currentRoute.length > 38 ? currentRoute.slice(0, 35) + '...' : currentRoute;
-    const line = `\r🚧 [${bar}] ${current}/${total} (${Math.round(pct * 100)}%) │ ⏱ ${elapsed.toFixed(0)}s │ ETA ${eta.toFixed(0)}s │ ${label}`.padEnd(120);
+    const line = `\r🚧 [${bar}] ${completed}/${total} (${Math.round(pct * 100)}%) │ ⏱ ${elapsed.toFixed(0)}s │ ETA ${eta.toFixed(0)}s │ ${label}`.padEnd(120);
     process.stdout.write(line);
   };
 
-  for (let i = 0; i < routes.length; i++) {
-    const route = routes[i];
-    renderProgress(i, route);
+  const renderRoute = async (page, route) => {
     const url = `http://localhost:4173${route}`;
+    let filePath = route === '/'
+      ? path.join(distPath, 'index.html')
+      : path.join(distPath, `${route}.html`);
 
     try {
-      await page.goto(url, {
-        waitUntil: 'domcontentloaded',
-        timeout: 15000
-      });
-
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 });
       await new Promise(resolve => setTimeout(resolve, 1500));
-
       const html = await page.content();
 
-      let filePath = route === '/'
-        ? path.join(distPath, 'index.html')
-        : path.join(distPath, `${route}.html`);
-
       if (route.includes('/') && route !== '/') {
-        const dir = path.dirname(filePath);
-        await fs.mkdir(dir, { recursive: true });
+        await fs.mkdir(path.dirname(filePath), { recursive: true });
       }
       await fs.writeFile(filePath, html);
     } catch (err) {
       errors++;
       process.stdout.write('\n');
       console.error(`⚠️ Error en ${route}: ${err.message}`);
-      // Intentar guardar lo que haya
       try {
         const html = await page.content();
-        let filePath = route === '/' ? path.join(distPath, 'index.html') : path.join(distPath, `${route}.html`);
         if (route.includes('/') && route !== '/') await fs.mkdir(path.dirname(filePath), { recursive: true });
         await fs.writeFile(filePath, html);
         console.log(`✅ Guardado (contingencia): ${filePath}`);
@@ -137,9 +133,21 @@ async function prerender() {
         console.error(`❌ No se pudo guardar ${route}:`, innerErr.message);
       }
     }
+  };
 
-    renderProgress(i + 1, route);
-  }
+  // Cola compartida: cada pestaña toma la siguiente ruta libre en cuanto termina la suya.
+  let nextIndex = 0;
+  const worker = async (page) => {
+    while (nextIndex < routes.length) {
+      const route = routes[nextIndex++];
+      await renderRoute(page, route);
+      completed++;
+      renderProgress(route);
+    }
+  };
+
+  renderProgress(routes[0] ?? '');
+  await Promise.all(pages.map(worker));
 
   process.stdout.write('\n');
 
